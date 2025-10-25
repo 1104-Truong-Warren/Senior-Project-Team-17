@@ -2,6 +2,10 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
+//used for reading CSV files
+using System.IO;
+using JetBrains.Annotations;
+
 public class GridBehavior : MonoBehaviour
 {
     // Ellison
@@ -29,10 +33,16 @@ public class GridBehavior : MonoBehaviour
     public int endX = 2; 
     public int endY = 2;
 
+    public string weightInput; //name of the CSV file to read from for setting tile weights
+
+    
+
 
     // Ellison
     // This path is the running list for the most optimal route to the destination
     public List<GameObject> path = new List<GameObject>();
+
+
 
 
     //when activated, generate the grid based on the GenerateGrid function
@@ -80,6 +90,46 @@ public class GridBehavior : MonoBehaviour
                 gridArray[i, j] = gridTile; // Warren | assigns objects into the grid
             }
         }
+
+        SetWeight();
+    }
+
+
+    //Jason
+    //Sets the weight of each tile in the grid by reading from a provided csv file.
+    //Might change this later to also allow for setting textures of the tiles.
+
+    //This function assumes that 0,0 is the top left corner of the grid, as does the csv
+    void SetWeight()
+    {
+
+        StreamReader dataInput = new StreamReader(weightInput);
+        //verifying that the dataInput file has been provided
+        if (dataInput == null)
+        {
+            Debug.LogError("No CSV file provided for SetWeight function in GridBehavior script attached to " + gameObject.name);
+            return;
+        } else
+        {
+            for (int i = 0; i < columns; i++)
+            {
+                //reading a line from the CSV file
+                string dataLine = dataInput.ReadLine();
+
+                //splitting the line into individual string values based on the comma delimiter
+                string[] dataValues = dataLine.Split(',');
+
+                for (int j = 0; j < rows; j++)
+                {
+                    //parsing the string value into an integer weight
+                    int tileWeight = int.Parse(dataValues[j]);
+                    //assigning the weight to the corresponding tile in the grid
+                    gridArray[i, j].GetComponent<GridStat>().weight = tileWeight;
+                }
+            }
+        }
+
+
     }
 
     // Ellison
