@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 463776c2230c51c428ab5d3e082425f8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 237954
+  packageName: 'Tactics Toolkit: Pathfinding'
+  packageVersion: 1.0
+  assetPath: Assets/Download/Pathfinding/LawlessGames/Tactics Toolkit Pathfinding/Pathfinding/Part
+    1 - Grid Setup/Prefabs/OverlayTile.prefab
+  uploadId: 545763

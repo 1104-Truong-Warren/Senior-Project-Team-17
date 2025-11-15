@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: fa4a59dee47119244814ad20535bd95e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 237954
+  packageName: 'Tactics Toolkit: Pathfinding'
+  packageVersion: 1.0
+  assetPath: Assets/Download/Pathfinding/LawlessGames/Tactics Toolkit Pathfinding/Pathfinding/Part
+    3 - RangeFinding and Path Display/Scripts/PathFinder.cs
+  uploadId: 545763

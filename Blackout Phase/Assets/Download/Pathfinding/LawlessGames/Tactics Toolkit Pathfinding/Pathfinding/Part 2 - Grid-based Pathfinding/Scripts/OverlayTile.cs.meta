@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 64d65354c26dbb94cb90b8236e463be9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 237954
+  packageName: 'Tactics Toolkit: Pathfinding'
+  packageVersion: 1.0
+  assetPath: Assets/Download/Pathfinding/LawlessGames/Tactics Toolkit Pathfinding/Pathfinding/Part
+    2 - Grid-based Pathfinding/Scripts/OverlayTile.cs
+  uploadId: 545763
