@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3f3a66566a187254d9d51e181541de1e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 237954
+  packageName: 'Tactics Toolkit: Pathfinding'
+  packageVersion: 1.0
+  assetPath: Assets/Download/Pathfinding/LawlessGames/Tactics Toolkit Pathfinding/Images/TIles/TilePallete.prefab
+  uploadId: 545763
