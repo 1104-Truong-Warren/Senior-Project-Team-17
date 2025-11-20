@@ -197,6 +197,40 @@ public class Grid : MonoBehaviour
         return false;
     }
 
+    public void EnemyPathToDestination(int startx, int starty, int endx, int endy, int budgetRemaining)
+    {
+        if (grid[endx, endy].visited == true)
+        {
+
+            //if the destination tile is reachable, just use the player pathfind function
+            GetPlayerPathToDestination(startx, starty, endx, endy, budgetRemaining);
+        } else
+        {
+            //if the destination tile is not reachable, find the closest reachable tile to it
+            Tile closestTile = null;
+            float closestDistance = float.MaxValue;
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (grid[x, y].visited)
+                    {
+                        float distance = Vector2.Distance(new Vector2(x, y), new Vector2(endx, endy));
+                        if (distance < closestDistance)
+                        {
+                            closestDistance = distance;
+                            closestTile = grid[x, y];
+                        }
+                    }
+                }
+            }
+            if (closestTile != null)
+            {
+                GetPlayerPathToDestination(startx, starty, closestTile.x, closestTile.y, budgetRemaining);
+            }
+        }
+    }
+
     public void TestPathDisplay(int startx, int starty, int endx, int endy, int budgetRemaining)
     {
         bool foundPath = GetPlayerPathToDestination(startx, starty, endx, endy, budgetRemaining);
@@ -213,6 +247,18 @@ public class Grid : MonoBehaviour
                 pathObject.transform.position = new Vector3(currentTile.x, currentTile.y, -1);
             }
             
+        }
+    }
+
+    public void TestEnemyPath(int startx, int starty, int endx, int endy, int budgetRemaining)
+    {
+        EnemyPathToDestination(startx, starty, endx, endy, budgetRemaining);
+        while (path.Count > 0)
+        {
+            Tile currentTile = path.Pop();
+            GameObject pathObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            pathObject.tag = "AccessibleTileDisplay";
+            pathObject.transform.position = new Vector3(currentTile.x, currentTile.y, -1);
         }
     }
 

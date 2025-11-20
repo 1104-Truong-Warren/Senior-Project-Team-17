@@ -34,7 +34,7 @@ public class AccessTest : MonoBehaviour
 
         if (pathfindTest)
         {
-            grid.TestPathDisplay(5,5,6,6,3);
+            grid.TestEnemyPath(5,5,0,0,3);
         }
 
     }
