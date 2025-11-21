@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 73590fb3461fae64cbaf3ebc4e72352b
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 237954
+  packageName: 'Tactics Toolkit: Pathfinding'
+  packageVersion: 1.0
+  assetPath: Assets/Download/Pathfinding/LawlessGames/Tactics Toolkit Pathfinding/Pathfinding/Part
+    3 - RangeFinding and Path Display/Prefab/SelectedTile.prefab
+  uploadId: 545763

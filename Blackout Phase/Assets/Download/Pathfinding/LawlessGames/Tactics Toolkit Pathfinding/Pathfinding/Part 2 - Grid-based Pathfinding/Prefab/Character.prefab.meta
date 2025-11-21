@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bb7631f78eb15e441b29229ddcfc378a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 237954
+  packageName: 'Tactics Toolkit: Pathfinding'
+  packageVersion: 1.0
+  assetPath: Assets/Download/Pathfinding/LawlessGames/Tactics Toolkit Pathfinding/Pathfinding/Part
+    2 - Grid-based Pathfinding/Prefab/Character.prefab
+  uploadId: 545763
