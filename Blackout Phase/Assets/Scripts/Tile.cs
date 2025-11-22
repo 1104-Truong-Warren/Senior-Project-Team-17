@@ -15,6 +15,9 @@ public class Tile
     public bool accessible;
     public bool visited;
 
+    //added to help vision tracking, should be initialized to false and set to true when player is on tile
+    public bool playerOnTile;
+
     public GameObject tileObject;
 
 
@@ -27,6 +30,7 @@ public class Tile
         this.accessible = accessible;
         this.visited = false;
         this.tileObject = null;
+        this.playerOnTile = false;
 
     }
 
