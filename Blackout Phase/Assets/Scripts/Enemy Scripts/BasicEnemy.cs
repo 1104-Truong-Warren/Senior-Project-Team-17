@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 
 //working with the assumption that enemies should have an update method for
 //animations, movement is handled by the enemy controller
@@ -42,6 +42,16 @@ public class BasicEnemy : MonoBehaviour
         }
 
         directionFacing = 'N'; //default to north
+
+        Debug.Log(grid.grid.Length);
+
+        //TEST CODE HERE, SETTING A BASIC PATROL ROUTE
+        //patrolLocations = new Tile[2];
+        //patrolLocations[0] = grid.grid[currentX, currentY];
+        //patrolLocations[1] = grid.grid[currentX + 2, currentY];
+        
+
+
     }
 
     // Update is called once per frame
@@ -50,6 +60,7 @@ public class BasicEnemy : MonoBehaviour
         
     }
 
+    
 
     //checks all cardinal directions up to vision range
     //stops checking in a direction if an inaccessible tile is found (which would indicate a wall or obstacle)
@@ -66,7 +77,7 @@ public class BasicEnemy : MonoBehaviour
             case 'N':
                 for (int i = 1; i <= visionRange; i++)
                 {
-                    if (grid.grid[currentX,currentY + i].accessible)
+                    if (grid.grid[currentX,currentY + i].accessible && grid.grid[currentX,currentY + i].movementCost != 0)
                     {
                         visibleTiles[i - 1] = grid.grid[currentX, currentY + i];
                     } else
@@ -78,7 +89,7 @@ public class BasicEnemy : MonoBehaviour
             case 'S':
                 for (int i = 1; i <= visionRange; i++)
                 {
-                    if (grid.grid[currentX, currentY - i].accessible)
+                    if (grid.grid[currentX, currentY - i].accessible && grid.grid[currentX, currentY - i].movementCost != 0)
                     {
                         visibleTiles[i - 1] = grid.grid[currentX, currentY - i];
                     }
@@ -91,7 +102,7 @@ public class BasicEnemy : MonoBehaviour
             case 'E':
                 for (int i = 1; i <= visionRange; i++)
                 {
-                    if (grid.grid[currentX + i, currentY].accessible)
+                    if (grid.grid[currentX + i, currentY].accessible && grid.grid[currentX + i, currentY].movementCost != 0)
                     {
                         visibleTiles[i - 1] = grid.grid[currentX + i, currentY];
                     }
@@ -104,7 +115,7 @@ public class BasicEnemy : MonoBehaviour
             case 'W':
                 for (int i = 1; i <= visionRange; i++)
                 {
-                    if (grid.grid[currentX - i, currentY].accessible)
+                    if (grid.grid[currentX - i, currentY].accessible && grid.grid[currentX - i, currentY].movementCost != 0)
                     {
                         visibleTiles[i - 1] = grid.grid[currentX - i, currentY];
                     }
@@ -128,6 +139,44 @@ public class BasicEnemy : MonoBehaviour
             }
         }
         return false;
+    }
+
+
+    //this function moves the enemy to the next tile in the pathfinding stack
+    public void MoveToTile(Tile destination)
+    {
+        //updating current position
+        currentX = destination.x;
+        currentY = destination.y;
+        //updating the enemy's world position
+        
+        Vector2 newPosition = new Vector2(currentX, currentY);
+        transform.position = newPosition;
+    }
+
+    public void Patrol()
+    {
+
+        
+        Tile destination = patrolLocations[currentPatrolIndex];
+        //moving to the next patrol location, sets to 0 if at end of array
+        currentPatrolIndex = currentPatrolIndex + 1;
+        if (currentPatrolIndex >= patrolLocations.Length)
+        {
+            currentPatrolIndex = 0;
+        }
+
+        grid.EnemyPathToDestination(currentX,currentY, destination.x, destination.y, movementBudget);
+
+        Stack<Tile> path = new(grid.path);
+
+        path.Pop(); //removing current tile from stack
+
+        while (path.Count > 0)
+        {
+            Tile nextTile = path.Pop();
+            MoveToTile(nextTile);
+        }
     }
 
 }

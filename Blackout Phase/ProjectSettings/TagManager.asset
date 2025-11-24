@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - AccessibleTileDisplay
+  - Enemy
   layers:
   - Default
   - TransparentFX

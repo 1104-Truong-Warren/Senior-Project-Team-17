@@ -7,7 +7,7 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     //stores the display objects for accessible tiles so they can be removed later
-    Stack<Tile> path = new Stack<Tile>();
+    public Stack<Tile> path = new Stack<Tile>();
 
     public int width;
     public int height;
