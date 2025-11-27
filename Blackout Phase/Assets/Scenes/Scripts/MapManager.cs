@@ -89,4 +89,20 @@ public class MapManager : MonoBehaviour
         foreach (var tile in map.Values) // calls the overlay tile reset for all objects
             tile.ResetTiles();
     }
+
+    [ContextMenu("Debug All Coordinates")]
+public void DebugAllCoordinates()
+{
+    if (map == null)
+    {
+        Debug.Log("Map is null");
+        return;
+    }
+    
+    Debug.Log($"=== ALL {map.Count} COORDINATES ===");
+    foreach (var coord in map.Keys)
+    {
+        Debug.Log($"Coordinate: {coord}");
+    }
+}
 }

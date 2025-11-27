@@ -2,188 +2,160 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Patrol : MonoBehaviour
+public class SimplePatrol : MonoBehaviour
 {
-    private List<Vector2Int> waypoints;
-    private int currentWaypointIndex = 0;
-    private bool isPatrolling = false;
-    private float patrolSpeed;
-    
+    [Header("Patrol Settings")]
+    [SerializeField] private List<Vector2Int> waypoints = new List<Vector2Int>();
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float waitTimeAtWaypoint = 1f;
+
+    [Header("Debug")]
+    [SerializeField] private bool showDebug = true;
+
     private CharacterInfo characterInfo;
-    private PathFinder pathFinder;
-    private List<OverlayTile> currentPath;
-    private int currentPathIndex = 0;
+    private int currentWaypointIndex = 0;
+    private bool isMoving = false;
+    private OverlayTile targetTile;
 
-    public void Initialize(List<Vector2Int> patrolWaypoints, float speed)
+    private void Start()
     {
-        waypoints = patrolWaypoints;
-        patrolSpeed = speed;
         characterInfo = GetComponent<CharacterInfo>();
-        pathFinder = new PathFinder();
-        
-        // AUTO-PLACE ENEMY ON FIRST WAYPOINT IF NOT ALREADY PLACED
-        AutoPlaceEnemy();
+        StartCoroutine(WaitForMapThenStart());
     }
 
-    // NEW METHOD: Auto-place enemy on first waypoint
-    private void AutoPlaceEnemy()
+    private IEnumerator WaitForMapThenStart()
     {
-        if (characterInfo.standingOnTile == null && waypoints != null && waypoints.Count > 0)
+        // Wait for MapManager to be ready
+        while (MapManager.Instance == null || MapManager.Instance.map == null)
         {
-            Vector2Int spawnCoord = waypoints[0];
-            if (MapManager.Instance != null && MapManager.Instance.map.ContainsKey(spawnCoord))
-            {
-                OverlayTile spawnTile = MapManager.Instance.map[spawnCoord];
-                PositionCharacterOnTile(spawnTile);
-                Debug.Log($"Enemy auto-placed at grid position: {spawnCoord}");
-            }
-            else
-            {
-                Debug.LogWarning($"Cannot auto-place enemy: No tile found at {spawnCoord}");
-            }
+            yield return null;
         }
-    }
 
-    // NEW METHOD: Position character on tile
-    private void PositionCharacterOnTile(OverlayTile tile)
-    {
-        if (characterInfo == null) return;
+        if (showDebug) Debug.Log("Map ready! Starting patrol...");
         
-        // Position the enemy on the tile (slightly offset for visibility)
-        transform.position = new Vector3(
-            tile.transform.position.x,
-            tile.transform.position.y + 0.0001f,
-            tile.transform.position.z
-        );
-        
-        // Set sorting order to match the tile
-        SpriteRenderer enemyRenderer = GetComponent<SpriteRenderer>();
-        if (enemyRenderer != null)
+        // Auto-place on first waypoint if not placed
+        if (characterInfo.standingOnTile == null && waypoints.Count > 0)
         {
-            enemyRenderer.sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            AutoPlaceOnFirstWaypoint();
         }
-        
-        // Update character info
-        characterInfo.standingOnTile = tile;
-    }
 
-    public void StartPatrol()
-    {
-        if (waypoints == null || waypoints.Count == 0)
+        // Start patrolling
+        if (waypoints.Count > 1)
         {
-            Debug.LogWarning("No patrol waypoints defined for " + gameObject.name);
-            return;
-        }
-        
-        // Ensure enemy is placed before starting patrol
-        if (characterInfo.standingOnTile == null)
-        {
-            AutoPlaceEnemy();
-        }
-        
-        isPatrolling = true;
-        currentWaypointIndex = 0;
-        CalculatePatrolPath();
-    }
-
-    public void StopPatrol()
-    {
-        isPatrolling = false;
-        currentPath = null;
-    }
-
-    public void UpdatePatrol()
-    {
-        if (!isPatrolling || currentPath == null || currentPath.Count == 0)
-            return;
-
-        if (currentPathIndex < currentPath.Count)
-        {
-            MoveToNextTile();
+            MoveToNextWaypoint();
         }
         else
         {
-            // Reached current waypoint, get next one
-            GetNextWaypoint();
-            CalculatePatrolPath();
+            Debug.LogWarning("Need at least 2 waypoints for patrol");
         }
     }
 
-    public void GetNextWaypoint()
+    private void AutoPlaceOnFirstWaypoint()
     {
-        currentWaypointIndex++;
-        if (currentWaypointIndex >= waypoints.Count)
+        Vector2Int firstWaypoint = waypoints[0];
+        if (MapManager.Instance.map.ContainsKey(firstWaypoint))
         {
-            currentWaypointIndex = 0; // Loop back to start
-        }
-        
-        currentPathIndex = 0;
-    }
-
-    public void CalculatePatrolPath()
-    {
-        if (characterInfo == null || characterInfo.standingOnTile == null)
-        {
-            Debug.LogWarning("Cannot calculate path: Character not placed on tile");
-            return;
-        }
-
-        Vector2Int targetWaypoint = waypoints[currentWaypointIndex];
-        
-        if (MapManager.Instance.map.ContainsKey(targetWaypoint))
-        {
-            OverlayTile targetTile = MapManager.Instance.map[targetWaypoint];
-            currentPath = pathFinder.FindPath(characterInfo.standingOnTile, targetTile);
-            currentPathIndex = 0;
-            
-            if (currentPath.Count == 0)
-            {
-                Debug.LogWarning("No path found to waypoint: " + targetWaypoint);
-                GetNextWaypoint(); // Skip to next waypoint if no path
-            }
-            else
-            {
-                Debug.Log($"Path calculated with {currentPath.Count} tiles to waypoint {targetWaypoint}");
-            }
+            OverlayTile tile = MapManager.Instance.map[firstWaypoint];
+            transform.position = tile.transform.position;
+            characterInfo.standingOnTile = tile;
+            if (showDebug) Debug.Log($"Enemy auto-placed at {firstWaypoint}");
         }
         else
         {
-            Debug.LogWarning($"Waypoint {targetWaypoint} not found in map");
+            Debug.LogError($"Cannot place enemy: Waypoint {firstWaypoint} not found in map!");
+            // Try to find any valid tile as fallback
+            FindFallbackPosition();
         }
     }
 
-    private void MoveToNextTile()
+    private void FindFallbackPosition()
     {
-        if (currentPathIndex >= currentPath.Count)
-            return;
-
-        OverlayTile targetTile = currentPath[currentPathIndex];
-        Vector2 targetPosition = targetTile.transform.position;
-        float step = patrolSpeed * Time.deltaTime;
-        
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
-        
-        if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
+        foreach (var tile in MapManager.Instance.map.Values)
         {
-            characterInfo.standingOnTile = targetTile;
-            currentPathIndex++;
-            Debug.Log($"Enemy moved to tile {currentPathIndex}/{currentPath.Count}");
+            if (!tile.isBlocked)
+            {
+                transform.position = tile.transform.position;
+                characterInfo.standingOnTile = tile;
+                Debug.Log($"Enemy fallback-placed at {tile.gridLocation}");
+                break;
+            }
         }
     }
 
-    // Helper method to add waypoints at runtime
-    public void AddWaypoint(Vector2Int waypoint)
+    private void MoveToNextWaypoint()
     {
-        if (waypoints == null)
-            waypoints = new List<Vector2Int>();
-            
-        waypoints.Add(waypoint);
+        if (waypoints.Count < 2) return;
+
+        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+        Vector2Int targetCoord = waypoints[currentWaypointIndex];
+
+        if (MapManager.Instance.map.ContainsKey(targetCoord))
+        {
+            targetTile = MapManager.Instance.map[targetCoord];
+            isMoving = true;
+            if (showDebug) Debug.Log($"Moving to waypoint {currentWaypointIndex}: {targetCoord}");
+        }
+        else
+        {
+            Debug.LogError($"Waypoint {targetCoord} not found! Skipping...");
+            // Skip to next waypoint
+            StartCoroutine(WaitAndMoveNext());
+        }
     }
 
-    // Helper method to clear waypoints
-    public void ClearWaypoints()
+    private void Update()
     {
-        if (waypoints != null)
-            waypoints.Clear();
+        if (isMoving && targetTile != null)
+        {
+            // Simple direct movement toward target tile
+            Vector2 targetPosition = targetTile.transform.position;
+            float step = moveSpeed * Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
+
+            // Check if reached target
+            if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
+            {
+                transform.position = targetPosition;
+                characterInfo.standingOnTile = targetTile;
+                isMoving = false;
+                if (showDebug) Debug.Log($"Reached waypoint {currentWaypointIndex}");
+
+                // Wait, then move to next waypoint
+                StartCoroutine(WaitAndMoveNext());
+            }
+        }
+    }
+
+    private IEnumerator WaitAndMoveNext()
+    {
+        yield return new WaitForSeconds(waitTimeAtWaypoint);
+        MoveToNextWaypoint();
+    }
+
+    [ContextMenu("Add Current Position as Waypoint")]
+    private void AddCurrentPositionAsWaypoint()
+    {
+        if (characterInfo != null && characterInfo.standingOnTile != null)
+        {
+            Vector2Int currentCoord = new Vector2Int(
+                characterInfo.standingOnTile.gridLocation.x,
+                characterInfo.standingOnTile.gridLocation.y
+            );
+            waypoints.Add(currentCoord);
+            Debug.Log($"Added waypoint: {currentCoord}");
+        }
+    }
+
+    [ContextMenu("Print Current Position")]
+    private void PrintCurrentPosition()
+    {
+        if (characterInfo != null && characterInfo.standingOnTile != null)
+        {
+            Debug.Log($"Current position: {characterInfo.standingOnTile.gridLocation}");
+        }
+        else
+        {
+            Debug.Log("Not on a tile or character info missing");
+        }
     }
 }
