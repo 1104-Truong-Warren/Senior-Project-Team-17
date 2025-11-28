@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
-public class NewGrid : MonoBehaviour
+public class NewGrid<TGridObject>
 {
     private int width;
     private int height;
-    private int[,] gridArray;
+    private TGridObject[,] gridArray;
     private float cellSize;
     private Vector3 originPosition;
     private TextMesh[,] debugTextArray;
@@ -19,7 +19,7 @@ public class NewGrid : MonoBehaviour
         this.cellSize = cellSize;
         this.originPosition = originPosition;
 
-        gridArray = new int[width, height];
+        gridArray = new TGridObject[width, height];
         debugTextArray = new TextMesh[width, height];
 
         for(int x = 0; x < gridArray.GetLength(0); x++)
@@ -34,10 +34,25 @@ public class NewGrid : MonoBehaviour
         Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height),  Color.white, 100f);
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height),  Color.white, 100f);
 
-        SetValue(2, 1, 0);
+        //SetValue(2, 1, 0);
     }
 
-    private Vector3 GetWorldPosition(int x, int y)
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
+    }
+
+    public float GetCellSize()
+    {
+        return cellSize;
+    }
+
+    public Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(x, y) * cellSize + originPosition;
     }
@@ -49,7 +64,7 @@ public class NewGrid : MonoBehaviour
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
     }
 
-    public void SetValue(int x, int y, int value)
+    public void SetValue(int x, int y, TGridObject value)
     {
         if(x >= 0 && y >= 0 && x < width && y < height)
         {
@@ -58,14 +73,14 @@ public class NewGrid : MonoBehaviour
         } 
     }
 
-    public void SetValue(Vector3 worldPosition, int value)
+    public void SetValue(Vector3 worldPosition, TGridObject value)
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
         SetValue(x, y, value);
     }
 
-    public int GetValue(int x, int y)
+    public TGridObject GetValue(int x, int y)
     {
         if(x >= 0 && y >= 0 && x < width && y < height)
         {
@@ -73,14 +88,16 @@ public class NewGrid : MonoBehaviour
         }
         else
         {
-            return 0;
+            return default(TGridObject);
         }
     }
 
-    public int GetValue(Vector3 worldPosition)
+    public TGridObject GetValue(Vector3 worldPosition)
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
         return GetValue(x, y);
     }
+
+
 }
