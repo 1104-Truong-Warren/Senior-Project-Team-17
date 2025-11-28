@@ -21,21 +21,32 @@ public class NewGrid<TGridObject>
         this.originPosition = originPosition;
 
         gridArray = new TGridObject[width, height];
-        debugTextArray = new TextMesh[width, height];
 
         for(int x = 0; x < gridArray.GetLength(0); x++)
         {
             for(int y = 0; y < gridArray.GetLength(1); y++)
             {
-                debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f , 10, Color.white, TextAnchor.MiddleCenter);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y),  Color.white, 100f);
+                gridArray[x, y] = createGridObject(this, x, y);
             }
         }
-        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height),  Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height),  Color.white, 100f);
 
-        //SetValue(2, 1, 0);
+        bool showDebug = true;
+        if(showDebug)
+        {
+            TextMesh[,] debugTextArray = new TextMesh[width, height];
+
+            for(int x = 0; x < gridArray.GetLength(0); x++)
+            {
+                for(int y = 0; y < gridArray.GetLength(1); y++)
+                {
+                    debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f , 10, Color.white, TextAnchor.MiddleCenter);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y),  Color.white, 100f);
+                }
+            }
+            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height),  Color.white, 100f);
+            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height),  Color.white, 100f);
+        }
     }
 
     public int GetWidth()
@@ -59,7 +70,7 @@ public class NewGrid<TGridObject>
     }
 
     // This function converts world position to grid position
-    private void GetXY(Vector3 worldPosition, out int x, out int y)
+    public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
