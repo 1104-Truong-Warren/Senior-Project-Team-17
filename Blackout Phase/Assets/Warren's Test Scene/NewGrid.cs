@@ -111,5 +111,17 @@ public class NewGrid<TGridObject>
         return GetValue(x, y);
     }
 
+    public void TriggerGridObjectChanged(int x, int y)
+    {
+        if (x >= 0 && y >= 0 && x < width && y < height)
+        {
+            // Update the debug text display
+            if (debugTextArray != null && debugTextArray[x, y] != null)
+            {
+                debugTextArray[x, y].text = gridArray[x, y].ToString();
+            }
+        }
+    }
+
 
 }
