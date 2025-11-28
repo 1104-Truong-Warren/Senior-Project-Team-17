@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
+using System;
 
 public class NewGrid<TGridObject>
 {
@@ -12,7 +13,7 @@ public class NewGrid<TGridObject>
     private Vector3 originPosition;
     private TextMesh[,] debugTextArray;
 
-    public NewGrid(int width, int height, float cellSize, Vector3 originPosition)
+    public NewGrid(int width, int height, float cellSize, Vector3 originPosition, Func<NewGrid<TGridObject>, int, int, TGridObject> createGridObject)
     {
         this.width = width;
         this.height = height;
