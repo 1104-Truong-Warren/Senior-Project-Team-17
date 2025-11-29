@@ -82,13 +82,14 @@ public class Testing : MonoBehaviour
 {
     private Pathfinding pathfinding;
     private CharacterMovement character;
-
     [SerializeField] private GameObject characterPrefab;
+
+    // Store which cells are black (blocked)
+    private HashSet<Vector2Int> blackCells = new HashSet<Vector2Int>();
 
     private void Start()
     {
         pathfinding = new Pathfinding(10, 10);
-        
         CreateCharacter();
     }
 
@@ -102,21 +103,11 @@ public class Testing : MonoBehaviour
             if (character != null)
             {
                 character.SetPathfinding(pathfinding);
-                
-                // Positions character at grid center of first cell
                 Vector3 startPos = pathfinding.GetGrid().GetWorldPosition(0, 0);
                 float cellSize = pathfinding.GetGrid().GetCellSize();
                 startPos += new Vector3(cellSize * 0.5f, cellSize * 0.5f, 0);
                 characterObj.transform.position = startPos;
             }
-            else
-            {
-                Debug.LogError("Character prefab missing CharacterMovement component!");
-            }
-        }
-        else
-        {
-            Debug.LogError("Character Prefab not assigned in Inspector!");
         }
     }
 
@@ -128,21 +119,6 @@ public class Testing : MonoBehaviour
             {
                 character.SetMoveToMousePosition();
             }
-            else
-            {
-                Debug.LogWarning("Character reference is null!");
-                CreateCharacter();
-            }
-            
-            if (character != null)
-            {
-                Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
-                pathfinding.GetGrid().GetXY(mouseWorldPosition, out int targetX, out int targetY);
-                pathfinding.GetGrid().GetXY(character.transform.position, out int startX, out int startY);
-                List<PathNode> path = pathfinding.FindPath(startX, startY, targetX, targetY);
-                
-                VisualizePath(path);
-            }
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -150,27 +126,41 @@ public class Testing : MonoBehaviour
             Vector3 mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
             pathfinding.GetGrid().GetXY(mouseWorldPosition, out int x, out int y);
             PathNode node = pathfinding.GetNode(x, y);
+            
             if (node != null)
             {
+                // Toggle walkable state
                 node.SetIsWalkable(!node.isWalkable);
+                
+                // Toggle black cell visual
+                Vector2Int cellPos = new Vector2Int(x, y);
+                if (blackCells.Contains(cellPos))
+                {
+                    blackCells.Remove(cellPos); // Remove from black cells
+                }
+                else
+                {
+                    blackCells.Add(cellPos); // Add to black cells
+                }
             }
         }
     }
 
-    private void VisualizePath(List<PathNode> path)
+    // Draw black cells
+    private void OnDrawGizmos()
     {
-        if (path != null)
+        if (pathfinding == null) return;
+
+        NewGrid<PathNode> grid = pathfinding.GetGrid();
+        float cellSize = grid.GetCellSize();
+
+        // Draw black cells
+        Gizmos.color = Color.black;
+        foreach (Vector2Int cellPos in blackCells)
         {
-            for (int i = 0; i < path.Count - 1; i++)
-            {
-                Vector3 startPos = pathfinding.GetGrid().GetWorldPosition(path[i].x, path[i].y);
-                Vector3 endPos = pathfinding.GetGrid().GetWorldPosition(path[i+1].x, path[i+1].y);
-                
-                float cellSize = pathfinding.GetGrid().GetCellSize();
-                Vector3 centerOffset = new Vector3(cellSize * 0.5f, cellSize * 0.5f);
-                
-                Debug.DrawLine(startPos + centerOffset, endPos + centerOffset, Color.green, 5f);
-            }
+            Vector3 center = grid.GetWorldPosition(cellPos.x, cellPos.y) + new Vector3(cellSize * 0.5f, cellSize * 0.5f, 0);
+            Vector3 size = new Vector3(cellSize, cellSize, 0.1f);
+            Gizmos.DrawCube(center, size);
         }
     }
 
