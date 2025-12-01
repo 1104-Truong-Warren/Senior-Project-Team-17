@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Ground
+  - OverlayTile
+  - CursorLayer
   - 
   - 
   - 
@@ -41,3 +41,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Water
+    uniqueID: 428403053
+    locked: 0
+  - name: Ground
+    uniqueID: 2452218551
+    locked: 0
+  - name: Effects
+    uniqueID: 3335590207
+    locked: 0
+  - name: Overlay
+    uniqueID: 1716906885
+    locked: 0
+  - name: Character
+    uniqueID: 1583326769
+    locked: 0
+  - name: Cursor
+    uniqueID: 4041073487
+    locked: 0
+  m_RenderingLayers:
+  - Default

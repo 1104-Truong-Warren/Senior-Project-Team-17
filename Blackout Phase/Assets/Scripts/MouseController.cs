@@ -27,7 +27,7 @@ public class MouseController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    private void LateUpdate()
     {
         //Debug.Log($"Cursor Z: {cursor.transform.position.z}");
 
@@ -54,6 +54,10 @@ public class MouseController : MonoBehaviour
 
                 OverlayTile tile = hit.Value.collider.gameObject.GetComponent<OverlayTile>();
 
+                // get out if tile not found
+                if (tile == null)
+                    return;
+
                 cursor.transform.position = tile.transform.position; // set cursor location to the overlay
 
                 cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
@@ -75,7 +79,7 @@ public class MouseController : MonoBehaviour
 
                     MapManager.Instance.ResetAllTiles(); // before showing tiles reset all
 
-                    tile.ShowTile();
+                    tile.ShowPlayerTile();
 
                     previouslySelectedTile = tile; // shows current tile and save it
 
@@ -91,17 +95,23 @@ public class MouseController : MonoBehaviour
 
                         //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
 
-                        characterInfo.standingOnTile = tile;
+                        characterInfo.PlayerSetTile(tile);
                     }
                     else
                     {
-                        path = pathFinder.FindPath(characterInfo.standingOnTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>());
+                        if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) // if tile has enemy/player/blocked get out
+                        {
+                            Debug.Log("Tile is being used!"); // debug
+
+                            return;
+                        }
+                        path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>());
 
                         //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
 
                         //Show the path tiles (highlight)
                         foreach (var t in path)
-                            t.ShowTile();
+                            t.ShowPlayerTile();
                     }
                 }
                 //overlayTile.GetComponent<SpriteRenderer>().sortingOrder; // also matches the sprite render
@@ -149,15 +159,31 @@ public class MouseController : MonoBehaviour
 
     private void PositionCharacterOnLine(OverlayTile tile)
     {
-        // offset the y-axis a little bit
-        characterInfo.transform.position = new Vector3(tile.transform.position.x,
-            tile.transform.position.y + 0.0001f,
-            tile.transform.position.z
-        );  // store the postion
+        if (characterInfo == null) // characterInfo not found go through the characterPrefab and use that info
+        {
+            characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo>();
+
+            PositionCharacterOnLine(tile); // current position
+
+            //characterInfo.PlayerSetTile(tile); // update the tile 
+
+            return;
+        }
+
+        else if (characterInfo.CurrentTile != null) // reset the old tile, reset flag
+            characterInfo.CurrentTile.hasPlayer = false;
+
+        tile.hasPlayer = true; // triggers the flag has player
+
+        characterInfo.PlayerSetTile(tile); // update player's tile info
+
+            // offset the y-axis a little bit
+            characterInfo.transform.position = new Vector3(tile.transform.position.x,
+                tile.transform.position.y + 0.0001f,
+                tile.transform.position.z
+            );  // store the postion
 
         characterInfo.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
-
-        characterInfo.standingOnTile = tile; // save it to the character tile
     }
 
     public RaycastHit2D? GetFocusedOnTile()

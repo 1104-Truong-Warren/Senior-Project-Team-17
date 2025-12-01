@@ -69,7 +69,7 @@ public class PathFinder
         {
             finishedList.Add(currentTile);
 
-            currentTile.ShowTile(); // shows the tile 
+            currentTile.ShowPlayerTile(); // shows the tile 
 
             currentTile = currentTile.previousTile;
         }

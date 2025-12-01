@@ -2,16 +2,22 @@ using UnityEngine;
 
 public class OverlayTile : MonoBehaviour
 {
-    public int G;
-    public int H;
+    public int G; // x
+    public int H; // y
 
-    public int F { get { return G +  H; } } // returns the tile point
+    public int F { get { return G + H; } } // returns the tile point
 
     public bool isBlocked; // flag to see if tile is blocked
 
     public OverlayTile previousTile; // store the last tile
 
-    public Vector3Int gridLocation; 
+    public Vector3Int gridLocation;  // locatin of the grid
+
+    public bool hasPlayer; // has player flag?
+    public bool hasEnemy;  // has enmey flag?
+    public bool debugSelected = false; // debug flag
+
+    public bool Occupied => hasEnemy || hasPlayer; // either condition is true the tile is being used
 
     /*
     public void Start()
@@ -29,12 +35,18 @@ public class OverlayTile : MonoBehaviour
             HideTile(); // calls the hide in the beginning to make it transparent
         }*/
     }
- 
+
     // show tile
-    public void ShowTile()
+    public void ShowEnemyTile()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); // get the sprite render change display color
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 0.85f); // get the sprite render change display color, enemy red
     }
+
+    public void ShowPlayerTile()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(0f, 0.7f, 1f, 0.85f); // get the sprite render change display color, player blue
+    }
+
 
     // hide it changing color
     public void HideTile()
@@ -47,9 +59,28 @@ public class OverlayTile : MonoBehaviour
     {
         G = 0;
         H = 0;
-        
+
         previousTile = null;
 
         HideTile();
     }
 }
+    // us draw Gizmos to display the x,y on the editor before running the game
+    //#if UNITY_EDITOR
+
+    //private void OnDrawGizmos()
+    //{
+    //    if (debugSelected) // if debug is true
+    //    {
+    //        //Gizmos.color = Color.red; // shows Red
+
+    //        //Gizmos.DrawWireCube(transform.position, new Vector3(1, 0.1f, 0.5f)); // draw a cube on the position
+
+    //        UnityEditor.Handles.Label(transform.position + new Vector3(0, 0.15f, 0),
+    //        $"({gridLocation.x}, {gridLocation.y})"); // checks the position of x&y while editing using Gizmos
+
+    //    }
+    //}
+//#endif
+
+
