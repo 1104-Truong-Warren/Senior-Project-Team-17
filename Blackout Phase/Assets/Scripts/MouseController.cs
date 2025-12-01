@@ -19,6 +19,10 @@ public class MouseController : MonoBehaviour
 
     private List<OverlayTile> path;
 
+
+    // Ellison - Added bool to enable and disable movement
+    public bool movementEnabled = false;
+
     private void Start()
     {
         pathFinder = new PathFinder(); // create it
@@ -29,102 +33,109 @@ public class MouseController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //Debug.Log($"Cursor Z: {cursor.transform.position.z}");
-
-        //Debug.Log($"Camera Z: {Camera.main.transform.position.z}");
-
-        //RaycastHit2D? hit = GetFocusedOnTile();
-
-        var hit = GetFocusedOnTile(); // reference
-
-        // found something then save it to a gameobj
-        if (hit.HasValue)
+        // Ellison - moved everything into movement enabled check
+        if (movementEnabled)
         {
 
-            //GameObject overlayTile = hit.Value.collider.gameObject;
+            //Debug.Log($"Cursor Z: {cursor.transform.position.z}");
 
-            //Debug.Log($"Cursor moving to {overlayTile.transform.position}");
+            //Debug.Log($"Camera Z: {Camera.main.transform.position.z}");
 
-            if (cursor != null)
-            //if (Input.GetMouseButtonDown(0))
+            //RaycastHit2D? hit = GetFocusedOnTile();
+
+            var hit = GetFocusedOnTile(); // reference
+
+            // found something then save it to a gameobj
+            if (hit.HasValue)
             {
-                //Vector3 targetPosition = overlayTile.transform.position;
 
-                //targetPosition.z -= 0.01f; // tiny offsets to z
+                //GameObject overlayTile = hit.Value.collider.gameObject;
 
-                OverlayTile tile = hit.Value.collider.gameObject.GetComponent<OverlayTile>();
+                //Debug.Log($"Cursor moving to {overlayTile.transform.position}");
 
-                cursor.transform.position = tile.transform.position; // set cursor location to the overlay
-
-                cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
-
-                if (Input.GetMouseButtonDown(0))
+                if (cursor != null)
+                //if (Input.GetMouseButtonDown(0))
                 {
-                    //tile.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); // changes the selected color
+                    //Vector3 targetPosition = overlayTile.transform.position;
 
-                    //tile.ShowTile(); // get the color
+                    //targetPosition.z -= 0.01f; // tiny offsets to z
 
-                    // Clear previous path highlight
-                    foreach (var t in path)
-                        t.HideTile();
+                    OverlayTile tile = hit.Value.collider.gameObject.GetComponent<OverlayTile>();
 
-                    path.Clear();
+                    cursor.transform.position = tile.transform.position; // set cursor location to the overlay
 
-                    if (previouslySelectedTile != null)  // hides the previous selected tiles
-                        previouslySelectedTile.HideTile();
 
-                    MapManager.Instance.ResetAllTiles(); // before showing tiles reset all
+                    // Ellison - Changed to make cursor render below the pop up menu
+                    cursor.GetComponent<SpriteRenderer>().sortingOrder = 9;
 
-                    tile.ShowTile();
-
-                    previouslySelectedTile = tile; // shows current tile and save it
-
-                    //Debug.Log($"Clicked on tile: {overlayTile.name}");
-
-                    if (characterInfo == null)
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        //characterInfo = new CharacterInfo(); // declare it again 
+                        //tile.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); // changes the selected color
 
-                        characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo>(); // get the prefab assign
+                        //tile.ShowTile(); // get the color
 
-                        PositionCharacterOnLine(tile);
-
-                        //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
-
-                        characterInfo.standingOnTile = tile;
-                    }
-                    else
-                    {
-                        path = pathFinder.FindPath(characterInfo.standingOnTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>());
-
-                        //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
-
-                        //Show the path tiles (highlight)
+                        // Clear previous path highlight
                         foreach (var t in path)
-                            t.ShowTile();
+                            t.HideTile();
+
+                        path.Clear();
+
+                        if (previouslySelectedTile != null)  // hides the previous selected tiles
+                            previouslySelectedTile.HideTile();
+
+                        MapManager.Instance.ResetAllTiles(); // before showing tiles reset all
+
+                        tile.ShowTile();
+
+                        previouslySelectedTile = tile; // shows current tile and save it
+
+                        //Debug.Log($"Clicked on tile: {overlayTile.name}");
+
+                        if (characterInfo == null)
+                        {
+                            //characterInfo = new CharacterInfo(); // declare it again 
+
+                            characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo>(); // get the prefab assign
+
+                            PositionCharacterOnLine(tile);
+
+                            //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
+
+                            characterInfo.standingOnTile = tile;
+                        }
+                        else
+                        {
+                            path = pathFinder.FindPath(characterInfo.standingOnTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>());
+
+                            //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
+
+                            //Show the path tiles (highlight)
+                            foreach (var t in path)
+                                t.ShowTile();
+                        }
                     }
+                    //overlayTile.GetComponent<SpriteRenderer>().sortingOrder; // also matches the sprite render
+
+                    //cursor.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+                    //cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
+                    //cursor.GetComponent<SpriteRenderer>().color = Color.red; // bright color to check visibility
+
                 }
-                //overlayTile.GetComponent<SpriteRenderer>().sortingOrder; // also matches the sprite render
 
-                //cursor.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
-                //cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
-                //cursor.GetComponent<SpriteRenderer>().color = Color.red; // bright color to check visibility
+                //transform.position = overlayTile.transform.position; // position = overlay position
 
+                //gameObject.GetComponent<SpriteRenderer>().sortingLayerID = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
             }
 
-            //transform.position = overlayTile.transform.position; // position = overlay position
-
-            //gameObject.GetComponent<SpriteRenderer>().sortingLayerID = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
-        }
-
-        if (path.Count > 0)
-        {
-            MoveAlongPath();
-        }
-        //else
-        //{
+            if (path.Count > 0)
+            {
+                MoveAlongPath();
+            }
+            //else
+            //{
             //Debug.Log("No hit");
-        //}
+            //}
+        }
     }
 
     private void MoveAlongPath()
@@ -177,5 +188,10 @@ public class MouseController : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void ToggleMovement()
+    {
+        movementEnabled = !movementEnabled;
     }
 }
