@@ -65,6 +65,12 @@ public class EnemyController : MonoBehaviour
             {
                 case "patrol":
                     enemies[i].Patrol();
+                    enemies[i].UpdateVision();
+                    playerSpotted = enemies[i].CanSeePlayer();
+                    if (playerSpotted)
+                    {
+                        state = "alert";
+                    }
                     break;
                 case "alert":
                     //enemies[i].EngagePlayer();

@@ -32,6 +32,10 @@ public class BasicEnemy : MonoBehaviour
 
     public Rifle weapon;
 
+
+    //preventing coroutines from overlapping and blowing up the project
+    bool isMoving = false;
+
     void Start()
     {
         //setting the size of the visible tiles array to be equal to vision range
@@ -143,31 +147,56 @@ public class BasicEnemy : MonoBehaviour
         return false;
     }
 
-    IEnumerator MoveToTileDelay()
-    {
-        yield return new WaitForSeconds(1f);
-    }
 
-    //this function moves the enemy to the next tile in the pathfinding stack
+
+    //this function moves the enemy to the specified tile, updating position and direction facing accordingly
+    //important to note that vision does not get updated until AFTER the pathfinding is complete
+    //we would probably want to change this later, but for now it works
     public void MoveToTile(Tile destination)
     {
+
+        if (currentX + 1 == destination.x)
+        {
+            directionFacing = 'E';
+        } else if (currentX - 1 == destination.x)
+        {
+            directionFacing = 'W';
+        } else if (currentY + 1 == destination.y)
+        {
+            directionFacing = 'N';
+        } else if (currentY - 1 == destination.y)
+        {
+            directionFacing = 'S';
+        }
+
         //updating current position
         currentX = destination.x;
         currentY = destination.y;
-        //updating the enemy's world position
-        
+
+
+        //updating the enemy's world position, using z = -1 to ensure it appears above the grid tiles
         Vector3 newPosition = new Vector3(currentX, currentY, -1);
         transform.position = newPosition;
 
-        //delays between movements for visual clarity by half a second
         
-        //wait time between movements, can be adjusted for speed
+
     }
 
     public void Patrol()
     {
-
         
+        if (!isMoving)
+        {
+            StartCoroutine(PatrolCoroutine());
+        }
+
+    }
+
+    private IEnumerator PatrolCoroutine()
+    {
+
+        isMoving = true;
+
         Tile destination = patrolLocations[currentPatrolIndex];
         Debug.Log("Enemy moving to patrol location: " + destination.x + ", " + destination.y);
         //moving to the next patrol location, sets to 0 if at end of array
@@ -176,8 +205,8 @@ public class BasicEnemy : MonoBehaviour
         {
             currentPatrolIndex = 0;
         }
-        
-        grid.EnemyPathToDestination(currentX,currentY, destination.x, destination.y, movementBudget);
+
+        grid.EnemyPathToDestination(currentX, currentY, destination.x, destination.y, movementBudget);
 
         Stack<Tile> pathReversed = new Stack<Tile>(grid.path);
 
@@ -195,8 +224,17 @@ public class BasicEnemy : MonoBehaviour
             Tile nextTile = path.Pop();
             Debug.Log("Enemy moving to tile: " + nextTile.x + ", " + nextTile.y);
             MoveToTile(nextTile);
-            MoveToTileDelay();
+
+
+            //enforces a half second delay between movements for animation purposes
+            yield return new WaitForSeconds(0.5f);
+
         }
+
+        isMoving = false;
     }
+
+    
+
 
 }
