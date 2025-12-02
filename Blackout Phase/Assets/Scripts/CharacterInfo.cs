@@ -27,7 +27,13 @@ public class CharacterInfo : MonoBehaviour
     }
     public void PlayerSetTile(OverlayTile tile)
     {
+        // if current tile is not null reset the tile 
+        if (CurrentTile != null)
+            CurrentTile.hasPlayer = false; 
+
         standingOnTile = tile; // instead of directly accessing use this function
+
+        CurrentTile.hasPlayer = true; // after the new tile is set hasPlayer = T
     }
 
     public void PlayerTakeDamage(int dmg)

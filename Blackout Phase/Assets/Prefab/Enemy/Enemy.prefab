@@ -153,6 +153,7 @@ MonoBehaviour:
   Health: 5
   AttackRange: 1
   enemyDamage: 3
+  enemyDetectionRange: 3
   MoveRange: 3
   Tile: {fileID: 0}
 --- !u!114 &6399035647557708820

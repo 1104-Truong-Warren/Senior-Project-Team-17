@@ -7,6 +7,7 @@ public class EnemyInfo : MonoBehaviour
     [SerializeField] private int Health; // enmey's health
     [SerializeField] private int AttackRange; // enemy's attk range
     [SerializeField] private int enemyDamage; // how much damage enemy does
+    [SerializeField] private int enemyDetectionRange; // how far is the enemy detection
     [SerializeField] private int MoveRange; // enemy's moveRange
 
 
@@ -19,6 +20,8 @@ public class EnemyInfo : MonoBehaviour
     public int attackRange => AttackRange; // attack range
 
     public int EnemyDmg => enemyDamage; // get the enemy's dmg
+
+    public int EnemyDetect => enemyDetectionRange; // get the enemy's detection range
 
     public int health => Health; // hit points
 
