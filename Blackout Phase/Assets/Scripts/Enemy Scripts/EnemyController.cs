@@ -35,6 +35,7 @@ public class EnemyController : MonoBehaviour
     //state is updated before each enemy's turn
     public void TakeTurn()
     {
+        Debug.Log("Enemy Controller Taking Turn");
         bool playerSpotted = false;
 
         for (int i = 0; i < enemyCount; i++)

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 //working with the assumption that enemies should have an update method for
 //animations, movement is handled by the enemy controller
@@ -43,13 +44,14 @@ public class BasicEnemy : MonoBehaviour
 
         directionFacing = 'N'; //default to north
 
-        Debug.Log(grid.grid.Length);
+
 
         //TEST CODE HERE, SETTING A BASIC PATROL ROUTE
-        //patrolLocations = new Tile[2];
-        //patrolLocations[0] = grid.grid[currentX, currentY];
-        //patrolLocations[1] = grid.grid[currentX + 2, currentY];
+        patrolLocations = new Tile[2];
+        patrolLocations[0] = grid.grid[currentX + 2, currentY];
+        patrolLocations[1] = grid.grid[currentX, currentY];
         
+
 
 
     }
@@ -141,6 +143,10 @@ public class BasicEnemy : MonoBehaviour
         return false;
     }
 
+    IEnumerator MoveToTileDelay()
+    {
+        yield return new WaitForSeconds(1f);
+    }
 
     //this function moves the enemy to the next tile in the pathfinding stack
     public void MoveToTile(Tile destination)
@@ -150,8 +156,12 @@ public class BasicEnemy : MonoBehaviour
         currentY = destination.y;
         //updating the enemy's world position
         
-        Vector2 newPosition = new Vector2(currentX, currentY);
+        Vector3 newPosition = new Vector3(currentX, currentY, -1);
         transform.position = newPosition;
+
+        //delays between movements for visual clarity by half a second
+        
+        //wait time between movements, can be adjusted for speed
     }
 
     public void Patrol()
@@ -159,23 +169,33 @@ public class BasicEnemy : MonoBehaviour
 
         
         Tile destination = patrolLocations[currentPatrolIndex];
+        Debug.Log("Enemy moving to patrol location: " + destination.x + ", " + destination.y);
         //moving to the next patrol location, sets to 0 if at end of array
         currentPatrolIndex = currentPatrolIndex + 1;
         if (currentPatrolIndex >= patrolLocations.Length)
         {
             currentPatrolIndex = 0;
         }
-
+        
         grid.EnemyPathToDestination(currentX,currentY, destination.x, destination.y, movementBudget);
 
-        Stack<Tile> path = new(grid.path);
+        Stack<Tile> pathReversed = new Stack<Tile>(grid.path);
+
+        //i didnt consider that copying the stack will necessarily reverse it
+        //this terribleness fixes that, should probably optimize later
+        Stack<Tile> path = new Stack<Tile>(pathReversed);
+
+
 
         path.Pop(); //removing current tile from stack
 
         while (path.Count > 0)
         {
+            Debug.Log("Enemy path length: " + path.Count);
             Tile nextTile = path.Pop();
+            Debug.Log("Enemy moving to tile: " + nextTile.x + ", " + nextTile.y);
             MoveToTile(nextTile);
+            MoveToTileDelay();
         }
     }
 

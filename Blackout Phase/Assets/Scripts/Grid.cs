@@ -138,6 +138,12 @@ public class Grid : MonoBehaviour
     public bool GetPlayerPathToDestination(int startx, int starty, int endx, int endy, int budgetRemaining)
     {
 
+        //reject invalid starting coordinates early
+        if (startx < 0 || startx >= width || starty < 0 || starty >= height || budgetRemaining < 0)
+        {
+            return false;
+        }
+
         if (startx == endx && starty == endy)
         {
             path.Push(grid[startx, starty]);
@@ -150,12 +156,20 @@ public class Grid : MonoBehaviour
         //path to destination
 
         //check in the same order as AccessibleTiles
-        //this will result in slow execution if the destination is down and left, but that should be
-        //ok since this is a turn-based game anyway
+        //i know this code isnt particularly fast
+        //TOO BAD!
 
 
-        if (grid[startx,starty+1].visited && (budgetRemaining -  grid[startx,starty+1].movementCost) >= 0)
+
+        //checking up
+        if (starty + 1 < height && grid[startx,starty+1].visited && (budgetRemaining -  grid[startx,starty+1].movementCost) >= 0)
         {
+
+            if (starty + 1 >= height)
+            {
+                Debug.Log("Out of bounds access at " + startx + ", " + (starty + 1));
+            }
+
             pathToDest = GetPlayerPathToDestination(startx, starty + 1, endx, endy, budgetRemaining - grid[startx, starty + 1].movementCost);
             if (pathToDest)
             {
@@ -164,8 +178,15 @@ public class Grid : MonoBehaviour
             }
         }
 
-        if (grid[startx + 1, starty].visited && (budgetRemaining - grid[startx + 1, starty].movementCost) >= 0)
+
+        //checking right
+        if (startx + 1 < width && grid[startx + 1, starty].visited && (budgetRemaining - grid[startx + 1, starty].movementCost) >= 0)
         {
+            if (startx + 1 >= width)
+            {
+                Debug.Log("Out of bounds access at " + (startx + 1) + ", " + starty);
+            }
+
             pathToDest = GetPlayerPathToDestination(startx + 1, starty, endx, endy, budgetRemaining - grid[startx + 1, starty].movementCost);
             if (pathToDest)
             {
@@ -174,8 +195,16 @@ public class Grid : MonoBehaviour
             }
         }
 
-        if (grid[startx, starty - 1].visited && (budgetRemaining - grid[startx, starty - 1].movementCost) >= 0)
+
+        //checking down
+        if (starty - 1 >= 0 && grid[startx, starty - 1].visited && (budgetRemaining - grid[startx, starty - 1].movementCost) >= 0 && starty - 1 >= 0)
         {
+
+            if (starty - 1 < 0)
+            {
+                Debug.Log("Out of bounds access at " + startx + ", " + (starty - 1));
+            }
+
             pathToDest = GetPlayerPathToDestination(startx, starty - 1, endx, endy, budgetRemaining - grid[startx, starty - 1].movementCost);
             if (pathToDest)
             {
@@ -184,8 +213,14 @@ public class Grid : MonoBehaviour
             }
         }
 
-        if (grid[startx - 1, starty].visited && (budgetRemaining - grid[startx - 1, starty].movementCost) >= 0)
+        if (startx - 1 >= 0 && grid[startx - 1, starty].visited && (budgetRemaining - grid[startx - 1, starty].movementCost) >= 0 && startx - 1 >= 0)
         {
+            if (startx - 1 < 0)
+            {
+                Debug.Log("Out of bounds access at " + (startx - 1) + ", " + starty);
+            }
+
+
             pathToDest = GetPlayerPathToDestination(startx - 1, starty, endx, endy, budgetRemaining - grid[startx - 1, starty].movementCost);
             if (pathToDest)
             {
@@ -199,6 +234,7 @@ public class Grid : MonoBehaviour
 
     public void EnemyPathToDestination(int startx, int starty, int endx, int endy, int budgetRemaining)
     {
+        AccessibleTiles(startx, starty, budgetRemaining);
         if (grid[endx, endy].visited == true)
         {
 

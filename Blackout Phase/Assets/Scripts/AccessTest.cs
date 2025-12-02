@@ -19,8 +19,8 @@ public class AccessTest : MonoBehaviour
     {
         if (isActive)
         {
-            grid.grid[2, 1].accessible = false;
-            grid.grid[5, 6].accessible = false;
+            //grid.grid[2, 1].accessible = false;
+            //grid.grid[5, 6].accessible = false;
             isActive = false;
             grid.CallAccessibleTiles(5, 5, 3);
         }
@@ -36,11 +36,14 @@ public class AccessTest : MonoBehaviour
 
         if (pathfindTest)
         {
-            grid.TestEnemyPath(5, 5, 0, 0, 3);
+            pathfindTest = false;
+            grid.CallAccessibleTiles(0, 0, 3);
+            grid.TestEnemyPath(0, 0, 2, 0, 3);
         }
 
         if (testEnemyPatrol)
         {
+            //Debug.Log(grid.path.Count);
             testEnemyPatrol = false;
             enemyController.TakeTurn();
 
