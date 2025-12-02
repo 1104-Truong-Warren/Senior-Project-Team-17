@@ -29,6 +29,8 @@ public class MouseController : MonoBehaviour
     // Update is called once per frame
     private void LateUpdate()
     {
+        if (TurnManager.Instance.State != TurnState.PlayerAction) return; // preventing player moving before other things are setup
+
         //Debug.Log($"Cursor Z: {cursor.transform.position.z}");
 
         //Debug.Log($"Camera Z: {Camera.main.transform.position.z}");
@@ -105,7 +107,17 @@ public class MouseController : MonoBehaviour
 
                             return;
                         }
+
+                        int playerMoveteps = characterInfo.GetMoveRange(); // set the move range for player 
+
                         path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>());
+
+                        // path steps > actually movement that's not in the range
+                        if (path.Count - 1 > playerMoveteps)
+                        {
+                            Debug.Log("Out of bound! Moved Too far or Not moving!"); // debug
+                            return;
+                        }
 
                         //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
 
@@ -141,7 +153,7 @@ public class MouseController : MonoBehaviour
     {
         var step = speed * Time.deltaTime; // how fast character moves
 
-        float zIndex = path[0].transform.position.z + 0.01f;
+        float zIndex = path[0].transform.position.z + 0.01f; // z position
 
         characterInfo.transform.position = Vector2.MoveTowards(characterInfo.transform.position, // move to
             path[0].transform.position, step);
@@ -149,11 +161,20 @@ public class MouseController : MonoBehaviour
         characterInfo.transform.position = new Vector3(characterInfo.transform.position.x, // from
             characterInfo.transform.position.y, zIndex);
 
+        // movement finished
         if (Vector2.Distance(characterInfo.transform.position, path[0].transform.position) < 0.00001f)
         {
             PositionCharacterOnLine(path[0]); // calculate postition on line
 
             path.RemoveAt(0); // remove after
+
+            // finishes moving Turn starts
+            if (path.Count == 0)
+            {
+                //haracterInfo.ApUsed(1); // used 1 AP after moved
+
+                TurnManager.Instance.PlayerSpendAP(1); // checks for the AP each turn, 1 AP per movement
+            }
         }
     }
 
