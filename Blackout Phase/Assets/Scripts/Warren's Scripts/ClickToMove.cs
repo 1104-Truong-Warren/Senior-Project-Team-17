@@ -13,9 +13,9 @@ public class ClickToMove : MonoBehaviour
     // Reference to Unity's built-in component that hands the position, rotation, and scale (of the player)
     public Transform player;
    
-    // Reference to Unity's built-in component that stores x and y values, it also starts the player at grid position (5,5)
+    // Reference to Unity's built-in component that stores x and y values, it also starts the player at grid position (x,y)
     // Resource: https://docs.unity3d.com/ScriptReference/Vector2Int.html
-    private Vector2Int playerGridPos = new Vector2Int(5, 5);
+    private Vector2Int playerGridPos = new Vector2Int(1, 8);
 
 
     // Added by Ellison - to track if movement is allowed
@@ -33,10 +33,10 @@ public class ClickToMove : MonoBehaviour
 
     void Start()
     {
-        // Checks if the player object exists, then it will position the player at (5,5,-1)
+        // Checks if the player object exists, then it will position the player at x, y
         if (player != null)
         {
-            player.position = new Vector3(5, 5, -1);
+            player.position = new Vector3(1, 8, -1);
         }
     }
    
