@@ -94,16 +94,6 @@ public class TurnManager : MonoBehaviour
     // use finite state to control the turn
     public void SetTurnState(TurnState newState)
     {
-        // if player is died but the state is not in game over 
-        if (State != TurnState.GameOver && CharacterInfo.Instance.hp <= 0)
-        {
-            State = TurnState.GameOver; // change it to Game over state
-
-            Debug.Log("TurnManager: Player died => GAME OVER...."); // debug
-
-            return;
-        }
-
         Debug.Log($"TurnManger => State shift:{State} => {newState}"); // display the sate changes
 
         State = newState; // current state to a new state
@@ -138,6 +128,16 @@ public class TurnManager : MonoBehaviour
             case TurnState.GameOver: // if player died/didn't meet requirements 
                 Debug.Log("GAME OVER!");
                 break;              
+        }
+
+        // if player is died but the state is not in game over 
+        if (State != TurnState.GameOver && CharacterInfo.Instance.hp <= 0)
+        {
+            State = TurnState.GameOver; // change it to Game over state
+
+            Debug.Log("TurnManager: Player died => GAME OVER...."); // debug
+
+            return;
         }
     }
 

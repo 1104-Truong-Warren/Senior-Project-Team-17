@@ -102,3 +102,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 10
   MaxHP: 10
+  baseMoveRange: 6
