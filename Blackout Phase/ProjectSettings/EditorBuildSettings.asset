@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scene/TitleScreen.unity
     guid: 42b2affeef86845e798c04cddb96e5d1
   - enabled: 1
-    path: Assets/Scene/2D_Test_Grid.unity
+    path: Assets/Scene/Demo_pxiel_2D_Test_Grid.unity
     guid: 7a559cb171c28ee4a978cda5067aab9f
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
