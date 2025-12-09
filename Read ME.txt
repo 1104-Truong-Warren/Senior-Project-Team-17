@@ -21,7 +21,7 @@ From MouseControl, Overlay, Pathfinder, and MapManager scripts, mostly from this
 ==============================================================================================
 
 
-What we added to meet our fiontianl/non-functional requirements:
+What we added to meet our functional/non-functional requirements:
 
 ------------------------------------------------------------------------------------------------
 We build on that using Unity Discussion forums and online resources like YouTube to replicate the enemyPathfinder, enemyMovement, and enemyTileScanner. 
@@ -31,5 +31,4 @@ The EnemyAI and TurnManager are based on what I(Weijun) learned from the CS456 c
 We did encounter some failures, for example, the enemyPatrol, since back then we didn't have the other enemy scripts it relies on, the Player's pathfinder. The results were super messy and buggy.
 
 A UI for movement, inventory, game start, some UI is linked to the mouseControl functions (move controls the before you click on the tile), (Esc opens the in game menu, you can resume, quit the game)
-
 
