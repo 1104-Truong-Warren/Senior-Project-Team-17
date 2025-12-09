@@ -80,7 +80,7 @@ public class PathFinder
     }
 
     // for find the square distance
-    private int GetManhattenDistance(OverlayTile start, OverlayTile neighbour)
+    public int GetManhattenDistance(OverlayTile start, OverlayTile neighbour)
     {
         return Mathf.Abs(start.gridLocation.x - neighbour.gridLocation.x) + 
             Mathf.Abs(start.gridLocation.y - neighbour.gridLocation.y);

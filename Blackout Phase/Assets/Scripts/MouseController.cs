@@ -128,14 +128,16 @@ public class MouseController : MonoBehaviour
 
                                 int playerMoveteps = characterInfo.GetMoveRange(); // set the move range for player 
 
-                                path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>());
+                                int distance = pathFinder.GetManhattenDistance(characterInfo.CurrentTile, tile); // find the distance between our current and target tile
 
                                 // path steps > actually movement that's not in the range
-                                if (path.Count - 1 > playerMoveteps)
+                                if (distance > playerMoveteps)
                                 {
                                     Debug.Log("Out of bound! Moved Too far or Not moving!"); // debug
                                     return;
                                 }
+
+                                path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>()); // if is not out of range player can go there
 
                                 //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
 
@@ -195,7 +197,7 @@ public class MouseController : MonoBehaviour
             // finishes moving Turn starts
             if (path.Count == 0)
             {
-                //haracterInfo.ApUsed(1); // used 1 AP after moved
+                //characterInfo.ApUsed(1); // used 1 AP after moved
 
                 TurnManager.Instance.PlayerSpendAP(1); // checks for the AP each turn, 1 AP per movement
 

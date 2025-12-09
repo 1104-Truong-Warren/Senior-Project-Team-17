@@ -1,0 +1,35 @@
+Resources:
+---------------------------------------------------------------------------------------------
+
+YouTube: https://www.youtube.com/@Brackeys, https://www.youtube.com/@PandemoniumGameDev, 
+
+Unity Discussions: https://discussions.unity.com/
+
+Reddit: https://www.reddit.com/r/unity/,  https://www.reddit.com/r/gamedev/
+
+Google
+
+Found this channel on YouTube for our base Grid design: https://www.youtube.com/@lawlessgames3844
+----------------------------------------------------------------------------------------------
+
+
+What we used as the base-system :
+==============================================================================================
+
+From MouseControl, Overlay, Pathfinder, and MapManager scripts, mostly from this guy. 
+(we did modify it)
+==============================================================================================
+
+
+What we added to meet our fiontianl/non-functional requirements:
+
+------------------------------------------------------------------------------------------------
+We build on that using Unity Discussion forums and online resources like YouTube to replicate the enemyPathfinder, enemyMovement, and enemyTileScanner. 
+
+The EnemyAI and TurnManager are based on what I(Weijun) learned from the CS456 class. It's called a finite state machine, where you have limited states that either go forward or loop back to themselves. At the end, it repeats. That way, the logic is strictly controlled by each state, not messy coding practices, to prevent runtime bugs.
+
+We did encounter some failures, for example, the enemyPatrol, since back then we didn't have the other enemy scripts it relies on, the Player's pathfinder. The results were super messy and buggy.
+
+A UI for movement, inventory, game start, some UI is linked to the mouseControl functions (move controls the before you click on the tile), (Esc opens the in game menu, you can resume, quit the game)
+
+

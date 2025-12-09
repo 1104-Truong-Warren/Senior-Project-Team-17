@@ -1793,7 +1793,6 @@ GameObject:
   - component: {fileID: 1605501875}
   - component: {fileID: 1605501874}
   - component: {fileID: 1605501876}
-  - component: {fileID: 1605501877}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -1846,18 +1845,6 @@ MonoBehaviour:
   overlayTilePrefab: {fileID: 4113100507690895351, guid: 7d49ff21b561f8d4d82364c9c90aacf2, type: 3}
   overlayContainer: {fileID: 1520247900}
   groundTileMap: {fileID: 2046162400}
---- !u!114 &1605501877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605501873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92c04a60374cc5f40b2f065df3f0beee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1621470186
 PrefabInstance:
   m_ObjectHideFlags: 0
