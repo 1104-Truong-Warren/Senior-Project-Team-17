@@ -13,7 +13,7 @@ public enum EnemyState
     Attack
 }
 
-public class EnemyController : MonoBehaviour
+public class EnemyController1 : MonoBehaviour
 {
     //[SerializeField] private Transform player; // get the player object
 
@@ -316,7 +316,7 @@ public class EnemyController : MonoBehaviour
     {
         //OverlayTile playerTile = CharacterInfo.Instance.CurrentTile; // get the player's tile
 
-        CharacterInfo player = CharacterInfo.Instance; // setup the prefab character
+        CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
 
         //OverlayTile enemyTile = enemyInfo.currentTile;
 
@@ -342,7 +342,7 @@ public class EnemyController : MonoBehaviour
 
     private bool PlayerDetectRange()
     {
-        CharacterInfo player = CharacterInfo.Instance; // setup the prefab character
+        CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
 
         if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
 
@@ -354,7 +354,7 @@ public class EnemyController : MonoBehaviour
 
     public void AttackPlayer()
     {
-        CharacterInfo playerInfo = CharacterInfo.Instance; // setup the player, now it can access all the info
+        CharacterInfo1 playerInfo = CharacterInfo1.Instance; // setup the player, now it can access all the info
 
         // if player not found get out 
         if (playerInfo == null)
@@ -431,7 +431,7 @@ public class EnemyController : MonoBehaviour
 
         Debug.Log($"{name} Patrol target = {targetGrid}"); // debug msg
 
-        OverlayTile targetTile = MapManager.Instance.GetTile(targetGrid); // get the tile from map Manager
+        OverlayTile targetTile = MapManager1.Instance.GetTile(targetGrid); // get the tile from map Manager
 
         if (targetTile == null) // if next tile not found display error
         {
@@ -471,7 +471,7 @@ public class EnemyController : MonoBehaviour
 
     private OverlayTile GetClosestAdjacentTileToPlayer()
     {
-        CharacterInfo player = CharacterInfo.Instance; // get player info
+        CharacterInfo1 player = CharacterInfo1.Instance; // get player info
 
         // if player || the player tile not found retuns null
         if (player == null || player.CurrentTile == null)
@@ -497,7 +497,7 @@ public class EnemyController : MonoBehaviour
         {
             Vector2Int gridPosition = playerPositions + offsets; // add the offset to the player position
 
-            OverlayTile tile = MapManager.Instance.GetTile(gridPosition); // access the tile from map
+            OverlayTile tile = MapManager1.Instance.GetTile(gridPosition); // access the tile from map
 
             if (tile == null) continue; // keeps going even if the tile not found skip
 

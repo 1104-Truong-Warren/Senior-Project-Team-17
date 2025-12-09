@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterInfo : MonoBehaviour
+public class CharacterInfo1 : MonoBehaviour
 {
     private const int maxAP = 2; // action points for player each turn max out at 2 
 
@@ -19,7 +19,7 @@ public class CharacterInfo : MonoBehaviour
 
     public OverlayTile CurrentTile => standingOnTile;
 
-    public static CharacterInfo Instance { get; private set; } // access
+    public static CharacterInfo1 Instance { get; private set; } // access
     public int currentAP {  get; private set; } // access the AP
 
     //public OverlayTile PlayerSetTile() => CurrentTile;// helper

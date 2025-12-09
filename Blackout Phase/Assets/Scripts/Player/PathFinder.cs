@@ -88,7 +88,7 @@ public class PathFinder
 
     private List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile)
     {
-        var map = MapManager.Instance.map; // from the mapManager
+        var map = MapManager1.Instance.map; // from the mapManager
 
         List<OverlayTile> neighbours = new List<OverlayTile>();
         

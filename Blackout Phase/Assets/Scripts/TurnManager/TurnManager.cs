@@ -19,7 +19,7 @@ public enum TurnState
 public class TurnManager : MonoBehaviour
 {
     [Header("Enemies")]
-    [SerializeField] private List<EnemyController> enemies = new List<EnemyController>(); // set up the enmey controller
+    [SerializeField] private List<EnemyController1> enemies = new List<EnemyController1>(); // set up the enmey controller
 
     public static TurnManager Instance { get; private set; }  // accessor for other scripts
     public TurnState State { get; private set; } = TurnState.MapLoading; // state controls the turn using finite state, starts with loading in
@@ -48,9 +48,9 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => MapManager.Instance != null && 
-                                         MapManager.Instance.map != null &&
-                                         MapManager.Instance.map.Count > 0); // wait until the map is set
+        yield return new WaitUntil(() => MapManager1.Instance != null && 
+                                         MapManager1.Instance.map != null &&
+                                         MapManager1.Instance.map.Count > 0); // wait until the map is set
 
         Debug.Log("Turnmanager: Map is ready"); // debug msg
 
@@ -58,7 +58,7 @@ public class TurnManager : MonoBehaviour
 
         //CurrentPhase = TurnPhase.Player; // Palyer can not start turn
 
-        EnemyController[] found = FindObjectsByType<EnemyController>(FindObjectsSortMode.InstanceID); // got through the list and find enemies
+        EnemyController1[] found = FindObjectsByType<EnemyController1>(FindObjectsSortMode.InstanceID); // got through the list and find enemies
 
         enemies.AddRange(found); // add the nemeies
 
@@ -131,7 +131,7 @@ public class TurnManager : MonoBehaviour
         }
 
         // if player is died but the state is not in game over 
-        if (State != TurnState.GameOver && CharacterInfo.Instance.hp <= 0)
+        if (State != TurnState.GameOver && CharacterInfo1.Instance.hp <= 0)
         {
             State = TurnState.GameOver; // change it to Game over state
 
@@ -153,7 +153,7 @@ public class TurnManager : MonoBehaviour
     //    return true;// else true
     //}
 
-    public void RegisterEnemy(EnemyController enemy)
+    public void RegisterEnemy(EnemyController1 enemy)
     {
         if (!enemies.Contains(enemy)) // enemies not found add them
         {
@@ -165,9 +165,9 @@ public class TurnManager : MonoBehaviour
 
     private void PlayerTurnStart()
     {
-        CharacterInfo.Instance.ResetAP(); // resets the AP at the beginning of the turn
+        CharacterInfo1.Instance.ResetAP(); // resets the AP at the beginning of the turn
 
-        Debug.Log("Player AP reset to: " + CharacterInfo.Instance.currentAP); // shows current AP at the begginer of the turn
+        Debug.Log("Player AP reset to: " + CharacterInfo1.Instance.currentAP); // shows current AP at the begginer of the turn
 
         // current state is not playerAcution? set it to playerAction
         if (State != TurnState.PlayerAction)
@@ -181,7 +181,7 @@ public class TurnManager : MonoBehaviour
         Debug.Log("Player turn Ended -> Enemy Phase Starting");
 
         // before ending player's turn check if it died
-        if (CharacterInfo.Instance.hp <= 0)
+        if (CharacterInfo1.Instance.hp <= 0)
         {
             SetTurnState(TurnState.GameOver); // if player died game over state
             return; // get out
@@ -194,9 +194,9 @@ public class TurnManager : MonoBehaviour
 
     public void PlayerSpendAP(int amount)
     {
-        CharacterInfo.Instance.ApUsed(amount); // instead of directly accessing link the spend through this function
+        CharacterInfo1.Instance.ApUsed(amount); // instead of directly accessing link the spend through this function
 
-        Debug.Log($"Player Spent {amount}AP, Remaining: {CharacterInfo.Instance.currentAP}"); // spend AP, AP left
+        Debug.Log($"Player Spent {amount}AP, Remaining: {CharacterInfo1.Instance.currentAP}"); // spend AP, AP left
 
         CheckPlayerAP(); // check if player still have AP left
     }
@@ -207,7 +207,7 @@ public class TurnManager : MonoBehaviour
         if (State != TurnState.PlayerAction) return; 
 
         // if the player AP this turn is 0 end turn
-        if (CharacterInfo.Instance.currentAP <= 0)
+        if (CharacterInfo1.Instance.currentAP <= 0)
         {
             Debug.Log("Player is out of AP, ending your end.");
 
@@ -234,7 +234,7 @@ public class TurnManager : MonoBehaviour
 
         //Debug.Log("Enemy Phase Start"); // debug
 
-        foreach (EnemyController enemy in enemies)   // each enemies take a turn, if not found continue next
+        foreach (EnemyController1 enemy in enemies)   // each enemies take a turn, if not found continue next
         {
             if (enemy == null) continue; // if enemy is not found skip ingore
             

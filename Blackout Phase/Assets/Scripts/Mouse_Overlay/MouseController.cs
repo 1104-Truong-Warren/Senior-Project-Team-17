@@ -11,7 +11,7 @@ public class MouseController : MonoBehaviour
 
     [SerializeField] private GameObject characterPrefab; // object for the character prefab
 
-    [SerializeField] private CharacterInfo characterInfo; // stores the characgter info
+    [SerializeField] private CharacterInfo1 characterInfo; // stores the characgter info
 
     [SerializeField] private float speed; // move speed for character
 
@@ -94,7 +94,7 @@ public class MouseController : MonoBehaviour
                         if (previouslySelectedTile != null)  // hides the previous selected tiles
                             previouslySelectedTile.HideTile();
 
-                        MapManager.Instance.ResetAllTiles(); // before showing tiles reset all
+                        MapManager1.Instance.ResetAllTiles(); // before showing tiles reset all
 
                         tile.ShowPlayerTile();
 
@@ -109,7 +109,7 @@ public class MouseController : MonoBehaviour
                             {
                                 //characterInfo = new CharacterInfo(); // declare it again 
 
-                                characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo>(); // get the prefab assign
+                                characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // get the prefab assign
 
                                 PositionCharacterOnLine(tile);
 
@@ -213,7 +213,7 @@ public class MouseController : MonoBehaviour
     {
         if (characterInfo == null) // characterInfo not found go through the characterPrefab and use that info
         {
-            characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo>();
+            characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>();
 
             PositionCharacterOnLine(tile); // current position
 

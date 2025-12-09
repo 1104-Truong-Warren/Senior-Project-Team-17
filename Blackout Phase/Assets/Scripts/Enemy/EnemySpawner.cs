@@ -11,9 +11,9 @@ public class EnemySpwawan : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => MapManager.Instance != null && 
-            MapManager.Instance.map != null &&
-            MapManager.Instance.map.Count > 0); // wait until the map is fully setup before anything else
+        yield return new WaitUntil(() => MapManager1.Instance != null && 
+            MapManager1.Instance.map != null &&
+            MapManager1.Instance.map.Count > 0); // wait until the map is fully setup before anything else
 
         SpawnAfterMapReady(); // delay call 
     }
@@ -23,7 +23,7 @@ public class EnemySpwawan : MonoBehaviour
         // wait until map is spawned and the map count > 0
         //yield return new WaitUntil(() => MapManager.Instance.map != null && MapManager.Instance.map.Count > 0);
 
-        OverlayTile tile = MapManager.Instance.GetTile(spawnGridPosition); // get the spawn tile
+        OverlayTile tile = MapManager1.Instance.GetTile(spawnGridPosition); // get the spawn tile
 
         if (tile == null)
         {
@@ -35,7 +35,7 @@ public class EnemySpwawan : MonoBehaviour
 
         EnemyInfo enemyInfo = enemy.GetComponent<EnemyInfo>(); // set up the info
 
-        EnemyController enemyController = enemy.GetComponent<EnemyController>(); // controlls enemy
+        EnemyController1 enemyController = enemy.GetComponent<EnemyController1>(); // controlls enemy
 
         // enemyInfo or control not found displays debug and get out
         if (enemyInfo == null || enemyController == null)

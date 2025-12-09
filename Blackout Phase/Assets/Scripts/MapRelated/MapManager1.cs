@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections;
 
-public class MapManager : MonoBehaviour
+public class MapManager1 : MonoBehaviour
 {
-    private static MapManager _instance;
-    public static MapManager Instance { get { return _instance; } } // can access but can't change it 
+    private static MapManager1 _instance;
+    public static MapManager1 Instance { get { return _instance; } } // can access but can't change it 
 
     [Header("File attach")]
     [SerializeField] public OverlayTile overlayTilePrefab; // to access the overlay prefab

@@ -18,10 +18,10 @@ public class EnemyTileScanner
         List<OverlayTile> result = new List<OverlayTile>();// new list for tile scanner
 
         // if everything is not found returns the empty result
-        if (tile == null || MapManager.Instance == null || MapManager.Instance.map == null)
+        if (tile == null || MapManager1.Instance == null || MapManager1.Instance.map == null)
             return result;
 
-        var map = MapManager.Instance.map; // get map directly
+        var map = MapManager1.Instance.map; // get map directly
 
         Vector2Int position = new(tile.gridLocation.x, tile.gridLocation.y); // get current grid position
 
