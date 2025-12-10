@@ -9,13 +9,13 @@ public class EnemyTileScanner
           Vector2Int.left, Vector2Int.right
         };
 
-    public List<OverlayTile> GetNeighbours(OverlayTile tile)
+    public List<OverlayTile1> GetNeighbours(OverlayTile1 tile)
     {
         //Vector2Int[] directions = { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) }; //Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right }; // setup the vection directions
 
         //int tileLayerMask = LayerMask.GetMask("OverlayTile"); // get the layermask 
 
-        List<OverlayTile> result = new List<OverlayTile>();// new list for tile scanner
+        List<OverlayTile1> result = new List<OverlayTile1>();// new list for tile scanner
 
         // if everything is not found returns the empty result
         if (tile == null || MapManager1.Instance == null || MapManager1.Instance.map == null)
@@ -31,7 +31,7 @@ public class EnemyTileScanner
 
             Vector2Int neighbourKey = position + direction; // what position and direction is the neighbour tile
 
-            if (map.TryGetValue(neighbourKey, out OverlayTile neighbour))// collider not null found something 
+            if (map.TryGetValue(neighbourKey, out OverlayTile1 neighbour))// collider not null found something 
             {
                 //Debug.Log($"Scanner hit: {hit.collider.name} at {hit.collider.transform.position}"); // debug
 

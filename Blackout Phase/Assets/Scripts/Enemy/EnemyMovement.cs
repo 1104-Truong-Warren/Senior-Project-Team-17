@@ -14,9 +14,9 @@ public class EnemyMovement : MonoBehaviour
         enemyInfo = GetComponent<EnemyInfo>(); // setup the enemyinfo
     }
 
-    public IEnumerator MoveAlong(List<OverlayTile> path)
+    public IEnumerator MoveAlong(List<OverlayTile1> path)
     {
-        foreach (OverlayTile tile in path) // loop through all the moveable tiles in path
+        foreach (OverlayTile1 tile in path) // loop through all the moveable tiles in path
         {
             tile.ShowEnemyTile(); // display enemy tiles
 
@@ -34,7 +34,7 @@ public class EnemyMovement : MonoBehaviour
         //yield return MoveStep(path[0]);
     }
 
-    private IEnumerator MoveStep(OverlayTile tile)
+    private IEnumerator MoveStep(OverlayTile1 tile)
     {
         if (enemyInfo.currentTile != null)
             enemyInfo.currentTile.hasEnemy = false; // the tile has no enemy flag

@@ -9,7 +9,7 @@ public class CharacterInfo1 : MonoBehaviour
     [SerializeField] private int MaxHP; // the player's Max HP
     [SerializeField] private int baseMoveRange; // how far player able to move
 
-    private OverlayTile standingOnTile; // stores the tile
+    private OverlayTile1 standingOnTile; // stores the tile
 
     // public accessor for player's info
     public int hp => HP; 
@@ -17,7 +17,7 @@ public class CharacterInfo1 : MonoBehaviour
 
     //public int MoveRange => moveRange;
 
-    public OverlayTile CurrentTile => standingOnTile;
+    public OverlayTile1 CurrentTile => standingOnTile;
 
     public static CharacterInfo1 Instance { get; private set; } // access
     public int currentAP {  get; private set; } // access the AP
@@ -56,7 +56,7 @@ public class CharacterInfo1 : MonoBehaviour
             return 0; // nonthing match 
     }
 
-    public void PlayerSetTile(OverlayTile tile)
+    public void PlayerSetTile(OverlayTile1 tile)
     {
         // if current tile is not null reset the tile 
         if (CurrentTile != null)

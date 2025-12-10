@@ -372,7 +372,7 @@ public class EnemyController1 : MonoBehaviour
     {
         //OverlayTile playerTile = CharacterInfo.Instance.CurrentTile; // get the player tile info
 
-        OverlayTile chaseTargetPlayer = GetClosestAdjacentTileToPlayer(); // find the closest adjacent tile but not player's tile
+        OverlayTile1 chaseTargetPlayer = GetClosestAdjacentTileToPlayer(); // find the closest adjacent tile but not player's tile
 
         // no adjacent tile found
         if (chaseTargetPlayer == null)
@@ -392,7 +392,7 @@ public class EnemyController1 : MonoBehaviour
             yield break;
         }
 
-        List<OverlayTile> findPath = pathFinder.FindPath(enemyInfo.currentTile, chaseTargetPlayer); // find the adjacent path bewteen player/enemy
+        List<OverlayTile1> findPath = pathFinder.FindPath(enemyInfo.currentTile, chaseTargetPlayer); // find the adjacent path bewteen player/enemy
 
         if (findPath.Count <= 1)  // skip if it's one because player is next to nemey
         {
@@ -402,7 +402,7 @@ public class EnemyController1 : MonoBehaviour
             yield break;
         }
 
-        List<OverlayTile> moveSteps = findPath.Skip(1).Take(enemyInfo.moveRange).ToList(); // if it matches current tile, go to next tile
+        List<OverlayTile1> moveSteps = findPath.Skip(1).Take(enemyInfo.moveRange).ToList(); // if it matches current tile, go to next tile
 
         yield return movement.MoveAlong(moveSteps); // move correct steps to moveAlong and distance
 
@@ -431,7 +431,7 @@ public class EnemyController1 : MonoBehaviour
 
         Debug.Log($"{name} Patrol target = {targetGrid}"); // debug msg
 
-        OverlayTile targetTile = MapManager1.Instance.GetTile(targetGrid); // get the tile from map Manager
+        OverlayTile1 targetTile = MapManager1.Instance.GetTile(targetGrid); // get the tile from map Manager
 
         if (targetTile == null) // if next tile not found display error
         {
@@ -454,7 +454,7 @@ public class EnemyController1 : MonoBehaviour
             yield break;
         }
 
-        List<OverlayTile> path = pathFinder.FindPath(enemyInfo.currentTile, targetTile); // current tile to next tile
+        List<OverlayTile1> path = pathFinder.FindPath(enemyInfo.currentTile, targetTile); // current tile to next tile
 
         if (path.Count <= 1)
         {
@@ -469,7 +469,7 @@ public class EnemyController1 : MonoBehaviour
             UpdateIndex(); // updates the index
     }
 
-    private OverlayTile GetClosestAdjacentTileToPlayer()
+    private OverlayTile1 GetClosestAdjacentTileToPlayer()
     {
         CharacterInfo1 player = CharacterInfo1.Instance; // get player info
 
@@ -488,7 +488,7 @@ public class EnemyController1 : MonoBehaviour
             new Vector2Int(0, -1),
         };
 
-        OverlayTile bestTile = null; // to store the best tile to stand
+        OverlayTile1 bestTile = null; // to store the best tile to stand
 
         float bestDistance = float.MaxValue; // no limits for now 
 
@@ -497,7 +497,7 @@ public class EnemyController1 : MonoBehaviour
         {
             Vector2Int gridPosition = playerPositions + offsets; // add the offset to the player position
 
-            OverlayTile tile = MapManager1.Instance.GetTile(gridPosition); // access the tile from map
+            OverlayTile1 tile = MapManager1.Instance.GetTile(gridPosition); // access the tile from map
 
             if (tile == null) continue; // keeps going even if the tile not found skip
 

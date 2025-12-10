@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OverlayTile : MonoBehaviour
+public class OverlayTile1 : MonoBehaviour
 {
     public int G; // x
     public int H; // y
@@ -9,7 +9,7 @@ public class OverlayTile : MonoBehaviour
 
     public bool isBlocked; // flag to see if tile is blocked
 
-    public OverlayTile previousTile; // store the last tile
+    public OverlayTile1 previousTile; // store the last tile
 
     public Vector3Int gridLocation;  // locatin of the grid
 

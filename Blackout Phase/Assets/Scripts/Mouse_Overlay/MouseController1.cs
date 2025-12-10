@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MouseController : MonoBehaviour
+public class MouseController1 : MonoBehaviour
 {
     [SerializeField] private GameObject cursor; // for our curosr
 
@@ -15,11 +15,11 @@ public class MouseController : MonoBehaviour
 
     [SerializeField] private float speed; // move speed for character
 
-    private OverlayTile previouslySelectedTile; // previous tile
+    private OverlayTile1 previouslySelectedTile; // previous tile
 
-    private PathFinder pathFinder; // access the pathfinder
+    private PathFinder1 pathFinder; // access the pathfinder
 
-    private List<OverlayTile> path;
+    private List<OverlayTile1> path;
 
 
     // Ellison - Added bool to enable or disable movement (disabled by default)
@@ -33,9 +33,9 @@ public class MouseController : MonoBehaviour
 
     private void Start()
     {
-        pathFinder = new PathFinder(); // create it
+        pathFinder = new PathFinder1(); // create it
 
-        path = new List<OverlayTile>(); 
+        path = new List<OverlayTile1>(); 
     }
 
     // Update is called once per frame
@@ -69,7 +69,7 @@ public class MouseController : MonoBehaviour
 
                     //targetPosition.z -= 0.01f; // tiny offsets to z
 
-                    OverlayTile tile = hit.Value.collider.gameObject.GetComponent<OverlayTile>();
+                    OverlayTile1 tile = hit.Value.collider.gameObject.GetComponent<OverlayTile1>();
 
                     // get out if tile not found
                     if (tile == null)
@@ -209,7 +209,7 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    private void PositionCharacterOnLine(OverlayTile tile)
+    private void PositionCharacterOnLine(OverlayTile1 tile)
     {
         if (characterInfo == null) // characterInfo not found go through the characterPrefab and use that info
         {

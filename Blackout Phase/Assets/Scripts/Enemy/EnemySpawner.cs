@@ -23,7 +23,7 @@ public class EnemySpwawan : MonoBehaviour
         // wait until map is spawned and the map count > 0
         //yield return new WaitUntil(() => MapManager.Instance.map != null && MapManager.Instance.map.Count > 0);
 
-        OverlayTile tile = MapManager1.Instance.GetTile(spawnGridPosition); // get the spawn tile
+        OverlayTile1 tile = MapManager1.Instance.GetTile(spawnGridPosition); // get the spawn tile
 
         if (tile == null)
         {

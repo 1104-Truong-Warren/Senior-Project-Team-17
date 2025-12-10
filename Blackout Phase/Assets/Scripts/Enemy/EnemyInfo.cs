@@ -11,7 +11,7 @@ public class EnemyInfo : MonoBehaviour
     [SerializeField] private int MoveRange; // enemy's moveRange
 
 
-    [SerializeField] OverlayTile Tile; // current tile enmey is on
+    [SerializeField] OverlayTile1 Tile; // current tile enmey is on
 
 
     // public accessor
@@ -25,7 +25,7 @@ public class EnemyInfo : MonoBehaviour
 
     public int health => Health; // hit points
 
-    public OverlayTile currentTile => Tile; // where the enemy tile is
+    public OverlayTile1 currentTile => Tile; // where the enemy tile is
 
     //public OverlayTile EnemySetTile() => currentTile;
 
@@ -36,7 +36,7 @@ public class EnemyInfo : MonoBehaviour
     //        Debug.Log($"Enemy starts at grid {currentTile.gridLocation}");
     //}
 
-    public void EnemySetTile(OverlayTile newtile)
+    public void EnemySetTile(OverlayTile1 newtile)
     {
         Tile = newtile; // set up the tile
     }

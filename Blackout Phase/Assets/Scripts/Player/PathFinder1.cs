@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PathFinder 
+public class PathFinder1 
 {
-   public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
+   public List<OverlayTile1> FindPath(OverlayTile1 start, OverlayTile1 end)
     {
 
-        List<OverlayTile> openList = new List<OverlayTile>(); // add to the list
+        List<OverlayTile1> openList = new List<OverlayTile1>(); // add to the list
 
-        List<OverlayTile> closedList = new List<OverlayTile>(); // once finished checking put them here
+        List<OverlayTile1> closedList = new List<OverlayTile1>(); // once finished checking put them here
 
         openList.Add(start);
 
         // loop through everything
         while (openList.Count > 0)
         {
-            OverlayTile currentOverlayTile = openList.OrderBy(x => x.F).First(); // overlay tile of the lowest overlay
+            OverlayTile1 currentOverlayTile = openList.OrderBy(x => x.F).First(); // overlay tile of the lowest overlay
 
             openList.Remove(currentOverlayTile);
 
@@ -55,14 +55,14 @@ public class PathFinder
 
         }
 
-        return new List<OverlayTile>();
+        return new List<OverlayTile1>();
     }
 
-    private List<OverlayTile> GetFinishedList(OverlayTile start, OverlayTile end)
+    private List<OverlayTile1> GetFinishedList(OverlayTile1 start, OverlayTile1 end)
     {
-        List<OverlayTile> finishedList = new List<OverlayTile>(); // new list
+        List<OverlayTile1> finishedList = new List<OverlayTile1>(); // new list
 
-        OverlayTile currentTile = end; // from end
+        OverlayTile1 currentTile = end; // from end
 
         // read in everything but backwards
         while (currentTile != start)
@@ -80,17 +80,17 @@ public class PathFinder
     }
 
     // for find the square distance
-    public int GetManhattenDistance(OverlayTile start, OverlayTile neighbour)
+    public int GetManhattenDistance(OverlayTile1 start, OverlayTile1 neighbour)
     {
         return Mathf.Abs(start.gridLocation.x - neighbour.gridLocation.x) + 
             Mathf.Abs(start.gridLocation.y - neighbour.gridLocation.y);
     }
 
-    private List<OverlayTile> GetNeighbourTiles(OverlayTile currentOverlayTile)
+    private List<OverlayTile1> GetNeighbourTiles(OverlayTile1 currentOverlayTile)
     {
         var map = MapManager1.Instance.map; // from the mapManager
 
-        List<OverlayTile> neighbours = new List<OverlayTile>();
+        List<OverlayTile1> neighbours = new List<OverlayTile1>();
         
         // Top
         Vector2Int locationToCheck = new Vector2Int(currentOverlayTile.gridLocation.x, 

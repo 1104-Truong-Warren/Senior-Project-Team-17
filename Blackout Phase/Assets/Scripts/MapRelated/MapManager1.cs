@@ -10,11 +10,11 @@ public class MapManager1 : MonoBehaviour
     public static MapManager1 Instance { get { return _instance; } } // can access but can't change it 
 
     [Header("File attach")]
-    [SerializeField] public OverlayTile overlayTilePrefab; // to access the overlay prefab
+    [SerializeField] public OverlayTile1 overlayTilePrefab; // to access the overlay prefab
     [SerializeField] public GameObject overlayContainer;  // to access the gameobject
     [SerializeField] private Tilemap groundTileMap; // for ground only
 
-    public Dictionary<Vector2Int, OverlayTile> map;   //
+    public Dictionary<Vector2Int, OverlayTile1> map;   //
     private bool ignoreBottomTiles;      // flag 
 
     public static event Action OnMapFinished; // waiting for map before anything else
@@ -45,7 +45,7 @@ public class MapManager1 : MonoBehaviour
 
         var tileMap = groundTileMap; // only using the ground layer
 
-        map = new Dictionary<Vector2Int, OverlayTile>();
+        map = new Dictionary<Vector2Int, OverlayTile1>();
 
         BoundsInt bounds = tileMap.cellBounds; // find the edges of the map
 
@@ -113,7 +113,7 @@ public class MapManager1 : MonoBehaviour
             tile.ResetTiles();
     }
 
-    public OverlayTile GetTile(Vector2Int gridPosition)
+    public OverlayTile1 GetTile(Vector2Int gridPosition)
     {
         if (map.ContainsKey(gridPosition))
             return map[gridPosition]; // if exisit return it

@@ -11,20 +11,20 @@ public class EnemyPathFinder
         this.scanner = scanner; // set it up
     }
 
-    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
+    public List<OverlayTile1> FindPath(OverlayTile1 start, OverlayTile1 end)
     {
         // if start or end not found returns a new list
         if (start == null || end == null)
         {
             Debug.LogError("EnemyPathFinder: start/end is null!"); // debug
-            return new List<OverlayTile> ();
+            return new List<OverlayTile1> ();
         }
 
         Debug.Log("Pathfinder started: " + start.name + " -> " + end.name); //debug
 
-        List<OverlayTile> open = new List<OverlayTile>(); // using a new list for enemy pathfinding
+        List<OverlayTile1> open = new List<OverlayTile1>(); // using a new list for enemy pathfinding
 
-        HashSet<OverlayTile> closed = new HashSet<OverlayTile>();
+        HashSet<OverlayTile1> closed = new HashSet<OverlayTile1>();
 
         start.G = 0; // start position
 
@@ -37,7 +37,7 @@ public class EnemyPathFinder
         // if open has data read it
         while (open.Count > 0)
         {
-            OverlayTile current = open.OrderBy(n => n.F).First(); // orders them
+            OverlayTile1 current = open.OrderBy(n => n.F).First(); // orders them
 
             if (current == end)
                 return BuildPath(start, end); // reaches the end start buiding
@@ -50,7 +50,7 @@ public class EnemyPathFinder
 
             Debug.Log("Current Tile: " + current.gridLocation); //debug
 
-            foreach (OverlayTile neighbour in scanner.GetNeighbours(current)) // runs all the neighbour tiles in scanner list
+            foreach (OverlayTile1 neighbour in scanner.GetNeighbours(current)) // runs all the neighbour tiles in scanner list
             {
                 //Debug.Log("Neighbour count = " + neighbour.Count);
 
@@ -74,10 +74,10 @@ public class EnemyPathFinder
         }
 
         Debug.LogWarning("EnemeyPathFinder: No path found!");
-        return new List<OverlayTile>(); // returns the empty list
+        return new List<OverlayTile1>(); // returns the empty list
     }
 
-    private int Manhattan(OverlayTile a, OverlayTile b)
+    private int Manhattan(OverlayTile1 a, OverlayTile1 b)
     {
         return Mathf.Abs(a.gridLocation.x - b.gridLocation.x) + 
             Mathf.Abs(a.gridLocation.y - b.gridLocation.y);
@@ -90,11 +90,11 @@ public class EnemyPathFinder
     //    return scanner;  // for testing
     //}
 
-    private List<OverlayTile> BuildPath(OverlayTile start, OverlayTile end)
+    private List<OverlayTile1> BuildPath(OverlayTile1 start, OverlayTile1 end)
     {
-        List<OverlayTile> path = new List<OverlayTile>(); // create a new path
+        List<OverlayTile1> path = new List<OverlayTile1>(); // create a new path
 
-        OverlayTile current = end; // current overlay is the end result
+        OverlayTile1 current = end; // current overlay is the end result
 
         // list is not empty and not equal to end result
         while (current != start && current != null)
