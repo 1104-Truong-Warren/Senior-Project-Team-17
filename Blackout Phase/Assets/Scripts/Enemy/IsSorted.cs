@@ -11,6 +11,6 @@ public class IsSorted : MonoBehaviour
 
     private void LateUpdate()
     {
-        spriteRenderer.sortingOrder = -(int)(transform.position.y * 100) + 10000; // lower y in from highter behind to make it stable close to camera
+        spriteRenderer.sortingOrder = -(int)(transform.position.y * 100) + 10000; //  y to highter behind to make it stable close to camera
     }
 }

@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding// for the List<T> and dictionary <T, T> for pathfinding
 using UnityEngine;
-using System.Linq;
+using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
 
 public class EnemyPathFinder 
 {

@@ -1,7 +1,7 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
+using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
+using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
 using UnityEditor.Experimental.GraphView;
 using Unity.VisualScripting;
 

@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
+using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
 using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using UnityEngine; 
+using UnityEngine.EventSystems; // for stuff like 2d/3d raycasting, for mouse to find the correct tiles
+using UnityEngine.UI; // for the UI stuff, menu and such
 
 public class MouseController1 : MonoBehaviour
 {

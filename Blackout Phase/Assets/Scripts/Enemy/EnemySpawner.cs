@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 
 public class EnemySpwawan : MonoBehaviour
 {

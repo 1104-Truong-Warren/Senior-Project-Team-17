@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using System.Collections;
+using UnityEngine.Tilemaps; // for the grid isomatric/ hexagonal tilemaps, the one we have is isometric
+using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 
 public class MapManager1 : MonoBehaviour
 {

@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
+using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
 using UnityEngine;
 
 public class PathFinder1 
