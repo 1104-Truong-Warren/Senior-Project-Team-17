@@ -1,6 +1,6 @@
-// Warren
+// Author: Warren
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;  // This built-in library is used to load and manage scenes, allow to switch between various and different scenes.
 
 // Resource: https://www.youtube.com/watch?v=9dYDBomQpBQ&t=37s
 
