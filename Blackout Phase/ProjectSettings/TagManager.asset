@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - AccessibleTileDisplay
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -41,23 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Water
-    uniqueID: 428403053
-    locked: 0
-  - name: Ground
-    uniqueID: 2452218551
-    locked: 0
-  - name: Effects
-    uniqueID: 3335590207
-    locked: 0
-  - name: Overlay
-    uniqueID: 1716906885
-    locked: 0
-  - name: Character
-    uniqueID: 1583326769
-    locked: 0
-  - name: Cursor
-    uniqueID: 4041073487
-    locked: 0
   m_RenderingLayers:
   - Default
+  - Light Layer 1
+  - Light Layer 2
+  - Light Layer 3
+  - Light Layer 4
+  - Light Layer 5
+  - Light Layer 6
+  - Light Layer 7
