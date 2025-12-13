@@ -1,7 +1,11 @@
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// Weijun
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
 using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
-using Unity.VisualScripting;
-using UnityEngine; 
+using Unity.VisualScripting; // not sure what this is just shows up built in feature for visual graphs, state graphs
+using UnityEngine; // default
 using UnityEngine.EventSystems; // for stuff like 2d/3d raycasting, for mouse to find the correct tiles
 using UnityEngine.UI; // for the UI stuff, menu and such
 
@@ -35,7 +39,7 @@ public class MouseController1 : MonoBehaviour
     {
         pathFinder = new PathFinder1(); // create it
 
-        path = new List<OverlayTile1>(); 
+        path = new List<OverlayTile1>();
     }
 
     // Update is called once per frame
@@ -146,7 +150,7 @@ public class MouseController1 : MonoBehaviour
                                     t.ShowPlayerTile();
                             }
                         }
-                        
+
                     }
                     //overlayTile.GetComponent<SpriteRenderer>().sortingOrder; // also matches the sprite render
 
@@ -229,11 +233,11 @@ public class MouseController1 : MonoBehaviour
 
         characterInfo.PlayerSetTile(tile); // update player's tile info
 
-            // offset the y-axis a little bit
-            characterInfo.transform.position = new Vector3(tile.transform.position.x,
-                tile.transform.position.y + 0.0001f,
-                tile.transform.position.z
-            );  // store the postion
+        // offset the y-axis a little bit
+        characterInfo.transform.position = new Vector3(tile.transform.position.x,
+            tile.transform.position.y + 0.0001f,
+            tile.transform.position.z
+        );  // store the postion
 
         characterInfo.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
     }

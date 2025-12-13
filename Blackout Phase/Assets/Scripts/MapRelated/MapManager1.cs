@@ -1,12 +1,16 @@
-using System;
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// Weijun
+using System; // for c# library stuff like int, string etc...
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
-using UnityEngine;
+using UnityEngine; // default
 using UnityEngine.Tilemaps; // for the grid isomatric/ hexagonal tilemaps, the one we have is isometric
 using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 
 public class MapManager1 : MonoBehaviour
 {
-    private static MapManager1 _instance;
+    private static MapManager1 _instance; 
     public static MapManager1 Instance { get { return _instance; } } // can access but can't change it 
 
     [Header("File attach")]
@@ -14,8 +18,8 @@ public class MapManager1 : MonoBehaviour
     [SerializeField] public GameObject overlayContainer;  // to access the gameobject
     [SerializeField] private Tilemap groundTileMap; // for ground only
 
-    public Dictionary<Vector2Int, OverlayTile1> map;   //
-    private bool ignoreBottomTiles;      // flag 
+    public Dictionary<Vector2Int, OverlayTile1> map;   // map position, using x,y, and overlay using map
+    private bool ignoreBottomTiles;      // flag for tiles that are under tiles, z high 
 
     public static event Action OnMapFinished; // waiting for map before anything else
 
@@ -49,7 +53,7 @@ public class MapManager1 : MonoBehaviour
 
         BoundsInt bounds = tileMap.cellBounds; // find the edges of the map
 
-        // loop through all the tiles
+        // loop through all the tiles in order, z from high to low, y,x
         for (int z = bounds.max.z; z >= bounds.min.z; z--) // hights to lowest 
         {
             for (int y = bounds.min.y; y < bounds.max.y; y++)
@@ -61,21 +65,22 @@ public class MapManager1 : MonoBehaviour
 
                     Vector3Int tileLocation = new Vector3Int(x, y, z); // new vection3 location
 
-                    Vector2Int tileKey = new Vector2Int(x, y);  // new vection2 location
+                    Vector2Int tileKey = new Vector2Int(x, y);  // new vection2 location, for our path find
 
+                    // tile has tiles, the map is built before loading in
                     if (tileMap.HasTile(tileLocation) && tileMap.GetTile(tileLocation) != null &&
                         !map.ContainsKey(tileKey))
                     {
-                        var overlayTile = Instantiate(overlayTilePrefab, overlayContainer.transform);
+                        var overlayTile = Instantiate(overlayTilePrefab, overlayContainer.transform); // copy the overlay info over
 
-                        var cellWorldPosition = tileMap.GetCellCenterWorld(tileLocation);
+                        var cellWorldPosition = tileMap.GetCellCenterWorld(tileLocation); // center of a grid cell
 
-                        overlayTile.transform.position = cellWorldPosition + new Vector3(0, 0, -0.05f);
+                        overlayTile.transform.position = cellWorldPosition + new Vector3(0, 0, -0.05f); // keep the x,y but offset the z a little 
                         //      cellWorldPosition.z - 0.1f); // one higher than the actual map
 
                         //overlayTile.GetComponent<SpriteRenderer>().sortingOrder = tileMap.GetComponent<TilemapRenderer>().sortingOrder;
 
-                        overlayTile.gridLocation = new Vector3Int(x, y, 0); //tileLocation; // save the gridlocation
+                        overlayTile.gridLocation = new Vector3Int(x, y, 0); //tileLocation; // save the gridlocation for overlayTile
 
                         // Consider ONLY the ground tilemap:
                         overlayTile.isBlocked = false; //tileMap.GetTile(tileLocation) == null;
@@ -90,7 +95,7 @@ public class MapManager1 : MonoBehaviour
 
                         if (spriteRenderer != null && tileMap != null)//!map.ContainsKey(tileKey) || overlayTile.gridLocation.z > map[tileKey].gridLocation.z) // only keep the highest z
                         {
-                            spriteRenderer.sortingOrder = tilemapRenderer.sortingOrder + 1;
+                            spriteRenderer.sortingOrder = tilemapRenderer.sortingOrder + 1; // keep the sprite higher than tile
                         }
 
                         map[tileKey] = overlayTile; // if nothing happens stores the overlay 
@@ -116,140 +121,10 @@ public class MapManager1 : MonoBehaviour
     public OverlayTile1 GetTile(Vector2Int gridPosition)
     {
         if (map.ContainsKey(gridPosition))
-            return map[gridPosition]; // if exisit return it
+            return map[gridPosition]; // if exisit return it the map location
 
         return null; // if not return nothing
     }
 }
 
-////Only x,y no z
-
-////using System;
-////using System.Collections;
-////using System.Collections.Generic;
-////using UnityEngine;
-////using UnityEngine.Tilemaps;
-
-////public class MapManager : MonoBehaviour
-////{
-////    private static MapManager _instance; // privite to save data
-
-////    public static MapManager Instance => _instance; // public so other script can use it
-
-////    [Header("Files attach")]
-////    [SerializeField] public OverlayTile overlayTilePrefab; // the prefab  for overlay
-////    [SerializeField] public GameObject overlayContainer; // the overlay object
-////    [SerializeField] private Tilemap groundTileMap; // for the groundTile
-
-////    public Dictionary<Vector2Int, OverlayTile> map; // dictionary for the map
-
-////    public static event Action OnMapFinished; // events on map
-
-////    private void Awake()
-////    {
-////        //  if the map is not set up distory it
-////        if (_instance != null && _instance != this) 
-////        {
-////            Destroy(gameObject);
-////            return;
-////        }
-
-////        _instance = this; // set it to this
-////    }
-
-////    private void Start()
-////    {
-////        StartCoroutine(GenerateMap()); // generates the map takes time
-////    }
-
-////    private IEnumerator GenerateMap()
-////    {
-////        // error msg if the groundTile not found
-////        if (groundTileMap == null) 
-////        {
-////            Debug.LogError("MapManager: groundTile is not assigned!");
-////            yield break;
-////        }
-
-////        map = new Dictionary<Vector2Int, OverlayTile>(); // creates the new object for map
-
-////        BoundsInt bounds = groundTileMap.cellBounds; // the boundaries of the tile
-
-////        Debug.Log("Bounds: " + bounds);
-////        Debug.Log("Min: " + bounds.min + "  Max: " + bounds.max);
-
-////        Debug.Log("CellBounds = " + groundTileMap.cellBounds);
-////        Debug.Log("GroundTilemap has tile at (0,0)? " + groundTileMap.HasTile(new Vector3Int(0, 0, 0)));
-
-////        // uses nested loops to run through the x, y coordinates 
-////        for (int y = bounds.min.y; y < bounds.max.y; y++)
-////        {
-////            for (int x = bounds.min.x; x < bounds.max.x; x++)
-////            {
-////                Vector3Int cell = new Vector3Int(x, y, 0); // only use x,y, z = 0
-
-////                // check if the groundTiles is not working keep going
-////                if (!groundTileMap.HasTile(cell))
-////                    continue;
-
-////                Vector2Int key = new Vector2Int(x, y); // this is the x, y checking if map matches
-
-////                // if matches keep on going
-////                if (map.ContainsKey(key))
-////                    continue;
-
-////                OverlayTile overlayTile = Instantiate(overlayTilePrefab, overlayContainer.transform); // what the overlay has, a prefab&thecontainer
-
-////                Vector3 worldPosition = groundTileMap.GetCellCenterWorld(cell); // set up the world position for cells
-
-////                overlayTile.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z + 1f); // above the groud overlay
-
-////                overlayTile.gridLocation = cell; // 0 for z
-
-////                overlayTile.isBlocked = false;   // all ttile can be access
-
-////                overlayTile.HideTile();  // hides the tiles
-
-////                var collider = overlayTile.GetComponent<BoxCollider2D>(); // set up the collider box2d
-
-////                // if collider is found add it from gameobject
-////                if (collider == null)
-////                {
-////                    collider = overlayTile.gameObject.AddComponent<BoxCollider2D>();
-
-////                }
-
-////                overlayTile.gameObject.layer = LayerMask.NameToLayer("OverlayTile"); // set up the layer mask 
-
-////                map.Add(key, overlayTile); // add the correct tiles to max
-////            }
-////        }
-
-////        Debug.Log("Tiles created: " + map.Count); // debug to show how many tiles created
-
-////        OnMapFinished?.Invoke(); // wait untile map is finished
-////        yield return null; // delay return
-////    }
-
-////    public void ResetAllTiles()
-////    {
-////        // empty map get out
-////        if (map == null) return;
-
-////        // reset all the tiles in map
-////        foreach (var tile in map.Values)
-////            tile.ResetTiles();
-////    }
-
-////    public OverlayTile GetTile(Vector2Int gridPosition)
-////    {
-////        // if tile is found get the gridPosition and return it
-////        if (map != null && map.TryGetValue(gridPosition, out var tile))
-////            return tile;
-////        else
-////            return null; // return nothing if not found
-
-////    }
-////}
-///
 

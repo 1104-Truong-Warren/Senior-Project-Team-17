@@ -1,5 +1,13 @@
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// This is also similar to the player's path find we copied over usinng the same idea
+// scanners tiles close to the enemy see if it's vaild if so find the shortest distance 
+// using loops to find the best path and return the best path
+// Weijun
+
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding// for the List<T> and dictionary <T, T> for pathfinding
-using UnityEngine;
+using UnityEngine; // default
 using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
 
 public class EnemyPathFinder 

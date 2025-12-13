@@ -1,9 +1,13 @@
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// Weijun
 using UnityEngine;
 
 public class OverlayTile1 : MonoBehaviour
 {
-    public int G; // x
-    public int H; // y
+    public int G; // tile point
+    public int H; // tile point
 
     public int F { get { return G + H; } } // returns the tile point
 
@@ -65,22 +69,22 @@ public class OverlayTile1 : MonoBehaviour
         HideTile();
     }
 }
-    // us draw Gizmos to display the x,y on the editor before running the game
-    //#if UNITY_EDITOR
+// us draw Gizmos to display the x,y on the editor before running the game
+//#if UNITY_EDITOR
 
-    //private void OnDrawGizmos()
-    //{
-    //    if (debugSelected) // if debug is true
-    //    {
-    //        //Gizmos.color = Color.red; // shows Red
+//private void OnDrawGizmos()
+//{
+//    if (debugSelected) // if debug is true
+//    {
+//        //Gizmos.color = Color.red; // shows Red
 
-    //        //Gizmos.DrawWireCube(transform.position, new Vector3(1, 0.1f, 0.5f)); // draw a cube on the position
+//        //Gizmos.DrawWireCube(transform.position, new Vector3(1, 0.1f, 0.5f)); // draw a cube on the position
 
-    //        UnityEditor.Handles.Label(transform.position + new Vector3(0, 0.15f, 0),
-    //        $"({gridLocation.x}, {gridLocation.y})"); // checks the position of x&y while editing using Gizmos
+//        UnityEditor.Handles.Label(transform.position + new Vector3(0, 0.15f, 0),
+//        $"({gridLocation.x}, {gridLocation.y})"); // checks the position of x&y while editing using Gizmos
 
-    //    }
-    //}
+//    }
+//}
 //#endif
 
 

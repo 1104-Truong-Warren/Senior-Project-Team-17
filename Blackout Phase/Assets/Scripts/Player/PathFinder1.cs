@@ -1,7 +1,11 @@
-using NUnit.Framework;
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// Weijun
+using NUnit.Framework; // edit mode and play mode
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
 using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
-using UnityEngine;
+using UnityEngine; // default one
 
 public class PathFinder1 
 {

@@ -1,4 +1,10 @@
-using UnityEngine; 
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// This is just for enemy movement it's similar to the player movement's idea 
+// Weijun
+
+using UnityEngine;  // default
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding// for the List<T> and dictionary <T, T> for pathfinding
 using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 

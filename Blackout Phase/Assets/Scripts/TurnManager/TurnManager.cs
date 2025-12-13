@@ -1,4 +1,14 @@
-using UnityEngine;
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// This is also a finite state machine took inspiration from CS 456
+// this time is constantly updating because turn based games needs a turn manager at all time
+// since we have more states this time a switch statement is used to help navigate through out
+// the different states, player start -> player action -> player end -> calls the enemy controll
+// then the enemy use its own finite state machine to control the action -> enemy ends calls player again
+// it just keeps on repeating again until the player dies then it goes into game over state
+// Weijun
+
+using UnityEngine; // default
 using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 using System.Collections.Generic;  // for the List<T> and dictionary <T, T> for pathfinding
 using Unity.VisualScripting;

@@ -1,4 +1,12 @@
-using UnityEngine;
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// This script scanners for tiles that is not being used along side of pathfind for enemy
+// if the tile is not being used by player or enemy it returns as a vaild tile
+// after that returns the path and let pathfind decide which is the shortest path
+// Weijun
+
+using UnityEngine; // default
 using System.Collections.Generic;  // for the List<T> and dictionary <T, T> for pathfinding
 
 public class EnemyTileScanner

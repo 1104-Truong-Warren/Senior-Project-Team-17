@@ -1,4 +1,10 @@
-using UnityEngine;
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// The character info stats is made by me, I added stats for the character hp, movementRange
+// functionalities, AP, and how it works 
+// Weijun
+using UnityEngine; // default 
 
 public class CharacterInfo1 : MonoBehaviour
 {

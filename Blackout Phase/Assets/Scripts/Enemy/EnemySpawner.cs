@@ -1,4 +1,11 @@
-using UnityEngine;
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// for prefab enemy spawn positions, pick a vaild x,y on the map and spawn enemies acorrdingly
+// since the enemy has a spawn point I used the same starting point in patrol points so it skips to
+// the first array for patrol instead of spawn position path[0] -> path[1], goes like this path[1] -> path[2]
+// Weijun
+
+using UnityEngine; // default
 using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 
 public class EnemySpwawan : MonoBehaviour

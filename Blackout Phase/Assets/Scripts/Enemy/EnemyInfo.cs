@@ -1,5 +1,13 @@
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// this is similar to the characterInfo, but it was done by me the stats HP, attkRange,
+// enemey damage, detectionRange, but the only useful thing currently are
+// damage, attackRange, moveRange, and detectionRange , since player doesn's have an attk hp is kinda useless
+// the moveRange is used for chasing range so it doesn't follow the player forever
+// Weijun
+
 using Unity.VisualScripting;
-using UnityEngine;
+using UnityEngine; // default
 
 public class EnemyInfo : MonoBehaviour
 {

@@ -1,4 +1,11 @@
-using UnityEngine;
+// and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
+// I should have keep tract on the exact page but I forgot to save some of the links 
+// this is just a sorting layer thing for the enemy sprite so it would appeared on top
+// had some trouble with some sprite bug where enemy sprite sinks down into the grid map
+// but everything is fixed. It was some kind of pathing bug and visual bug combined.
+// Weijun
+
+using UnityEngine; // default
 
 public class IsSorted : MonoBehaviour
 {
