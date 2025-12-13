@@ -1,9 +1,9 @@
-// Author: Warren
+// This script is used for camera control. The player can zoom in and out using the mouse scroll wheel. They can also move around the camera by holding the right mouse button.
+// Warren
 using UnityEngine;
 
 // Resource: https://youtu.be/pJQndtJ2rk0?si=1g5IUdCvv3ocOUV1
 
-// This script is used for camera control. The player can zoom in and out using the mouse scroll wheel. They can also move around the camera by holding the right mouse button.
 public class CameraControl : MonoBehaviour
 {
     // Created labled section which will show up in the inspector, allowing adjustments of zoom speed, zoom level, and sensitivity of the mouse wheel.

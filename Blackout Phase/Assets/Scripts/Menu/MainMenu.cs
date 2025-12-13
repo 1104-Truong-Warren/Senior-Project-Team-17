@@ -1,5 +1,5 @@
-// Author: Warren
-
+// The purpose of this script is to add and control the main menu functionality, including starting the game by loading the main gameplay scene and existing the application when the user selects the quit button.
+// Warren
 using UnityEngine;
 using UnityEngine.SceneManagement; // This built-in library is used to load and manage scenes, allow to switch between various and different scenes.
 

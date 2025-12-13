@@ -1,4 +1,5 @@
-// Author: Warren
+// The purpose of this script is to manage the game's pause functionality, including toggling the pause menu, freezing and resuming gameplay, and handling scene transitions such as returning to the main menu.
+// Warren
 using UnityEngine;
 using UnityEngine.SceneManagement;  // This built-in library is used to load and manage scenes, allow to switch between various and different scenes.
 
