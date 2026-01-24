@@ -4,6 +4,7 @@
 // Weijun
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
 using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
+using System.Runtime.InteropServices;
 using Unity.VisualScripting; // not sure what this is just shows up built in feature for visual graphs, state graphs
 using UnityEngine; // default
 using UnityEngine.EventSystems; // for stuff like 2d/3d raycasting, for mouse to find the correct tiles
@@ -11,12 +12,12 @@ using UnityEngine.UI; // for the UI stuff, menu and such
 
 public class MouseController1 : MonoBehaviour
 {
+    [Header("Settings for some stuff")]
+    [SerializeField] private LayerMask enemyLayer; // enemy's layer for detection
+    [SerializeField] private PlayerAction currentAction; // access what kind of skill player is on
     [SerializeField] private GameObject cursor; // for our curosr
-
     [SerializeField] private GameObject characterPrefab; // object for the character prefab
-
     [SerializeField] private CharacterInfo1 characterInfo; // stores the characgter info
-
     [SerializeField] private float speed; // move speed for character
 
     private OverlayTile1 previouslySelectedTile; // previous tile
@@ -45,7 +46,19 @@ public class MouseController1 : MonoBehaviour
     // Update is called once per frame
     private void LateUpdate()
     {
-        if (TurnManager.Instance.State != TurnState.PlayerAction) return; // preventing player moving before other things are setup
+        if (TurnManager.Instance.State != TurnState.PlayerAction && TurnManager.Instance.State != TurnState.PlayerSpawn) return; // preventing player moving before other things are setup
+
+        //// mouse test for enemy collider
+        //Vector3 mPosition = Input.mousePosition; // set up the mousse position
+
+        // Debugs for display
+        //mPosition.z = Mathf.Abs(Camera.main.transform.position.z); // make sure z is not affected to get the correct input
+
+        //Vector3 MPWorld = Camera.main.ScreenToWorldPoint(mPosition); // mouse position in the game world
+
+        //Debug.DrawLine(MPWorld + Vector3.left * 0.1f, MPWorld + Vector3.right * 0.1f, Color.green, 0.1f); // debug msg
+
+        //Debug.DrawLine(MPWorld + Vector3.up * 0.1f, MPWorld + Vector3.down * 0.1f, Color.green, 0.1f); // debug msg
 
         // Ellison - moved everything into a check for movement being enabled AND cursor not being over a UI element
         if (!IsPointerOverUIObject())
@@ -73,7 +86,7 @@ public class MouseController1 : MonoBehaviour
 
                     //targetPosition.z -= 0.01f; // tiny offsets to z
 
-                    OverlayTile1 tile = hit.Value.collider.gameObject.GetComponent<OverlayTile1>();
+                    OverlayTile1 tile = hit.Value.collider.gameObject.GetComponent<OverlayTile1>(); // which tile to spawn
 
                     // get out if tile not found
                     if (tile == null)
@@ -82,6 +95,34 @@ public class MouseController1 : MonoBehaviour
                     cursor.transform.position = tile.transform.position; // set cursor location to the overlay
 
                     cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
+
+                    // spawn player before Turn starts
+                    if (TurnManager.Instance.State == TurnState.PlayerSpawn && Input.GetMouseButtonDown(0))
+                    {
+                        // tile not found get out
+                        if (tile == null) return;
+
+                        // if tile is being used get out
+                        if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) return;
+
+                        characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+
+                        PositionCharacterOnLine(tile); // where to spawn
+
+                        characterInfo.PlayerSetTile(tile); // set up the player tile
+
+                        TurnManager.Instance.SetTurnState(TurnState.PlayerStart); // after respawn starts turn
+
+                        PlayerCombatCheck.Instance?.PlayerSetUp(); // set up player status
+                        return;
+                    }
+
+                    // check for attack input if key press is A
+                    if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        currentAction = PlayerAction.Attack;
+                        Debug.Log("Attack Mode on!");
+                    }
 
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -105,6 +146,23 @@ public class MouseController1 : MonoBehaviour
                         previouslySelectedTile = tile; // shows current tile and save it
 
                         //Debug.Log($"Clicked on tile: {overlayTile.name}");
+
+                        // Attack mode on
+                        if (currentAction == PlayerAction.Attack && Input.GetMouseButtonDown(0))
+                        {
+                            EnemyInfo enemy = GetEnemyMouseClick(); // check for enemy status
+
+                            Debug.Log(enemy == null ? "No enemy under mouse click" : $"Enemy clicked: {enemy.name}"); // display enemy if clicked works
+
+                            // enemy exist attack
+                            if (enemy != null)
+                            {
+                                PlayerCombatCheck.Instance.PlayerAttackCheck(enemy); // passes the enemy over to finalize the attack
+
+                                currentAction = PlayerAction.None; // set the player action to none
+                                return;
+                            }
+                        }
 
 
                         if (movementEnabled)
@@ -250,8 +308,8 @@ public class MouseController1 : MonoBehaviour
 
         RaycastHit2D[] hit = Physics2D.RaycastAll(mousePosition2d, Vector2.zero); // raycast is like a imaginary line to find what's infront 
 
-        Debug.DrawRay(mousePosition2d, Vector2.zero, Color.red, 0.2f);
-        Debug.Log($"Hits: {hit.Length}");
+        //Debug.DrawRay(mousePosition2d, Vector2.zero, Color.red, 0.2f);
+        Debug.Log($"All Hits: {hit.Length}");
 
         if (hit.Length > 0)
         {
@@ -259,6 +317,36 @@ public class MouseController1 : MonoBehaviour
         }
 
         return null;
+    }
+
+    private EnemyInfo GetEnemyMouseClick()
+    {
+        // camera not found return null
+        if (Camera.main == null) return null;
+
+        Vector3 mPosition = Input.mousePosition; // mouse input position set up
+
+        mPosition.z = -Camera.main.transform.position.z; // set up the correct z position
+
+        Vector3 mousePositionWorld = Camera.main.ScreenToWorldPoint(mPosition); // get mouse position acorrding to mian cam
+
+        Vector2 mousePosition2d = mousePositionWorld; // new Vector2(mousePositionWorld.x, mousePositionWorld.y ); // get the 2d position x,y
+
+        Collider2D[] hits = Physics2D.OverlapPointAll(mousePosition2d); // layer doesn't work, enemyLayer); // reading it from 2d x,y and layer
+
+        Debug.Log($"Mouse world position: {mousePosition2d}, enemy hits: {hits.Length}"); // debug msg
+
+        foreach (var h in hits)
+        {
+            Debug.Log($"Hit collider: {h.name} layer = {LayerMask.LayerToName(h.gameObject.layer)}"); // debug msg
+
+            EnemyInfo enemy = h.GetComponentInParent<EnemyInfo>(); // get enemyinfo from hit
+
+            // if enemy exist returns the enemy info
+            if (enemy != null) return enemy; 
+        }
+
+        return null; // elsee return null
     }
 
 
@@ -287,6 +375,14 @@ public class MouseController1 : MonoBehaviour
         // Checks to see if movement is enabled, only runs if the movement is currently off
         if (!movementEnabled)
         {
+            EnemyInfo enemy = GetEnemyMouseClick(); // raycast check
+
+            if (enemy != null)
+            {
+                PlayerCombatCheck.Instance.PlayerAttackCheck(enemy);
+                return;
+            }
+
             movementEnabled = true;
         }
     }

@@ -12,16 +12,19 @@ using UnityEngine; // default
 using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 using System.Collections.Generic;  // for the List<T> and dictionary <T, T> for pathfinding
 using Unity.VisualScripting;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public enum TurnState
 {
     MapLoading, // loads map
+    PlayerSpawn, // let player spawn start point
     PlayerStart, // player reset AP
     PlayerAction, // spending AP
     PlayerEnd, // passing to enemy
     EnemyStart, // initialize enemies
     EnemyAction, // attack/patrol/chase
     EnemyEnd, // back to player
+    ClearLevel, // passes the level
     GameOver, // when player dies
     UI       // UI
 }
@@ -37,6 +40,8 @@ public class TurnManager : MonoBehaviour
     //public bool IsPlayerTurn => CurrentPhase == TurnPhase.Player; // flag to check if player's turn?
 
     private bool isInitialized = false; // check too see if enemies are initialized
+
+    private CharacterInfo1 playerInfo; // player's info
 
     private void Awake()
     {
@@ -54,6 +59,8 @@ public class TurnManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // keeps the game object
 
         Debug.Log("TurnManager Awake"); // test
+
+        PlayerSetUp(); // bool function for player set up
     }
 
     private IEnumerator Start()
@@ -78,18 +85,8 @@ public class TurnManager : MonoBehaviour
 
         Debug.Log("Turnmanager initialized"); // debug msg
 
-        SetTurnState(TurnState.PlayerAction); // starting the state Player
+        SetTurnState(TurnState.PlayerSpawn); // Let Player Spawn
     }
-
-    //private void Update()
-    //{
-    //    if (!isInitialized) return; // not initialized return
-
-    //    if (CurrentPhase == TurnPhase.Player && Input.GetKeyDown(KeyCode.Space)) // space ends the player's turn, if is player's turn
-    //        EndPlayerTurn();
-
-    //    //Debug.Log($"{name} turn ended.");
-    //}
 
     private void Update()
     {
@@ -111,6 +108,10 @@ public class TurnManager : MonoBehaviour
         // now by using a switch statement we can link each state to the correct function call
         switch (State)
         {
+            case TurnState.PlayerSpawn: // player spawn before Turn starts
+                Debug.Log("Player pick a spawn point");
+                break;
+
             case TurnState.PlayerStart: // player starts the turn, reset AP
                 PlayerTurnStart(); // start
                 break;
@@ -135,13 +136,18 @@ public class TurnManager : MonoBehaviour
                 SetTurnState(TurnState.PlayerStart); // cycle starts
                 break;
 
+            case TurnState.ClearLevel: // when player clears the level
+                Debug.Log("Next level Ready!");
+                // level manger load new level from here
+                break;
+
             case TurnState.GameOver: // if player died/didn't meet requirements 
                 Debug.Log("GAME OVER!");
                 break;              
         }
 
         // if player is died but the state is not in game over 
-        if (State != TurnState.GameOver && CharacterInfo1.Instance.hp <= 0)
+        if (State != TurnState.GameOver && playerInfo != null && playerInfo.CurrentHP <= 0)
         {
             State = TurnState.GameOver; // change it to Game over state
 
@@ -150,18 +156,6 @@ public class TurnManager : MonoBehaviour
             return;
         }
     }
-
-    //private bool AllEnemiesReady()
-    //{
-    //    foreach (var enemy in enemies) // use a loop to check if enemies ar setup
-    //    {
-    //        if (enemy == null) continue; // if not found skip
-
-    //        else if (!enemy.Initialized) return false; // if not initialized set it to false
-    //    }
-
-    //    return true;// else true
-    //}
 
     public void RegisterEnemy(EnemyController1 enemy)
     {
@@ -175,9 +169,20 @@ public class TurnManager : MonoBehaviour
 
     private void PlayerTurnStart()
     {
-        CharacterInfo1.Instance.ResetAP(); // resets the AP at the beginning of the turn
+        // check if the playerInfo finished loading
+        if (!PlayerSetUp())
+        {
+            Debug.LogWarning("TurnManager => Player not ready yet! delay"); // debug msg
 
-        Debug.Log("Player AP reset to: " + CharacterInfo1.Instance.currentAP); // shows current AP at the begginer of the turn
+            StartCoroutine(WaitForPlayerReady()); // calls the delay function
+            return;
+        }
+
+        playerInfo.ResetAP(); // resets the AP at the beginning of the turn
+
+        Debug.Log("Player AP reset to: " + playerInfo.currentAP); // shows current AP at the begginer of the turn
+
+        Debug.Log("Player Current EN: " + playerInfo.CurrentEN); // shows current EN for debug
 
         // current state is not playerAcution? set it to playerAction
         if (State != TurnState.PlayerAction)
@@ -191,7 +196,7 @@ public class TurnManager : MonoBehaviour
         Debug.Log("Player turn Ended -> Enemy Phase Starting");
 
         // before ending player's turn check if it died
-        if (CharacterInfo1.Instance.hp <= 0)
+        if (playerInfo.CurrentHP <= 0)
         {
             SetTurnState(TurnState.GameOver); // if player died game over state
             return; // get out
@@ -204,9 +209,9 @@ public class TurnManager : MonoBehaviour
 
     public void PlayerSpendAP(int amount)
     {
-        CharacterInfo1.Instance.ApUsed(amount); // instead of directly accessing link the spend through this function
+        playerInfo.ApUsed(amount); // instead of directly accessing link the spend through this function
 
-        Debug.Log($"Player Spent {amount}AP, Remaining: {CharacterInfo1.Instance.currentAP}"); // spend AP, AP left
+        Debug.Log($"Player Spent {amount}AP, Remaining: {playerInfo.currentAP}"); // spend AP, AP left
 
         CheckPlayerAP(); // check if player still have AP left
     }
@@ -217,7 +222,7 @@ public class TurnManager : MonoBehaviour
         if (State != TurnState.PlayerAction) return; 
 
         // if the player AP this turn is 0 end turn
-        if (CharacterInfo1.Instance.currentAP <= 0)
+        if (playerInfo.currentAP <= 0)
         {
             Debug.Log("Player is out of AP, ending your end.");
 
@@ -256,6 +261,11 @@ public class TurnManager : MonoBehaviour
         }
         Debug.Log("All enemies completed their turns -> Player turn Starting"); // debug
 
+        LevelCleared(); // check if all enemies are defeated
+
+        // if the current state is cleared break
+        if (State == TurnState.ClearLevel) yield break; 
+
         SetTurnState(TurnState.EnemyEnd); // enemy turn ended
 
         //CurrentPhase = TurnPhase.Player; // back to player's phase after enmey's turn
@@ -265,12 +275,75 @@ public class TurnManager : MonoBehaviour
         //yield break; 
     }
 
-    // Add this to your UI script
-    
-    //public void OnEndTurnButton()
-    //{
-    //    TurnManager.Instance.EndPlayerTurn(); // ends player's turn
-    //}
+    private void LevelCleared()
+    {
+        Debug.Log($"Enemies left before:{enemies.Count}"); // debug msg
+
+        enemies.RemoveAll(E  => E == null); // remove all null enemies, dead enemies are destroyed when killed
+
+        Debug.Log($"Enemies left after:{enemies.Count}"); // debug msg
+
+        //  enemies check if they are equal to 0 level cleared
+        if (enemies.Count == 0)
+        {
+            Debug.Log("Level Cleared!!!!");
+
+            SetTurnState(TurnState.ClearLevel); // set it to level cleared
+            return;
+        }
+    }
+
+    private bool PlayerSetUp()
+    {
+        playerInfo = GetComponent<CharacterInfo1>(); // set up playerInfo 
+
+        // if the playerInfo was found return 1
+        if (playerInfo != null) return true;
+
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player1"); // use gameobject to find the player's tag 
+
+        // if player obj found set it up to playerInfo
+        if (playerObj != null)
+            playerInfo = playerObj.GetComponent<CharacterInfo1>();
+
+        return playerInfo != null; // check if playerInfo is still null
+    }
+
+    private IEnumerator WaitForPlayerReady()
+    {
+        yield return new WaitUntil(PlayerSetUp); // wait until the Player is set up
+
+        PlayerTurnStart(); // calls the start function again after delay
+    }
 }
+
+//private void Update()
+//{
+//    if (!isInitialized) return; // not initialized return
+
+//    if (CurrentPhase == TurnPhase.Player && Input.GetKeyDown(KeyCode.Space)) // space ends the player's turn, if is player's turn
+//        EndPlayerTurn();
+
+//    //Debug.Log($"{name} turn ended.");
+//}
+
+// Add this to your UI script
+
+//public void OnEndTurnButton()
+//{
+//    TurnManager.Instance.EndPlayerTurn(); // ends player's turn
+//}
+
+//private bool AllEnemiesReady()
+//{
+//    foreach (var enemy in enemies) // use a loop to check if enemies ar setup
+//    {
+//        if (enemy == null) continue; // if not found skip
+
+//        else if (!enemy.Initialized) return false; // if not initialized set it to false
+//    }
+
+//    return true;// else true
+//}
 
 

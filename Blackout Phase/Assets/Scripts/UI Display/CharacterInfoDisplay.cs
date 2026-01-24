@@ -18,7 +18,7 @@ public class CharacterInfoDisplay : MonoBehaviour
             if (textComponents.Length >= 1)
             {
                 // HP display
-                textComponents[0].text = hpPrefix + CharacterInfo1.Instance.hp + "/" + CharacterInfo1.Instance.maxHP;
+                textComponents[0].text = hpPrefix + CharacterInfo1.Instance.CurrentHP + "/" + CharacterInfo1.Instance.maxHP;
             }
             
             if (textComponents.Length >= 2)

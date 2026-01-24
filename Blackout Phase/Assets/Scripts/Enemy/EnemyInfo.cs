@@ -35,15 +35,6 @@ public class EnemyInfo : MonoBehaviour
 
     public OverlayTile1 currentTile => Tile; // where the enemy tile is
 
-    //public OverlayTile EnemySetTile() => currentTile;
-
-    //private void Start()
-    //{
-    //    Debug.Log($"EnemyInfo currentTile = {currentTile}");
-    //    if (currentTile != null)
-    //        Debug.Log($"Enemy starts at grid {currentTile.gridLocation}");
-    //}
-
     public void EnemySetTile(OverlayTile1 newtile)
     {
         Tile = newtile; // set up the tile
@@ -57,9 +48,22 @@ public class EnemyInfo : MonoBehaviour
         {
             Health = 0;
 
+            // reset the tile to empty
+            if (Tile != null)
+                Tile.hasEnemy = false;
+
             Debug.Log($"{name} has died.");
             
             Destroy(this.gameObject);  // destory object enemy
         }
     }
 }
+
+//public OverlayTile EnemySetTile() => currentTile;
+
+//private void Start()
+//{
+//    Debug.Log($"EnemyInfo currentTile = {currentTile}");
+//    if (currentTile != null)
+//        Debug.Log($"Enemy starts at grid {currentTile.gridLocation}");
+//}

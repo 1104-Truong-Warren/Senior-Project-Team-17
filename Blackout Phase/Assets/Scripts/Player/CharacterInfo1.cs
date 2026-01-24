@@ -8,18 +8,33 @@ using UnityEngine; // default
 
 public class CharacterInfo1 : MonoBehaviour
 {
-    private const int maxAP = 2; // action points for player each turn max out at 2 
+    private int maxAP = 2; // action points for player each turn max out at 2 aside from passive skills
+    private int RageMode = 2; // after defeating 2 enemy in a row, enters a special state, player can attack again (extra movement) on top of the AP
 
     [Header("Player Stats")]
     [SerializeField] private int HP;    //  the player's current
     [SerializeField] private int MaxHP; // the player's Max HP
+    [SerializeField] private int EN; // the player's current EN (energey for skills)
+    [SerializeField] private int MaxEN; // the player's max EN
     [SerializeField] private int baseMoveRange; // how far player able to move
+    [SerializeField] private int baseAttk; // the basic attack of player
+    [SerializeField] private int baseAttkRange; // basic attack range of player
+    [SerializeField] private int basehitRate; // the basic hit rate of player
+    [SerializeField] private int baseCriticalRate; // the basic critical rate for player
+    [SerializeField] private int baseCritDamage; // the basic critical damage for player
 
     private OverlayTile1 standingOnTile; // stores the tile
 
     // public accessor for player's info
-    public int hp => HP; 
+    public int CurrentHP => HP; 
     public int maxHP => MaxHP;
+    public int CurrentEN => EN;
+    public int maxEN => MaxEN;
+    public int BaseAttk => baseAttk;
+    public int BaseRange => baseAttkRange;
+
+    // check EN
+    public bool HasEN(int costEN) => EN >= costEN; // left EN right cost (>=) a right symbol
 
     //public int MoveRange => moveRange;
 
@@ -85,6 +100,27 @@ public class CharacterInfo1 : MonoBehaviour
 
             TurnManager.Instance.SetTurnState(TurnState.GameOver); // Game Over!
         }
+    }
+
+    public bool PlayerEnCheck(int costEN)
+    {
+        // if the costEN is less than or equal to 0 free turn, for the rage mode 
+        if (costEN <= 0) return true;
+
+        // if the player EN is less than EN cost return false
+        if (EN < costEN) return false;
+
+        EN -= costEN; // EN - costEN
+
+        return true;
+    } 
+
+    public void RestoreEN(int amountEN)
+    {
+        // if the amount is negative return
+        if (amountEN <= 0) return;
+
+        EN = Mathf.Min(maxEN, EN + amountEN); // compare maxEN and the current EN + restore amount and use the minimum, make sure we don't over cap the EN limit
     }
         
 }

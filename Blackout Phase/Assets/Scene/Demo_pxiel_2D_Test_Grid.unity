@@ -500,6 +500,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083f98c2e12da6c48851bbbf217a8a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  currentAction: 0
   cursor: {fileID: 225022930}
   characterPrefab: {fileID: 5142501310898631158, guid: e551b6a8dc33ec745919d1ebf9efcf62, type: 3}
   characterInfo: {fileID: 0}
@@ -980,6 +984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 491550074}
   - component: {fileID: 491550073}
+  - component: {fileID: 491550075}
   m_Layer: 0
   m_Name: TurnManager
   m_TagString: Untagged
@@ -1015,6 +1020,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &491550075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491550072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6988e471686085f4eb9b1c49cdaddf06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicAttkDamage: 0
+  basicAttckRange: 0
+  basicAttkAPcost: 0
+  basicAttkENcost: 0
+  SDbasicAttkSkill: {fileID: 11400000, guid: afdec3a6de293f644b2f2dac6b4db4a9, type: 2}
 --- !u!1 &633539108
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,6 +2129,10 @@ PrefabInstance:
     - target: {fileID: 6960028506073106077, guid: 53c24059186a6a24597ea94e404ac891, type: 3}
       propertyPath: m_Name
       value: PauseCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960028506073106077, guid: 53c24059186a6a24597ea94e404ac891, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9108746490460574197, guid: 53c24059186a6a24597ea94e404ac891, type: 3}
       propertyPath: m_Pivot.x

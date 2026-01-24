@@ -365,7 +365,7 @@ public class EnemyController1 : MonoBehaviour
         else //if (playerInfo != null) // if player found damage them 
             playerInfo.PlayerTakeDamage(enemyInfo.EnemyDmg);
 
-        Debug.Log($"{name} attacked the player for {enemyInfo.EnemyDmg} damage! Player current HP: {playerInfo.hp}"); // debug
+        Debug.Log($"{name} attacked the player for {enemyInfo.EnemyDmg} damage! Player current HP: {playerInfo.CurrentHP}"); // debug
     }
 
     private IEnumerator MoveTowardPlayer()
