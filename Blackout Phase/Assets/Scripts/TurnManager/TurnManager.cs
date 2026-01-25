@@ -271,6 +271,15 @@ public class TurnManager : MonoBehaviour
     //{
     //    TurnManager.Instance.EndPlayerTurn(); // ends player's turn
     //}
+
+    // Added by Warren: Needed to add this function because the GAME OVER screen keeps reappearing because the TurnManager game over state keeps looping.
+    // This fixed the problem, it forces the reset of the player's turn state.
+    public void ForceResetToPlayerTurn()
+    {
+        State = TurnState.PlayerAction;
+        Debug.Log("TurnManager: Force reset to PlayerAction state");
+    }
+
 }
 
 
