@@ -1,9 +1,9 @@
-// The purpose of this script is to add and control the main menu functionality, including starting the game by loading the main gameplay scene and existing the application when the user selects the quit button.
 // Warren
+// The purpose of this script is to add and control the main menu functionality, including starting the game by loading the main gameplay scene and existing the application when the user selects the quit button.
+// Resource: https://www.youtube.com/watch?v=-GWjA6dixV4 - For setting up main menu and the implementation of start game button and quitting to desktop
+
 using UnityEngine;
 using UnityEngine.SceneManagement; // This built-in library is used to load and manage scenes, allow to switch between various and different scenes.
-
-// Resource: https://www.youtube.com/watch?v=-GWjA6dixV4
 
 public class MainMenu : MonoBehaviour
 {
