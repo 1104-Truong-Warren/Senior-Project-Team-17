@@ -45,6 +45,11 @@ public class GameOverSceneManager : MonoBehaviour
     // Loads the Title Screen scene.
     void GoToMainMenu()
     {
+    if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.ForceResetToPlayerTurn(); 
+        }
+    
         Debug.Log("Going to main menu");
         SceneManager.LoadScene("TitleScreen");
     }
