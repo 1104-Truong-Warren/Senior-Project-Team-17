@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame() // Calls in Unity's built-in SceneMananger function, it will load the scene depending on the name.
     {
-        SceneManager.LoadScene("2D_Test_Grid");
+        SceneManager.LoadScene("Demo_pxiel_2D_Test_Grid");
     }
 
     // Later on, will implement a settings button, which will load another scene in which the user can adjust their play style, such as increasing volume, adjusting controls, enable camera functionalities, etc.
