@@ -90,7 +90,7 @@ public class DamageObserver : MonoBehaviour
         
         // Set timer, such as the hide time
         hideTime = Time.time + displayTime;
-        isShowing =
+        isShowing = true;
         
         Debug.Log($"DamageObserver: {attackerName} hit for {damage} damage");
     }
@@ -101,6 +101,7 @@ public class DamageObserver : MonoBehaviour
         if (damageText != null) damageText.gameObject.SetActive(false);
         if (attackerText != null) attackerText.gameObject.SetActive(false);
         isShowing = false;
+    }
     
         // Determines which enemy likely attacked the player
         string FindAttackingEnemy()
@@ -140,6 +141,5 @@ public class DamageObserver : MonoBehaviour
             }
             
             return "Enemy"; // Default name 
-        }
-    }
+        }  
 }
