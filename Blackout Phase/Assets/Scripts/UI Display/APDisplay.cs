@@ -5,6 +5,9 @@
 // No longer in use because this was an attempt to NOT use TextMeshPro and instead work with Unity's default UI.
 
 
+using UnityEngine;
+using UnityEngine.UI;
+
 public class APDisplay : MonoBehaviour
 {
     private Text apText;

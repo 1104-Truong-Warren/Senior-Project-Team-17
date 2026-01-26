@@ -27,7 +27,7 @@ public class DamageObserver : MonoBehaviour
         // Get initial HP, provides access to player's health from CharacterInfo1
         if (CharacterInfo1.Instance != null)
         {
-            lastPlayerHP = CharacterInfo1.Instance.hp;
+            lastPlayerHP = CharacterInfo1.Instance.CurrentHP;
             Debug.Log($"DamageObserver: Started. Player HP = {lastPlayerHP}");
         }
         
@@ -45,7 +45,7 @@ public class DamageObserver : MonoBehaviour
             return;
         }
         
-        int currentHP = CharacterInfo1.Instance.hp;
+        int currentHP = CharacterInfo1.Instance.CurrentHP;
         
         // Check if player took damage by comparing with previous frame's HP
         if (currentHP < lastPlayerHP)
