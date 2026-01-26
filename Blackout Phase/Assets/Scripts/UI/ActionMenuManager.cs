@@ -58,10 +58,8 @@ public class ActionMenuManager : MonoBehaviour
     {
         inventoryScreen.SetActive(true);
 
-        bool tempBool = menuAnimator.GetBool("isCollapsed");
-        tempBool = !tempBool;
-
-        if (tempBool)
+        // If Action Menu open, close it
+        if (!menuAnimator.GetBool("isCollapsed"))
         {
             menuAnimator.SetBool("isCollapsed", true);
         }
@@ -73,9 +71,22 @@ public class ActionMenuManager : MonoBehaviour
     {
         inventoryScreen.SetActive(false);
 
+        // If Action Menu closed, open it
         if (menuAnimator.GetBool("isCollapsed"))
         {
             menuAnimator.SetBool("isCollapsed", false);
+        }
+    }
+
+    public void ToggleInventoryScreen()
+    {
+        if (inventoryScreen.activeSelf)
+        {
+            CloseInventoryScreen();
+        }
+        else
+        {
+            OpenInventoryScreen();
         }
     }
 }

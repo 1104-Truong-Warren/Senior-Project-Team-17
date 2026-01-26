@@ -25,6 +25,11 @@ public class KeybindManager : MonoBehaviour
     // reference to ActionMenuManager.cs to toggle action menu
     public ActionMenuManager actionMenuManager;
 
+    // INVENTORY
+    // user-bound key to open inventory (default I key)
+    public InputAction toggleInventoryAction;
+    // no other references needed, ActionMenuManager already present
+
     // ADD OTHER KEYBINDS HERE WITH SAME FORMAT AS NEEDED
 
 
@@ -34,6 +39,10 @@ public class KeybindManager : MonoBehaviour
         // Connect movement action
         toggleMovementAction = InputSystem.actions.FindAction("MoveToggle");
         Debug.Log("Toggle Movement Action set up");
+
+        // Connect inventory action
+        toggleInventoryAction = InputSystem.actions.FindAction("InventoryToggle");
+        Debug.Log("Toggle Inventory Action set up");
 
         // ADD OTHER KEYBINDS HERE WITH SAME FORMAT AS NEEDED
     }
@@ -48,6 +57,14 @@ public class KeybindManager : MonoBehaviour
             mouseController.ToggleMovement();
             actionMenuManager.ToggleMenu();
             Debug.Log("M key pressed");
+        }
+
+        // Check for toggle inventory key press
+        // References ActionMenuManager.cs
+        if (toggleInventoryAction.WasPressedThisFrame())
+        {
+            actionMenuManager.ToggleInventoryScreen();
+            Debug.Log("I key pressed");
         }
 
         // ADD OTHER KEYBINDS HERE WITH SAME FORMAT AS NEEDED
