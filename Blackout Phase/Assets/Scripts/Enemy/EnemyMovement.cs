@@ -15,6 +15,8 @@ public class EnemyMovement : MonoBehaviour
 
     private EnemyInfo enemyInfo; // access enemyInfo
 
+    private SpriteRenderer spriteRenderer; // for enemy sprite
+
     private void Awake()
     {
         enemyInfo = GetComponent<EnemyInfo>(); // setup the enemyinfo
@@ -42,6 +44,7 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator MoveStep(OverlayTile1 tile)
     {
+        // clear old tile
         if (enemyInfo.currentTile != null)
             enemyInfo.currentTile.hasEnemy = false; // the tile has no enemy flag
 
@@ -51,21 +54,28 @@ public class EnemyMovement : MonoBehaviour
 
         while (Vector2.Distance(transform.position, targetPostion) > 0.01f) // if the distance is > 0.01f move towards the position
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetPostion, moveSpeed * Time.deltaTime); // how fast it moves
+            //transform.position = Vector2.MoveTowards(transform.position, targetPostion, moveSpeed * Time.deltaTime); // how fast it moves
 
-            //// make sure the sprite works even moving 
-            //if (spriteRender != null)
-            //    spriteRender.sortingOrder = 999;
+            var current = transform.position; // current sprite position
+
+            var target = new Vector3(targetPostion.x, targetPostion.y, current.z); // change the target position x,y but keep the z
+
+            transform.position = Vector3.MoveTowards(current, target, (moveSpeed * Time.deltaTime)); // moving from current to target tile, how fast it moves
+
+            //// make sure the sprite works even moving, high layer 
+            if (spriteRenderer != null)
+                spriteRenderer.sortingOrder = 999;
 
             yield return null;
-
-
-            enemyInfo.EnemySetTile(tile); // set enemy tile
-
-            tile.hasEnemy = true; // now has enemy moved over
-
-            transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y + 0.01f, // a little y offset
-                tile.transform.position.z);
         }
+
+        enemyInfo.EnemySetTile(tile); // set enemy tile
+
+        tile.hasEnemy = true; // now has enemy moved over
+
+        transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y + 0.01f, // a little y offset
+            tile.transform.position.z);
+
+        Debug.Log($"{name} moved to {enemyInfo.currentTile.gridLocation}"); // debug msg
     }
 }

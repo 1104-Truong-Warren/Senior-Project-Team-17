@@ -6,13 +6,18 @@
 // Weijun
 
 using UnityEngine; // default
-using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
+using System.Collections;
+using NUnit.Framework;
+using System.Collections.Generic; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 
 public class EnemySpwawan : MonoBehaviour
 {
     [Header("Enemy set up")]
-    [SerializeField] GameObject enemyPrefab; // enemy prefab
-    [SerializeField] Vector2Int spawnGridPosition;// where it starts
+    [SerializeField] private GameObject enemyPrefab; // enemy prefab
+    [SerializeField] private Vector2Int spawnGridPosition;// where it starts
+
+    [Header("Patrol points")]
+    [SerializeField] private List<Vector2Int> patrolPoints = new List<Vector2Int>(); // array list of enemy patrol points
 
     //private EnemyInfo enemyInfo; // accessor
 
@@ -43,6 +48,8 @@ public class EnemySpwawan : MonoBehaviour
         EnemyInfo enemyInfo = enemy.GetComponent<EnemyInfo>(); // set up the info
 
         EnemyController1 enemyController = enemy.GetComponent<EnemyController1>(); // controlls enemy
+
+        enemyController.SetPatrolPoints(patrolPoints, 0); // set up the patrol points for enemy
 
         // enemyInfo or control not found displays debug and get out
         if (enemyInfo == null || enemyController == null)

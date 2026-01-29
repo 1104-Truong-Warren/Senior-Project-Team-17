@@ -168,12 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0fb02989e94b94fab395c7e7186126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {x: -7, y: -4}
-  - {x: -7, y: -1}
-  - {x: -7, y: 2}
-  - {x: -4, y: 2}
-  - {x: -1, y: 2}
+  patrolPoints: []
 --- !u!114 &3800167357023009846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e04caf6c39f884a8d8212033d33105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 6
 --- !u!114 &-6424244232038671058
 MonoBehaviour:
   m_ObjectHideFlags: 0

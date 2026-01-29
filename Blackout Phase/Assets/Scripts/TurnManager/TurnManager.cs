@@ -75,9 +75,9 @@ public class TurnManager : MonoBehaviour
 
         //CurrentPhase = TurnPhase.Player; // Palyer can not start turn
 
-        EnemyController1[] found = FindObjectsByType<EnemyController1>(FindObjectsSortMode.InstanceID); // got through the list and find enemies
+        //EnemyController1[] found = FindObjectsByType<EnemyController1>(FindObjectsSortMode.InstanceID); // got through the list and find enemies
 
-        enemies.AddRange(found); // add the nemeies
+        //enemies.AddRange(found); // add the nemeies
 
         Debug.Log($"TurnManager: Found {enemies.Count} enemies in scene."); // debug
 
@@ -159,11 +159,18 @@ public class TurnManager : MonoBehaviour
 
     public void RegisterEnemy(EnemyController1 enemy)
     {
+        // if enemy is null get out
+        if (enemy == null) return; 
+
         if (!enemies.Contains(enemy)) // enemies not found add them
         {
             enemies.Add(enemy); // add enemies
 
             Debug.Log($"TurnManager: Registerd enemy {enemy.name}"); // debug
+        }
+        else
+        {
+            Debug.Log($"TurnManager: Duplicated enemy! {enemy.name}"); // debug 
         }
     }
 
@@ -328,6 +335,13 @@ public class TurnManager : MonoBehaviour
     {
         State = TurnState.PlayerAction;
         Debug.Log("TurnManager: Force reset to PlayerAction state");
+    }
+
+    public void DeleteEnmey(EnemyController1 enemy)
+    {
+        enemies.Remove(enemy); // removes this enemy
+
+        enemies.RemoveAll(e => e == null); // deletes all the null enemies
     }
 
 }

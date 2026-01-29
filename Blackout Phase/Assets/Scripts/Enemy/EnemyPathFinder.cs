@@ -21,6 +21,18 @@ public class EnemyPathFinder
 
     public List<OverlayTile1> FindPath(OverlayTile1 start, OverlayTile1 end)
     {
+        // use a foreach to set up the key values for G, H, previous
+        foreach (var keyValue in MapManager1.Instance.map)
+        {
+            var tile = keyValue.Value; // reference to the key value
+
+            tile.G = int.MaxValue; // G is the max
+
+            tile.H = 0; // H is 0 but calculate it later
+
+            tile.previousTile = null; // null not set up
+        }
+
         // if start or end not found returns a new list
         if (start == null || end == null)
         {
@@ -47,8 +59,8 @@ public class EnemyPathFinder
         {
             OverlayTile1 current = open.OrderBy(n => n.F).First(); // orders them
 
-            if (current == end)
-                return BuildPath(start, end); // reaches the end start buiding
+            if (current.gridLocation == end.gridLocation)
+                return BuildPath(start, current); // reaches the current to start, start buiding
 
             open.Remove(current); // deletete it
 
@@ -67,13 +79,17 @@ public class EnemyPathFinder
                  
                 int G = current.G + 1; // calculation for movenment, start-> A->B -> current, G = current+1
 
-                if (!open.Contains(neighbour) || G < neighbour.G) // if it doesn't containt neighbour tile or it's shorter than our distance?
+                if (G < neighbour.G) // if it doesn't containt neighbour tile or it's shorter than our distance?
                 {
                     neighbour.G = G; // set it to the new distance
 
                     neighbour.H = Manhattan(neighbour, end); // pass it to do the calculation
 
                     neighbour.previousTile = current; // set the previousTile to current
+
+                    // if the neighbour tile is the end tile return and build it
+                    if (neighbour.gridLocation == end.gridLocation)
+                        return BuildPath(start, neighbour);
 
                     if (!open.Contains(neighbour))
                         open.Add(neighbour); // if it is not in the contained list add it
@@ -105,9 +121,12 @@ public class EnemyPathFinder
         OverlayTile1 current = end; // current overlay is the end result
 
         // list is not empty and not equal to end result
-        while (current != start && current != null)
+        while (current != null)
         {
             path.Add(current); // add the current into the list
+
+            // if the current tile is the start break
+            if (current.gridLocation == start.gridLocation) break;
 
             current = current.previousTile; //  backwards writting in data
         }

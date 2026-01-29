@@ -20,7 +20,7 @@ public class EnemyController1 : MonoBehaviour
     [Header("Patrol points")]
     [SerializeField] private List<Vector2Int> patrolPoints = new List<Vector2Int>(); // patrol points
 
-    private int patrolIndex = 1; // where at array
+    private int patrolIndex = 0; // where at array
     private int alterCounter = 0; // how many turns enemy stays altered
 
     private EnemyInfo enemyInfo; // enmey's status
@@ -52,85 +52,9 @@ public class EnemyController1 : MonoBehaviour
     private void Start()
     {
         Debug.Log("EnemyController start - currentTile = " + enemyInfo.currentTile); // debug
+
+        enemyState = EnemyState.Patrol; // start off by patrolling
     }
-
-    //public void SetInitialized()
-    //{
-    //    Initialized = true;
-    //}
-
-    //private IEnumerator Start()
-    //{
-    //    yield return new WaitUntil(() => MapManager.Instance != null); // wait until Map is initialized 
-
-    //    yield return new WaitUntil(() => enemyInfo.currentTile != null); // wait until TurnManager is set up
-
-    //    yield return new WaitUntil(() => MapManager.Instance.map.Count > 0); // wait until map finshed load
-
-    //    scanner = GetComponent<EnemyTileScanner>();
-
-    //    pathFinder = new EnemyPathFinder(scanner); // setup path finding
-
-    //    Debug.Log("Scanner from Get Component = " + scanner); // debug
-
-    //    Debug.Log("Scanner inside pathfinder = " + pathFinder.TestScanner()); // debug
-
-
-    //    //StartCoroutine(TestPatrol());
-    //}
-
-    //private IEnumerator Start()
-    //{
-    //    yield return new WaitUntil(() => MapManager.Instance != null); // wait until Map is initialized 
-
-    //    yield return new WaitUntil(() => TurnManager.Instance != null); // wait until TurnManager is set up
-
-    //    enemyInfo = GetComponent<EnemyInfo>(); // setup enmey's status
-
-    //    //pathFinder = new PathFinder(); // setup pathfinder
-
-    //    enemyPatrol = GetComponent<EnemyPatrol>(); // setup enemy patrol
-
-    //    //if (player != null) // player not found? check for the tag "Player" and set that to our game object
-    //    //    player = GameObject.FindWithTag("Player").transform;
-    //    //else
-    //    //    Debug.LogWarning("Player not found. Make sure the player has the Player tag.");
-    //    //player = GameObject.FindWithTag("Player").transform; // setup the player object
-
-
-    //    //if (player == null) // if player not found find the object with tag "Player"
-    //    //{
-    //    //    Debug.LogWarning("Player not assigned to EnemyController!");
-
-    //    //    GameObject playerObj = GameObject.FindWithTag("Player");
-
-    //    //    if (playerObj != null) // if found set that to the player obj
-    //    //        player = playerObj.transform;
-
-    //    //}
-
-    //    yield return new WaitForSeconds(0.1f); // wait for 0.1 seconds
-
-    //    isReady = true; // now player is ready
-
-    //    Debug.Log($"{name} is fully initialized and ready"); // debug test
-
-    //    //StartCoroutine(FindPlayer()); // starts the turn for enemy
-    //}
-
-    //private IEnumerator FindPlayer()
-    //{
-    //    yield return new WaitUntil(() => GameObject.FindWithTag("Player") != null); // wait until the player tag is found
-
-    //    player = GameObject.FindWithTag("Player").transform; // setup the player object
-
-    //    //StartCoroutine(TakeTurn()); // calls for TakeTurn
-    //    yield return null; // wait for 1 frame
-
-    //    TurnManager.Instance.EndEnemyTurn(); // ends enemy turn
-
-    //    isReady = true; // if player found toggle flag
-    //}
 
     // using finite states to control the enemy ai
     public IEnumerator TakeTurn()
@@ -176,13 +100,13 @@ public class EnemyController1 : MonoBehaviour
             }
         }
 
-        // enemy is alter mode and player not found (alter mode 2)
-        else if (enemyState == EnemyState.Alter && !PlayerDetectRange())
-        {
-            Debug.Log($"{name}: Player got away and not deteccted, back to patrol"); // debug
+        //// enemy is alter mode and player not found (alter mode 2)
+        //else if (enemyState == EnemyState.Alter && !PlayerDetectRange())
+        //{
+        //    Debug.Log($"{name}: Player got away and not deteccted, back to patrol"); // debug
 
-            enemyState = EnemyState.Alter; // change to patrol
-        }
+        //    enemyState = EnemyState.Alter; // change to patrol
+        //}
 
         // player not found or player escaped back to patrol (patrol state)
         else if (enemyState == EnemyState.Patrol)
@@ -191,90 +115,6 @@ public class EnemyController1 : MonoBehaviour
             yield break;
         }
     }
-
-    // Old enemy movement control version 
-    //    // if enemy tile is null display a debug
-    //    if (enemyInfo.currentTile == null)
-    //    {
-    //        Debug.LogError($" {name} has no currentTile, skipping turn.");
-    //        yield break;
-    //    }
-
-    //    //Debug.Log("Enemy current tile = " + enemyInfo.currentTile.gridLocation); debug
-
-    //    // if patrolPoints doesn't exisit display debug msg
-    //    if (patrolPoints == null || patrolPoints.Count == 0)
-    //    {
-    //        Debug.LogWarning($"{name} has no patrol points, skipping turn");
-    //        yield break;
-    //    }
-
-    //    Vector2Int targetGrid = patrolPoints[patrolIndex]; // find the next patrol point
-
-    //    //patrolIndex = (patrolIndex + 1) % patrolPoints.Count; // index calculation for example 0, 1 % patrolPoints = 1, 2%3 = 2, 3%3 = 0; 0 -> 1 ->2
-
-    //    Debug.Log($"{name} Patrol target = {targetGrid}"); // debug msg
-
-    //    OverlayTile targetTile = MapManager.Instance.GetTile(targetGrid); // get the tile from map Manager
-
-    //    if (targetTile == null) // if next tile not found display error
-    //    {
-    //        Debug.LogError($"{name} No tile at Patrol target {targetGrid}"); // debug msg
-    //        yield break;
-    //    }
-
-    //    Debug.Log($"{name} current tile = {enemyInfo.currentTile.gridLocation}"); // debug msg
-    //    Debug.Log("Calling pathfinder..."); // debug msg
-
-    //    List<OverlayTile> path = pathFinder.FindPath(enemyInfo.currentTile, targetTile); // current tile to next tile
-
-    //    if (path.Count <= 1)
-    //    {
-    //        Debug.LogWarning("Path empty, enemy not moving this turn"); // debug msg
-    //        yield break;
-    //    }
-
-    //    // if the path is not empty display it
-    //    //if (path.Count > 0)
-
-    //    //List<OverlayTile> trimmedPath = path.GetRange(1, path.Count - 1); // only go from 1 -> next
-
-    //    // current skip 0 -> start from 1
-    //    yield return movement.MoveAlong(path.Skip(1).ToList()); // if path count > 0 delay return, got through the patrol points, skips whole path
-
-    //    // after moving check if player in range if so attack
-    //    if (PlayerInAttRangeCheck())
-    //    {
-    //        Debug.Log($"In enemy range! {name} attacks the player!"); // debug
-
-    //        AttackPlayer(); // if player in range attack them
-    //        yield break; // get out, not moving this turn
-    //    }
-
-    //    if (enemyInfo.currentTile == targetTile) // if we reach the tile update it
-    //        UpdateIndex(); // updates the index
-
-    //    //if (!isReady)
-    //    //{
-    //    //    Debug.LogWarning("Enemy not ready yet - skipping turn");
-
-    //    //    yield break;
-    //    //}
-
-    //    //Debug.Log($"{name} is taking its turn.");
-
-    //    ////yield return new WaitForSeconds(0.5f); // wait a little before returns
-
-    //    //if (enemyPatrol != null) // if enemyPatrol exist do the patrol
-    //    //{
-    //    //    yield return StartCoroutine(enemyPatrol.EnemyPatrolStep());
-    //    //}
-    //    ////yield return null;
-
-    //    ////TurnManager.Instance.EndEnemyTurn(); // end enemy's Turn
-    //}
-
-
 
     private void UpdateIndex()
     {
@@ -433,6 +273,13 @@ public class EnemyController1 : MonoBehaviour
 
         OverlayTile1 targetTile = MapManager1.Instance.GetTile(targetGrid); // get the tile from map Manager
 
+        // if target tile and enemy current tile both are found and they are equal update the index
+        if (targetTile != null && enemyInfo.currentTile != null && enemyInfo.currentTile.gridLocation == targetTile.gridLocation)
+        {
+            UpdateIndex(); // index update
+            yield break;
+        }
+
         if (targetTile == null) // if next tile not found display error
         {
             Debug.LogError($"{name} No tile at Patrol target {targetGrid}"); // debug msg
@@ -456,7 +303,7 @@ public class EnemyController1 : MonoBehaviour
 
         List<OverlayTile1> path = pathFinder.FindPath(enemyInfo.currentTile, targetTile); // current tile to next tile
 
-        if (path.Count <= 1)
+        if (path.Count < 2)
         {
             Debug.LogWarning("Path empty, enemy not moving this turn"); // debug msg
             yield break;
@@ -465,7 +312,7 @@ public class EnemyController1 : MonoBehaviour
         // current skip 0 -> start from 1
         yield return movement.MoveAlong(path.Skip(1).ToList()); // if path count > 0 delay return, got through the patrol points, skips whole path
 
-        if (enemyInfo.currentTile == targetTile) // if we reach the tile update it
+        if (enemyInfo.currentTile.gridLocation == targetTile.gridLocation) // if we reach the tile update it
             UpdateIndex(); // updates the index
     }
 
@@ -522,4 +369,190 @@ public class EnemyController1 : MonoBehaviour
 
         return bestTile; // returns the closest adjacent tile  
     }
+
+    public void SetPatrolPoints(List<Vector2Int> pPoints, int startIndex = 0)
+    {
+        patrolPoints = new List<Vector2Int>(pPoints); // clone the patrol points for individual enemy
+
+        patrolIndex = Mathf.Clamp(startIndex, 0, Mathf.Max(0, patrolPoints.Count - 1)); // the patrol range is bewteen 0 - max count
+
+        movingForward = true; // direction of movement
+
+        // enemyInfo and enemy current tile exist and patrolPoints is vaild, change the starting tile to the next index
+        if (enemyInfo != null && enemyInfo.currentTile != null && patrolPoints.Count > 0)
+        {
+            Vector2Int currentTile = new Vector2Int(enemyInfo.currentTile.gridLocation.x, enemyInfo.currentTile.gridLocation.y); // set current tile based on enemy current position x,y
+
+            // current patrol point is equal to the tile and patrol points are more than one go to next point
+            if (patrolPoints[patrolIndex] == currentTile && patrolPoints.Count > 1)
+                patrolIndex = (patrolIndex + 1) % patrolPoints.Count; // update the indext to next patrol point
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // deltes the destoryed enemy
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.DeleteEnmey(this);
+    }
 }
+
+// Old enemy movement control version 
+//    // if enemy tile is null display a debug
+//    if (enemyInfo.currentTile == null)
+//    {
+//        Debug.LogError($" {name} has no currentTile, skipping turn.");
+//        yield break;
+//    }
+
+//    //Debug.Log("Enemy current tile = " + enemyInfo.currentTile.gridLocation); debug
+
+//    // if patrolPoints doesn't exisit display debug msg
+//    if (patrolPoints == null || patrolPoints.Count == 0)
+//    {
+//        Debug.LogWarning($"{name} has no patrol points, skipping turn");
+//        yield break;
+//    }
+
+//    Vector2Int targetGrid = patrolPoints[patrolIndex]; // find the next patrol point
+
+//    //patrolIndex = (patrolIndex + 1) % patrolPoints.Count; // index calculation for example 0, 1 % patrolPoints = 1, 2%3 = 2, 3%3 = 0; 0 -> 1 ->2
+
+//    Debug.Log($"{name} Patrol target = {targetGrid}"); // debug msg
+
+//    OverlayTile targetTile = MapManager.Instance.GetTile(targetGrid); // get the tile from map Manager
+
+//    if (targetTile == null) // if next tile not found display error
+//    {
+//        Debug.LogError($"{name} No tile at Patrol target {targetGrid}"); // debug msg
+//        yield break;
+//    }
+
+//    Debug.Log($"{name} current tile = {enemyInfo.currentTile.gridLocation}"); // debug msg
+//    Debug.Log("Calling pathfinder..."); // debug msg
+
+//    List<OverlayTile> path = pathFinder.FindPath(enemyInfo.currentTile, targetTile); // current tile to next tile
+
+//    if (path.Count <= 1)
+//    {
+//        Debug.LogWarning("Path empty, enemy not moving this turn"); // debug msg
+//        yield break;
+//    }
+
+//    // if the path is not empty display it
+//    //if (path.Count > 0)
+
+//    //List<OverlayTile> trimmedPath = path.GetRange(1, path.Count - 1); // only go from 1 -> next
+
+//    // current skip 0 -> start from 1
+//    yield return movement.MoveAlong(path.Skip(1).ToList()); // if path count > 0 delay return, got through the patrol points, skips whole path
+
+//    // after moving check if player in range if so attack
+//    if (PlayerInAttRangeCheck())
+//    {
+//        Debug.Log($"In enemy range! {name} attacks the player!"); // debug
+
+//        AttackPlayer(); // if player in range attack them
+//        yield break; // get out, not moving this turn
+//    }
+
+//    if (enemyInfo.currentTile == targetTile) // if we reach the tile update it
+//        UpdateIndex(); // updates the index
+
+//    //if (!isReady)
+//    //{
+//    //    Debug.LogWarning("Enemy not ready yet - skipping turn");
+
+//    //    yield break;
+//    //}
+
+//    //Debug.Log($"{name} is taking its turn.");
+
+//    ////yield return new WaitForSeconds(0.5f); // wait a little before returns
+
+//    //if (enemyPatrol != null) // if enemyPatrol exist do the patrol
+//    //{
+//    //    yield return StartCoroutine(enemyPatrol.EnemyPatrolStep());
+//    //}
+//    ////yield return null;
+
+//    ////TurnManager.Instance.EndEnemyTurn(); // end enemy's Turn
+//}
+
+//public void SetInitialized()
+//{
+//    Initialized = true;
+//}
+
+//private IEnumerator Start()
+//{
+//    yield return new WaitUntil(() => MapManager.Instance != null); // wait until Map is initialized 
+
+//    yield return new WaitUntil(() => enemyInfo.currentTile != null); // wait until TurnManager is set up
+
+//    yield return new WaitUntil(() => MapManager.Instance.map.Count > 0); // wait until map finshed load
+
+//    scanner = GetComponent<EnemyTileScanner>();
+
+//    pathFinder = new EnemyPathFinder(scanner); // setup path finding
+
+//    Debug.Log("Scanner from Get Component = " + scanner); // debug
+
+//    Debug.Log("Scanner inside pathfinder = " + pathFinder.TestScanner()); // debug
+
+
+//    //StartCoroutine(TestPatrol());
+//}
+
+//private IEnumerator Start()
+//{
+//    yield return new WaitUntil(() => MapManager.Instance != null); // wait until Map is initialized 
+
+//    yield return new WaitUntil(() => TurnManager.Instance != null); // wait until TurnManager is set up
+
+//    enemyInfo = GetComponent<EnemyInfo>(); // setup enmey's status
+
+//    //pathFinder = new PathFinder(); // setup pathfinder
+
+//    enemyPatrol = GetComponent<EnemyPatrol>(); // setup enemy patrol
+
+//    //if (player != null) // player not found? check for the tag "Player" and set that to our game object
+//    //    player = GameObject.FindWithTag("Player").transform;
+//    //else
+//    //    Debug.LogWarning("Player not found. Make sure the player has the Player tag.");
+//    //player = GameObject.FindWithTag("Player").transform; // setup the player object
+
+
+//    //if (player == null) // if player not found find the object with tag "Player"
+//    //{
+//    //    Debug.LogWarning("Player not assigned to EnemyController!");
+
+//    //    GameObject playerObj = GameObject.FindWithTag("Player");
+
+//    //    if (playerObj != null) // if found set that to the player obj
+//    //        player = playerObj.transform;
+
+//    //}
+
+//    yield return new WaitForSeconds(0.1f); // wait for 0.1 seconds
+
+//    isReady = true; // now player is ready
+
+//    Debug.Log($"{name} is fully initialized and ready"); // debug test
+
+//    //StartCoroutine(FindPlayer()); // starts the turn for enemy
+//}
+
+//private IEnumerator FindPlayer()
+//{
+//    yield return new WaitUntil(() => GameObject.FindWithTag("Player") != null); // wait until the player tag is found
+
+//    player = GameObject.FindWithTag("Player").transform; // setup the player object
+
+//    //StartCoroutine(TakeTurn()); // calls for TakeTurn
+//    yield return null; // wait for 1 frame
+
+//    TurnManager.Instance.EndEnemyTurn(); // ends enemy turn
+
+//    isReady = true; // if player found toggle flag
+//}
