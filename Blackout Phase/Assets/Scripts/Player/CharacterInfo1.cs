@@ -122,5 +122,49 @@ public class CharacterInfo1 : MonoBehaviour
 
         EN = Mathf.Min(maxEN, EN + amountEN); // compare maxEN and the current EN + restore amount and use the minimum, make sure we don't over cap the EN limit
     }
+
+    // ADDED BY WARREN: New method to increase maximum HP (for level up choices)
+    public void IncreaseMaxHP(int amount)
+    {
+        MaxHP += amount;
+        HP += amount;
+        Debug.Log($"HP increased to {HP}/{MaxHP}");
+        
+        UpdateAllUI();
+    }
+    
+    // New method to increase maximum EN (for level up choices)
+    public void IncreaseMaxEN(int amount)
+    {
+        MaxEN += amount;
+        EN += amount;
+        Debug.Log($"EN increased to {EN}/{MaxEN}");
+        
+        UpdateAllUI();
+    }
+    
+    // New method to increase base attack (for level up choices)
+    public void IncreaseAttack(int amount)
+    {
+        baseAttk += amount;
+        Debug.Log($"Attack increased to {baseAttk}");
+    
+        UpdateAllUI();
+    }
+
+    // New method to update all of the UI and have LevelsManager.cs update it visually on screen during runtime
+    private void UpdateAllUI()
+    {
+        // Find all UI text elements and update them directly
+        CharacterInfoDisplay[] displays = FindObjectsOfType<CharacterInfoDisplay>();
+        
+        if (displays.Length == 0)
+        {
+            Debug.LogWarning("No CharacterInfoDisplay found in scene!");
+            return;
+        }
+        
+        Debug.Log($"Found {displays.Length} UI display(s), updating...");
+    }
         
 }

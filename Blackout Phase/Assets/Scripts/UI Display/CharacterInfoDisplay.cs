@@ -4,42 +4,97 @@
 // It continuously updates the player's Health Points (HP) and the movement range (Move).
 // The script will automatiicaly find and update the TextMeshPro UI elements that are the children of the GameObject it is attached to.
 
-// Resources:
+// Source: https://docs.unity3d.com/ScriptReference/GameObject.GetComponentsInChildren.html - Used to find all TextMeshPro children
+// Source: https://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html - Coroutine for waiting for player spawn
+// Source: https://docs.unity3d.com/ScriptReference/WaitForSeconds.html - Used in coroutine for delayed checks
+// Source: https://docs.unity3d.com/ScriptReference/Time-frameCount.html - Frame-based conditional logging
 
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class CharacterInfoDisplay : MonoBehaviour
 {
-    [Header("Top-Left Display")] // Header to created labled section in Unity inspector.
-    [SerializeField] private string hpPrefix = "HP: "; // Customizable prefix for HP text.
-    [SerializeField] private string movePrefix = "Move: "; // Customizable prefix for movement range.
+    [Header("Top-Left Display")]
+    [SerializeField] private string hpPrefix = "HP: ";
+    [SerializeField] private string movePrefix = "Move: ";
+    [SerializeField] private string attackPrefix = "ATK: ";
+    [SerializeField] private string enPrefix = "EN: ";
+    
+    private CharacterInfo1 playerInfo;
+    private TextMeshProUGUI[] textComponents;
+    private bool playerFound = false;
+    
+    void Start()
+    {
+        textComponents = GetComponentsInChildren<TextMeshProUGUI>();
+        StartCoroutine(FindPlayerRoutine());
+    }
+    
+    IEnumerator FindPlayerRoutine()
+    {
+        Debug.Log("CharacterInfoDisplay: Looking for player...");
+        
+        // Wait until player spawns
+        while (playerInfo == null)
+        {
+            playerInfo = CharacterInfo1.Instance;
+            
+            if (playerInfo == null)
+            {
+                Debug.Log("CharacterInfoDisplay: Player not found yet, waiting...");
+                yield return new WaitForSeconds(0.5f); // Check every 0.5 seconds
+            }
+        }
+        
+        Debug.Log($"CharacterInfoDisplay: Found player! {playerInfo.gameObject.name}");
+        playerFound = true;
+        
+        // Initial UI update
+        UpdateUI();
+    }
     
     void Update()
     {
-
-        // Checks if CharacterInfo1 script is available, on contains the HP and movement data.
-        if (CharacterInfo1.Instance != null)
+        if (playerFound)
         {
-            // Finds all TextMeshPro components that are the children of the GameObject.
-            // Resource: https://docs.unity3d.com/ScriptReference/GameObject.GetComponentsInChildren.html
-            TextMeshProUGUI[] textComponents = GetComponentsInChildren<TextMeshProUGUI>();
-            
-            // Updates HP display if at least one TextMeshPro child exists.
-            if (textComponents.Length >= 1)
-            {
-                // HP display
-                textComponents[0].text = hpPrefix + CharacterInfo1.Instance.CurrentHP + "/" + CharacterInfo1.Instance.maxHP;
-            }
-            
-            // Updates movement range display if at least 2 TextMeshPro children exist.
-            if (textComponents.Length >= 2)
-            {
-                // Move range display
-                int moveRange = CharacterInfo1.Instance.GetMoveRange();
-                // Displays the calculated movement range.
-                textComponents[1].text = movePrefix + moveRange;
-            }
+            UpdateUI();
+        }
+    }
+    
+    private void UpdateUI()
+    {
+        if (playerInfo == null) return;
+        
+        // Debug log to see values
+        if (Time.frameCount % 60 == 0) // Log every second
+        {
+            Debug.Log($"UI Update - HP: {playerInfo.CurrentHP}/{playerInfo.maxHP}, ATK: {playerInfo.BaseAttk}");
+        }
+        
+        // Update HP display
+        if (textComponents.Length >= 1)
+        {
+            textComponents[0].text = hpPrefix + playerInfo.CurrentHP + "/" + playerInfo.maxHP;
+        }
+        
+        // Update Move display
+        if (textComponents.Length >= 2)
+        {
+            int moveRange = playerInfo.GetMoveRange();
+            textComponents[1].text = movePrefix + moveRange;
+        }
+        
+        // Update Attack display
+        if (textComponents.Length >= 3)
+        {
+            textComponents[2].text = attackPrefix + playerInfo.BaseAttk;
+        }
+        
+        // Update EN display
+        if (textComponents.Length >= 4)
+        {
+            textComponents[3].text = enPrefix + playerInfo.CurrentEN + "/" + playerInfo.maxEN;
         }
     }
 }
