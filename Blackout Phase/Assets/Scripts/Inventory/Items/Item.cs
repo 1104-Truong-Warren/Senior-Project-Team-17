@@ -9,4 +9,17 @@ public class Item : ScriptableObject
     public string itemName = "New Item";
     public Sprite icon  = null;
     public bool isDefaultItem = false;
+
+    // virtual function so that derived classes can override it
+    public virtual void Use()
+    {
+        // Use the item
+        // Something may happen
+        Debug.Log("Using " + itemName);
+    }
+
+    public void RemoveFromInventory()
+    {
+        Inventory.instance.Remove(this);
+    }
 }

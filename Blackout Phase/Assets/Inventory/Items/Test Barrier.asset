@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 965d975c01a477340963e467aa5a6956, type: 3}
-  m_Name: Test Item
+  m_Script: {fileID: 11500000, guid: 34ad24b98da3ba342be6486e74dc0f22, type: 3}
+  m_Name: Test Barrier
   m_EditorClassIdentifier: 
-  itemName: Test Shield
-  icon: {fileID: 7336351854047456328, guid: f6fe994edcbf07748a7d73ee710dab32, type: 3}
+  itemName: New Item
+  icon: {fileID: 21300000, guid: e2642e91624823b4fb0fdcb1042d0e95, type: 3}
   isDefaultItem: 0
+  equipSlot: 3
+  healthModifier: 10
+  attackModifier: 0

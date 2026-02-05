@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f6fe994edcbf07748a7d73ee710dab32
+guid: 670e9545a4dee5843bd296eadcb522c1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7336351854047456328
-    second: Armor_Bonus_0
+      213: 2667008397971843834
+    second: Damage_Bonus_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Armor_Bonus_0
+      name: Damage_Bonus_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 84ce6cf3425ffc560800000000000000
-      internalID: 7336351854047456328
+      spriteID: afa681ee10e130520800000000000000
+      internalID: 2667008397971843834
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Armor_Bonus_0: 7336351854047456328
+      Damage_Bonus_0: 2667008397971843834
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
