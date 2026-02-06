@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Test Shield
   icon: {fileID: 21300000, guid: f6fe994edcbf07748a7d73ee710dab32, type: 3}
+  type: Equipment
+  description: Increases max HP by 5
+  flavorText: '"A basic shield"'
   isDefaultItem: 0
   equipSlot: 3
   healthModifier: 5

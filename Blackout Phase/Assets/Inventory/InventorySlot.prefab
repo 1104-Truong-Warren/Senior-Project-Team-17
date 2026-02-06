@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 1504542282053944974}
   - component: {fileID: 4101244863732447985}
   - component: {fileID: 8862894755668426741}
+  - component: {fileID: 356779355997867623}
   m_Layer: 5
   m_Name: ItemButton
   m_TagString: Untagged
@@ -265,6 +266,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &356779355997867623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7277068585249067747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5e91a354914444f87f45fdfaaa9893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseOnCount: 0
+  inventorySlot: {fileID: 7753471313651590717}
+  itemInfoUI: {fileID: 0}
+  currentSlotImage: {fileID: 0}
+  currentSlotName: 
+  currentSlotType: 
+  currentSlotDescription: 
+  currentSlotFlavorText: 
 --- !u!1 &7753471313651590717
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +338,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 787571615247748528}
   removeButton: {fileID: 4573665971925372958}
+  name: 
+  type: 
+  description: 
+  flavorText: 
 --- !u!1 &8479189452003029207
 GameObject:
   m_ObjectHideFlags: 0

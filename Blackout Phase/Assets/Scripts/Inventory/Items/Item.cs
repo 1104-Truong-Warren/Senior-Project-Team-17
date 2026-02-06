@@ -8,6 +8,9 @@ public class Item : ScriptableObject
 {
     public string itemName = "New Item";
     public Sprite icon  = null;
+    public string type = "Default Type";
+    public string description = "Default Description";
+    public string flavorText = "Default Flavor Text";
     public bool isDefaultItem = false;
 
     // virtual function so that derived classes can override it
