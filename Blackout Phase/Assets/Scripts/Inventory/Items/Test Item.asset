@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965d975c01a477340963e467aa5a6956, type: 3}
   m_Name: Test Item
   m_EditorClassIdentifier: 
-  itemName: Test Consumable
-  icon: {fileID: 21300000, guid: 6e7f6fecd617d02468c0c4e450581ddd, type: 3}
+  itemName: Default Name
+  icon: {fileID: 0}
+  type: Default Type
+  description: Default Description
+  flavorText: Default Flavor Text
   isDefaultItem: 0
