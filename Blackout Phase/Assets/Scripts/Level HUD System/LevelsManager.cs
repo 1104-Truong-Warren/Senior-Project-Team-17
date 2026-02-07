@@ -381,7 +381,7 @@ public class LevelsManager : MonoBehaviour
             }
         }
         
-        return true;
+        return true; 
     }
     
     // Shows the level up choice panel and pauses the game
