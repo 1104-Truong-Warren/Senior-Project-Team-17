@@ -28,6 +28,10 @@ public class CharacterInfoDisplay : MonoBehaviour
     [SerializeField] private Image hpBar; // UI Image for HP bar, set to Filled type in Inspector
     [SerializeField] private Image hpBarBackground; // Background image
     
+    [Header("EN Bar Visual")]
+    [SerializeField] private Image enBar; // UI Image for EN bar, set to Filled type in Inspector
+    [SerializeField] private Image enBarBackground; // Background image for EN bar
+    
     private CharacterInfo1 playerInfo;
     private TextMeshProUGUI[] textComponents;
     private bool playerFound = false;
@@ -132,10 +136,24 @@ public class CharacterInfoDisplay : MonoBehaviour
             textComponents[2].text = attackPrefix + playerInfo.BaseAttk;
         }
         
-        // Update EN display
+        // Update EN text display
         if (textComponents.Length >= 4)
         {
             textComponents[3].text = enPrefix + playerInfo.CurrentEN + "/" + playerInfo.maxEN;
+        }
+        
+        // Update EN bar visual
+        if (enBar != null && playerInfo.maxEN > 0)
+        {
+            // Calculate EN percentage (0.0 to 1.0)
+            float enPercentage = (float)playerInfo.CurrentEN / playerInfo.maxEN;
+            
+            // Update bar fill amount
+            enBar.fillAmount = enPercentage;
+        }
+        else if (enBar != null && playerInfo.maxEN <= 0)
+        {
+            Debug.LogWarning("CharacterInfoDisplay: Player maxEN is 0 or negative, cannot update EN bar.");
         }
     }
 }
