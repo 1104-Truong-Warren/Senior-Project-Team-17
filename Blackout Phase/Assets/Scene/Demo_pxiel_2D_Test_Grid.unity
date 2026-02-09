@@ -6562,6 +6562,8 @@ MonoBehaviour:
   damageText: {fileID: 2021288361}
   attackerText: {fileID: 860687689}
   displayTime: 2
+  damageOffset: {x: 50, y: 30}
+  attackerOffset: {x: 10, y: 60}
 --- !u!1 &2021288359
 GameObject:
   m_ObjectHideFlags: 0
@@ -6628,8 +6630,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4278255615
+  m_fontColor: {r: 1, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6652,7 +6654,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
