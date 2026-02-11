@@ -30,6 +30,11 @@ public class KeybindManager : MonoBehaviour
     public InputAction toggleInventoryAction;
     // no other references needed, ActionMenuManager already present
 
+    // UNEQUIP ALL
+    // user-bound key to unequip all equipment (default U key)
+    public InputAction unequipAllAction;
+    // no other references needed
+
     // ADD OTHER KEYBINDS HERE WITH SAME FORMAT AS NEEDED
 
 
@@ -43,6 +48,10 @@ public class KeybindManager : MonoBehaviour
         // Connect inventory action
         toggleInventoryAction = InputSystem.actions.FindAction("InventoryToggle");
         Debug.Log("Toggle Inventory Action set up");
+
+        // Connect unequip all action
+        unequipAllAction = InputSystem.actions.FindAction("UnequipAll");
+        Debug.Log("Unequip All Action set up");
 
         // ADD OTHER KEYBINDS HERE WITH SAME FORMAT AS NEEDED
     }
@@ -65,6 +74,13 @@ public class KeybindManager : MonoBehaviour
         {
             actionMenuManager.ToggleInventoryScreen();
             Debug.Log("I key pressed");
+        }
+
+        // Check for unequip all key press
+        if (unequipAllAction.WasPressedThisFrame())
+        {
+            EquipmentManager.instance.UnequipAll();
+            Debug.Log("U key pressed");
         }
 
         // ADD OTHER KEYBINDS HERE WITH SAME FORMAT AS NEEDED
