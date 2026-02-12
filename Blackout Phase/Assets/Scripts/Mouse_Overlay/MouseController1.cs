@@ -1,7 +1,8 @@
 // These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
 // and some additional fixing from online sources Unity Discussion:https://discussions.unity.com/, reddit, YouTube
 // I should have keep tract on the exact page but I forgot to save some of the links 
-// Weijun
+// Weijun, Ellison
+
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
 using System.Linq; // filter numbers that are greater than 10, x=> x.F is using it, ordering etc...
 using System.Runtime.InteropServices;
@@ -130,6 +131,12 @@ public class MouseController1 : MonoBehaviour
 
                         //tile.ShowTile(); // get the color
 
+                        Vector2 world = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
+
+                        DebugMouseClickHits(world); // function call to check
+
+                        Debug.Log("Pointer is over UI: " + MouseController1.IsPointerOverUIObject()); // debug msg
+
                         // Clear previous path highlight
                         foreach (var t in path)
                             t.HideTile();
@@ -150,21 +157,23 @@ public class MouseController1 : MonoBehaviour
                         // Attack mode on
                         if (currentAction == PlayerAction.Attack && Input.GetMouseButtonDown(0))
                         {
+                            //Vector2 worldP = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
+
                             EnemyInfo enemy = GetEnemyMouseClick(); // check for enemy status
+
+                            //EnemyInfo enemy = GetEnemyUnderMouse(worldP); // find the enemyInfo using world position
 
                             Debug.Log(enemy == null ? "No enemy under mouse click" : $"Enemy clicked: {enemy.name}"); // display enemy if clicked works
 
                             // enemy exist attack
                             if (enemy != null)
-                            {
                                 PlayerCombatCheck.Instance.PlayerAttackCheck(enemy); // passes the enemy over to finalize the attack
 
-                                currentAction = PlayerAction.None; // set the player action to none
-                                return;
-                            }
+                            currentAction = PlayerAction.None; // set the player action to none
+                            return;
                         }
 
-
+                        // if the character movement is enabled
                         if (movementEnabled)
                         {
                             if (characterInfo == null)
@@ -319,25 +328,42 @@ public class MouseController1 : MonoBehaviour
         return null;
     }
 
+    private void DebugMouseClickHits(Vector2 worldPosition)
+    {
+        var hits = Physics2D.OverlapPointAll(worldPosition); // what the world position the mouse hit
+
+        Debug.LogWarning($"Click:{worldPosition} hit {hits.Length} colliders:"); // debug msg
+
+        // loop to find what it hit
+        foreach (var hit in hits)
+            Debug.LogWarning($" - {hit.name} layer:{LayerMask.LayerToName(hit.gameObject.layer)} z:{hit.transform.position.z}"); // debug msg
+    }
+
     private EnemyInfo GetEnemyMouseClick()
     {
         // camera not found return null
         if (Camera.main == null) return null;
 
-        Vector3 mPosition = Input.mousePosition; // mouse input position set up
+        //Vector3 mPosition = Input.mousePosition; // mouse input position set up
 
-        mPosition.z = -Camera.main.transform.position.z; // set up the correct z position
+        //mPosition.z = -Camera.main.transform.position.z; // set up the correct z position
 
-        Vector3 mousePositionWorld = Camera.main.ScreenToWorldPoint(mPosition); // get mouse position acorrding to mian cam
+        //Vector3 mousePositionWorld = Camera.main.ScreenToWorldPoint(mPosition); // get mouse position acorrding to mian cam
 
-        Vector2 mousePosition2d = mousePositionWorld; // new Vector2(mousePositionWorld.x, mousePositionWorld.y ); // get the 2d position x,y
+        //Vector2 mousePosition2d = mousePositionWorld; // new Vector2(mousePositionWorld.x, mousePositionWorld.y ); // get the 2d position x,y
 
-        Collider2D[] hits = Physics2D.OverlapPointAll(mousePosition2d); // layer doesn't work, enemyLayer); // reading it from 2d x,y and layer
+        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        Debug.Log($"Mouse world position: {mousePosition2d}, enemy hits: {hits.Length}"); // debug msg
+        Collider2D[] hits = Physics2D.OverlapPointAll(worldPosition); //(mousePosition2d); // layer doesn't work, enemyLayer); // reading it from 2d x,y and layer
+
+        Debug.Log($"Mouse world position: {worldPosition}, enemy hits: {hits.Length}"); // debug msg {mousePosition2d}
 
         foreach (var h in hits)
         {
+            // accept Enemy Layer only
+            if (h.gameObject.layer != LayerMask.NameToLayer("Enemy"))
+                continue;
+
             Debug.Log($"Hit collider: {h.name} layer = {LayerMask.LayerToName(h.gameObject.layer)}"); // debug msg
 
             EnemyInfo enemy = h.GetComponentInParent<EnemyInfo>(); // get enemyinfo from hit
@@ -398,3 +424,20 @@ public class MouseController1 : MonoBehaviour
         }
     }
 }
+
+// doesn't work
+//private EnemyInfo GetEnemyUnderMouse(Vector2 worldPos)
+//{
+//    var hits = Physics2D.OverlapPointAll(worldPos); // find the overlap points
+
+//    // loop to find enemyinfo if hit
+//    foreach (var hit in hits)
+//    {
+//        var enemy = hit.GetComponentInParent<EnemyInfo>(); // get the hit.enemyInfo
+
+//        if (enemy != null) return enemy; // if enemy exit return it
+//    }
+
+//    return null;
+//}
+

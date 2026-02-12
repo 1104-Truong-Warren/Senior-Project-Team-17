@@ -185,6 +185,8 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
+        //PlayerFuryMode.Instance.ResetCurrentKills(); // reset the kill counter before each turn
+
         playerInfo.ResetAP(); // resets the AP at the beginning of the turn
 
         Debug.Log("Player AP reset to: " + playerInfo.currentAP); // shows current AP at the begginer of the turn
@@ -216,6 +218,13 @@ public class TurnManager : MonoBehaviour
 
     public void PlayerSpendAP(int amount)
     {
+        // if the fury mode is active use this instead of AP points
+        if (PlayerFuryMode.Instance.inFuryMode)
+        {
+            PlayerFuryMode.Instance.FuryModeGoingDown(); // use the RageMode turns
+            return;
+        }
+
         playerInfo.ApUsed(amount); // instead of directly accessing link the spend through this function
 
         Debug.Log($"Player Spent {amount}AP, Remaining: {playerInfo.currentAP}"); // spend AP, AP left
@@ -339,6 +348,8 @@ public class TurnManager : MonoBehaviour
 
     public void DeleteEnmey(EnemyController1 enemy)
     {
+        PlayerFuryMode.Instance.EnemyKilledUpdate(); // add to kills
+
         enemies.Remove(enemy); // removes this enemy
 
         enemies.RemoveAll(e => e == null); // deletes all the null enemies

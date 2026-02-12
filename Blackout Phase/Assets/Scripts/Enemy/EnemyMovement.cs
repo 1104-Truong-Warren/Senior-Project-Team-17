@@ -19,7 +19,9 @@ public class EnemyMovement : MonoBehaviour
 
     private void Awake()
     {
-        enemyInfo = GetComponent<EnemyInfo>(); // setup the enemyinfo
+        enemyInfo = GetComponent<EnemyInfo>(); // set up the enemyinfo
+
+        spriteRenderer = GetComponent<SpriteRenderer>(); // set up the enemy sprite renderer
     }
 
     public IEnumerator MoveAlong(List<OverlayTile1> path)
@@ -45,8 +47,8 @@ public class EnemyMovement : MonoBehaviour
     private IEnumerator MoveStep(OverlayTile1 tile)
     {
         // clear old tile
-        if (enemyInfo.currentTile != null)
-            enemyInfo.currentTile.hasEnemy = false; // the tile has no enemy flag
+        //if (enemyInfo.currentTile != null)
+        //    enemyInfo.currentTile.hasEnemy = false; // the tile has no enemy flag
 
         Vector3 targetPostion = tile.transform.position + new Vector3(0, 0.01f, 0); // a little offset on y
 
@@ -71,7 +73,7 @@ public class EnemyMovement : MonoBehaviour
 
         enemyInfo.EnemySetTile(tile); // set enemy tile
 
-        tile.hasEnemy = true; // now has enemy moved over
+        //tile.hasEnemy = true; // now has enemy moved over
 
         transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y + 0.01f, // a little y offset
             tile.transform.position.z);

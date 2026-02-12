@@ -1,4 +1,5 @@
 // used this video to see how other people make skills URL: https://www.youtube.com/watch?v=V4WrS-Wt2xU
+// Weijun
 
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public class PlayerCombatCheck : MonoBehaviour
     [SerializeField] private int basicAttckRange; // B attk range
     [SerializeField] private int basicAttkAPcost; // ap cost for Battack
     [SerializeField] private int basicAttkENcost; // en cost for Battack
+    [SerializeField] private int basicAttkHitRate; // base skill hitRate
+    [SerializeField] private int basicAttkSkillCrit; // base skill crit chance
+    [SerializeField] private int basicAttkCritDmg; // base attk crit dmg
 
     // ================== SkillData Settings ===========================
     [SerializeField] private SkillData SDbasicAttkSkill; // for access the skill data's data
@@ -29,7 +33,7 @@ public class PlayerCombatCheck : MonoBehaviour
 
         Instance = this; // setup the this pointer
 
-        //PlayerSetUp(); // void function to set up the player status
+        PlayerSetUp(); // void function to set up the player status
     }
 
     public void PlayerAttackCheck(EnemyInfo enemy)
@@ -59,14 +63,39 @@ public class PlayerCombatCheck : MonoBehaviour
             return;
         }
 
-        Vector3Int p = player.CurrentTile.gridLocation; // player tile location
+        //var pTile = CharacterInfo1.Instance.CurrentTile; // copies player's current tile
 
-        Vector3Int e = enemy.currentTile.gridLocation; // enemy tile location
+        //var eTile = enemy.currentTile != null ? enemy.currentTile : MapManager1.Instance.GetWorldTilePosition((Vector2)enemy.transform.position); // use world position to find the enemy tile
+
+        //Debug.Log($"Player grid:{pTile.gridLocation} world:{pTile.transform.position} name:{pTile.name}"); // debug msg
+
+        //Debug.Log($"Enemy grid:{eTile.gridLocation} world:{eTile.transform.position} name:{eTile.name}"); // debug msg
+
+        //Debug.Log($"Player object world position:{CharacterInfo1.Instance.transform.position}"); // debug msg
+
+        //Debug.Log($"Enemy object world position:{enemy.transform.position}"); // debug msg
+
+
+        OverlayTile1 playerTile = CharacterInfo1.Instance.CurrentTile; // player tile location
+
+        OverlayTile1 enemyTile = enemy.currentTile; //MapManager1.Instance.GetWorldTileFromTransform(enemy.transform); // enemy tile location
+
+        //var e = enemyTile.gridLocation; // enemy tile location
+
+        // if the enemy tile is empty get out
+        if (enemyTile == null || playerTile == null)
+        {
+            Debug.Log("Player/Enemy Tile not found!"); // debug msg
+            return;
+        }
 
         // get the dist between player/enemy for range check
-        int distance = Mathf.Abs(p.x - e.x) + Mathf.Abs(p.y - e.y); // do math to get the correct manhattan methond to get attk range
+        //int distance = Mathf.Abs(p.x - e.x) + Mathf.Abs(p.y - e.y); // do math to get the correct manhattan methond to get attk range
+
+        int distance = Manhattan(playerTile.gridLocation, enemyTile.gridLocation); //Mathf.Abs(playerTile.gridLocation.x - enemyTile.gridLocation.x) + Mathf.Abs(playerTile.gridLocation.y - enemyTile.gridLocation.y);
 
         Debug.Log($"Distance = {distance}, PlayerAttkRange:{basicAttckRange} (PlayerBaseRange:{playerInfo.BaseRange})");
+
         // check to see if enemy is in range for attk
         if (distance > basicAttckRange)
         {
@@ -81,7 +110,35 @@ public class PlayerCombatCheck : MonoBehaviour
             return;
         }
 
-        enemy.EnemyTakeDamage(basicAttkDamage); // calls the dmamge founction pass the amount
+        int hitChance = HitRollCheck.FinalHitChanceCal(playerInfo.BaseHitRate, basicAttkHitRate, enemy.EvasionRate); // pass over the data to roll a hit
+
+        Debug.Log($"HitChance:{hitChance}"); // debug msg
+
+        // check for hit roll
+        if (!HitRollCheck.HitRollPercent(hitChance))
+        {
+            Debug.Log("Attack MISS!"); // debug msg
+
+            TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // still - ap
+
+            CharacterInfo1.Instance.PlayerEnCheck(basicAttkENcost); // EN goes down 
+
+            return;
+        }
+
+        int dmg = basicAttkDamage; // for the final attack crit hit
+
+        int critChance = HitRollCheck.FinalCritChanceCal(playerInfo.BaseCriticalRate, SDbasicAttkSkill.AttkCritChance); // find the crit chance of attack
+        
+        //
+        if (HitRollCheck.HitRollPercent(critChance))
+        {
+            dmg = HitRollCheck.CritHit(dmg, basicAttkCritDmg); // crit dmg calculation
+
+            Debug.Log($"Critical Hit: Damage:{dmg}"); // debug msg
+        }
+
+        enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
 
         TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // how much AP the attack cost
     }
@@ -114,11 +171,24 @@ public class PlayerCombatCheck : MonoBehaviour
 
         basicAttckRange = playerInfo.BaseRange; // basic attk range
 
+        basicAttkDamage = playerInfo.BaseCritDamage; // basic crit dmg
+
         basicAttkAPcost = SDbasicAttkSkill.AttkAPCost; // basic Attk AP cost
 
         basicAttkENcost = SDbasicAttkSkill.AttkENCost; // basic attk EN cost
+
+        basicAttkHitRate = SDbasicAttkSkill.AttkHitRate; // basic attk hit rate
+
+        basicAttkSkillCrit = SDbasicAttkSkill.AttkCritChance; // basic attk crit add on
+    }
+
+    private int Manhattan(Vector3Int a, Vector3Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // returns the player/enemy distance
     }
 }
+
+
 
 //// debug msg in PlayerStatusSetUp()
 //if (playerInfo == null)

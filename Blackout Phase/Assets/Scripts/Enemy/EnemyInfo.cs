@@ -17,6 +17,7 @@ public class EnemyInfo : MonoBehaviour
     [SerializeField] private int enemyDamage; // how much damage enemy does
     [SerializeField] private int enemyDetectionRange; // how far is the enemy detection
     [SerializeField] private int MoveRange; // enemy's moveRange
+    [SerializeField] private int evasionRate; // enemy's dodge rate
 
 
     [SerializeField] OverlayTile1 Tile; // current tile enmey is on
@@ -32,12 +33,21 @@ public class EnemyInfo : MonoBehaviour
     public int EnemyDetect => enemyDetectionRange; // get the enemy's detection range
 
     public int health => Health; // hit points
+    public int EvasionRate => evasionRate; // get enemy evasion rate 
 
     public OverlayTile1 currentTile => Tile; // where the enemy tile is
 
     public void EnemySetTile(OverlayTile1 newtile)
     {
+        // tile exsit, flag is f, before we set enemy, nothing
+        if (Tile != null)
+            Tile.hasEnemy = false;
+
         Tile = newtile; // set up the tile
+
+        // after we set the tile, toggle flag to t
+        if (Tile != null)
+            Tile.hasEnemy = true;
     }
 
     public void EnemyTakeDamage(int dmg)
