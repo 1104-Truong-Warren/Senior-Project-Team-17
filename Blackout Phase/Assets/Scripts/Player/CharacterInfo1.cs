@@ -9,7 +9,7 @@ using UnityEngine; // default
 public class CharacterInfo1 : MonoBehaviour
 {
     private int maxAP = 2; // action points for player each turn max out at 2 aside from passive skills
-    private int RageMode = 2; // after defeating 2 enemy in a row, enters a special state, player can attack again (extra movement) on top of the AP
+    //private int RageMode = 2; // after defeating 2 enemy in a row, enters a special state, player can attack again (extra movement) on top of the AP
 
     [Header("Player Stats")]
     [SerializeField] private int HP;    //  the player's current
@@ -19,7 +19,7 @@ public class CharacterInfo1 : MonoBehaviour
     [SerializeField] private int baseMoveRange; // how far player able to move
     [SerializeField] private int baseAttk; // the basic attack of player
     [SerializeField] private int baseAttkRange; // basic attack range of player
-    [SerializeField] private int basehitRate; // the basic hit rate of player
+    [SerializeField] private int baseHitRate; // the basic hit rate of player
     [SerializeField] private int baseCriticalRate; // the basic critical rate for player
     [SerializeField] private int baseCritDamage; // the basic critical damage for player
 
@@ -32,6 +32,10 @@ public class CharacterInfo1 : MonoBehaviour
     public int maxEN => MaxEN;
     public int BaseAttk => baseAttk;
     public int BaseRange => baseAttkRange;
+    public int BaseHitRate => baseHitRate;
+    public int BaseCriticalRate => baseCriticalRate;
+    public int BaseCritDamage => baseCritDamage;    
+
 
     // check EN
     public bool HasEN(int costEN) => EN >= costEN; // left EN right cost (>=) a right symbol

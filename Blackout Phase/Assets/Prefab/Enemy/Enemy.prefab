@@ -71,7 +71,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.08249998, y: 0.25}
+  m_Offset: {x: 0.061952144, y: 0.27054757}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.38, y: 0}
@@ -81,7 +81,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6875, y: 0.5}
+  m_Size: {x: 0.79904395, y: 0.58806145}
   m_EdgeRadius: 0
 --- !u!212 &5669075291210165856
 SpriteRenderer:
@@ -155,6 +155,7 @@ MonoBehaviour:
   enemyDamage: 3
   enemyDetectionRange: 3
   MoveRange: 3
+  evasionRate: 10
   Tile: {fileID: 0}
 --- !u!114 &6399035647557708820
 MonoBehaviour:

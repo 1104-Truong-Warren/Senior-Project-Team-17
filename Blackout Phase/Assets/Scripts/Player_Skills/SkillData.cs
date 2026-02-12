@@ -1,6 +1,6 @@
 // used this video to see how other people make skills URL: https://www.youtube.com/watch?v=V4WrS-Wt2xU
 // used to see how scriptableObject works URL: https://www.youtube.com/watch?v=cy49zMBZvhg
-
+// Weijun
 
 using UnityEngine;
 
@@ -14,6 +14,14 @@ public class SkillData : ScriptableObject
     public string Attack; // basic attack
 
     [TextArea] public string AttkDescription; // basic attack
+
+    [Header("Basic Attk Hit rate")]
+    // =========== EN cost =====================
+    public int AttkHitRate = 45; // skill hit rate
+
+    [Header("Basic Attk Crit rate")]
+    // =========== EN cost =====================
+    public int AttkCritChance = 0; // skill crit rate
 
     [Header("Basic Attk EN cost")]
     // =========== EN cost =====================

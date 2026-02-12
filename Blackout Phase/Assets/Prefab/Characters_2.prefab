@@ -9,8 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4713709272405449018}
+  - component: {fileID: 7918997221001863701}
   - component: {fileID: 5577901978014081105}
   - component: {fileID: 3716359381729905787}
+  - component: {fileID: 7194712552239500322}
+  - component: {fileID: 9097942805516662175}
+  - component: {fileID: 1259040166856660165}
   m_Layer: 0
   m_Name: Characters_2
   m_TagString: Player1
@@ -33,6 +37,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &7918997221001863701
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142501310898631158}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.375, y: 0.5}
+    newSize: {x: 0.375, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.375, y: 0.5}
+  m_EdgeRadius: 0
 --- !u!212 &5577901978014081105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -107,6 +156,53 @@ MonoBehaviour:
   baseMoveRange: 6
   baseAttk: 5
   baseAttkRange: 1
-  basehitRate: 50
+  baseHitRate: 50
   baseCriticalRate: 5
   baseCritDamage: 50
+--- !u!114 &7194712552239500322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142501310898631158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119eaca9aa4406a459df9069bccbe3b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killsToTrigger: 2
+  baseFuryModeActionTurns: 2
+--- !u!114 &9097942805516662175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142501310898631158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d748778a0855ac45b5ca3279187d9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerSR: {fileID: 5577901978014081105}
+  flashSpeed: 0.1
+--- !u!114 &1259040166856660165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142501310898631158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276a68093f912424c95dbad257e91db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockOnKey: 97
+  previousKey: 113
+  nextKey: 101
+  cancelKey: 115
+  confirmKey: 99
+  enemyInRange: 1
+  keepTargetAfterAttk: 0

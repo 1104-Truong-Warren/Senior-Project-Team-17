@@ -112,6 +112,32 @@ public class MapManager1 : MonoBehaviour
         yield return null; // give it a frame
     }
 
+    public OverlayTile1 GetWorldTilePosition(Vector2 worldPosition)
+    {
+        Vector3Int tileCell = groundTileMap.WorldToCell(worldPosition); // 3d int of the tile cell in the world position from groundTile
+
+        Vector2Int keyValue = new Vector2Int(tileCell.x, tileCell.y); // the key value of the x,y int
+
+        // the key value matches the tile returns the tile position
+        if (map.TryGetValue(keyValue, out var tile))
+            return tile;
+
+        return null; // if not found return null
+    }
+
+    public OverlayTile1 GetWorldTileFromTransform(Transform transf)
+    {
+        // transf not found return null
+        if (transf == null) return null;
+
+        Collider2D Collider = transf.GetComponentInChildren<Collider2D>(); // get the transf collider from children
+
+        // if transf collider is not null use it from center
+        Vector2 Position = Collider != null ? (Vector2)Collider.bounds.center : (Vector2)transf.position;
+
+        return GetWorldTilePosition(Position); // returns the transf position
+    }
+
     public void ResetAllTiles()
     {
         foreach (var tile in map.Values) // calls the overlay tile reset for all objects
