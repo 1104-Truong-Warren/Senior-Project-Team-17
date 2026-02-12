@@ -9,6 +9,12 @@ public class EquipmentManager : MonoBehaviour
 {
     public static EquipmentManager instance;
 
+
+    public int previousTotalHealthModifier = 0;
+    public int previousTotalAttackModifier = 0;
+    public int currentTotalHealthModifier = 0;
+    public int currentTotalAttackModifier = 0;
+
     void Awake()
     {
         if (instance != null)
@@ -54,6 +60,8 @@ public class EquipmentManager : MonoBehaviour
         }
 
         currentEquipment[slotIndex] = newItem;
+        RecalculateTotalModifiers();
+        ApplyModifiersToPlayer();
         Debug.Log("Equipped " + newItem.name + " in slot " + newItem.equipSlot);
     }
 
@@ -70,6 +78,8 @@ public class EquipmentManager : MonoBehaviour
                 onEquipmentChanged.Invoke(null, oldItem);
             }
 
+            RecalculateTotalModifiers();
+            ApplyModifiersToPlayer();
             Debug.Log("Unequipped " + oldItem.name + " from slot " + oldItem.equipSlot);
         }
     }
@@ -79,6 +89,41 @@ public class EquipmentManager : MonoBehaviour
         for (int i = 0; i < currentEquipment.Length; i++)
         {
             Unequip(i);
+        }
+    }
+
+    // function to recalculate total modifiers based on currently equipped items, called after equipping or unequipping
+    public void RecalculateTotalModifiers()
+    {
+        previousTotalHealthModifier = currentTotalHealthModifier;
+        previousTotalAttackModifier = currentTotalAttackModifier;
+
+        currentTotalHealthModifier = 0;
+        currentTotalAttackModifier = 0;
+
+        foreach (Equipment equipment in currentEquipment)
+        {
+            if (equipment != null)
+            {
+                currentTotalHealthModifier += equipment.healthModifier;
+                currentTotalAttackModifier += equipment.attackModifier;
+            }
+        }
+    }
+
+    // another function kept separate from recalculating modifiers to reapply modifiers to player
+    // best way I could think of doing this was subtracting the previous modifiers then adding the new ones
+    // seems better than trying to go relative to player base health since that can change from other sources
+    public void ApplyModifiersToPlayer()
+    {
+        CharacterInfo1 player = CharacterInfo1.Instance;
+        if (player != null)
+        {
+            player.DecreaseMaxHP(previousTotalHealthModifier);
+            player.DecreaseAttack(previousTotalAttackModifier);
+
+            player.IncreaseMaxHP(currentTotalHealthModifier);
+            player.IncreaseAttack(currentTotalAttackModifier);
         }
     }
 

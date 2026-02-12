@@ -124,6 +124,7 @@ public class CharacterInfo1 : MonoBehaviour
     }
 
     // ADDED BY WARREN: New method to increase maximum HP (for level up choices)
+    // also used to increase max HP for equipped gear - Ellison
     public void IncreaseMaxHP(int amount)
     {
         MaxHP += amount;
@@ -132,7 +133,29 @@ public class CharacterInfo1 : MonoBehaviour
         
         UpdateAllUI();
     }
-    
+
+    // added function to decrease max HP, mostly used for recalculating gear bonuses
+    // best way I could think of doing this was using this function to subtract the old bonus then add the new
+    // could also be used for debuffs later if needed
+    // - Ellison
+    public void DecreaseMaxHP(int amount)
+    {
+        MaxHP -= amount;
+        //HP = Mathf.Min(HP, MaxHP); // make sure current HP doesn't exceed new max HP
+        HP -= amount; // decrease current HP by the same amount to reflect the change, if we just set it to the new max it would heal the player if they were below the new max already
+        Debug.Log($"HP decreased to {HP}/{MaxHP}");
+        
+        UpdateAllUI();
+    }
+
+    // function to restore HP
+    // - Ellison
+    public void RestoreHP(int amount)
+    {
+        if (amount <= 0) return; // if the amount is negative or zero return
+        HP = Mathf.Min(MaxHP, HP + amount); // compare maxHP and the current HP + restore amount and use the minimum, make sure we don't over cap the HP limit
+    }
+
     // New method to increase maximum EN (for level up choices)
     public void IncreaseMaxEN(int amount)
     {
@@ -148,6 +171,16 @@ public class CharacterInfo1 : MonoBehaviour
     {
         baseAttk += amount;
         Debug.Log($"Attack increased to {baseAttk}");
+    
+        UpdateAllUI();
+    }
+
+    // function to decrease base attack, same logic for DecreaseMaxHP, check above
+    // - Ellison
+    public void DecreaseAttack(int amount)
+    {
+        baseAttk -= amount;
+        Debug.Log($"Attack decreased to {baseAttk}");
     
         UpdateAllUI();
     }

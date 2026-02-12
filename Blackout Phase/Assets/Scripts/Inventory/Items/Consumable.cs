@@ -13,6 +13,7 @@ public class Consumable : Item
     public override void Use()
     {
         base.Use();
+        CharacterInfo1.Instance.RestoreHP(healthChangeAmount);
         RemoveFromInventory();
     }
 }
