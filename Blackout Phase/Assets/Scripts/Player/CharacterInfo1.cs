@@ -22,6 +22,7 @@ public class CharacterInfo1 : MonoBehaviour
     [SerializeField] private int baseHitRate; // the basic hit rate of player
     [SerializeField] private int baseCriticalRate; // the basic critical rate for player
     [SerializeField] private int baseCritDamage; // the basic critical damage for player
+    [SerializeField] private int baseEvasion; // evasion rate of the player
 
     private OverlayTile1 standingOnTile; // stores the tile
 
@@ -35,7 +36,7 @@ public class CharacterInfo1 : MonoBehaviour
     public int BaseHitRate => baseHitRate;
     public int BaseCriticalRate => baseCriticalRate;
     public int BaseCritDamage => baseCritDamage;    
-
+    public int BaseEvasion => baseEvasion; 
 
     // check EN
     public bool HasEN(int costEN) => EN >= costEN; // left EN right cost (>=) a right symbol
@@ -114,10 +115,16 @@ public class CharacterInfo1 : MonoBehaviour
         // if the player EN is less than EN cost return false
         if (EN < costEN) return false;
 
-        EN -= costEN; // EN - costEN
-
         return true;
     } 
+
+    public void PlayerSpendEN(int costEN)
+    {
+        // if the EN cost is negative or greater than total EN get out
+        if (costEN < 0 || costEN > CurrentEN || CurrentEN == 0) return;
+
+        EN -= costEN; // EN - costEN
+    }
 
     public void RestoreEN(int amountEN)
     {

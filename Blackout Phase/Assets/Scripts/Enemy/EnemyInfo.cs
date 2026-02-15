@@ -18,6 +18,7 @@ public class EnemyInfo : MonoBehaviour
     [SerializeField] private int enemyDetectionRange; // how far is the enemy detection
     [SerializeField] private int MoveRange; // enemy's moveRange
     [SerializeField] private int evasionRate; // enemy's dodge rate
+    [SerializeField] private int enemyHitRate; // enemy base hit rate
 
 
     [SerializeField] OverlayTile1 Tile; // current tile enmey is on
@@ -34,6 +35,8 @@ public class EnemyInfo : MonoBehaviour
 
     public int health => Health; // hit points
     public int EvasionRate => evasionRate; // get enemy evasion rate 
+    public int EnemyHitRate => enemyHitRate; // enemy base hit rate
+
 
     public OverlayTile1 currentTile => Tile; // where the enemy tile is
 

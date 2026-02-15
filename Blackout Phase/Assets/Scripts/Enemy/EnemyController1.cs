@@ -26,8 +26,11 @@ public class EnemyController1 : MonoBehaviour
     private EnemyInfo enemyInfo; // enmey's status
     private EnemyPathFinder pathFinder; // finding the enemy path
     private EnemyMovement movement; // how it moves
+    private EnemyAttackCore enemyAttk; // access the enemy attk script
     private EnemyState enemyState; // state control for Enemy AI
     //private EnemyTileScanner scanner; // scanns the neighbour tiles for pathfinding
+
+    private CharacterInfo1 player; // access player info
 
     public bool Initialized { get; set; } = false; // for initialize flag
     private bool movingForward = true;
@@ -47,6 +50,14 @@ public class EnemyController1 : MonoBehaviour
         movement = GetComponent<EnemyMovement>(); // setup movement
 
         pathFinder = new EnemyPathFinder(scanner); // setup scanner
+
+        enemyAttk = GetComponentInChildren<EnemyAttackCore>(); // set up enemy attack
+
+        // check to see if the set up is working
+        if (enemyAttk == null)
+            Debug.Log($"{name} No EnemyAttackCore found! cannont attack!"); // debug msg
+
+        //player = CharacterInfo1.Instance; // cpoies player info
     }
 
     private void Start()
@@ -59,17 +70,42 @@ public class EnemyController1 : MonoBehaviour
     // using finite states to control the enemy ai
     public IEnumerator TakeTurn()
     {
-        // before moving check if player is in range if so attack (attack state)
-        if (PlayerInAttRangeCheck())
-        {
-            Debug.Log($"In enemy range! {name} attacks the player!"); // debug
+        SetPlayerInfo(); // set up player info
 
-            AttackPlayer(); // if player in range attack them
-            yield break; // get out, not moving this turn
+        // before moving check if player is in range if so attack (attack state)
+        //if (PlayerInAttRangeCheck())
+        //{
+        //    Debug.Log($"In enemy range! {name} attacks the player!"); // debug
+
+        //    //AttackPlayer(); // if player in range attack them
+        //    yield break; // get out, not moving this turn
+        //}
+
+        Debug.Log($"{name} " +
+            $"EnemyAttkscript null:{(enemyAttk == null)} " +
+            $"attkEnemyInfo null:{(enemyInfo == null)} " +
+            $"enemyTile null:{(enemyInfo.currentTile == null)} " +
+            $"player null:{(player == null)} " +
+            $"playerTile null:{(player.CurrentTile == null)}"); // debug msg
+
+        // check if player is in enemy attack range if so, attack
+        if (enemyAttk != null && enemyAttk.CanAttackPlayer(player))
+        {
+            //var player = GetPlayer(); // set up player
+
+            if (player != null || player.CurrentTile != null)
+            {
+                Debug.Log($"Player In Range:{name} attck player!"); // debug msg
+
+                //enemyAttk.AttackPlayer(player);
+
+                AttackQeue(player);
+                yield break;
+            }
         }
 
         // player detected ! change state (detect state)
-        else if (PlayerDetectRange())
+        if (PlayerDetectRange())
         {
             // only reset if enemy is not in alter state
             if (enemyState != EnemyState.Alter)
@@ -86,7 +122,7 @@ public class EnemyController1 : MonoBehaviour
         }
 
         // after player detected change to alter (alter state)
-        else if (enemyState == EnemyState.Alter)
+        if (enemyState == EnemyState.Alter)
         {
             alterCounter++; // add one to the counter
 
@@ -152,63 +188,19 @@ public class EnemyController1 : MonoBehaviour
         }
     }
 
-    private bool PlayerInAttRangeCheck()
-    {
-        //OverlayTile playerTile = CharacterInfo.Instance.CurrentTile; // get the player's tile
-
-        CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
-
-        //OverlayTile enemyTile = enemyInfo.currentTile;
-
-        //if (playerTile == null || enemyTile == null) return; // if player or enemy not tile not found get out
-
-        if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
-
-        int distance = Mathf.Abs(enemyInfo.currentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
-                    + Mathf.Abs(enemyInfo.currentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
-
-        Debug.Log($"Enemy distance to play = {distance}"); // debug
-
-        // if player is in range attack
-        //if (distance <= enemyInfo.attackRange)
-        //{
-        //    Debug.Log($"In enemy range! {name} attacks the player!"); // debug
-
-        //    AttackPlayer(); // if player in range attack them
-        //}
-
-        return distance <= enemyInfo.attackRange; // if palyer exsit return the distance not T/F
-    }
-
     private bool PlayerDetectRange()
-    {
-        CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
+{
+    CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
 
-        if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
+    if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
 
-        int distance = Mathf.Abs(enemyInfo.currentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
-                    + Mathf.Abs(enemyInfo.currentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
+    int distance = Mathf.Abs(enemyInfo.currentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
+                + Mathf.Abs(enemyInfo.currentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
 
-        return distance <= enemyInfo.EnemyDetect; // return the detection range
-    }
+    return distance <= enemyInfo.EnemyDetect; // return the detection range
+}
 
-    public void AttackPlayer()
-    {
-        CharacterInfo1 playerInfo = CharacterInfo1.Instance; // setup the player, now it can access all the info
-
-        // if player not found get out 
-        if (playerInfo == null)
-        {
-            Debug.LogError("playerInfo not found!"); // debug
-            return;
-        }
-        else //if (playerInfo != null) // if player found damage them 
-            playerInfo.PlayerTakeDamage(enemyInfo.EnemyDmg);
-
-        Debug.Log($"{name} attacked the player for {enemyInfo.EnemyDmg} damage! Player current HP: {playerInfo.CurrentHP}"); // debug
-    }
-
-    private IEnumerator MoveTowardPlayer()
+private IEnumerator MoveTowardPlayer()
     {
         //OverlayTile playerTile = CharacterInfo.Instance.CurrentTile; // get the player tile info
 
@@ -389,6 +381,51 @@ public class EnemyController1 : MonoBehaviour
         }
     }
 
+    private void SetPlayerInfo()
+    {
+        // if player is null set up
+        if (player == null)
+            player = CharacterInfo1.Instance; // copies the playerInfo
+
+        // if player still null try findthe name tag
+        if (player == null)
+        {
+            // ======= if playerInfo still null ========
+            var playerObj = GameObject.FindGameObjectWithTag("Player1"); // find it using game object tag
+
+            // if found set up the basic stats for player1
+            if (playerObj != null)
+                player = playerObj.GetComponent<CharacterInfo1>(); // set up the playerInfo using object
+        }
+
+        Debug.Log($"player null?{player == null} playerTile null?{(player != null ? player.CurrentTile == null : true)}"); // debug msg
+    }
+
+    //private CharacterInfo1 GetPlayer()
+    //{
+    //    // finds the player info when needed 
+    //    return CharacterInfo1.Instance != null ? CharacterInfo1.Instance : GameObject.FindGameObjectWithTag("Player1")?.GetComponent<CharacterInfo1>(); 
+    //}
+
+    private void AttackQeue(CharacterInfo1 player)
+    {
+        // if player null get out
+        if (player == null) return;
+
+        Debug.Log($"[Enemy]:{name} Attack Qeue! player:{player?.name} dmg:{enemyInfo.EnemyDmg}"); // debug msg
+
+        //// states for calculation
+        //int enemyHitRate = enemyInfo.EnemyHitRate; // set up the enemy hit rate
+
+        //int dmg = enemyInfo.EnemyDmg; // set up enemy dmg
+
+        //int playerEvasion = player.BaseEvasion; // set up the player evasion rate
+
+        int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.EnemyHitRate, 0, player.BaseEvasion);
+
+        TurnManager.Instance.StartPlayerReaction(enemyInfo, enemyInfo.EnemyDmg, hitChance); // copies over the enemy/player data
+    }
+
     private void OnDestroy()
     {
         // deltes the destoryed enemy
@@ -396,6 +433,52 @@ public class EnemyController1 : MonoBehaviour
             TurnManager.Instance.DeleteEnmey(this);
     }
 }
+
+// not in use anymore 
+//public void AttackPlayer()
+//{
+//    CharacterInfo1 playerInfo = CharacterInfo1.Instance; // setup the player, now it can access all the info
+
+//    // if player not found get out 
+//    if (playerInfo == null)
+//    {
+//        Debug.LogError("playerInfo not found!"); // debug
+//        return;
+//    }
+//    else //if (playerInfo != null) // if player found damage them 
+//        playerInfo.PlayerTakeDamage(enemyInfo.EnemyDmg);
+
+//    Debug.Log($"{name} attacked the player for {enemyInfo.EnemyDmg} damage! Player current HP: {playerInfo.CurrentHP}"); // debug
+//}
+
+// replaced by enemy attack scripts
+//private bool PlayerInAttRangeCheck()
+//{
+//    //OverlayTile playerTile = CharacterInfo.Instance.CurrentTile; // get the player's tile
+
+//    CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
+
+//    //OverlayTile enemyTile = enemyInfo.currentTile;
+
+//    //if (playerTile == null || enemyTile == null) return; // if player or enemy not tile not found get out
+
+//    if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
+
+//    int distance = Mathf.Abs(enemyInfo.currentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
+//                + Mathf.Abs(enemyInfo.currentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
+
+//    Debug.Log($"Enemy distance to play = {distance}"); // debug
+
+//    // if player is in range attack
+//    //if (distance <= enemyInfo.attackRange)
+//    //{
+//    //    Debug.Log($"In enemy range! {name} attacks the player!"); // debug
+
+//    //    AttackPlayer(); // if player in range attack them
+//    //}
+
+//    return distance <= enemyInfo.attackRange; // if palyer exsit return the distance not T/F
+//}
 
 // Old enemy movement control version 
 //    // if enemy tile is null display a debug

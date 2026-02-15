@@ -20,6 +20,7 @@ public enum TurnState
     PlayerSpawn, // let player spawn start point
     PlayerStart, // player reset AP
     PlayerAction, // spending AP
+    PlayerReaction, // reaction to enemy attacks
     PlayerEnd, // passing to enemy
     EnemyStart, // initialize enemies
     EnemyAction, // attack/patrol/chase
@@ -34,10 +35,23 @@ public class TurnManager : MonoBehaviour
     [Header("Enemies")]
     [SerializeField] private List<EnemyController1> enemies = new List<EnemyController1>(); // set up the enmey controller
 
+    private readonly List<EnemyController1> pendingEnemyRemovals = new List<EnemyController1>(); // for the dead enemies
+
     public static TurnManager Instance { get; private set; }  // accessor for other scripts
     public TurnState State { get; private set; } = TurnState.MapLoading; // state controls the turn using finite state, starts with loading in
 
+    public EnemyInfo inComingAttackEnemy { get; private set; } // let otehr scripts to access it
+
+    // player's reaction to enemy attacks
+    public int inComingDamage { get; private set; } // let other scripts to access it, the in coming damage 
+
+    public int inComingHitChance { get; private set; } // let other scripts to access the in coming Hit Chance
+
+    public bool WaitForPlayerReact => State == TurnState.PlayerReaction; // set a flag for other script to access if player is in Reaction state
+
     //public bool IsPlayerTurn => CurrentPhase == TurnPhase.Player; // flag to check if player's turn?
+
+    private bool playerReactionSuccessful = false; // keep track if player's reaction worked
 
     private bool isInitialized = false; // check too see if enemies are initialized
 
@@ -265,17 +279,38 @@ public class TurnManager : MonoBehaviour
 
         //Debug.Log("Enemy Phase Start"); // debug
 
-        foreach (EnemyController1 enemy in enemies)   // each enemies take a turn, if not found continue next
+        var enemyList = enemies.ToArray(); //new List<EnemyController1>(enemies); // svae enemies into a list so it doesn't break the loop
+
+        foreach (EnemyController1 enemy in enemyList)   // each enemies take a turn, if not found continue next
         {
             if (enemy == null) continue; // if enemy is not found skip ingore
+
+            //if (!enemies.Contains(enemy)) continue; // skip the enemies we kill this turn
             
             Debug.Log($"TurnManager: Enemy taking turn -> {enemy.name}"); // which enemy
 
             yield return StartCoroutine(enemy.TakeTurn()); // each enemy 
             yield return new WaitForSeconds(0.1f); // another delay   
+
+            // if the turn is player Reaction let player make a decision
+            if (State == TurnState.PlayerReaction)
+            {
+                Debug.Log("Player reaction!"); // debug msg
+                yield return StartCoroutine(WaitForPlayerReaction());
+            }
             
         }
         Debug.Log("All enemies completed their turns -> Player turn Starting"); // debug
+
+        // if enemy remove list is bigger than 0, remove them
+        if (pendingEnemyRemovals.Count > 0)
+        {
+            // use a loop to go through the enemy rmoval list
+            foreach (var enemy in pendingEnemyRemovals)
+                enemies.Remove(enemy); // remove each enemy
+
+            pendingEnemyRemovals.Clear(); // reset the list
+        }
 
         LevelCleared(); // check if all enemies are defeated
 
@@ -311,7 +346,7 @@ public class TurnManager : MonoBehaviour
 
     private bool PlayerSetUp()
     {
-        playerInfo = GetComponent<CharacterInfo1>(); // set up playerInfo 
+        //playerInfo = GetComponent<CharacterInfo1>(); // set up playerInfo 
 
         // if the playerInfo was found return 1
         if (playerInfo != null) return true;
@@ -338,12 +373,116 @@ public class TurnManager : MonoBehaviour
     //    TurnManager.Instance.EndPlayerTurn(); // ends player's turn
     //}
 
+    public void StartPlayerReaction(EnemyInfo enemyAttker, int dmg, int hitChance)
+    {
+        inComingAttackEnemy = enemyAttker; // set up enemy attacker
+
+        inComingDamage = dmg; // how much damage is from enemy
+
+        inComingHitChance = hitChance; // what is the hit chance of enemy
+
+        playerReactionSuccessful = false; // player hasn't react to attack yet
+
+        SetTurnState(TurnState.PlayerReaction); // change state to player react 
+    }
+
+    public void PlayerDodgeReaction()
+    {
+        // if current state is not player Reaction get out
+        if (State != TurnState.PlayerReaction) return;
+
+        bool enemyHit = HitRollCheck.HitRollPercent(inComingHitChance); // use flag to check the hit chance roll
+
+        // it hit returns true player take damage
+        if (enemyHit)
+        {
+            Debug.Log("Player Failed to Dodge!"); // debug msg
+
+            CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // player take damage
+        }
+        else
+        {
+            Debug.Log("Player Dodged the Attack!"); // debug msg
+        }
+
+        //playerReactionSuccessful = true; // set the flag to true, player did an reaction
+
+        EndPlayerReaction();  // after player react flag toggle
+    }
+
+    public void PlayerTankDamageReaction()
+    {
+        // if current state is not player Reaction get out
+        if (State != TurnState.PlayerReaction) return;
+
+        Debug.Log("Player takes Dmg by Enemy"); // debug msg
+
+        CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // take damage
+
+        //playerReactionSuccessful = true; // set flage to true and player, 
+
+        EndPlayerReaction();  // after player react flag toggle
+    }
+    
+    public void PlayerCounterAttackReaction()
+    {
+        // if current state is not player Reaction get out
+        if (State != TurnState.PlayerReaction) return;
+
+        // check if the enemy attacker exist
+        if (inComingAttackEnemy == null)
+        {
+            Debug.LogWarning("No incoming enemy to counter attack!"); // debug msg
+
+            playerReactionSuccessful = true; // player did an reaction
+            return;
+        }
+
+        PlayerCombatCheck.Instance.PlayerCounterAttack(inComingAttackEnemy); // call the counter attack function and pass over the enemy info
+
+        EndPlayerReaction();  // after player react flag toggle
+
+        //playerReactionSuccessful = true; // set player did an reaction
+    }
+
+    
+    public IEnumerator WaitForPlayerReaction()
+    {
+
+        yield return new WaitUntil(() => playerReactionSuccessful); // wait until player reaction flag is true
+     
+
+        // reset everything
+        inComingAttackEnemy = null;
+
+        inComingDamage = 0;
+
+        inComingHitChance = 0;
+
+        //State = TurnState.EnemyAction; // after enemy attack player react goes back to loop, check for next enemy action
+    }
+
+    public void EndPlayerReaction()
+    {
+        playerReactionSuccessful = true; // set the flag to true, player reacted
+    }
+
     // Added by Warren: Needed to add this function because the GAME OVER screen keeps reappearing because the TurnManager game over state keeps looping.
     // This fixed the problem, it forces the reset of the player's turn state.
     public void ForceResetToPlayerTurn()
     {
         State = TurnState.PlayerAction;
         Debug.Log("TurnManager: Force reset to PlayerAction state");
+    }
+
+    public void DeleteEnemy(EnemyController1 enemy)
+    {
+        // enemy is not found get out
+        if (enemy == null) return;
+
+        // if the enemy removal list is not empty, remove them
+        if (!pendingEnemyRemovals.Contains(enemy))
+            pendingEnemyRemovals.Add(enemy); // add them to removal list
     }
 
     public void DeleteEnmey(EnemyController1 enemy)

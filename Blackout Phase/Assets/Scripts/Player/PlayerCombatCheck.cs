@@ -38,8 +38,8 @@ public class PlayerCombatCheck : MonoBehaviour
 
     public void PlayerAttackCheck(EnemyInfo enemy)
     {
-        // enemy not found get out
-        if (enemy == null) return;
+        // enemy/enemy tile not found get out
+        if (enemy == null || enemy.currentTile == null) return;
 
         // if the current turn state is not player's acttion returns
         if (TurnManager.Instance.State != TurnState.PlayerAction) return;
@@ -56,12 +56,7 @@ public class PlayerCombatCheck : MonoBehaviour
             return;
         }
 
-        // check to see if enemy is on a tile
-        if (enemy.currentTile == null)
-        {
-            Debug.Log("Enemy is not on any tiles!");
-            return;
-        }
+        TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // how much AP the attack cost
 
         //var pTile = CharacterInfo1.Instance.CurrentTile; // copies player's current tile
 
@@ -110,6 +105,8 @@ public class PlayerCombatCheck : MonoBehaviour
             return;
         }
 
+        CharacterInfo1.Instance.PlayerSpendEN(basicAttkENcost); // EN goes down 
+
         int hitChance = HitRollCheck.FinalHitChanceCal(playerInfo.BaseHitRate, basicAttkHitRate, enemy.EvasionRate); // pass over the data to roll a hit
 
         Debug.Log($"HitChance:{hitChance}"); // debug msg
@@ -121,26 +118,91 @@ public class PlayerCombatCheck : MonoBehaviour
 
             TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // still - ap
 
-            CharacterInfo1.Instance.PlayerEnCheck(basicAttkENcost); // EN goes down 
-
             return;
         }
 
         int dmg = basicAttkDamage; // for the final attack crit hit
 
         int critChance = HitRollCheck.FinalCritChanceCal(playerInfo.BaseCriticalRate, SDbasicAttkSkill.AttkCritChance); // find the crit chance of attack
-        
-        //
-        if (HitRollCheck.HitRollPercent(critChance))
+
+        // check for crit roll
+        if (PlayerCritOrFuryActiveCheck(critChance))
         {
             dmg = HitRollCheck.CritHit(dmg, basicAttkCritDmg); // crit dmg calculation
 
-            Debug.Log($"Critical Hit: Damage:{dmg}"); // debug msg
+            // if player in Fury mode display crit in Fury mode
+            if (PlayerFuryMode.Instance.inFuryMode)
+                Debug.Log("In Fury Mode Attacker Critital Hit");
+
+            else
+                Debug.Log($"Counter Critical Hit: Damage:{dmg}"); // debug msg
         }
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+    }
 
-        TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // how much AP the attack cost
+    public void PlayerCounterAttack(EnemyInfo enemy)
+    {
+        // enemy not found get out
+        if (enemy == null) return;
+
+        var player = CharacterInfo1.Instance; // make a copy of characterInfo as reference
+
+        // if player is not found or player tile not found get out
+        if (player == null || player.CurrentTile == null) return;
+
+        // check if enemy still has health left
+        if (enemy.health <= 0) return;
+
+        int hitChance = HitRollCheck.FinalHitChanceCal(playerInfo.BaseHitRate, basicAttkHitRate, enemy.EvasionRate); // pass over the data to roll a hit
+
+        Debug.Log($"HitChance:{hitChance}"); // debug msg
+
+        // check if the player has enough EN
+        if (!playerInfo.PlayerEnCheck(basicAttkENcost))
+        {
+            Debug.Log("Insufficent EN amount!"); // debug msg
+            return;
+        }
+
+        CharacterInfo1.Instance.PlayerSpendEN(basicAttkENcost); // EN goes down  
+
+        // check for hit roll
+        if (!HitRollCheck.HitRollPercent(hitChance))
+        {
+            Debug.Log("Counter Attack MISS!"); // debug msg
+
+            //TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // still - ap
+            return;
+        }
+
+        int dmg = basicAttkDamage; // for the final attack crit hit
+
+        int critChance = HitRollCheck.FinalCritChanceCal(playerInfo.BaseCriticalRate, SDbasicAttkSkill.AttkCritChance); // find the crit chance of attack
+
+        // check for crit roll
+        if (PlayerCritOrFuryActiveCheck(critChance))
+        {
+            dmg = HitRollCheck.CritHit(dmg, basicAttkCritDmg); // crit dmg calculation
+
+            // if player in Fury mode display crit in Fury mode
+            if (PlayerFuryMode.Instance.inFuryMode)
+                Debug.Log("In Fury Mode Attacker Critital Hit");
+
+            else
+                Debug.Log($"Counter Critical Hit: Damage:{dmg}"); // debug msg
+        }
+
+        enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+    }
+
+    private bool PlayerCritOrFuryActiveCheck(int critChance)
+    {
+        // if player is active return t
+        if (PlayerFuryMode.Instance.inFuryMode)
+            return true;
+
+        return HitRollCheck.HitRollPercent(critChance); // or check to see if crit roll passes
     }
 
     public void PlayerSetUp()
