@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a673fd9e76a9614297535b4c9e90b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 200
+  Health: 5
   AttackRange: 1
   enemyDamage: 3
   enemyDetectionRange: 3
