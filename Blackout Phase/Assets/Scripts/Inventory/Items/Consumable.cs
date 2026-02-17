@@ -9,11 +9,13 @@ using UnityEngine;
 public class Consumable : Item
 {
     public int healthChangeAmount;
+    public int energyChangeAmount;
 
     public override void Use()
     {
         base.Use();
         CharacterInfo1.Instance.RestoreHP(healthChangeAmount);
+        CharacterInfo1.Instance.RestoreEN(energyChangeAmount);
         RemoveFromInventory();
     }
 }

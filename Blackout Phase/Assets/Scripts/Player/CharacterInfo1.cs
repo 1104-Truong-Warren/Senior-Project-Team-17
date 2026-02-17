@@ -176,7 +176,7 @@ public class CharacterInfo1 : MonoBehaviour
         
         UpdateAllUI();
     }
-    
+
     // New method to increase base attack (for level up choices)
     public void IncreaseAttack(int amount)
     {
