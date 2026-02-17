@@ -263,6 +263,12 @@ public class MouseController1 : MonoBehaviour
         {
             PositionCharacterOnLine(path[0]); // calculate postition on line
 
+            if (path[0].hasItem) // if current tile has item trigger the pickup
+            {
+                path[0].PickUpItem(); // call the pickup function
+                Debug.Log("Player picked up an item!"); // debug msg
+            }
+
             path.RemoveAt(0); // remove after
 
             // finishes moving Turn starts
