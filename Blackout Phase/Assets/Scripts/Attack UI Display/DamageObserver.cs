@@ -12,6 +12,7 @@
 
 using UnityEngine;
 using TMPro;
+using System.Collections; // For IEnumerator
 
 public class DamageObserver : MonoBehaviour
 {
@@ -19,8 +20,13 @@ public class DamageObserver : MonoBehaviour
     [SerializeField] private TextMeshProUGUI damageText; 
     [SerializeField] private TextMeshProUGUI attackerText; 
     
+    [Header("Animation")]
+    [SerializeField] private Animation damageAnimation; 
+    [SerializeField] private Animation attackerAnimation; 
+    
     [Header("Settings")]
     [SerializeField] private float displayTime = 2f; // How long damage notification stays visible, in this case, 2 seconds.
+    [SerializeField] private float appearDelay = 0.1f; // Small delay before text appears (adjustable in Inspector)
     
     // Added option to position text above player
     [Header("2D Position Offset")]
@@ -60,7 +66,7 @@ public class DamageObserver : MonoBehaviour
         if (currentHP < lastPlayerHP)
         {
             int damage = lastPlayerHP - currentHP; // Calculate damage amount
-            ShowDamage(damage); // Display damage notification
+            StartCoroutine(ShowDamageWithDelay(damage)); // CHANGED: Use coroutine with delay
             lastPlayerHP = currentHP; // Update stored HP
             
             Debug.Log($"DamageObserver: Player took {damage} damage. HP now {currentHP}");
@@ -84,23 +90,46 @@ public class DamageObserver : MonoBehaviour
         }
     }
     
+    // Coroutine to add delay before showing damage
+    IEnumerator ShowDamageWithDelay(int damage)
+    {
+        // Wait for the specified delay (adjustable in Inspector)
+        yield return new WaitForSeconds(appearDelay);
+        
+        // Now show the damage
+        ShowDamage(damage);
+    }
+    
     // Displays damage notification with amount and enemy name
     void ShowDamage(int damage)
     {
         // Finds which enemy attacked by checking proximity to player
         string attackerName = FindAttackingEnemy();
         
-        // Update UI, set text content and activate GameObject
         if (damageText != null)
         {
             damageText.text = $"-{damage} HP"; // Format: "-10 HP"
             damageText.gameObject.SetActive(true);
+            
+            // Play damage text animation
+            if (damageAnimation != null)
+            {
+                damageAnimation.Play();
+                Debug.Log("Playing damage text animation");
+            }
         }
         
         if (attackerText != null)
         {
             attackerText.text = $"{attackerName} attacks!";
             attackerText.gameObject.SetActive(true);
+            
+            // Play attacker text animation
+            if (attackerAnimation != null)
+            {
+                attackerAnimation.Play();
+                Debug.Log("Playing attacker text animation");
+            }
         }
         
         // This function allows the text to follow the player in the scene, and have the text appear above the player's head.
@@ -111,6 +140,9 @@ public class DamageObserver : MonoBehaviour
         isShowing = true;
         
         Debug.Log($"DamageObserver: {attackerName} hit for {damage} damage");
+        
+        // The TurnManager is responsible for applying all damage during player reactions
+        // This prevents double-damage issues where both scripts were applying damage
     }
     
     // This function allows the text to follow the player in the scene, and have the text appear above the player's head.
