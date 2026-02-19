@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ff468522a88594f835ce1750834844, type: 3}
+  m_Name: Tutorial
+  m_EditorClassIdentifier: 
+  dialogue:
+  - New pilot found.
+  - Scanning biometrics...
+  - Scan complete. New pilot registered.
+  - Welcome new pilot. I am the Strategic Analysis and Guidance Engine. You can call
+    me S.A.G.E. for short.
