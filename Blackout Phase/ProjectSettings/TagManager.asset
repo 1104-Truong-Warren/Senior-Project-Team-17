@@ -18,12 +18,12 @@ TagManager:
   - OverlayTile
   - CursorLayer
   - Enemy
+  - WorldItem
   - 
   - 
   - 
   - 
-  - 
-  - 
+  - Transitions
   - 
   - 
   - 

@@ -21,6 +21,9 @@ public class OverlayTile1 : MonoBehaviour
     public bool hasEnemy;  // has enmey flag?
     public bool debugSelected = false; // debug flag
 
+    public bool hasItem; // has item flag - Ellison
+    [SerializeField] public WorldItemInfo itemOnTile; // the item on the tile - Ellison
+
     public bool Occupied => hasEnemy || hasPlayer; // either condition is true the tile is being used
 
     /*
@@ -67,6 +70,18 @@ public class OverlayTile1 : MonoBehaviour
         previousTile = null;
 
         HideTile();
+    }
+
+    // function to pick up item on the tile - Ellison
+    public void PickUpItem()
+    {
+        if (hasItem)
+        {
+            Inventory.instance.Add(itemOnTile.item); // Add the item to the inventory
+            hasItem = false; // Remove the item from the tile
+            Destroy(itemOnTile.gameObject); // Destroy the item GameObject in the scene
+            itemOnTile = null; // Clear the reference to the item
+        }
     }
 }
 // us draw Gizmos to display the x,y on the editor before running the game

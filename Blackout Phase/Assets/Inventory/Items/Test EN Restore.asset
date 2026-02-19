@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4a6e2b172b94d4db444c07fa047732, type: 3}
+  m_Name: Test EN Restore
+  m_EditorClassIdentifier: 
+  itemName: Teset EN Restore
+  icon: {fileID: 21300000, guid: f510741a976d8c045a0ae66ac7bd05b2, type: 3}
+  type: Consumable
+  description: Restores 10 EN when used
+  flavorText: '"A small energy core"'
+  isDefaultItem: 0
+  healthChangeAmount: 0
+  energyChangeAmount: 10
