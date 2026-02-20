@@ -403,6 +403,12 @@ public class TurnManager : MonoBehaviour
         else
         {
             Debug.Log("Player Dodged the Attack!"); // debug msg
+
+            // Added by Warren, displays on the screen that the player dodged the attack
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowDodgedText(CharacterInfo1.Instance.transform.position);
+            }
         }
 
         //playerReactionSuccessful = true; // set the flag to true, player did an reaction

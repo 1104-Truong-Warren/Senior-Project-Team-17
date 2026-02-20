@@ -116,6 +116,12 @@ public class PlayerCombatCheck : MonoBehaviour
         {
             Debug.Log("Attack MISS!"); // debug msg
 
+            // Added by Warren, text that shows on the screen
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowMissText(enemy.transform.position);
+            }
+
             TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // still - ap
 
             return;

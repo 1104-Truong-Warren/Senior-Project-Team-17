@@ -1,7 +1,6 @@
 // Warren
 // The purpose of this script is to observe player health changes and display damage notifications in the UI.
 // When the player takes damage, it shows how much damage was dealt and attempts to shows that the enemy attacked.
-// Also the player's damage to the enemies will be displayed as well, with how much damage they dealt.
 // The notification displays for 2 seconds, and then automatically disappears.
 
 // Source: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html - For  health monitoring
@@ -34,6 +33,7 @@ public class DamageObserver : MonoBehaviour
     [SerializeField] private Vector2 damageOffset = new Vector2(0, 50); 
     [SerializeField] private Vector2 attackerOffset = new Vector2(0, 80); 
     [SerializeField] private Vector2 playerDamageOffset = new Vector2(0, 30); // Separate offset for player attacks on enemies
+    [SerializeField] private Vector2 dodgeOffset = new Vector2(0, 40); // Separate offset for dodge text above player
 
     [Header("Player Damage Settings")]
     [SerializeField] private bool showPlayerDamage = true;
@@ -258,11 +258,15 @@ public class DamageObserver : MonoBehaviour
 
     }  
 
-    // This method is in charge of showing the player's damage on the enemy. Will have the same text pop-up animations and dynamically displays how much damage the player did.
+    // Add this public method that PlayerCombatCheck can call
     public void ShowPlayerDamage(int damage, Vector3 enemyPosition)
     {
         if (!showPlayerDamage) return;
         
+        // MODIFIED: Use prefab spawning instead of single text instance
+        // This allows multiple damage numbers to appear simultaneously
+        
+        // Make sure we have a prefab and canvas
         if (playerDamagePrefab == null || canvasTransform == null)
         {
             Debug.LogError("PlayerDamagePrefab or CanvasTransform not assigned in DamageObserver!");
@@ -278,7 +282,7 @@ public class DamageObserver : MonoBehaviour
         
         if (damageTMP != null)
         {
-            // Position the text with the separate player damage offset
+            // Position the text with the SEPARATE player damage offset
             damageTMP.rectTransform.position = screenPos + new Vector3(playerDamageOffset.x, playerDamageOffset.y, 0);
             
             // Set the text
@@ -294,6 +298,106 @@ public class DamageObserver : MonoBehaviour
         
         // Destroy after delay to clean up
         StartCoroutine(HidePlayerDamage(damageInstance));
+    }
+
+    // NEW: Show "Miss!" text when player misses an attack
+    public void ShowMissText(Vector3 enemyPosition)
+    {
+        Debug.Log($"ShowMissText called at position: {enemyPosition}"); // ADD THIS
+        
+        if (!showPlayerDamage) 
+        {
+            Debug.Log("ShowMissText: showPlayerDamage is false"); // ADD THIS
+            return;
+        }
+        
+        // Make sure we have a prefab and canvas
+        if (playerDamagePrefab == null || canvasTransform == null)
+        {
+            Debug.LogError($"PlayerDamagePrefab or CanvasTransform not assigned! Prefab: {playerDamagePrefab}, Canvas: {canvasTransform}");
+            return;
+        }
+        
+        // Convert enemy world position to screen position
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(enemyPosition + Vector3.up * 2f);
+        Debug.Log($"Screen position: {screenPos}"); // ADD THIS
+        
+        // Spawn a new text instance
+        GameObject missInstance = Instantiate(playerDamagePrefab, canvasTransform);
+        TextMeshProUGUI missTMP = missInstance.GetComponent<TextMeshProUGUI>();
+        
+        if (missTMP != null)
+        {
+            // Position the text with the same offset as damage numbers
+            missTMP.rectTransform.position = screenPos + new Vector3(playerDamageOffset.x, playerDamageOffset.y, 0);
+            
+            // Set the text to "Miss!"
+            missTMP.text = "Miss!";
+            
+            // Optional: Change color for miss (gray/white)
+            missTMP.color = Color.gray;
+            
+            Debug.Log($"Miss text set and positioned at: {missTMP.rectTransform.position}"); // ADD THIS
+        }
+        else
+        {
+            Debug.LogError("Miss text: TextMeshProUGUI component not found on prefab!"); // ADD THIS
+        }
+        
+        // Play the animation
+        Animation anim = missInstance.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim.Play("DamageTextBounce");
+            Debug.Log("Animation playing"); // ADD THIS
+        }
+        else
+        {
+            Debug.LogWarning("Miss text: No Animation component found"); // ADD THIS
+        }
+        
+        // Destroy after delay
+        StartCoroutine(HidePlayerDamage(missInstance));
+    }
+
+    // NEW: Show "Dodged!" text when player dodges an enemy attack (appears above player)
+    public void ShowDodgedText(Vector3 playerPosition)
+    {
+        // Make sure we have a prefab and canvas
+        if (playerDamagePrefab == null || canvasTransform == null)
+        {
+            Debug.LogError("PlayerDamagePrefab or CanvasTransform not assigned in DamageObserver!");
+            return;
+        }
+        
+        // Convert player world position to screen position
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition + Vector3.up * 2f);
+        
+        // Spawn a new text instance
+        GameObject dodgeInstance = Instantiate(playerDamagePrefab, canvasTransform);
+        TextMeshProUGUI dodgeTMP = dodgeInstance.GetComponent<TextMeshProUGUI>();
+        
+        if (dodgeTMP != null)
+        {
+            // Position the text with the SEPARATE dodge offset
+            dodgeTMP.rectTransform.position = screenPos + new Vector3(dodgeOffset.x, dodgeOffset.y, 0);
+            
+            // Set the text to "Dodged!"
+            dodgeTMP.text = "Dodged!";
+            
+            // Optional: Change color for dodge (green/blue)
+            dodgeTMP.color = Color.cyan;
+        }
+        
+        // Play the animation
+        Animation anim = dodgeInstance.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim.Play("DamageTextBounce");
+        }
+        
+        // Destroy after delay
+        StartCoroutine(HidePlayerDamage(dodgeInstance));
     }
 
     IEnumerator HidePlayerDamage(GameObject damageInstance)
