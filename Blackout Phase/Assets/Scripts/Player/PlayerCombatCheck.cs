@@ -139,6 +139,9 @@ public class PlayerCombatCheck : MonoBehaviour
         }
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+
+        // Added by Warren, for player's damage UI on the enemy
+        DamageObserver.Instance.ShowPlayerDamage(dmg, enemy.transform.position);
     }
 
     public void PlayerCounterAttack(EnemyInfo enemy)
@@ -194,6 +197,9 @@ public class PlayerCombatCheck : MonoBehaviour
         }
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+
+        // Added by Warren, for player's damage UI on the enemy 
+        DamageObserver.Instance.ShowPlayerDamage(dmg, enemy.transform.position);
     }
 
     private bool PlayerCritOrFuryActiveCheck(int critChance)

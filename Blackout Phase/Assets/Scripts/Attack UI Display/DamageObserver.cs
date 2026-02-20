@@ -1,6 +1,7 @@
 // Warren
 // The purpose of this script is to observe player health changes and display damage notifications in the UI.
 // When the player takes damage, it shows how much damage was dealt and attempts to shows that the enemy attacked.
+// Also the player's damage to the enemies will be displayed as well, with how much damage they dealt.
 // The notification displays for 2 seconds, and then automatically disappears.
 
 // Source: https://docs.unity3d.com/ScriptReference/MonoBehaviour.Update.html - For  health monitoring
@@ -32,10 +33,34 @@ public class DamageObserver : MonoBehaviour
     [Header("2D Position Offset")]
     [SerializeField] private Vector2 damageOffset = new Vector2(0, 50); 
     [SerializeField] private Vector2 attackerOffset = new Vector2(0, 80); 
+    [SerializeField] private Vector2 playerDamageOffset = new Vector2(0, 30); // Separate offset for player attacks on enemies
+
+    [Header("Player Damage Settings")]
+    [SerializeField] private bool showPlayerDamage = true;
+    [SerializeField] private TextMeshProUGUI playerDamageText;
+    
+    // ADDED: Prefab for spawning player damage text
+    [Header("Player Damage Prefab")]
+    [SerializeField] private GameObject playerDamagePrefab; // Assign the duplicated Damage Text prefab here
+    [SerializeField] private Transform canvasTransform; // Reference to the Canvas for spawning
+    
+    // ADDED: Singleton for easy access from other scripts
+    public static DamageObserver Instance { get; private set; }
     
     private int lastPlayerHP; // Player's HP from previous frame
     private float hideTime; // Amount of time the UI will be hidden       
     private bool isShowing = false;
+    
+    void Awake()
+    {
+        // ADDED: Singleton setup
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     
     void Start()
     {
@@ -49,6 +74,14 @@ public class DamageObserver : MonoBehaviour
         // Hide text initially, GameObjects are inactive until damage occurs
         if (damageText != null) damageText.gameObject.SetActive(false);
         if (attackerText != null) attackerText.gameObject.SetActive(false);
+        
+        // ADDED: If canvasTransform not set, try to find it automatically
+        if (canvasTransform == null)
+        {
+            Canvas canvas = FindObjectOfType<Canvas>();
+            if (canvas != null)
+                canvasTransform = canvas.transform;
+        }
     }
     
     void Update()
@@ -222,5 +255,51 @@ public class DamageObserver : MonoBehaviour
         }
         
         return "Enemy"; // Default name 
+
     }  
+
+    // This method is in charge of showing the player's damage on the enemy. Will have the same text pop-up animations and dynamically displays how much damage the player did.
+    public void ShowPlayerDamage(int damage, Vector3 enemyPosition)
+    {
+        if (!showPlayerDamage) return;
+        
+        if (playerDamagePrefab == null || canvasTransform == null)
+        {
+            Debug.LogError("PlayerDamagePrefab or CanvasTransform not assigned in DamageObserver!");
+            return;
+        }
+        
+        // Convert enemy world position to screen position
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(enemyPosition + Vector3.up * 2f);
+        
+        // Spawn a new damage text instance
+        GameObject damageInstance = Instantiate(playerDamagePrefab, canvasTransform);
+        TextMeshProUGUI damageTMP = damageInstance.GetComponent<TextMeshProUGUI>();
+        
+        if (damageTMP != null)
+        {
+            // Position the text with the separate player damage offset
+            damageTMP.rectTransform.position = screenPos + new Vector3(playerDamageOffset.x, playerDamageOffset.y, 0);
+            
+            // Set the text
+            damageTMP.text = $"-{damage} HP";
+        }
+        
+        // Play the animation if it exists (using the same animation name as enemy damage)
+        Animation anim = damageInstance.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim.Play("DamageTextBounce");
+        }
+        
+        // Destroy after delay to clean up
+        StartCoroutine(HidePlayerDamage(damageInstance));
+    }
+
+    IEnumerator HidePlayerDamage(GameObject damageInstance)
+    {
+        yield return new WaitForSeconds(displayTime);
+        if (damageInstance != null)
+            Destroy(damageInstance);
+    }
 }

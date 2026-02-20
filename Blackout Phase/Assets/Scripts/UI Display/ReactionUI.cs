@@ -202,6 +202,9 @@ public class ReactionUI : MonoBehaviour
             Debug.LogError("ReactionUI: TurnManager.Instance is NULL!");
             return;
         }
+
+        // Call TurnManager directly 
+        TurnManager.Instance.PlayerTankDamageReaction();
         
     }
     
