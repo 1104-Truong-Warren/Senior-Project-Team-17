@@ -39,12 +39,12 @@ public class DamageObserver : MonoBehaviour
     [SerializeField] private bool showPlayerDamage = true;
     [SerializeField] private TextMeshProUGUI playerDamageText;
     
-    // ADDED: Prefab for spawning player damage text
+    // Prefab for spawning player damage text
     [Header("Player Damage Prefab")]
     [SerializeField] private GameObject playerDamagePrefab; // Assign the duplicated Damage Text prefab here
     [SerializeField] private Transform canvasTransform; // Reference to the Canvas for spawning
     
-    // ADDED: Singleton for easy access from other scripts
+    // Singleton for easy access from other scripts
     public static DamageObserver Instance { get; private set; }
     
     private int lastPlayerHP; // Player's HP from previous frame
@@ -53,7 +53,7 @@ public class DamageObserver : MonoBehaviour
     
     void Awake()
     {
-        // ADDED: Singleton setup
+        // Singleton setup
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -75,7 +75,7 @@ public class DamageObserver : MonoBehaviour
         if (damageText != null) damageText.gameObject.SetActive(false);
         if (attackerText != null) attackerText.gameObject.SetActive(false);
         
-        // ADDED: If canvasTransform not set, try to find it automatically
+        // If canvasTransform not set, try to find it automatically
         if (canvasTransform == null)
         {
             Canvas canvas = FindObjectOfType<Canvas>();
@@ -300,14 +300,14 @@ public class DamageObserver : MonoBehaviour
         StartCoroutine(HidePlayerDamage(damageInstance));
     }
 
-    // NEW: Show "Miss!" text when player misses an attack
+    // Show "Miss!" text when player misses an attack
     public void ShowMissText(Vector3 enemyPosition)
     {
-        Debug.Log($"ShowMissText called at position: {enemyPosition}"); // ADD THIS
+        Debug.Log($"ShowMissText called at position: {enemyPosition}"); 
         
         if (!showPlayerDamage) 
         {
-            Debug.Log("ShowMissText: showPlayerDamage is false"); // ADD THIS
+            Debug.Log("ShowMissText: showPlayerDamage is false");
             return;
         }
         
@@ -320,7 +320,7 @@ public class DamageObserver : MonoBehaviour
         
         // Convert enemy world position to screen position
         Vector3 screenPos = Camera.main.WorldToScreenPoint(enemyPosition + Vector3.up * 2f);
-        Debug.Log($"Screen position: {screenPos}"); // ADD THIS
+        Debug.Log($"Screen position: {screenPos}"); 
         
         // Spawn a new text instance
         GameObject missInstance = Instantiate(playerDamagePrefab, canvasTransform);
@@ -337,11 +337,11 @@ public class DamageObserver : MonoBehaviour
             // Optional: Change color for miss (gray/white)
             missTMP.color = Color.gray;
             
-            Debug.Log($"Miss text set and positioned at: {missTMP.rectTransform.position}"); // ADD THIS
+            Debug.Log($"Miss text set and positioned at: {missTMP.rectTransform.position}");
         }
         else
         {
-            Debug.LogError("Miss text: TextMeshProUGUI component not found on prefab!"); // ADD THIS
+            Debug.LogError("Miss text: TextMeshProUGUI component not found on prefab!");
         }
         
         // Play the animation
@@ -349,18 +349,18 @@ public class DamageObserver : MonoBehaviour
         if (anim != null)
         {
             anim.Play("DamageTextBounce");
-            Debug.Log("Animation playing"); // ADD THIS
+            Debug.Log("Animation playing"); 
         }
         else
         {
-            Debug.LogWarning("Miss text: No Animation component found"); // ADD THIS
+            Debug.LogWarning("Miss text: No Animation component found"); 
         }
         
         // Destroy after delay
         StartCoroutine(HidePlayerDamage(missInstance));
     }
 
-    // NEW: Show "Dodged!" text when player dodges an enemy attack (appears above player)
+    // Show "Dodged!" text when player dodges an enemy attack (appears above player)
     public void ShowDodgedText(Vector3 playerPosition)
     {
         // Make sure we have a prefab and canvas
