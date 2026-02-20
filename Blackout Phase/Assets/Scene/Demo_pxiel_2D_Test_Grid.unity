@@ -10716,6 +10716,11 @@ MonoBehaviour:
   appearDelay: 0.2
   damageOffset: {x: 50, y: 30}
   attackerOffset: {x: 10, y: 60}
+  playerDamageOffset: {x: 100, y: -100}
+  showPlayerDamage: 1
+  playerDamageText: {fileID: 0}
+  playerDamagePrefab: {fileID: 3416096888536098760, guid: e0c8a40290a15fe4096b079625c1b1de, type: 3}
+  canvasTransform: {fileID: 2015903842}
 --- !u!224 &2020287696 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2130370347741350367, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
