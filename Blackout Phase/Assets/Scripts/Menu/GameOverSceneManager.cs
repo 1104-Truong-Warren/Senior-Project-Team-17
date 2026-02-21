@@ -34,23 +34,29 @@ public class GameOverSceneManager : MonoBehaviour
     // Reloads and resets the main gameplay scene.
     void RestartGame()
     {
+        Debug.Log("Restarting game...");
+        
+        // Reset TurnManager state before loading scene
         if (TurnManager.Instance != null)
         {
             TurnManager.Instance.ForceResetToPlayerTurn();
         }
-    
+        
+        // Load the game scene
         SceneManager.LoadScene("Demo_pxiel_2D_Test_Grid");
     }
     
     // Loads the Title Screen scene.
     void GoToMainMenu()
     {
-    if (TurnManager.Instance != null)
-        {
-            TurnManager.Instance.ForceResetToPlayerTurn(); 
-        }
-    
         Debug.Log("Going to main menu");
+        
+        // Also reset when going to main menu to prevent issues
+        if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.ForceResetToPlayerTurn();
+        }
+        
         SceneManager.LoadScene("TitleScreen");
     }
     
