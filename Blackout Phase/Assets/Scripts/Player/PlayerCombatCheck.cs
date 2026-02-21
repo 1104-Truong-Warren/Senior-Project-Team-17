@@ -116,6 +116,12 @@ public class PlayerCombatCheck : MonoBehaviour
         {
             Debug.Log("Attack MISS!"); // debug msg
 
+            // Added by Warren, text that shows on the screen
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowMissText(enemy.transform.position);
+            }
+
             TurnManager.Instance.PlayerSpendAP(basicAttkAPcost); // still - ap
 
             return;
@@ -139,6 +145,9 @@ public class PlayerCombatCheck : MonoBehaviour
         }
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+
+        // Added by Warren, for player's damage UI on the enemy
+        DamageObserver.Instance.ShowPlayerDamage(dmg, enemy.transform.position);
     }
 
     public void PlayerCounterAttack(EnemyInfo enemy)
@@ -194,6 +203,9 @@ public class PlayerCombatCheck : MonoBehaviour
         }
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+
+        // Added by Warren, for player's damage UI on the enemy 
+        DamageObserver.Instance.ShowPlayerDamage(dmg, enemy.transform.position);
     }
 
     private bool PlayerCritOrFuryActiveCheck(int critChance)

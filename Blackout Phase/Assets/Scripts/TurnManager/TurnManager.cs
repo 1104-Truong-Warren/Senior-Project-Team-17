@@ -403,6 +403,12 @@ public class TurnManager : MonoBehaviour
         else
         {
             Debug.Log("Player Dodged the Attack!"); // debug msg
+
+            // Added by Warren, displays on the screen that the player dodged the attack
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowDodgedText(CharacterInfo1.Instance.transform.position);
+            }
         }
 
         //playerReactionSuccessful = true; // set the flag to true, player did an reaction
@@ -472,7 +478,54 @@ public class TurnManager : MonoBehaviour
     public void ForceResetToPlayerTurn()
     {
         State = TurnState.PlayerAction;
-        Debug.Log("TurnManager: Force reset to PlayerAction state");
+        
+        // Reset all enemy patrol points to default values
+        ResetAllEnemyPatrolPoints();
+        
+        Debug.Log("TurnManager: Force reset to PlayerAction state with fresh patrol points");
+    }
+
+    // Fix: Reset all enemy patrol points by finding them in the scene
+    private void ResetAllEnemyPatrolPoints()
+    {
+        // Find all enemies in the current scene
+        EnemyController1[] allEnemies = FindObjectsByType<EnemyController1>(FindObjectsSortMode.InstanceID);
+        
+        if (allEnemies.Length == 0)
+        {
+            Debug.Log("No enemies found to reset patrol points");
+            return;
+        }
+        
+        // Find all patrol point GameObjects in the scene
+        GameObject[] patrolPointObjects = GameObject.FindGameObjectsWithTag("PatrolPoint");
+        
+        if (patrolPointObjects.Length == 0)
+        {
+            Debug.LogWarning("No patrol points found in scene with tag 'PatrolPoint'");
+            return;
+        }
+        
+        // Convert patrol point positions to grid coordinates
+        List<Vector2Int> allPatrolPositions = new List<Vector2Int>();
+        foreach (GameObject point in patrolPointObjects)
+        {
+            // Convert world position to grid position
+            Vector3 worldPos = point.transform.position;
+            Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(worldPos.x), Mathf.RoundToInt(worldPos.y));
+            allPatrolPositions.Add(gridPos);
+        }
+        
+        // Assign patrol points to each enemy
+        foreach (EnemyController1 enemy in allEnemies)
+        {
+            if (enemy != null)
+            {
+                // Use the existing SetPatrolPoints method in EnemyController1
+                enemy.SetPatrolPoints(allPatrolPositions, 0);
+                Debug.Log($"Reset patrol points for {enemy.name}: found {allPatrolPositions.Count} points");
+            }
+        }
     }
 
     public void DeleteEnemy(EnemyController1 enemy)
@@ -494,7 +547,7 @@ public class TurnManager : MonoBehaviour
         enemies.RemoveAll(e => e == null); // deletes all the null enemies
     }
 
-}
+    }
 
 //private void Update()
 //{

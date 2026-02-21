@@ -431,7 +431,11 @@ private IEnumerator MoveTowardPlayer()
         // deltes the destoryed enemy
         if (TurnManager.Instance != null)
             TurnManager.Instance.DeleteEnmey(this);
+
+        // Added by Warren, stops all running coroutines when enemies are destroyed, bug should be fixed.
+        StopAllCoroutines();
     }
+    
 }
 
 // not in use anymore 
