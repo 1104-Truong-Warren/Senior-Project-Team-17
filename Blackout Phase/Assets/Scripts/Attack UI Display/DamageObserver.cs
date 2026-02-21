@@ -173,9 +173,7 @@ public class DamageObserver : MonoBehaviour
         isShowing = true;
         
         Debug.Log($"DamageObserver: {attackerName} hit for {damage} damage");
-        
-        // The TurnManager is responsible for applying all damage during player reactions
-        // This prevents double-damage issues where both scripts were applying damage
+      
     }
     
     // This function allows the text to follow the player in the scene, and have the text appear above the player's head.

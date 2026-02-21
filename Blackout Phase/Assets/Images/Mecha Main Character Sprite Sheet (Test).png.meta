@@ -1,0 +1,1044 @@
+fileFormatVersion: 2
+guid: 2a4967de9d1e21b478b9bcb7e18b568b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4460868700667489843
+    second: Mecha Main Character Sprite Sheet (Test)_0
+  - first:
+      213: 9210597703350624383
+    second: Mecha Main Character Sprite Sheet (Test)_1
+  - first:
+      213: -7343200295184895286
+    second: Mecha Main Character Sprite Sheet (Test)_2
+  - first:
+      213: -6552327432847771408
+    second: Mecha Main Character Sprite Sheet (Test)_3
+  - first:
+      213: -1647499318119089474
+    second: Mecha Main Character Sprite Sheet (Test)_4
+  - first:
+      213: 1987385464222641840
+    second: Mecha Main Character Sprite Sheet (Test)_5
+  - first:
+      213: -2804175411304093412
+    second: Mecha Main Character Sprite Sheet (Test)_6
+  - first:
+      213: -8953097343175552874
+    second: Mecha Main Character Sprite Sheet (Test)_7
+  - first:
+      213: -3406782142058631103
+    second: Mecha Main Character Sprite Sheet (Test)_8
+  - first:
+      213: -928046598569925879
+    second: Mecha Main Character Sprite Sheet (Test)_9
+  - first:
+      213: -2363636331941381975
+    second: Mecha Main Character Sprite Sheet (Test)_10
+  - first:
+      213: -9162353082995335828
+    second: Mecha Main Character Sprite Sheet (Test)_11
+  - first:
+      213: 7003867326620681888
+    second: Mecha Main Character Sprite Sheet (Test)_12
+  - first:
+      213: -7566743208627032140
+    second: Mecha Main Character Sprite Sheet (Test)_13
+  - first:
+      213: 2457295589506196533
+    second: Mecha Main Character Sprite Sheet (Test)_14
+  - first:
+      213: -2935569909890992047
+    second: Mecha Main Character Sprite Sheet (Test)_15
+  - first:
+      213: -5042357175959777353
+    second: Mecha Main Character Sprite Sheet (Test)_16
+  - first:
+      213: -4430762101478819556
+    second: Mecha Main Character Sprite Sheet (Test)_17
+  - first:
+      213: -6550837105181281828
+    second: Mecha Main Character Sprite Sheet (Test)_18
+  - first:
+      213: -7024931708430250691
+    second: Mecha Main Character Sprite Sheet (Test)_19
+  - first:
+      213: 2965206120448742120
+    second: Mecha Main Character Sprite Sheet (Test)_20
+  - first:
+      213: -4765167638177744374
+    second: Mecha Main Character Sprite Sheet (Test)_21
+  - first:
+      213: 214682590332498571
+    second: Mecha Main Character Sprite Sheet (Test)_22
+  - first:
+      213: 8526746787783458648
+    second: Mecha Main Character Sprite Sheet (Test)_23
+  - first:
+      213: 3516493937835852622
+    second: Mecha Main Character Sprite Sheet (Test)_24
+  - first:
+      213: 8485101940283114784
+    second: Mecha Main Character Sprite Sheet (Test)_25
+  - first:
+      213: 5274526270457761054
+    second: Mecha Main Character Sprite Sheet (Test)_26
+  - first:
+      213: -341580870752400847
+    second: Mecha Main Character Sprite Sheet (Test)_27
+  - first:
+      213: 4237700114327588264
+    second: Mecha Main Character Sprite Sheet (Test)_28
+  - first:
+      213: -9213302646680286687
+    second: Mecha Main Character Sprite Sheet (Test)_29
+  - first:
+      213: -6594149886129370887
+    second: Mecha Main Character Sprite Sheet (Test)_30
+  - first:
+      213: 6254329772696897181
+    second: Mecha Main Character Sprite Sheet (Test)_31
+  - first:
+      213: -3318177181044263131
+    second: Mecha Main Character Sprite Sheet (Test)_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 519
+        width: 55
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc15e0b2d8fc712c0800000000000000
+      internalID: -4460868700667489843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_1
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 520
+        width: 54
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f702e35bfcd92df70800000000000000
+      internalID: 9210597703350624383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_2
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 519
+        width: 55
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac2f5facc36b71a90800000000000000
+      internalID: -7343200295184895286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_3
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 520
+        width: 50
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f8bf016ae47115a0800000000000000
+      internalID: -6552327432847771408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_4
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 520
+        width: 52
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eba30d75918e229e0800000000000000
+      internalID: -1647499318119089474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_5
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 519
+        width: 54
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bee3c2dc8c949b10800000000000000
+      internalID: 1987385464222641840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_6
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 430
+        width: 62
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c19a55112519519d0800000000000000
+      internalID: -2804175411304093412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_7
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 430
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6901784e66530c380800000000000000
+      internalID: -8953097343175552874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_8
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 430
+        width: 71
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 140737311bda8b0d0800000000000000
+      internalID: -3406782142058631103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_9
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 429
+        width: 67
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 903ea3d198aee13f0800000000000000
+      internalID: -928046598569925879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_10
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 429
+        width: 88
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a83d68774da23fd0800000000000000
+      internalID: -2363636331941381975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_11
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 334
+        width: 90
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6d9b5d4a68c8d080800000000000000
+      internalID: -9162353082995335828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_12
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 333
+        width: 87
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a6c039b93cb23160800000000000000
+      internalID: 7003867326620681888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_13
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 332
+        width: 118
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bfaf2f54278df690800000000000000
+      internalID: -7566743208627032140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_14
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 333
+        width: 121
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 534a6a0c1511a1220800000000000000
+      internalID: 2457295589506196533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_15
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 243
+        width: 196
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1583f9368b2c247d0800000000000000
+      internalID: -2935569909890992047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_16
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 234
+        width: 209
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bf86403dd2f50ab0800000000000000
+      internalID: -5042357175959777353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_17
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 147
+        width: 94
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1977190855c282c0800000000000000
+      internalID: -4430762101478819556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_18
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 200
+        width: 15
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd1b8345c50c615a0800000000000000
+      internalID: -6550837105181281828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_19
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 146
+        width: 193
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3d03a3b4dd628e90800000000000000
+      internalID: -7024931708430250691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_20
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 221
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e259279147862920800000000000000
+      internalID: 2965206120448742120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_21
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 150
+        width: 107
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0a7a3fa749beddb0800000000000000
+      internalID: -4765167638177744374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_22
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 149
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b82ba30bda4baf200800000000000000
+      internalID: 214682590332498571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_23
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 51
+        width: 72
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85f398fd607155670800000000000000
+      internalID: 8526746787783458648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_24
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 118
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e434583fa981dc030800000000000000
+      internalID: 3516493937835852622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_25
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 50
+        width: 77
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0258d89324321c570800000000000000
+      internalID: 8485101940283114784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_26
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 118
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1dc91582b1e23940800000000000000
+      internalID: 5274526270457761054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_27
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 50
+        width: 81
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13a0cb00206724bf0800000000000000
+      internalID: -341580870752400847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_28
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 98
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8adc02b3dc55fca30800000000000000
+      internalID: 4237700114327588264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_29
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 108
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12a84789e06c32080800000000000000
+      internalID: -9213302646680286687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_30
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 105
+        width: 10
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f88399ad9fdc74a0800000000000000
+      internalID: -6594149886129370887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_31
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 101
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d968fb99ac7dbc650800000000000000
+      internalID: 6254329772696897181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_32
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 105
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 527bc0e2f6773f1d0800000000000000
+      internalID: -3318177181044263131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_33
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 105
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cf8c5fe33f03eb4fb1f2ccc639ee401
+      internalID: 890062091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_34
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 102
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5381382d19bd324880fda533004af83
+      internalID: 1919428197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mecha Main Character Sprite Sheet (Test)_35
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 51
+        width: 123
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a5626c07868fac49b9a36d55617c538
+      internalID: -1568243648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 8e3d8ef9d4a754547895664f1a19378e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Mecha Main Character Sprite Sheet (Test)_0: -4460868700667489843
+      Mecha Main Character Sprite Sheet (Test)_1: 9210597703350624383
+      Mecha Main Character Sprite Sheet (Test)_10: -2363636331941381975
+      Mecha Main Character Sprite Sheet (Test)_11: -9162353082995335828
+      Mecha Main Character Sprite Sheet (Test)_12: 7003867326620681888
+      Mecha Main Character Sprite Sheet (Test)_13: -7566743208627032140
+      Mecha Main Character Sprite Sheet (Test)_14: 2457295589506196533
+      Mecha Main Character Sprite Sheet (Test)_15: -2935569909890992047
+      Mecha Main Character Sprite Sheet (Test)_16: -5042357175959777353
+      Mecha Main Character Sprite Sheet (Test)_17: -4430762101478819556
+      Mecha Main Character Sprite Sheet (Test)_18: -6550837105181281828
+      Mecha Main Character Sprite Sheet (Test)_19: -7024931708430250691
+      Mecha Main Character Sprite Sheet (Test)_2: -7343200295184895286
+      Mecha Main Character Sprite Sheet (Test)_20: 2965206120448742120
+      Mecha Main Character Sprite Sheet (Test)_21: -4765167638177744374
+      Mecha Main Character Sprite Sheet (Test)_22: 214682590332498571
+      Mecha Main Character Sprite Sheet (Test)_23: 8526746787783458648
+      Mecha Main Character Sprite Sheet (Test)_24: 3516493937835852622
+      Mecha Main Character Sprite Sheet (Test)_25: 8485101940283114784
+      Mecha Main Character Sprite Sheet (Test)_26: 5274526270457761054
+      Mecha Main Character Sprite Sheet (Test)_27: -341580870752400847
+      Mecha Main Character Sprite Sheet (Test)_28: 4237700114327588264
+      Mecha Main Character Sprite Sheet (Test)_29: -9213302646680286687
+      Mecha Main Character Sprite Sheet (Test)_3: -6552327432847771408
+      Mecha Main Character Sprite Sheet (Test)_30: -6594149886129370887
+      Mecha Main Character Sprite Sheet (Test)_31: 6254329772696897181
+      Mecha Main Character Sprite Sheet (Test)_32: -3318177181044263131
+      Mecha Main Character Sprite Sheet (Test)_33: 890062091
+      Mecha Main Character Sprite Sheet (Test)_34: 1919428197
+      Mecha Main Character Sprite Sheet (Test)_35: -1568243648
+      Mecha Main Character Sprite Sheet (Test)_4: -1647499318119089474
+      Mecha Main Character Sprite Sheet (Test)_5: 1987385464222641840
+      Mecha Main Character Sprite Sheet (Test)_6: -2804175411304093412
+      Mecha Main Character Sprite Sheet (Test)_7: -8953097343175552874
+      Mecha Main Character Sprite Sheet (Test)_8: -3406782142058631103
+      Mecha Main Character Sprite Sheet (Test)_9: -928046598569925879
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

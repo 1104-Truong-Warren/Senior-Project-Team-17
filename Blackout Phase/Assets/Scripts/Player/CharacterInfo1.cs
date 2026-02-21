@@ -48,6 +48,8 @@ public class CharacterInfo1 : MonoBehaviour
     public static CharacterInfo1 Instance { get; private set; } // access
     public int currentAP {  get; private set; } // access the AP
 
+    private Animator animator; // Added by Warren
+
     //public OverlayTile PlayerSetTile() => CurrentTile;// helper
 
     private void Awake()
@@ -55,6 +57,8 @@ public class CharacterInfo1 : MonoBehaviour
         Instance = this; // set up the player accessor
 
         currentAP = maxAP; // Start with 2AP
+
+        animator = GetComponent<Animator>(); // Added by Warren
     }
 
     public void ResetAP()
@@ -209,6 +213,13 @@ public class CharacterInfo1 : MonoBehaviour
         }
         
         Debug.Log($"Found {displays.Length} UI display(s), updating...");
+    }
+
+    // Added by Warren
+    public void PlayAttackAnimation()
+    {
+        if (animator != null)
+            animator.SetTrigger("Attack");
     }
         
 }

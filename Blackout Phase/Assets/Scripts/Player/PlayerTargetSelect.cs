@@ -276,6 +276,8 @@ public class PlayerTargetSelect : MonoBehaviour
 
         PlayerCombatCheck.Instance.PlayerAttackCheck(currentTarget); // attack the locked on target
 
+        CharacterInfo1.Instance.PlayAttackAnimation();
+
         ClearAttackTargetHighlight(); // clear the target after (clear the target highlight
     }
 

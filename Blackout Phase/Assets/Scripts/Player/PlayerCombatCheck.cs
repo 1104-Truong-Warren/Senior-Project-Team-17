@@ -22,6 +22,9 @@ public class PlayerCombatCheck : MonoBehaviour
 
     private CharacterInfo1 playerInfo; // to access playerInfo
 
+    // Added by Warren
+    private Animator animator;
+
     private void Awake()
     {
         // if Innstance(copy) exsist and not the same as pointer deleted
@@ -34,6 +37,8 @@ public class PlayerCombatCheck : MonoBehaviour
         Instance = this; // setup the this pointer
 
         PlayerSetUp(); // void function to set up the player status
+
+        animator = GetComponent<Animator>();
     }
 
     public void PlayerAttackCheck(EnemyInfo enemy)
@@ -144,6 +149,28 @@ public class PlayerCombatCheck : MonoBehaviour
                 Debug.Log($"Counter Critical Hit: Damage:{dmg}"); // debug msg
         }
 
+        if (animator != null)
+        {
+            Debug.Log($"ANIMATOR DEBUG: Attempting to play attack animation");
+            Debug.Log($"Animator exists: {animator != null}");
+            Debug.Log($"Controller exists: {animator.runtimeAnimatorController != null}");
+            Debug.Log($"Parameter count: {animator.parameters.Length}");
+            
+            // List all parameters
+            foreach (var param in animator.parameters)
+            {
+                Debug.Log($"Parameter: {param.name} - Type: {param.type}");
+            }
+            
+            // Try to set the trigger
+            animator.SetTrigger("Attack");
+            Debug.Log("Attack trigger sent");
+            
+            // Check current state
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            Debug.Log($"Current state: {stateInfo.fullPathHash} - Is it playing? {stateInfo.length > 0}");
+        }
+
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
 
         // Added by Warren, for player's damage UI on the enemy
@@ -200,6 +227,28 @@ public class PlayerCombatCheck : MonoBehaviour
 
             else
                 Debug.Log($"Counter Critical Hit: Damage:{dmg}"); // debug msg
+        }
+
+        if (animator != null)
+        {
+            Debug.Log($"ANIMATOR DEBUG: Attempting to play attack animation");
+            Debug.Log($"Animator exists: {animator != null}");
+            Debug.Log($"Controller exists: {animator.runtimeAnimatorController != null}");
+            Debug.Log($"Parameter count: {animator.parameters.Length}");
+            
+            // List all parameters
+            foreach (var param in animator.parameters)
+            {
+                Debug.Log($"Parameter: {param.name} - Type: {param.type}");
+            }
+            
+            // Try to set the trigger
+            animator.SetTrigger("Attack");
+            Debug.Log("Attack trigger sent");
+            
+            // Check current state
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            Debug.Log($"Current state: {stateInfo.fullPathHash} - Is it playing? {stateInfo.length > 0}");
         }
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
