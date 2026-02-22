@@ -10,9 +10,10 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
     public float textSpeed;
+    public bool dialogueDone = false;
 
     //public string[] lines;
-    private int index;
+    public int index;
 
     // trying to use the dialogue asset scriptable object
     public DialogueAsset dialogueAsset;
@@ -22,7 +23,7 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         //textComponent.enabled = true;
-        StartCoroutine(InitializeDialogue()); // start the dialogue initialization
+        //StartCoroutine(InitializeDialogue()); // start the dialogue initialization
     }
 
     IEnumerator InitializeDialogue()
@@ -30,6 +31,20 @@ public class Dialogue : MonoBehaviour
         yield return 3f;
         textComponent.text = string.Empty; // set the text to empty at the start
         StartDialogue(); // start the dialogue
+    }
+
+    public void Reinitialize(DialogueAsset newDialogueAsset)
+    {
+        StopAllCoroutines(); // stop any ongoing coroutines
+
+        // Reset all states
+        dialogueAsset = newDialogueAsset; // update the dialogue asset
+        index = 0; // reset the index
+        textComponent.text = string.Empty; // clear the text
+        dialogueDone = false; // reset the dialogue done flag
+
+        // Start dialogue again
+        StartDialogue();
     }
 
     // Update is called once per frame
@@ -57,6 +72,9 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator TypeLine()
     {
+        // Clear text before typing the new line
+        textComponent.text = string.Empty;
+
         // Type each character one by one with a delay of textSpeed seconds
         foreach (char c in dialogueAsset.dialogue[index].ToCharArray())
         {
@@ -76,6 +94,12 @@ public class Dialogue : MonoBehaviour
         else
         {
             gameObject.SetActive(false); // deactivate the dialogue box when all lines are done
+            dialogueDone = true; // set the dialogue done flag to true
         }
     }
+
+    public int GetCurrentLineIndex()
+    {
+        return index;
+    } 
 }
