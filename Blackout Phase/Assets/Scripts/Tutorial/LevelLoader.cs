@@ -15,7 +15,7 @@ public class LevelLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(1)) // if right mouse button is clicked
+        if(Input.GetKeyDown(KeyCode.N)) // if N is clicked
         {
             LoadNextLevel();
             transitionSounds.PlayTransitionSound();
