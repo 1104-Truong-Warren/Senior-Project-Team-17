@@ -89,6 +89,10 @@ public class SaveSelectUI : MonoBehaviour
             GameObject msg = Instantiate(saveButtonPrefab, saveButtonContainer);
             msg.GetComponentInChildren<TextMeshProUGUI>().text = "No save files found";
             msg.GetComponent<Button>().interactable = false;
+            
+            // Disable delete button if it exists on the message
+            Button deleteBtn = msg.transform.Find("DeleteButton")?.GetComponent<Button>();
+            if (deleteBtn != null) deleteBtn.gameObject.SetActive(false);
             return;
         }
         
@@ -100,9 +104,37 @@ public class SaveSelectUI : MonoBehaviour
             
             buttonText.text = $"{save.fileName}\n{save.DisplayDate} - HP: {save.playerHP}/{save.playerMaxHP}";
             
+            // Button that loads the save file when clicked
             Button button = buttonObj.GetComponent<Button>();
             string fileName = save.fileName;
             button.onClick.AddListener(() => LoadSelectedSave(fileName));
+            
+            // Find and setup delete button for this save file
+            Button deleteButton = buttonObj.transform.Find("DeleteButton")?.GetComponent<Button>();
+            if (deleteButton != null)
+            {
+                string fullPath = save.fullPath; // Store the full path for deletion
+                deleteButton.onClick.AddListener(() => DeleteSaveFile(fullPath, buttonObj));
+            }
+        }
+    }
+
+    // The purpose of this function is to delete unwanted save files from the Saves folder
+    private void DeleteSaveFile(string fullPath, GameObject buttonObj)
+    {
+        // Confirm deletion in console
+        Debug.Log($"Deleting save file: {fullPath}");
+        
+        if (saveManager != null)
+        {
+            saveManager.DeleteSaveFile(fullPath); // Call SaveManager to handle actual file deletion
+            Destroy(buttonObj); // Remove the button from the UI immediately
+            
+            // Check if there are no saves left and refresh the list to show "No saves" message
+            if (saveManager.GetAvailableSaves().Count == 0)
+            {
+                PopulateSaveList(); // Refresh to show the empty state message
+            }
         }
     }
     

@@ -70,6 +70,7 @@ public class SaveManager : MonoBehaviour
                 SaveFileInfo info = new SaveFileInfo
                 {
                     fileName = Path.GetFileName(file),
+                    fullPath = file,
                     saveDate = File.GetLastWriteTime(file),
                     playerHP = data.hp,
                     playerMaxHP = data.maxHP,
@@ -168,5 +169,23 @@ public class SaveManager : MonoBehaviour
     public List<SaveFileInfo> GetAvailableSaves()
     {
         return availableSaves;
+    }
+
+    // The purpose of this function is to permanently delete a save file from the computer's hard drive.
+    public void DeleteSaveFile(string fullPath)
+    {
+        try
+        {
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+                Debug.Log($"Deleted save file: {fullPath}");
+                RefreshSaveList(); // Update the list after deletion
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to delete save file: {e.Message}");
+        }
     }
 }

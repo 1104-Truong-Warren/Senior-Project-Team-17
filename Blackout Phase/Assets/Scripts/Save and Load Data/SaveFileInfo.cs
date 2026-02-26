@@ -15,6 +15,7 @@ using System;
 public class SaveFileInfo
 {
     public string fileName;
+    public string fullPath;
     public DateTime saveDate; // The data and time  of when the file was saved
     public int playerHP;
     public int playerMaxHP;
