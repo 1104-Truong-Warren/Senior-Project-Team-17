@@ -1,5 +1,6 @@
 // Warren
 // The purpose of this script is to add and control the main menu functionality, including starting the game by loading the main gameplay scene and existing the application when the user selects the quit button.
+// The user also have the option to load their save files and adjust sound volume.
 
 // Resource: https://www.youtube.com/watch?v=-GWjA6dixV4 - For setting up main menu and the implementation of start game button and quitting to desktop
 // Resource: https://www.youtube.com/watch?v=zc8ac_qUXQY&t=1s - For setting up the volume adjustment button and visuals
@@ -8,6 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement; // This built-in library is used to load and manage scenes, allow to switch between various and different scenes.
 using UnityEngine.UI; // Added for UI components
 using TMPro; // Add this if using TextMeshPro
+using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Slider volumeSlider; // Reference to volume slider
     [SerializeField] Button settingsButton; // Reference to settings button
     [SerializeField] Button backButton; // Reference to back button
+
+    [Header("Save/Load")]
+    [SerializeField] SaveSelectUI saveSelectUI; // Reference for loading save files menu/panel
     
     AudioManager audioManager; // Reference to audio manager
     
@@ -47,7 +52,7 @@ public class MainMenu : MonoBehaviour
     
     public void PlayGame() // Calls in Unity's built-in SceneMananger function, it will load the scene depending on the name.
     {
-        SceneManager.LoadScene("TestIntro");
+        SceneManager.LoadScene("Demo_pxiel_2D_Test_Grid");
     }
 
     
@@ -80,5 +85,17 @@ public class MainMenu : MonoBehaviour
         #if UNITY_EDITOR // Preprocessor directive, the code will only execute when the Unity Editor is running.
         UnityEditor.EditorApplication.isPlaying = false; // Stops play mode in the Unity Editor
         #endif // Ends the conditional compilation block.
+    }
+
+    public void OpenSaveSelect()
+    {
+        if (saveSelectUI != null)
+        {
+            saveSelectUI.OpenSaveSelect();
+        }
+        else
+        {
+            Debug.LogError("saveSelectUI is not assigned in the Inspector! Drag the SaveSelectPanel into the field.");
+        }
     }
 }

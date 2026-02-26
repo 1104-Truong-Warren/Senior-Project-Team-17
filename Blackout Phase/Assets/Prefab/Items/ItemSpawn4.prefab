@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5615831392377947958
+--- !u!1 &4341928498832212384
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2897777253034977141}
-  - component: {fileID: 5441835317206917970}
+  - component: {fileID: 1717090129671457547}
+  - component: {fileID: 3139807911280166267}
   m_Layer: 0
-  m_Name: PauseManager
+  m_Name: ItemSpawn4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2897777253034977141
+--- !u!4 &1717090129671457547
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5615831392377947958}
+  m_GameObject: {fileID: 4341928498832212384}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4929116, y: 0.54887474, z: -0.017694436}
+  m_LocalPosition: {x: 528.61304, y: 237.52275, z: 2.2356443}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5441835317206917970
+--- !u!114 &3139807911280166267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5615831392377947958}
+  m_GameObject: {fileID: 4341928498832212384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91177d02fba9e4d41b1d550bc179186e, type: 3}
+  m_Script: {fileID: 11500000, guid: 202d4c9f28cfc5d41ac2a62581dda421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuUI: {fileID: 0}
+  item: {fileID: 11400000, guid: d0fc3f05a4cae68408d4073d56807a0a, type: 2}
+  itemObject: {fileID: 4771652766161298532, guid: d85dec9df9ab8e3498c0dff722d83964, type: 3}
+  spawnGridPosition: {x: 4, y: 2}

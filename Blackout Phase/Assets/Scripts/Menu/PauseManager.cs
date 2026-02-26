@@ -60,4 +60,18 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("TitleScreen");
     }
+
+    // Function that lets the player save their game anytime. 
+    public void OnSaveButtonClick()
+    {
+        SaveManager saveManager = FindObjectOfType<SaveManager>();
+        if (saveManager != null)
+        {
+            saveManager.SaveGame();
+        }
+        else
+        {
+            Debug.LogError("SaveManager not found!");
+        }
+    }
 }

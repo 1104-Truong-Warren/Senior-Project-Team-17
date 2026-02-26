@@ -210,5 +210,27 @@ public class CharacterInfo1 : MonoBehaviour
         
         Debug.Log($"Found {displays.Length} UI display(s), updating...");
     }
+
+    // Added by Warren - function that saves the HP, EN, and attack damage data
+    // Called after save file is selected and loaded from main menu.
+    public void LoadFromSaveData(PlayerSaveData data)
+    {
+        // Stats that saves when player saves while in game
+        HP = data.hp;
+        MaxHP = data.maxHP;
+        EN = data.en;
+        MaxEN = data.maxEN;
+        baseAttk = data.baseAttk;
+        baseAttkRange = data.baseAttkRange;
+        baseHitRate = data.baseHitRate;
+        baseCriticalRate = data.baseCriticalRate;
+        baseCritDamage = data.baseCritDamage;
+        baseEvasion = data.baseEvasion;
+        
+        // Set position
+        transform.position = new Vector3(data.posX, data.posY, data.posZ);
+        
+        Debug.Log($"Game loaded! HP: {HP}/{MaxHP}, EN: {EN}/{MaxEN}");
+    }
         
 }
