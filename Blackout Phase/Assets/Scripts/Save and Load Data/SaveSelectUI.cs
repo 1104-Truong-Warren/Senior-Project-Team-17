@@ -65,6 +65,13 @@ public class SaveSelectUI : MonoBehaviour
     // The purpose of this function is it creatse buttons for each file that is found in the Saves folder.
     private void PopulateSaveList()
     {
+        // Ensure proper spacing
+        VerticalLayoutGroup layout = saveButtonContainer.GetComponent<VerticalLayoutGroup>();
+        if (layout != null)
+        {
+            layout.spacing = 100f; // Set your desired spacing
+        }
+        
         // Clears any existing buttons from previous time the panel was opened.
         foreach (Transform child in saveButtonContainer)
             Destroy(child.gameObject);
