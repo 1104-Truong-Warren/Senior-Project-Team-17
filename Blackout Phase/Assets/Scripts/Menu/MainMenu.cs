@@ -17,7 +17,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject settingsPanel; // Reference to settings panel
     
     [Header("Settings UI")]
-    [SerializeField] Slider volumeSlider; // Reference to volume slider
+    [SerializeField] Slider masterVolumeSlider; // Reference to master volume slider (RENAMED from volumeSlider)
+    [SerializeField] Slider sfxVolumeSlider; // Reference to SFX volume slider
     [SerializeField] Button settingsButton; // Reference to settings button
     [SerializeField] Button backButton; // Reference to back button
 
@@ -33,21 +34,20 @@ public class MainMenu : MonoBehaviour
         
         // Setup button listeners
         if (settingsButton != null)
+        {
             settingsButton.onClick.AddListener(OpenSettings);
+        }
             
         if (backButton != null)
-            backButton.onClick.AddListener(CloseSettings);
-        
-        // Setup volume slider
-        if (volumeSlider != null && audioManager != null)
         {
-            volumeSlider.value = audioManager.GetVolume();
-            volumeSlider.onValueChanged.AddListener(SetVolume);
+            backButton.onClick.AddListener(CloseSettings);
         }
         
-        // Ensure settings panel is closed at start
+        // Ensures settings panel is closed at start
         if (settingsPanel != null)
+        {
             settingsPanel.SetActive(false);
+        }
     }
     
     public void PlayGame() // Calls in Unity's built-in SceneMananger function, it will load the scene depending on the name.
@@ -68,14 +68,6 @@ public class MainMenu : MonoBehaviour
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(false);
-        }
-    }
-    
-    public void SetVolume(float volume)
-    {
-        if (audioManager != null)
-        {
-            audioManager.SetVolume(volume);
         }
     }
 
