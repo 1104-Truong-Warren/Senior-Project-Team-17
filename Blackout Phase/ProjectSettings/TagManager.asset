@@ -7,6 +7,8 @@ TagManager:
   - AccessibleTileDisplay
   - Enemy
   - Player1
+  - Music Volume slider
+  - SFX Volume slider
   layers:
   - Default
   - TransparentFX
