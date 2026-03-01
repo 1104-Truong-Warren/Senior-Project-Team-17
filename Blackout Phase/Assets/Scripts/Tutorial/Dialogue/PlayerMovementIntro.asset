@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ff468522a88594f835ce1750834844, type: 3}
+  m_Name: PlayerMovementIntro
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Good work!
+  - Now, let's control the mech itself.
+  - At the bottom of your screen is the action menu.
+  - During your turn, this menu will appear and show you your available combat options.
+  - Clicking the "move" button will enable movement mode, and you can select a spot
+    to move to.
+  - You can also press the 'M' key on your keyboard to enable movement.
+  - Under normal conditions, you get two actions per turn.
+  - You can only move a limited number of spaces. For now, this is 6 spaces.
+  - However, you may also choose to use your second action to move a little bit further.
+  - Let's try it now.

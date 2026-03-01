@@ -10,35 +10,83 @@ using UnityEngine.UI;
 public enum TutorialStep
 {
     Blackscreen,
-    DialogueMovementIntro,
+    CameraMovementIntro,
     CameraMovement,
+    PlayerMovementIntro,
+    PlayerMovement,
     Complete
 }
 
 public class TutorialManager : MonoBehaviour
 {
+    public GameObject dialoguePanel; // default position 670 top, 110 bottom
+    // moved position is 600 top, 180 bottom
     public Dialogue dialogueBox; // box ALL dialogue gets loaded into
     public TutorialMouseController mouseController; // for controlling the mouse and player movement
     public GameObject blackscreen; 
     public DragCamera2D cameraController;
-    public Sprite incompleteBox;
     public Sprite completeBox;
 
-    public DialogueAsset blackscreenDialogue;
-    public DialogueAsset movementIntroDialogue;
+    public GameObject stepCompletePanel;
 
-    // Movement tutorial
-    public GameObject tutorialMovementPanel; // panel for movement tutorial
+    public AudioSource bigStepCompleteSource; // on the canvas
+
+    // Blackscreen Step
+    public DialogueAsset blackscreenDialogue;
+
+    // CameraMovementIntro Step
+    public DialogueAsset cameraMovementIntroDialogue;
+
+    // CameraMovement Step
+    public GameObject cameraMovementPanel;
     public GameObject panStatusImage;
     public GameObject zoomStatusImage;
 
-    [SerializeField] public TutorialStep currentStep = TutorialStep.Blackscreen;
+    // PlayerMovementIntro
+    public DialogueAsset playerMovementIntroDialogue;
+    public GameObject actionMenu;
+
+    // Dictionary to map tutorial steps to their panel's AudioSource
+    private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
+
+    public TutorialStep currentStep = TutorialStep.Blackscreen;
     public bool currentStepComplete = false;
+
+    // Track which tasks have been marked complete to avoid repeated calls
+    private bool zoomMarkedComplete = false;
+    private bool panMarkedComplete = false;
+
+    private bool stepMarkedComplete = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        InitializeAudioSources();
         StartCoroutine(RunTutorial());
+    }
+
+    // Initialize the audio sources for each step's panel
+    private void InitializeAudioSources()
+    {
+        // Get the AudioSource from each step's panel
+        // For CameraMovement step, get the AudioSource from tutorialMovementPanel
+        AudioSource cameraMovementAudio = cameraMovementPanel.GetComponent<AudioSource>();
+        if (cameraMovementAudio != null)
+        {
+            stepAudioSources[TutorialStep.CameraMovement] = cameraMovementAudio;
+        }
+        else
+        {
+            Debug.LogWarning("No AudioSource found on tutorialMovementPanel");
+        }
+
+        // Add more steps as needed
+        // Example:
+        // AudioSource blackscreenAudio = blackscreen.GetComponent<AudioSource>();
+        // if (blackscreenAudio != null)
+        // {
+        //     stepAudioSources[TutorialStep.Blackscreen] = blackscreenAudio;
+        // }
     }
 
     // Update is called once per frame
@@ -49,7 +97,6 @@ public class TutorialManager : MonoBehaviour
             CheckStepCompletion();
         }
     }
-
 
     private IEnumerator RunTutorial()
     {
@@ -73,12 +120,16 @@ public class TutorialManager : MonoBehaviour
                 yield return StartCoroutine(RunBlackscreenStep(dialogueBox));
                 blackscreen.SetActive(false);
                 break;
-            case TutorialStep.DialogueMovementIntro:
+            case TutorialStep.CameraMovementIntro:
                 yield return StartCoroutine(RunDialogueMovementIntroStep(dialogueBox));
                 break;
 
             case TutorialStep.CameraMovement:
                 yield return StartCoroutine(RunCameraMovementStep());
+                break;
+
+            case TutorialStep.PlayerMovementIntro:
+                yield return StartCoroutine(RunPlayerMovementIntroStep(dialogueBox));
                 break;
 
             case TutorialStep.Complete:
@@ -97,7 +148,7 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator RunDialogueMovementIntroStep(Dialogue dialogue)
     {
-        dialogue.Reinitialize(movementIntroDialogue); // set the dialogue asset for the movement intro dialogue
+        dialogue.Reinitialize(cameraMovementIntroDialogue); // set the dialogue asset for the movement intro dialogue
         dialogue.gameObject.SetActive(true);
 
         // Wait until dialogue is done (also check for certain index to show mission panel)
@@ -106,7 +157,7 @@ public class TutorialManager : MonoBehaviour
             if (dialogue.GetCurrentLineIndex() == 5)
             {
                 // Make mission panel appear because dialogue talks about it
-                tutorialMovementPanel.SetActive(true);
+                cameraMovementPanel.SetActive(true);
             }
             yield return null;
         }
@@ -116,10 +167,35 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator RunCameraMovementStep()
     {
         // Show camera movement instructions/panel (redundant now)
-        tutorialMovementPanel.SetActive(true);
+        cameraMovementPanel.SetActive(true);
 
         // Wait for player to move camera
         yield return new WaitUntil(() => currentStepComplete);
+    }
+
+    private IEnumerator RunPlayerMovementIntroStep(Dialogue dialogue)
+    {
+        dialogue.Reinitialize(playerMovementIntroDialogue); // set the dialogue asset for the movement intro dialogue
+        dialogue.gameObject.SetActive(true);
+        // Wait until dialogue is done (also check for certain index to show action menu)
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            if (dialogue.GetCurrentLineIndex() == 2)
+            {
+                // Move dialogue box up to make room for action menu
+                RectTransform rectTransform = dialoguePanel.GetComponent<RectTransform>();
+                rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, 180); // Set bottom offset
+                rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -600); // Set top offset (negative)
+                actionMenu.SetActive(true);
+            }
+            yield return null;
+        }
+        currentStepComplete = true;
     }
 
     private void CheckStepCompletion()
@@ -127,19 +203,54 @@ public class TutorialManager : MonoBehaviour
         switch (currentStep)
         {
             case TutorialStep.CameraMovement:
-                if (cameraController.hasDoneZoom)
+                if (cameraController.hasDoneZoom && !zoomMarkedComplete)
                 {
-                    zoomStatusImage.GetComponent<Image>().sprite = completeBox;
+                    markTaskComplete(zoomStatusImage);
+                    zoomMarkedComplete = true;
                 }
-                if (cameraController.hasDonePan)
+                if (cameraController.hasDonePan && !panMarkedComplete)
                 {
-                    panStatusImage.GetComponent<Image>().sprite = completeBox;
+                    markTaskComplete(panStatusImage);
+                    panMarkedComplete = true;
                 }
-                if (cameraController.hasDoneZoom && cameraController.hasDonePan)
+                if (cameraController.hasDoneZoom && cameraController.hasDonePan && !stepMarkedComplete)
                 {
-                    Delay(2f); // small delay before marking complete
-                    currentStepComplete = true;
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 2f)); // Pass current step
+                    stepMarkedComplete = true;
                 }
+                break;
+        }
+    }
+
+    private IEnumerator CompleteStepWithDelay(TutorialStep step, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        // Hide the current step's panel
+        HideStepPanel(step);
+        
+        // Show the step complete panel
+        stepCompletePanel.SetActive(true);
+        
+        // Play the big step complete audio
+        bigStepCompleteSource.Play();
+        
+        // Mark step as complete
+        currentStepComplete = true;
+    }
+
+    private void HideStepPanel(TutorialStep step)
+    {
+        switch (step)
+        {
+            case TutorialStep.CameraMovement:
+                cameraMovementPanel.SetActive(false);
+                break;
+            case TutorialStep.CameraMovementIntro:
+                // Add panel hiding logic for this step if needed
+                break;
+            case TutorialStep.Blackscreen:
+                // Blackscreen is already handled in ExecuteStep
                 break;
         }
     }
@@ -148,9 +259,11 @@ public class TutorialManager : MonoBehaviour
     {
         currentStep = currentStep switch
         {
-            TutorialStep.Blackscreen => TutorialStep.DialogueMovementIntro,
-            TutorialStep.DialogueMovementIntro => TutorialStep.CameraMovement,
-            TutorialStep.CameraMovement => TutorialStep.Complete,
+            TutorialStep.Blackscreen => TutorialStep.CameraMovementIntro,
+            TutorialStep.CameraMovementIntro => TutorialStep.CameraMovement,
+            TutorialStep.CameraMovement => TutorialStep.PlayerMovementIntro,
+            TutorialStep.PlayerMovementIntro => TutorialStep.PlayerMovement,
+            TutorialStep.PlayerMovement => TutorialStep.Complete,
             _ => TutorialStep.Complete
         };
 
@@ -163,8 +276,14 @@ public class TutorialManager : MonoBehaviour
         // Handle tutorial completion - disable tutorial systems, enable normal gameplay, etc.
     }
 
-    private IEnumerator Delay(float delay)
+    private void markTaskComplete(GameObject statusImage)
     {
-        yield return new WaitForSeconds(delay);
+        statusImage.GetComponent<Image>().sprite = completeBox;
+        
+        // Get the AudioSource for the current step and play it
+        if (stepAudioSources.ContainsKey(currentStep) && stepAudioSources[currentStep] != null)
+        {
+            stepAudioSources[currentStep].Play();
+        }
     }
 }

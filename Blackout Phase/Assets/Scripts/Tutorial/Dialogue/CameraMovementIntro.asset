@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44ff468522a88594f835ce1750834844, type: 3}
-  m_Name: MovementIntro
+  m_Name: CameraMovementIntro
   m_EditorClassIdentifier: 
   dialogue:
   - First, let's introduce you to basic camera movement.
@@ -20,5 +20,5 @@ MonoBehaviour:
     of your current situation.
   - You can click and drag Right Mouse Button to pan the camera.
   - You can also use the scroll wheel to zoom in and out.
-  - Try both now. Your mission log in the top left will display your progress on
-    these tasks.
+  - Try both after dismissing this message. Your mission log in the top left will
+    display your progress on these tasks.
