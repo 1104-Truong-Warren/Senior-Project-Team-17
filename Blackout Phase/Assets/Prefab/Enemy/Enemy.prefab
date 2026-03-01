@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3800167357023009846}
   - component: {fileID: -6424244232038671058}
   - component: {fileID: 1283290579460195088}
+  - component: {fileID: 7919476336222347911}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -152,13 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a673fd9e76a9614297535b4c9e90b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 200
-  AttackRange: 1
-  enemyDamage: 3
-  enemyDetectionRange: 3
-  MoveRange: 3
-  evasionRate: 10
-  enemyHitRate: 90
+  stats: {fileID: 0}
   Tile: {fileID: 0}
 --- !u!114 &6399035647557708820
 MonoBehaviour:
@@ -211,6 +206,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillHitBonus: 0
+--- !u!114 &7919476336222347911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5232868240694350822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dfba66794135694ba3274bc2a4204bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeDodgeBounus: 10
+  counterAttackChance: 0
+  allowToCounter: 1
 --- !u!1001 &6827227202612923296
 PrefabInstance:
   m_ObjectHideFlags: 0
