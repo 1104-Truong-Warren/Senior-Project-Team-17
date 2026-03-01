@@ -19,6 +19,7 @@ public class MapManager1 : MonoBehaviour
     [SerializeField] private Tilemap groundTileMap; // for ground only
 
     public Dictionary<Vector2Int, OverlayTile1> map;   // map position, using x,y, and overlay using map
+
     private bool ignoreBottomTiles;      // flag for tiles that are under tiles, z high 
 
     public static event Action OnMapFinished; // waiting for map before anything else
@@ -44,7 +45,6 @@ public class MapManager1 : MonoBehaviour
 
     private IEnumerator GenerateMap()
     {
-
         //var tileMap = gameObject.GetComponentInChildren<Tilemap>(); // get the map
 
         var tileMap = groundTileMap; // only using the ground layer
@@ -138,11 +138,12 @@ public class MapManager1 : MonoBehaviour
         return GetWorldTilePosition(Position); // returns the transf position
     }
 
-    public void ResetAllTiles()
-    {
-        foreach (var tile in map.Values) // calls the overlay tile reset for all objects
-            tile.ResetTiles();
-    }
+    // Replaced by PlayerHighligh script
+    //public void ResetAllTiles()
+    //{
+    //    foreach (var tile in map.Values) // calls the overlay tile reset for all objects
+    //        tile.ResetTiles();
+    //}
 
     public OverlayTile1 GetTile(Vector2Int gridPosition)
     {

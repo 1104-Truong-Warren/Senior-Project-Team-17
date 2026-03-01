@@ -57,6 +57,8 @@ public class TurnManager : MonoBehaviour
 
     private CharacterInfo1 playerInfo; // player's info
 
+    private PlayerHighlighter playerHighlighter; // for displaying the highlights
+
     private void Awake()
     {
         if (Instance != null && Instance != this)  // if gameobject not found destory it, else set it to this
@@ -84,6 +86,14 @@ public class TurnManager : MonoBehaviour
                                          MapManager1.Instance.map.Count > 0); // wait until the map is set
 
         Debug.Log("Turnmanager: Map is ready"); // debug msg
+
+        // if the playerHighlight is not find search for it
+        if (playerHighlighter == null)
+            playerHighlighter = MapManager1.Instance.GetComponent<PlayerHighlighter>();
+
+        // back up if it can find it by type
+        if (playerHighlighter == null)
+            playerHighlighter = FindFirstObjectByType<PlayerHighlighter>();
 
         //yield return new WaitUntil(() => AllEnemiesReady()); // wait until enemies are set up
 
@@ -115,6 +125,12 @@ public class TurnManager : MonoBehaviour
     // use finite state to control the turn
     public void SetTurnState(TurnState newState)
     {
+        // clear the player's highlights
+        if (State == TurnState.PlayerAction && newState != TurnState.PlayerAction)
+        {
+            playerHighlighter?.ClearHighlights(); // clear all the highlights in the same playerAction turn
+        }
+
         Debug.Log($"TurnManger => State shift:{State} => {newState}"); // display the sate changes
 
         State = newState; // current state to a new state
@@ -128,10 +144,14 @@ public class TurnManager : MonoBehaviour
 
             case TurnState.PlayerStart: // player starts the turn, reset AP
                 PlayerTurnStart(); // start
+                ShowPlayerPreviews(); // show highlights
                 break;
 
             case TurnState.PlayerAction: // since the mouse controlls the turn do nothing, once AP used end, or manully end
-                break; 
+                break;
+
+            case TurnState.PlayerReaction: // player reaction to enemy attacks, counter/dodge/tank
+                break;
 
             case TurnState.PlayerEnd: // player turn ended -> calls enemy turn to start
                 StartCoroutine(EnemyTurnStart()); // continue
@@ -210,6 +230,33 @@ public class TurnManager : MonoBehaviour
         // current state is not playerAcution? set it to playerAction
         if (State != TurnState.PlayerAction)
             SetTurnState(TurnState.PlayerAction); // state now player action
+    }
+
+    public void ShowPlayerPreviews()
+    {
+        // if current state is not playerAction get out
+        if (State != TurnState.PlayerAction) return;
+
+        // if the highlight is missing get out
+        if (playerHighlighter == null) return;
+
+        // if player tile or player is not found get out
+        if (playerInfo == null || playerInfo.CurrentTile == null) return;
+
+        playerHighlighter.ShowPlayerMovementTiles(playerInfo.CurrentTile, playerInfo.GetMoveRange()); // highlight the range around the player, passing current tile and the getRange to find the correct range
+    }
+
+    private void FlashPlayerTile()
+    {
+        // check to make suere player tile exist
+        if (playerInfo == null || playerInfo.CurrentTile == null) return;
+
+        playerHighlighter?.SingleTileHighlight(playerInfo.CurrentTile, enemy: false); // calls the single tile
+    }
+
+    public void ClearHighlights()
+    {
+        playerHighlighter?.ClearHighlights(); // clears the highlights
     }
 
     public void EndPlayerTurn()
@@ -383,6 +430,10 @@ public class TurnManager : MonoBehaviour
 
         playerReactionSuccessful = false; // player hasn't react to attack yet
 
+        playerHighlighter?.ClearHighlights(); // clears the highlights
+
+        FlashPlayerTile(); // flashings player tile while being attacked
+
         SetTurnState(TurnState.PlayerReaction); // change state to player react 
     }
 
@@ -391,7 +442,11 @@ public class TurnManager : MonoBehaviour
         // if current state is not player Reaction get out
         if (State != TurnState.PlayerReaction) return;
 
-        bool enemyHit = HitRollCheck.HitRollPercent(inComingHitChance); // use flag to check the hit chance roll
+        int playerDodgeBonus = 10; // extra 10 dodge chance
+
+        int HitChanceAdjustment = Mathf.Clamp(inComingDamage - playerDodgeBonus, 5, 95); // make sure after the bonus chance it is still within 5 - 95
+
+        bool enemyHit = HitRollCheck.HitRollPercent(HitChanceAdjustment); // use flag to check the hit chance roll
 
         // it hit returns true player take damage
         if (enemyHit)
@@ -471,6 +526,8 @@ public class TurnManager : MonoBehaviour
     public void EndPlayerReaction()
     {
         playerReactionSuccessful = true; // set the flag to true, player reacted
+
+        playerHighlighter?.ClearHighlights(); // clear the highlights once finished reatiing
     }
 
     // Added by Warren: Needed to add this function because the GAME OVER screen keeps reappearing because the TurnManager game over state keeps looping.

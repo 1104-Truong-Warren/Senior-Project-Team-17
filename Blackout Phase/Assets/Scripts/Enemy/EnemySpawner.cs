@@ -14,7 +14,10 @@ public class EnemySpwawan : MonoBehaviour
 {
     [Header("Enemy set up")]
     [SerializeField] private GameObject enemyPrefab; // enemy prefab
+    [SerializeField] private EnemyStatsScripObj enemyStats; // enemy stats
     [SerializeField] private Vector2Int spawnGridPosition;// where it starts
+
+    private EnemyInfo enemyInfo; // set up accessor
 
     [Header("Patrol points")]
     [SerializeField] private List<Vector2Int> patrolPoints = new List<Vector2Int>(); // array list of enemy patrol points
@@ -45,7 +48,18 @@ public class EnemySpwawan : MonoBehaviour
 
         GameObject enemy = Instantiate(enemyPrefab, tile.transform.position, Quaternion.identity); // setup the enemy throgh prefab
 
-        EnemyInfo enemyInfo = enemy.GetComponent<EnemyInfo>(); // set up the info
+        enemyInfo = enemy.GetComponentInChildren<EnemyInfo>(); // set up the info even the child object
+
+        // check to see if enemyInfo exist
+        if (enemyInfo == null)
+        {
+            Debug.Log("EnemyInfo not found!"); // debug msg
+            return;
+        }
+
+        enemyInfo.SetStats(enemyStats); // set up the enemy stats
+
+        enemyInfo.ResetHPToMAX(); // set enemy HP back to max before spawn
 
         EnemyController1 enemyController = enemy.GetComponent<EnemyController1>(); // controlls enemy
 

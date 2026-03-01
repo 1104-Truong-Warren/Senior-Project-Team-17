@@ -15,14 +15,14 @@ public static class HitRollCheck
         return roll <= hitRate; // if outcome is less than roll hit
     }
 
-    public static int FinalHitChanceCal(int baseHitR, int skillHitR, int enemyEvasion, int min = 1, int max = 100)
+    public static int FinalHitChanceCal(int baseHitR, int skillHitR, int enemyEvasion, int min = 5, int max = 95)
     {
         int hitChance = (baseHitR + skillHitR) - enemyEvasion; // hit Chance is skill+base hitRate - enemy evasion stats
 
         return Mathf.Clamp(hitChance, min, max); // return the hit Chance, prevent out of range it has to be in 1 - 100 range
     }
 
-    public static int FinalCritChanceCal(int baseCrit, int skillCritB = 0, int min = 0, int max = 100)
+    public static int FinalCritChanceCal(int baseCrit, int skillCritB, int min = 10, int max = 100)
     {
         return Mathf.Clamp((baseCrit + skillCritB), min, max); // return the base crit + skill crit, has to be in 0 - 100 range
     }
