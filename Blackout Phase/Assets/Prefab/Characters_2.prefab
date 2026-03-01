@@ -104,11 +104,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d68cd437d1e7d945be6317bdcc223a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
-  MaxHP: 10
-  EN: 50
-  MaxEN: 50
-  baseMoveRange: 6
+  HP: 20
+  MaxHP: 20
+  EN: 25
+  MaxEN: 25
+  baseMoveRange: 4
   baseAttk: 5
   baseAttkRange: 1
   baseHitRate: 50
@@ -159,7 +159,7 @@ MonoBehaviour:
   previousKey: 113
   nextKey: 101
   cancelKey: 115
-  confirmKey: 99
+  confirmKey: 102
   enemyInRange: 1
   keepTargetAfterAttk: 0
 --- !u!114 &2987649893209457728
@@ -176,4 +176,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dodgeKey: 100
   takeHitKey: 116
-  counterAttkKey: 102
+  counterAttkKey: 99
