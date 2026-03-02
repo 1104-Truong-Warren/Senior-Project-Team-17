@@ -25,6 +25,7 @@ public class TutorialManager : MonoBehaviour
     public TutorialMouseController mouseController; // for controlling the mouse and player movement
     public GameObject blackscreen; 
     public DragCamera2D cameraController;
+    public Sprite incompleteBox;
     public Sprite completeBox;
 
     public GameObject stepCompletePanel;
@@ -46,6 +47,12 @@ public class TutorialManager : MonoBehaviour
     public DialogueAsset playerMovementIntroDialogue;
     public GameObject actionMenu;
 
+    // PlayerMovement Step
+    public GameObject cursor;
+    public GameObject playerMovementPanel;
+    public GameObject move1StatusImage;
+    public GameObject move2StatusImage;
+
     // Dictionary to map tutorial steps to their panel's AudioSource
     private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
 
@@ -57,6 +64,10 @@ public class TutorialManager : MonoBehaviour
     private bool panMarkedComplete = false;
 
     private bool stepMarkedComplete = false;
+    private bool move1aDone = false;
+    private bool move1bDone = false;
+    private bool move2aDone = false;
+    private bool move2bDone = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -132,6 +143,10 @@ public class TutorialManager : MonoBehaviour
                 yield return StartCoroutine(RunPlayerMovementIntroStep(dialogueBox));
                 break;
 
+            case TutorialStep.PlayerMovement:
+                yield return StartCoroutine(RunPlayerMovementStep());
+                break;
+
             case TutorialStep.Complete:
                 break;
         }
@@ -198,6 +213,15 @@ public class TutorialManager : MonoBehaviour
         currentStepComplete = true;
     }
 
+    private IEnumerator RunPlayerMovementStep()
+    {
+        cursor.SetActive(true);
+        playerMovementPanel.SetActive(true);
+        mouseController.BeginBlinkingSequence();
+
+        yield return new WaitUntil(() => currentStepComplete);
+    }
+
     private void CheckStepCompletion()
     {
         switch (currentStep)
@@ -213,7 +237,41 @@ public class TutorialManager : MonoBehaviour
                     markTaskComplete(panStatusImage);
                     panMarkedComplete = true;
                 }
-                if (cameraController.hasDoneZoom && cameraController.hasDonePan && !stepMarkedComplete)
+                if (zoomMarkedComplete && panMarkedComplete && !stepMarkedComplete)
+                {
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 2f)); // Pass current step
+                    stepMarkedComplete = true;
+                }
+                break;
+
+            case TutorialStep.PlayerMovement:
+                if (mouseController.movedSpot1a && !move1aDone)
+                {
+                    markTaskComplete(move1StatusImage);
+                    move1aDone = true;
+                }
+                if (mouseController.movedSpot1b && !move1bDone)
+                {
+                    markTaskComplete(move2StatusImage);
+                    move1bDone = true;
+                }
+                // reset for move 2
+                if (move1aDone && move1bDone && !move2aDone && !move2bDone && !stepMarkedComplete)
+                {
+                    move1StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                    move2StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                }
+                if (mouseController.movedSpot2a && !move2aDone)
+                {
+                    markTaskComplete(move1StatusImage);
+                    move2aDone = true;
+                }
+                if (mouseController.movedSpot2b && !move2bDone)
+                {
+                    markTaskComplete(move2StatusImage);
+                    move2bDone = true;
+                }
+                if (move2aDone && move2bDone && !stepMarkedComplete)
                 {
                     StartCoroutine(CompleteStepWithDelay(currentStep, 2f)); // Pass current step
                     stepMarkedComplete = true;
@@ -246,6 +304,9 @@ public class TutorialManager : MonoBehaviour
             case TutorialStep.CameraMovement:
                 cameraMovementPanel.SetActive(false);
                 break;
+            case TutorialStep.PlayerMovement:
+                playerMovementPanel.SetActive(false);
+                break;
             case TutorialStep.CameraMovementIntro:
                 // Add panel hiding logic for this step if needed
                 break;
@@ -257,6 +318,11 @@ public class TutorialManager : MonoBehaviour
 
     private void ProgressToNextStep()
     {
+        // Reset completion flags for next step
+        stepMarkedComplete = false;
+        //zoomMarkedComplete = false;
+        //panMarkedComplete = false;
+
         currentStep = currentStep switch
         {
             TutorialStep.Blackscreen => TutorialStep.CameraMovementIntro,

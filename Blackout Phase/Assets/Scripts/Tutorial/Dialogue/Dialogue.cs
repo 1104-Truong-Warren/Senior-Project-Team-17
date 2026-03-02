@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class Dialogue : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Dialogue : MonoBehaviour
 
     // trying to use the dialogue asset scriptable object
     public DialogueAsset dialogueAsset;
+
+    public Button skipButton;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -102,4 +105,13 @@ public class Dialogue : MonoBehaviour
     {
         return index;
     } 
+
+    public void SkipDialogue()
+    {
+        StopAllCoroutines();
+        index = dialogueAsset.dialogue.Length - 1; // set index to the last line
+        textComponent.text = dialogueAsset.dialogue[index]; // display the last line immediately
+        dialogueDone = true;
+        gameObject.SetActive(false);
+    }
 }
