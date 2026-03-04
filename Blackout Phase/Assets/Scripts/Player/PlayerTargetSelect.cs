@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 using System.Collections.Generic;
-using TMPro.Examples;
+//using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
