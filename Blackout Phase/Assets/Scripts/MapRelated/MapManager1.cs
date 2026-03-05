@@ -139,11 +139,11 @@ public class MapManager1 : MonoBehaviour
     }
 
     // Replaced by PlayerHighligh script
-    //public void ResetAllTiles()
-    //{
-    //    foreach (var tile in map.Values) // calls the overlay tile reset for all objects
-    //        tile.ResetTiles();
-    //}
+    public void ResetAllTiles()
+    {
+        foreach (var tile in map.Values) // calls the overlay tile reset for all objects
+            tile.ResetTiles();
+    }
 
     public OverlayTile1 GetTile(Vector2Int gridPosition)
     {
