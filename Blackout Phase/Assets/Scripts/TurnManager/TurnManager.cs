@@ -604,7 +604,12 @@ public class TurnManager : MonoBehaviour
         enemies.RemoveAll(e => e == null); // deletes all the null enemies
     }
 
+    public static void SetInstaceForEnemyTest(TurnManager inst)
+    {
+        Instance = inst; // set up the same instance for test
     }
+
+}
 
 //private void Update()
 //{

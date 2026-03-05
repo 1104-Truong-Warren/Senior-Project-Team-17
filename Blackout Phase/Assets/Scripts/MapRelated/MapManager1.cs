@@ -152,6 +152,11 @@ public class MapManager1 : MonoBehaviour
 
         return null; // if not return nothing
     }
+
+    public static void SetInstanceForTest(MapManager1 instance)
+    {
+        _instance = instance;
+    }
 }
 
 

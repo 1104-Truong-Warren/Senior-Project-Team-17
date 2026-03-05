@@ -200,7 +200,7 @@ public class CharacterInfo1 : MonoBehaviour
     private void UpdateAllUI()
     {
         // Find all UI text elements and update them directly
-        CharacterInfoDisplay[] displays = FindObjectsOfType<CharacterInfoDisplay>();
+        CharacterInfoDisplay[] displays = FindObjectsByType<CharacterInfoDisplay>(FindObjectsSortMode.None);
         
         if (displays.Length == 0)
         {

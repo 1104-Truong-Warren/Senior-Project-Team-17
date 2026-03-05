@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         // Find or get audio manager reference
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
         
         // Setup button listeners
         if (settingsButton != null)

@@ -94,4 +94,21 @@ public class EnemySpwawan : MonoBehaviour
 
         Debug.Log($"Enemy spawned at " + tile.gridLocation); // debug
     }
+
+    public void ConfigureationTest(GameObject ePrefab, EnemyStatsScripObj stats, Vector2Int enemyPosition, List<Vector2Int> patrol)
+    {
+        // call the configureation and set up the filed for everything
+        enemyPrefab = ePrefab;
+
+        enemyStats = stats;
+
+        spawnGridPosition = enemyPosition;
+
+        patrolPoints = patrol;
+    }
+
+    public void Spawn_ForTest()
+    {
+        SpawnAfterMapReady(); // helper for the test script
+    }
 }
