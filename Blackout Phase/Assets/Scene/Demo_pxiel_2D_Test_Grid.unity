@@ -5575,6 +5575,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1310414414429255714, guid: 9ebfb712c11620e43b8310b31b4ff145, type: 3}
+      propertyPath: uiAppearDelay
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2827826736635639445, guid: 9ebfb712c11620e43b8310b31b4ff145, type: 3}
       propertyPath: m_Name
       value: ReactionCanvas
@@ -5800,9 +5804,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2021288363}
     - target: {fileID: 1477399859705323, guid: e059e80f5e0592c4688934fe56dfe7e5, type: 3}
+      propertyPath: warningOffset.y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1477399859705323, guid: e059e80f5e0592c4688934fe56dfe7e5, type: 3}
       propertyPath: attackerAnimation
       value: 
       objectReference: {fileID: 860687691}
+    - target: {fileID: 1477399859705323, guid: e059e80f5e0592c4688934fe56dfe7e5, type: 3}
+      propertyPath: playerDamageOffset.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1477399859705323, guid: e059e80f5e0592c4688934fe56dfe7e5, type: 3}
+      propertyPath: playerDamageOffset.y
+      value: -150
+      objectReference: {fileID: 0}
     - target: {fileID: 3951610127215865422, guid: e059e80f5e0592c4688934fe56dfe7e5, type: 3}
       propertyPath: m_Name
       value: UI Damage Manager
