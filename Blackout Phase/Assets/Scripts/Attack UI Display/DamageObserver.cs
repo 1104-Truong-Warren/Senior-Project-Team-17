@@ -78,7 +78,7 @@ public class DamageObserver : MonoBehaviour
         // If canvasTransform not set, try to find it automatically
         if (canvasTransform == null)
         {
-            Canvas canvas = FindObjectOfType<Canvas>();
+            Canvas canvas = FindFirstObjectByType<Canvas>();
             if (canvas != null)
                 canvasTransform = canvas.transform;
         }
@@ -221,7 +221,7 @@ public class DamageObserver : MonoBehaviour
     string FindAttackingEnemy()
     {
         // Find all enemies in the scene from EnemyController1 script
-        EnemyController1[] enemies = FindObjectsOfType<EnemyController1>();
+        EnemyController1[] enemies = FindObjectsByType<EnemyController1>(FindObjectsSortMode.None);
         
         if (enemies.Length == 0)
         {

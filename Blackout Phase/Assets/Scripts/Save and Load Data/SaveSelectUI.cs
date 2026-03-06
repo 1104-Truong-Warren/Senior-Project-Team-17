@@ -28,7 +28,7 @@ public class SaveSelectUI : MonoBehaviour
     void Start()
     {
         // Finds the SaveManager in the scene in TitleScreen
-        saveManager = FindObjectOfType<SaveManager>();
+        saveManager = FindFirstObjectByType<SaveManager>();
         
         // Back button to close the panel
         if (backButton != null)
@@ -46,7 +46,7 @@ public class SaveSelectUI : MonoBehaviour
     // The purpose of this function is it is called by the MainMenu when the player press "LOAD GAME" and refreshes the list of saves.
     public void OpenSaveSelect()
     {
-        saveManager = FindObjectOfType<SaveManager>();
+        saveManager = FindFirstObjectByType<SaveManager>();
         if (saveManager != null)
         {
             saveManager.RefreshSaveList();
@@ -77,7 +77,7 @@ public class SaveSelectUI : MonoBehaviour
             Destroy(child.gameObject);
         
         // Finds the SaveManager again to ensure that we have latest reference
-        saveManager = FindObjectOfType<SaveManager>();
+        saveManager = FindFirstObjectByType<SaveManager>();
         if (saveManager == null) return;
         
         // Gets the list of save files from SaveManager

@@ -144,6 +144,23 @@ public class PlayerCombatCheck : MonoBehaviour
                 Debug.Log($"Counter Critical Hit: Damage:{dmg}"); // debug msg
         }
 
+        Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
+
+        var enemyReact = enemy.GetComponent<EnemyReactionController>(); // set up the enemy ract access
+
+        // enemy counter attack before taking dmg
+        if (enemyReact != null)
+        {
+            bool dodge = enemyReact.ReactToPlayerAttack(CharacterInfo1.Instance, basicAttkHitRate); // check for enemy dodged 
+
+            // did the dodge went through?
+            if (dodge)
+            {
+                Debug.Log("Enemy Dodged! Attack Missed!"); // debug msg
+                return;
+            }
+        }
+
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
 
         // Added by Warren, for player's damage UI on the enemy
@@ -161,7 +178,7 @@ public class PlayerCombatCheck : MonoBehaviour
         if (player == null || player.CurrentTile == null) return;
 
         // check if enemy still has health left
-        if (enemy.health <= 0) return;
+        if (enemy.CurrentHP <= 0) return;
 
         int hitChance = HitRollCheck.FinalHitChanceCal(playerInfo.BaseHitRate, basicAttkHitRate, enemy.EvasionRate); // pass over the data to roll a hit
 
@@ -200,6 +217,22 @@ public class PlayerCombatCheck : MonoBehaviour
 
             else
                 Debug.Log($"Counter Critical Hit: Damage:{dmg}"); // debug msg
+        }
+
+        var enemyReact = enemy.GetComponent<EnemyReactionController>(); // access enemyReaction
+
+        // if the enemyReact is found 
+        if (enemyReact != null)
+        {
+            bool dodged = enemyReact.ReactToPlayerAttack(CharacterInfo1.Instance, basicAttkHitRate); // copies player stats over, and use the function to check the flag
+
+            // is the flag true? is yest player missed
+            if (dodged)
+            {
+                Debug.Log("Enemy Dodged! Attack Missed"); // debug msg
+
+                return;
+            }
         }
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
@@ -245,7 +278,7 @@ public class PlayerCombatCheck : MonoBehaviour
 
         basicAttckRange = playerInfo.BaseRange; // basic attk range
 
-        basicAttkDamage = playerInfo.BaseCritDamage; // basic crit dmg
+        basicAttkCritDmg = playerInfo.BaseCritDamage; // basic crit dmg
 
         basicAttkAPcost = SDbasicAttkSkill.AttkAPCost; // basic Attk AP cost
 

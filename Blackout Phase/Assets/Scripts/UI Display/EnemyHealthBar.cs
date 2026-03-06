@@ -42,7 +42,9 @@ public class EnemyHealthBar : MonoBehaviour
         // Store max health
         if (enemyInfo != null)
         {
-            maxHealth = enemyInfo.health;
+            enemyInfo.ResetHPToMAX(); // reset HP to max before storing the number
+
+            maxHealth = enemyInfo.CurrentHP;
         }
         
         // Set position offset (X, Y, Z)
@@ -57,7 +59,7 @@ public class EnemyHealthBar : MonoBehaviour
         }
         
         // Update health bar
-        float hpPercentage = (float)enemyInfo.health / maxHealth;
+        float hpPercentage = (float)enemyInfo.CurrentHP / maxHealth;
         hpBar.fillAmount = hpPercentage;
         
         // Change color based on health 

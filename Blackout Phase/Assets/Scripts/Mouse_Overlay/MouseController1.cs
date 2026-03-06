@@ -20,13 +20,15 @@ public class MouseController1 : MonoBehaviour
     [SerializeField] private GameObject characterPrefab; // object for the character prefab
     [SerializeField] private CharacterInfo1 characterInfo; // stores the characgter info
     [SerializeField] private float speed; // move speed for character
+    [SerializeField] private KeyCode previewAttkRange;  // display player attak range
+    [SerializeField] private KeyCode AttackKey; // player attack key
+    [SerializeField] private KeyCode cancelAttkPreview; // cancels the preview attack key
 
     private OverlayTile1 previouslySelectedTile; // previous tile
 
     private PathFinder1 pathFinder; // access the pathfinder
 
-    private List<OverlayTile1> path;
-
+    private List<OverlayTile1> path; // tile list
 
     // Ellison - Added bool to enable or disable movement (disabled by default)
     public bool movementEnabled = false;
@@ -41,7 +43,7 @@ public class MouseController1 : MonoBehaviour
     {
         pathFinder = new PathFinder1(); // create it
 
-        path = new List<OverlayTile1>();
+        path = new List<OverlayTile1>(); // set up the List for tiles
     }
 
     // Update is called once per frame
@@ -119,10 +121,36 @@ public class MouseController1 : MonoBehaviour
                     }
 
                     // check for attack input if key press is A
-                    if (Input.GetKeyDown(KeyCode.A))
+                    if (Input.GetKeyDown(AttackKey))
                     {
+                        TurnManager.Instance.ClearHighlights(); // clear the highlights before attacking
+
                         currentAction = PlayerAction.Attack;
                         Debug.Log("Attack Mode on!");
+                    }
+
+                    // if the keycode is preview first clear highlights then show the player attack range
+                    if (Input.GetKeyDown(previewAttkRange))
+                    {
+                        currentAction = PlayerAction.Attack; // change to attack state
+
+                        TurnManager.Instance.ClearHighlights(); // clears highlight
+
+                        var highlight = FindFirstObjectByType<PlayerHighlighter>(); // set up the highlight access
+
+                        // if player and current tile is found, highlight it by passing the current tile and player attack range
+                        if (characterInfo != null && characterInfo.CurrentTile != null)
+                            highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, characterInfo.BaseRange);
+                    }
+
+                    // reset the highlight tile
+                    if (currentAction == PlayerAction.Attack && Input.GetKeyDown(cancelAttkPreview))
+                    {
+                        currentAction = PlayerAction.None; // reset the action
+
+                        TurnManager.Instance.ClearHighlights(); // clears the highlights
+
+                        TurnManager.Instance.ShowPlayerPreviews(); // display the movement tile again
                     }
 
                     if (Input.GetMouseButtonDown(0))
@@ -146,7 +174,7 @@ public class MouseController1 : MonoBehaviour
                         if (previouslySelectedTile != null)  // hides the previous selected tiles
                             previouslySelectedTile.HideTile();
 
-                        MapManager1.Instance.ResetAllTiles(); // before showing tiles reset all
+                        //MapManager1.Instance.ResetAllTiles(); // before showing tiles reset all
 
                         tile.ShowPlayerTile();
 
@@ -277,6 +305,8 @@ public class MouseController1 : MonoBehaviour
                 //characterInfo.ApUsed(1); // used 1 AP after moved
 
                 TurnManager.Instance.PlayerSpendAP(1); // checks for the AP each turn, 1 AP per movement
+
+                TurnManager.Instance.ShowPlayerPreviews(); // display the tiles
 
                 // Ellison - disable movement after moving, allow action menu to pop back up, re-enable collapse button
                 DisableMovement();
@@ -416,6 +446,8 @@ public class MouseController1 : MonoBehaviour
             }
 
             movementEnabled = true;
+
+            TurnManager.Instance.ClearHighlights(); // clears the highlights
         }
     }
 

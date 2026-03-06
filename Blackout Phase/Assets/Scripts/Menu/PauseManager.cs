@@ -64,7 +64,7 @@ public class PauseManager : MonoBehaviour
     // Function that lets the player save their game anytime. 
     public void OnSaveButtonClick()
     {
-        SaveManager saveManager = FindObjectOfType<SaveManager>();
+        SaveManager saveManager = FindFirstObjectByType<SaveManager>();
         if (saveManager != null)
         {
             saveManager.SaveGame();

@@ -33,15 +33,15 @@ public class OverlayTile1 : MonoBehaviour
     }*/
 
     // Update is called once per frame
-    void Update()
-    {
-        /*if (Input.GetMouseButtonDown(0))
-        {
-            //gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+    //void Update()
+    //{
+    //    /*if (Input.GetMouseButtonDown(0))
+    //    {
+    //        //gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
 
-            HideTile(); // calls the hide in the beginning to make it transparent
-        }*/
-    }
+    //        HideTile(); // calls the hide in the beginning to make it transparent
+    //    }*/
+    //}
 
     // show tile
     public void ShowEnemyTile()
@@ -54,6 +54,15 @@ public class OverlayTile1 : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().color = new Color(0f, 0.7f, 1f, 0.85f); // get the sprite render change display color, player blue
     }
 
+    public void ShowPlayerMoveRangeTile()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f); // get the sprite render change display color, player movement white
+    }
+
+    public void ShowPlayerAttackRangeTile()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.6f, 0f, 0.55f); // get the sprite render change display color, player attack orange
+    }
 
     // hide it changing color
     public void HideTile()

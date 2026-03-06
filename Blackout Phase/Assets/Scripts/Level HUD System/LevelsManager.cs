@@ -151,7 +151,7 @@ public class LevelsManager : MonoBehaviour
     private void ScanForEnemies()
     {
         previousEnemies.Clear();
-        EnemyInfo[] allEnemies = FindObjectsOfType<EnemyInfo>();
+        EnemyInfo[] allEnemies = FindObjectsByType<EnemyInfo>(FindObjectsSortMode.None);
         
         foreach (EnemyInfo enemy in allEnemies)
         {
@@ -166,7 +166,7 @@ public class LevelsManager : MonoBehaviour
     private void CheckForEnemyDeaths()
     {
         List<GameObject> currentEnemies = new List<GameObject>();
-        EnemyInfo[] allEnemies = FindObjectsOfType<EnemyInfo>();
+        EnemyInfo[] allEnemies = FindObjectsByType<EnemyInfo>(FindObjectsSortMode.None);
         foreach (EnemyInfo enemy in allEnemies)
         {
             if (enemy != null && enemy.gameObject != null)

@@ -6,7 +6,7 @@ public abstract class EnemyAttackCore : MonoBehaviour
 
     protected virtual void Awake()
     {
-        enemyInfo = GetComponent<EnemyInfo>(); // set up the enemyInfo
+        enemyInfo = GetComponentInParent<EnemyInfo>(); // set up the enemyInfo, garb it from parent the main not copies
     }
 
     public abstract bool CanAttackPlayer(CharacterInfo1 player); // just a inheritance, for distance check0
