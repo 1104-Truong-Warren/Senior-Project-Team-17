@@ -611,6 +611,8 @@ public class TurnManager : MonoBehaviour
 
 }
 
+
+
 //private void Update()
 //{
 //    if (!isInitialized) return; // not initialized return

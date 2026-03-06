@@ -10,6 +10,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections; // For IEnumerator
 
 public class ReactionUI : MonoBehaviour
 {
@@ -33,7 +34,11 @@ public class ReactionUI : MonoBehaviour
     [SerializeField] private int dodgeENCost = 10; // How much EN it costs to dodge (for display only) - No longer need, but keep in case
     [SerializeField] private int counterENCost = 5; // How much EN it costs to counterattack
     
+    [Header("Timing Settings")]
+    [SerializeField] private float uiAppearDelay = 0.8f; // Delay before UI appears (adjust in Inspector)
+    
     private CharacterInfo1 playerInfo; // Reference to player info for EN checks
+    private bool isWaitingToShow = false; // Flag to prevent multiple coroutines
     
     void Start()
     {
@@ -74,25 +79,59 @@ public class ReactionUI : MonoBehaviour
         {
             bool shouldShow = TurnManager.Instance.WaitForPlayerReact;
             
-            if (shouldShow && !reactionPanel.activeSelf)
-                ShowReactionUI();
+            // CHANGED: Use coroutine for delayed show, but immediate hide
+            if (shouldShow && !reactionPanel.activeSelf && !isWaitingToShow)
+            {
+                // Start coroutine to show UI after delay
+                StartCoroutine(ShowReactionUIDelayed());
+            }
             else if (!shouldShow && reactionPanel.activeSelf)
+            {
+                // IMMEDIATELY hide the UI when player reaction is done
                 HideReactionUI();
+            }
         }
         
         // Update button states (interactable, text, colors) every frame
-        UpdateButtonStates();
+        // Only update if panel is active to save performance
+        if (reactionPanel.activeSelf)
+        {
+            UpdateButtonStates();
+        }
         
         // Keyboard shortcuts when panel is active (optional backup)
         if (reactionPanel.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.D) && dodgeButton != null && dodgeButton.interactable)
+            {
                 OnDodgeClicked();
+            }
             else if (Input.GetKeyDown(KeyCode.T) && tankButton != null && tankButton.interactable)
+            {
                 OnTankClicked();
+            }
             else if (Input.GetKeyDown(KeyCode.F) && counterButton != null && counterButton.interactable)
+            {
                 OnCounterClicked();
+            }
         }
+    }
+    
+    // Coroutine to show UI after delay
+    IEnumerator ShowReactionUIDelayed()
+    {
+        isWaitingToShow = true;
+        
+        // Specified delay, so enemy attack text can display first
+        yield return new WaitForSeconds(uiAppearDelay);
+        
+        // Double-checks that we're still in reaction state
+        if (TurnManager.Instance != null && TurnManager.Instance.WaitForPlayerReact)
+        {
+            ShowReactionUI();
+        }
+        
+        isWaitingToShow = false;
     }
     
     // Displays the reaction UI with current attack information
@@ -125,11 +164,20 @@ public class ReactionUI : MonoBehaviour
         Debug.Log("ReactionUI: Showing reaction options");
     }
     
-    // Hides the reaction UI
+    // Hides the reaction UI immediately
     void HideReactionUI()
     {
         if (reactionPanel == null) return;
         reactionPanel.SetActive(false);
+        
+        // Cancel any pending show coroutine
+        if (isWaitingToShow)
+        {
+            StopAllCoroutines();
+            isWaitingToShow = false;
+        }
+        
+        Debug.Log("ReactionUI: Hidden immediately");
     }
     
     // Updates button appearance based on EN availability and success rates
@@ -188,6 +236,9 @@ public class ReactionUI : MonoBehaviour
             return;
         }
         
+        // Hide UI immediately when player makes a choice
+        HideReactionUI();
+        
         // Call TurnManager directly
         TurnManager.Instance.PlayerDodgeReaction();
     }
@@ -202,6 +253,9 @@ public class ReactionUI : MonoBehaviour
             Debug.LogError("ReactionUI: TurnManager.Instance is NULL!");
             return;
         }
+
+        // Hide UI immediately when player makes a choice
+        HideReactionUI();
 
         // Call TurnManager directly 
         TurnManager.Instance.PlayerTankDamageReaction();
@@ -218,6 +272,9 @@ public class ReactionUI : MonoBehaviour
             Debug.LogError("ReactionUI: TurnManager.Instance is NULL!");
             return;
         }
+        
+        // Hide UI immediately when player makes a choice
+        HideReactionUI();
         
         // Call TurnManager directly 
         // Counter EN cost is handled inside PlayerCounterAttackReaction or PlayerCombatCheck

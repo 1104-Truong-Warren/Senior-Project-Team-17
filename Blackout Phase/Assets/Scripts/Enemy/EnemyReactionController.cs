@@ -42,6 +42,13 @@ public class EnemyReactionController : MonoBehaviour
         if (!playerHit)
         {
             Debug.Log($"{name}: Enemy dodged Player Attack!"); // debug msg
+
+            // Added by Warren, shows "Enemy Dodged" text on the screen.
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowDodgedText(transform.position, true); // true = isEnemy
+            }
+
             return true; 
         }
 

@@ -50,6 +50,12 @@ public class DamageObserver : MonoBehaviour
     private int lastPlayerHP; // Player's HP from previous frame
     private float hideTime; // Amount of time the UI will be hidden       
     private bool isShowing = false;
+
+    [Header("Warning Messages")]
+    [SerializeField] private Vector2 warningOffset = new Vector2(0, 100); // Offset for warning messages above player
+    [SerializeField] private Color insufficientENColor = Color.red;
+    [SerializeField] private Color insufficientAPColor = Color.yellow;
+    [SerializeField] private Color outOfRangeColor = Color.gray;
     
     void Awake()
     {
@@ -360,8 +366,9 @@ public class DamageObserver : MonoBehaviour
         StartCoroutine(HidePlayerDamage(missInstance));
     }
 
-    // Show "Dodged!" text when player dodges an enemy attack (appears above player)
-    public void ShowDodgedText(Vector3 playerPosition)
+    // Show "Dodged!" text when player dodges an enemy attack
+    // Also when enemy dodges a player attack
+    public void ShowDodgedText(Vector3 position, bool isEnemy = false)
     {
         // Make sure we have a prefab and canvas
         if (playerDamagePrefab == null || canvasTransform == null)
@@ -370,8 +377,8 @@ public class DamageObserver : MonoBehaviour
             return;
         }
         
-        // Convert player world position to screen position
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition + Vector3.up * 2f);
+        // Convert world position to screen position
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(position + Vector3.up * 2f);
         
         // Spawn a new text instance
         GameObject dodgeInstance = Instantiate(playerDamagePrefab, canvasTransform);
@@ -379,14 +386,28 @@ public class DamageObserver : MonoBehaviour
         
         if (dodgeTMP != null)
         {
-            // Position the text with the SEPARATE dodge offset
-            dodgeTMP.rectTransform.position = screenPos + new Vector3(dodgeOffset.x, dodgeOffset.y, 0);
-            
-            // Set the text to "Dodged!"
-            dodgeTMP.text = "Dodged!";
-            
-            // Optional: Change color for dodge (green/blue)
-            dodgeTMP.color = Color.cyan;
+            // Use different offset and text based on who dodged
+            if (isEnemy)
+            {
+                // Position the text above the enemy with player damage offset
+                dodgeTMP.rectTransform.position = screenPos + new Vector3(playerDamageOffset.x, playerDamageOffset.y, 0);
+                
+                dodgeTMP.text = "Enemy Dodged!";
+                
+                dodgeTMP.color = Color.yellow;
+                
+                Debug.Log($"Enemy dodge text shown at: {dodgeTMP.rectTransform.position}");
+            }
+            else
+            {
+                // Positioning the text with that is separate from the player dodge offset
+                dodgeTMP.rectTransform.position = screenPos + new Vector3(dodgeOffset.x, dodgeOffset.y, 0);
+                
+                // Set the text to "Dodged!"
+                dodgeTMP.text = "Dodged!";
+                
+                dodgeTMP.color = Color.cyan;
+            }
         }
         
         // Play the animation
@@ -405,5 +426,140 @@ public class DamageObserver : MonoBehaviour
         yield return new WaitForSeconds(displayTime);
         if (damageInstance != null)
             Destroy(damageInstance);
+    }
+
+    // Show "Insufficient EN!" text when player doesn't have enough energy
+    public void ShowInsufficientEN(Vector3 playerPosition)
+    {
+        // Make sure we have a prefab and canvas
+        if (playerDamagePrefab == null || canvasTransform == null)
+        {
+            Debug.LogError("PlayerDamagePrefab or CanvasTransform not assigned in DamageObserver!");
+            return;
+        }
+        
+        // Convert player world position to screen position
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition + Vector3.up * 2f);
+        
+        // Spawn a new text instance
+        GameObject warningInstance = Instantiate(playerDamagePrefab, canvasTransform);
+        TextMeshProUGUI warningTMP = warningInstance.GetComponent<TextMeshProUGUI>();
+        
+        if (warningTMP != null)
+        {
+            // Position the text above the player
+            warningTMP.rectTransform.position = screenPos + new Vector3(warningOffset.x, warningOffset.y, 0);
+            
+            // Set the text to "Insufficient EN!"
+            warningTMP.text = "Insufficient EN!";
+            
+            // Set color to red
+            warningTMP.color = insufficientENColor;
+            
+            // Make text slightly larger for warnings
+            warningTMP.fontSize = warningTMP.fontSize * 1.2f;
+            
+            Debug.Log($"Insufficient EN text shown at: {warningTMP.rectTransform.position}");
+        }
+        
+        // Play the animation
+        Animation anim = warningInstance.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim.Play("DamageTextBounce");
+        }
+        
+        // Destroy after delay
+        StartCoroutine(HidePlayerDamage(warningInstance));
+    }
+
+    // Show "Not Enough AP!" text when player doesn't have enough action points
+    public void ShowInsufficientAP(Vector3 playerPosition)
+    {
+        // Make sure we have a prefab and canvas
+        if (playerDamagePrefab == null || canvasTransform == null)
+        {
+            Debug.LogError("PlayerDamagePrefab or CanvasTransform not assigned in DamageObserver!");
+            return;
+        }
+        
+        // Convert player world position to screen position
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition + Vector3.up * 2f);
+        
+        // Spawn a new text instance
+        GameObject warningInstance = Instantiate(playerDamagePrefab, canvasTransform);
+        TextMeshProUGUI warningTMP = warningInstance.GetComponent<TextMeshProUGUI>();
+        
+        if (warningTMP != null)
+        {
+            // Position the text above the player
+            warningTMP.rectTransform.position = screenPos + new Vector3(warningOffset.x, warningOffset.y, 0);
+            
+            // Set the text to "Not Enough AP!"
+            warningTMP.text = "Not Enough AP!";
+            
+            // Set color to yellow
+            warningTMP.color = insufficientAPColor;
+            
+            // Make text slightly larger for warnings
+            warningTMP.fontSize = warningTMP.fontSize * 1.2f;
+            
+            Debug.Log($"Insufficient AP text shown at: {warningTMP.rectTransform.position}");
+        }
+        
+        // Play the animation
+        Animation anim = warningInstance.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim.Play("DamageTextBounce");
+        }
+        
+        // Destroy after delay
+        StartCoroutine(HidePlayerDamage(warningInstance));
+    }
+
+    // Show "Out of Range!" text when enemy is too far away
+    public void ShowOutOfRange(Vector3 playerPosition)
+    {
+        // Make sure we have a prefab and canvas
+        if (playerDamagePrefab == null || canvasTransform == null)
+        {
+            Debug.LogError("PlayerDamagePrefab or CanvasTransform not assigned in DamageObserver!");
+            return;
+        }
+        
+        // Convert player world position to screen position
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition + Vector3.up * 2f);
+        
+        // Spawn a new text instance
+        GameObject warningInstance = Instantiate(playerDamagePrefab, canvasTransform);
+        TextMeshProUGUI warningTMP = warningInstance.GetComponent<TextMeshProUGUI>();
+        
+        if (warningTMP != null)
+        {
+            // Position the text above the player
+            warningTMP.rectTransform.position = screenPos + new Vector3(warningOffset.x, warningOffset.y, 0);
+            
+            // Set the text to "Out of Range!"
+            warningTMP.text = "Out of Range!";
+            
+            // Set color to gray
+            warningTMP.color = outOfRangeColor;
+            
+            // Make text slightly larger for warnings
+            warningTMP.fontSize = warningTMP.fontSize * 1.2f;
+            
+            Debug.Log($"Out of Range text shown at: {warningTMP.rectTransform.position}");
+        }
+        
+        // Play the animation
+        Animation anim = warningInstance.GetComponent<Animation>();
+        if (anim != null)
+        {
+            anim.Play("DamageTextBounce");
+        }
+        
+        // Destroy after delay
+        StartCoroutine(HidePlayerDamage(warningInstance));
     }
 }
