@@ -14,11 +14,14 @@ public enum TutorialStep
     CameraMovement,
     PlayerMovementIntro,
     PlayerMovement,
+    Combat1Intro,
+    Combat1,
     Complete
 }
 
 public class TutorialManager : MonoBehaviour
 {
+    [Header("Misc. Components")]
     public GameObject dialoguePanel; // default position 670 top, 110 bottom
     // moved position is 600 top, 180 bottom
     public Dialogue dialogueBox; // box ALL dialogue gets loaded into
@@ -32,26 +35,38 @@ public class TutorialManager : MonoBehaviour
 
     public AudioSource bigStepCompleteSource; // on the canvas
 
+    [Header("Step-Specific Components")]
+
+    [Header("Blackscreen Step")]
     // Blackscreen Step
     public DialogueAsset blackscreenDialogue;
 
+    [Header("CameraMovementIntro Step")]
     // CameraMovementIntro Step
     public DialogueAsset cameraMovementIntroDialogue;
 
+    [Header("CameraMovement Step")]
     // CameraMovement Step
     public GameObject cameraMovementPanel;
     public GameObject panStatusImage;
     public GameObject zoomStatusImage;
 
-    // PlayerMovementIntro
+    [Header("PlayerMovementIntro Step")]
+    // PlayerMovementIntro Step
     public DialogueAsset playerMovementIntroDialogue;
     public GameObject actionMenu;
+    public TutorialActionMenu actionMenuScript;
 
+    [Header("PlayerMovement Step")]
     // PlayerMovement Step
     public GameObject cursor;
     public GameObject playerMovementPanel;
     public GameObject move1StatusImage;
     public GameObject move2StatusImage;
+
+    [Header("Combat1Intro Step")]
+    // Combat1Intro Step
+    public DialogueAsset combat1IntroDialogue;
 
     // Dictionary to map tutorial steps to their panel's AudioSource
     private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
@@ -68,6 +83,8 @@ public class TutorialManager : MonoBehaviour
     private bool move1bDone = false;
     private bool move2aDone = false;
     private bool move2bDone = false;
+    private bool move3aDone = false;
+    private bool move3bDone = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -147,6 +164,10 @@ public class TutorialManager : MonoBehaviour
                 yield return StartCoroutine(RunPlayerMovementStep());
                 break;
 
+            case TutorialStep.Combat1Intro:
+                yield return StartCoroutine(RunCombat1IntroStep(dialogueBox));
+                break;
+
             case TutorialStep.Complete:
                 break;
         }
@@ -215,11 +236,34 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator RunPlayerMovementStep()
     {
+        if (!actionMenu.activeSelf)
+        {
+            actionMenu.SetActive(true);
+        }
+        stepCompletePanel.SetActive(false);
         cursor.SetActive(true);
         playerMovementPanel.SetActive(true);
         mouseController.BeginBlinkingSequence();
 
         yield return new WaitUntil(() => currentStepComplete);
+    }
+
+    private IEnumerator RunCombat1IntroStep(Dialogue dialogue)
+    {
+        actionMenuScript.CloseMenu(); // close action menu
+        dialogue.Reinitialize(combat1IntroDialogue); // set the dialogue asset for the combat intro dialogue
+        dialogue.gameObject.SetActive(true);
+        // Wait until dialogue is done
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            yield return null;
+        }
+        currentStepComplete = true;
     }
 
     private void CheckStepCompletion()
@@ -271,7 +315,24 @@ public class TutorialManager : MonoBehaviour
                     markTaskComplete(move2StatusImage);
                     move2bDone = true;
                 }
-                if (move2aDone && move2bDone && !stepMarkedComplete)
+                // reset for move 3
+                if (move2aDone && move2bDone && !move3aDone && !move3bDone && !stepMarkedComplete)
+                {
+                    move1StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                    move2StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                }
+                if (mouseController.movedSpot3a && !move3aDone)
+                {
+                    markTaskComplete(move1StatusImage);
+                    move3aDone = true;
+                }
+                if (mouseController.movedSpot3b && !move3bDone)
+                {
+                    markTaskComplete(move2StatusImage);
+                    move3bDone = true;
+                }
+                // check final steps
+                if (move3aDone && move3bDone && !stepMarkedComplete)
                 {
                     StartCoroutine(CompleteStepWithDelay(currentStep, 2f)); // Pass current step
                     stepMarkedComplete = true;
@@ -329,7 +390,9 @@ public class TutorialManager : MonoBehaviour
             TutorialStep.CameraMovementIntro => TutorialStep.CameraMovement,
             TutorialStep.CameraMovement => TutorialStep.PlayerMovementIntro,
             TutorialStep.PlayerMovementIntro => TutorialStep.PlayerMovement,
-            TutorialStep.PlayerMovement => TutorialStep.Complete,
+            TutorialStep.PlayerMovement => TutorialStep.Combat1Intro,
+            TutorialStep.Combat1Intro => TutorialStep.Combat1,
+            TutorialStep.Combat1 => TutorialStep.Complete,
             _ => TutorialStep.Complete
         };
 

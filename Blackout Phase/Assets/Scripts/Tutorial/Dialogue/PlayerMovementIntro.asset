@@ -19,8 +19,9 @@ MonoBehaviour:
   - During your turn, this menu will appear and show you your available combat options.
   - Clicking the "move" button will enable movement mode, and you can select a spot
     to move to.
-  - You can also press the 'M' key on your keyboard to enable movement.
+  - You can also press the 'M' key on your keyboard to enable movement. (not working
+    rn, ignore)
   - Under normal conditions, you get two actions per turn.
-  - You can only move a limited number of spaces. For now, this is 6 spaces.
+  - You can only move a limited number of spaces. For now, this is 4 spaces.
   - However, you may also choose to use your second action to move a little bit further.
   - Let's try it now.

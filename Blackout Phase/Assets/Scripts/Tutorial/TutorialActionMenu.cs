@@ -44,6 +44,14 @@ public class TutorialActionMenu : MonoBehaviour
         }
     }
 
+    public void CloseMenu()
+    {
+        if (menuAnimator != null)
+        {
+            menuAnimator.SetBool("isCollapsed", true);
+        }
+    }
+
     public void OpenInventoryScreen()
     {
         inventoryScreen.SetActive(true);
