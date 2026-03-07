@@ -16,6 +16,13 @@ public class TutorialEnemySpawner : MonoBehaviour
     [Header("Patrol points")]
     [SerializeField] private List<Vector2Int> patrolPoints = new List<Vector2Int>(); // array list of enemy patrol points
 
+    private EnemyMovement movement; // access enemy movement
+
+    [Header("Scripted events")]
+    [SerializeField] public Vector2Int spot1TilePosition;
+
+    public bool spot1Triggered = false; // flag for the first spot
+
 
     private IEnumerator Start()
     {
@@ -40,8 +47,10 @@ public class TutorialEnemySpawner : MonoBehaviour
         }
 
         GameObject enemy = Instantiate(enemyPrefab, tile.transform.position, Quaternion.identity); // setup the enemy throgh prefab
-
         enemyInfo = enemy.GetComponentInChildren<EnemyInfo>(); // set up the info even the child object
+
+        // get the movement component for the enemy
+        movement = enemy.GetComponent<EnemyMovement>();
 
         // check to see if enemyInfo exist
         if (enemyInfo == null)
@@ -86,5 +95,35 @@ public class TutorialEnemySpawner : MonoBehaviour
         TurnManager.Instance.RegisterEnemy(enemyController); // send over the enemy control 
 
         Debug.Log($"Enemy spawned at " + tile.gridLocation); // debug
+    }
+
+    public Vector2Int GetCurrentMilestoneTarget()
+    {
+        if (!spot1Triggered)
+            return spot1TilePosition;
+
+        // all milestones reached, no valid target
+        return Vector2Int.zero;
+    }
+
+    public void TriggerOneTileMove(Vector2Int spotToMove)
+    {
+        if (movement != null)
+        {
+            OverlayTile1 targetTile = MapManager1.Instance.GetTile(spotToMove);
+            if (targetTile != null)
+            {
+                StartCoroutine(movement.MoveAlong(new List<OverlayTile1> { targetTile }));
+                spot1Triggered = true; // set the flag to true after triggering the move
+            }
+            else
+            {
+                Debug.LogError($"No tile found at {spotToMove} for enemy move.");
+            }
+        }
+        else
+        {
+            Debug.LogError("EnemyMovement component not found on the enemy.");
+        }
     }
 }

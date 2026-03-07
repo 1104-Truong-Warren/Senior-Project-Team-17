@@ -67,6 +67,13 @@ public class TutorialManager : MonoBehaviour
     [Header("Combat1Intro Step")]
     // Combat1Intro Step
     public DialogueAsset combat1IntroDialogue;
+    public TutorialEnemySpawner enemySpawner1;
+
+    [Header("Combat1 Step")]
+    public GameObject combat1Panel;
+    public GameObject moveStatusImage;
+    public GameObject attackStatusImage;
+    public GameObject confirmStatusImage;
 
     // Dictionary to map tutorial steps to their panel's AudioSource
     private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
@@ -79,12 +86,17 @@ public class TutorialManager : MonoBehaviour
     private bool panMarkedComplete = false;
 
     private bool stepMarkedComplete = false;
+
     private bool move1aDone = false;
     private bool move1bDone = false;
     private bool move2aDone = false;
     private bool move2bDone = false;
     private bool move3aDone = false;
     private bool move3bDone = false;
+
+    private bool combat1MoveDone = false;
+    public bool combat1AttackDone = false;
+    private bool combat1ConfirmDone = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -106,6 +118,26 @@ public class TutorialManager : MonoBehaviour
         else
         {
             Debug.LogWarning("No AudioSource found on tutorialMovementPanel");
+        }
+
+        AudioSource playerMovementAudio = playerMovementPanel.GetComponent<AudioSource>();
+        if (playerMovementAudio != null)
+        {
+            stepAudioSources[TutorialStep.PlayerMovement] = playerMovementAudio;
+        }
+        else
+        {
+            Debug.LogWarning("No AudioSource found on playerMovementPanel");
+        }
+
+        AudioSource combat1Audio = combat1Panel.GetComponent<AudioSource>();
+        if (combat1Audio != null)
+        {
+            stepAudioSources[TutorialStep.Combat1] = combat1Audio;
+        }
+        else
+        {
+            Debug.LogWarning("No AudioSource found on combat1Panel");
         }
 
         // Add more steps as needed
@@ -166,6 +198,10 @@ public class TutorialManager : MonoBehaviour
 
             case TutorialStep.Combat1Intro:
                 yield return StartCoroutine(RunCombat1IntroStep(dialogueBox));
+                break;
+
+            case TutorialStep.Combat1:
+                yield return StartCoroutine(RunCombat1Step());
                 break;
 
             case TutorialStep.Complete:
@@ -253,6 +289,13 @@ public class TutorialManager : MonoBehaviour
         actionMenuScript.CloseMenu(); // close action menu
         dialogue.Reinitialize(combat1IntroDialogue); // set the dialogue asset for the combat intro dialogue
         dialogue.gameObject.SetActive(true);
+        actionMenu.SetActive(false);
+
+        // Move dialogue box back down to default position
+        RectTransform rectTransform = dialoguePanel.GetComponent<RectTransform>();
+        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, 110); // Set bottom offset
+        rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -670); // Set top offset (negative)
+
         // Wait until dialogue is done
         while (!dialogue.dialogueDone)
         {
@@ -261,9 +304,28 @@ public class TutorialManager : MonoBehaviour
                 // clear step complete panel from last step
                 stepCompletePanel.SetActive(false);
             }
+            if (dialogue.GetCurrentLineIndex() == 3)
+            {
+                // Move enemy to its spot 1
+                enemySpawner1.TriggerOneTileMove(enemySpawner1.spot1TilePosition);
+            }
             yield return null;
         }
+        actionMenu.SetActive(true);
         currentStepComplete = true;
+    }
+
+    private IEnumerator RunCombat1Step()
+    {
+        if (!actionMenu.activeSelf)
+        {
+            actionMenu.SetActive(true);
+        }
+        stepCompletePanel.SetActive(false);
+        combat1Panel.SetActive(true);
+        mouseController.StartMilestoneBlinking(mouseController.GetCurrentMilestoneTarget());
+
+        yield return new WaitUntil(() => currentStepComplete);
     }
 
     private void CheckStepCompletion()
@@ -338,6 +400,34 @@ public class TutorialManager : MonoBehaviour
                     stepMarkedComplete = true;
                 }
                 break;
+            case TutorialStep.Combat1:
+                if (mouseController.movedCombat1Spot && !combat1MoveDone)
+                {
+                    markTaskComplete(moveStatusImage);
+                    combat1MoveDone = true;
+                }
+                if (mouseController.attackCombat1Prepare && !combat1AttackDone)
+                {
+                    markTaskComplete(attackStatusImage);
+                    combat1AttackDone = true;
+                }
+                // edge case for canceling attack
+                if (!mouseController.attackCombat1Prepare && combat1AttackDone)
+                {
+                    attackStatusImage.GetComponent<Image>().sprite = incompleteBox;
+                    combat1AttackDone = false;
+                }
+                if (mouseController.confirmedCombat1Attack && !combat1ConfirmDone)
+                {
+                    markTaskComplete(confirmStatusImage);
+                    combat1ConfirmDone = true;
+                }
+                if (combat1ConfirmDone && !stepMarkedComplete)
+                {
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 2f)); // Pass current step
+                    stepMarkedComplete = true;
+                }
+                break;
         }
     }
 
@@ -368,11 +458,8 @@ public class TutorialManager : MonoBehaviour
             case TutorialStep.PlayerMovement:
                 playerMovementPanel.SetActive(false);
                 break;
-            case TutorialStep.CameraMovementIntro:
-                // Add panel hiding logic for this step if needed
-                break;
-            case TutorialStep.Blackscreen:
-                // Blackscreen is already handled in ExecuteStep
+            case TutorialStep.Combat1:
+                combat1Panel.SetActive(false);
                 break;
         }
     }

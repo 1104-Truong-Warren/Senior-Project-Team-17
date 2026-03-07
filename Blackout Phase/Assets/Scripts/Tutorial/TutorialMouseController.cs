@@ -38,6 +38,7 @@ public class TutorialMouseController : MonoBehaviour
     [SerializeField] public Vector2Int spot2bTilePosition;
     [SerializeField] public Vector2Int spot3aTilePosition;
     [SerializeField] public Vector2Int spot3bTilePosition;
+    [SerializeField] public Vector2Int combat1spotTilePosition;
 
     public float blinkSpeed = 0.5f;
     public OverlayTile1 currentMilestoneTile;
@@ -51,6 +52,13 @@ public class TutorialMouseController : MonoBehaviour
     public bool movedSpot3b = false;
 
     private bool isMoving = false; // track if movement is in progress
+
+    [Header("Combat1 Step")]
+    public Vector2Int enemySpot1Position;
+    public bool movedCombat1Spot = false;
+    public bool attackCombat1Prepare = false;
+    public bool confirmedCombat1Attack = false;
+
 
     private IEnumerator Start()
     {
@@ -74,6 +82,7 @@ public class TutorialMouseController : MonoBehaviour
     {
         // Instantiate player at set position and put on line
         characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+        characterInfo.GetComponent<PlayerTargetSelect>().enabled = false; // disable the target select script on the player for tutorial purposes
         OverlayTile1 tile = MapManager1.Instance.GetTile(spawnGridPosition); // get the tile info for the spawn point
         if (tile != null)
         {
@@ -87,6 +96,52 @@ public class TutorialMouseController : MonoBehaviour
 
     private void LateUpdate()
     {
+        // Combat Tutorial Logic (Simulated)
+        if (tutorialManager.currentStep == TutorialStep.Combat1)
+        {
+            // Get the tile where the enemy is standing
+            OverlayTile1 enemyTile = MapManager1.Instance.GetTile(enemySpot1Position);
+
+            if (enemyTile != null)
+            {
+                // 1. Mimic 'A' to Lock-On (Turn Tile Red)
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    enemyTile.ShowEnemyTile(); // This turns the tile red/orange
+                    //if (cursor != null) cursor.SetActive(false); // Hide mouse cursor to mimic lock-on
+                    Debug.Log("Tutorial: Simulated Lock-on");
+                    attackCombat1Prepare = true;
+                }
+
+                // 2. Mimic 'S' to Cancel (Hide Tile)
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    enemyTile.HideTile();
+                    //if (cursor != null) cursor.SetActive(true); // Bring mouse cursor back
+                    Debug.Log("Tutorial: Simulated Cancel");
+                    attackCombat1Prepare = false;
+                }
+
+                // 3. Mimic 'F' to Confirm Attack
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    // Only count the attack if the tile is currently "highlighted" (mimicking a lock-on)
+                    // You can check the sprite color alpha or just assume if they press F they meant it
+                    enemyTile.HideTile();
+                    confirmedCombat1Attack = true;
+                    //if (cursor != null) cursor.SetActive(true);
+                    Debug.Log("Tutorial: Simulated Attack Confirmed");
+                }
+            }
+
+            // If we are "mimicking" targeting, we should block the normal mouse logic
+            // We can check if the enemy tile is visible to determine this
+            if (enemyTile != null && enemyTile.GetComponent<SpriteRenderer>().color.a > 0)
+            {
+                return;
+            }
+        }
+
         if (!IsPointerOverUIObject())
         {
             var hit = GetFocusedOnTile(); // reference
@@ -126,7 +181,6 @@ public class TutorialMouseController : MonoBehaviour
                                 //characterInfo = new CharacterInfo(); // declare it again 
 
                                 characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // get the prefab assign
-
                                 PositionCharacterOnLine(tile);
 
                                 //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
@@ -294,7 +348,7 @@ public class TutorialMouseController : MonoBehaviour
         return results.Count > 0;
     }
 
-    private void CheckMilestoneReached(OverlayTile1 tile)
+    public void CheckMilestoneReached(OverlayTile1 tile)
     {
         // Check if player reached spot 1a
         if (!movedSpot1a && tile.gridLocation.x == spot1aTilePosition.x &&
@@ -361,9 +415,21 @@ public class TutorialMouseController : MonoBehaviour
             tile.HideTile();
             // no more blinking
         }
+
+
+        // Later, check if player reached combat1 spot
+        if (!movedCombat1Spot && tile.gridLocation.x == combat1spotTilePosition.x &&
+            tile.gridLocation.y == combat1spotTilePosition.y)
+        {
+            movedCombat1Spot = true;
+            Debug.Log("Player reached Combat 1 Spot! Tutorial combat movement complete!");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            // no more blinking
+        }
     }
 
-    private Vector2Int GetCurrentMilestoneTarget()
+    public Vector2Int GetCurrentMilestoneTarget()
     {
         if (!movedSpot1a)
             return spot1aTilePosition;
@@ -373,6 +439,12 @@ public class TutorialMouseController : MonoBehaviour
             return spot2aTilePosition;
         else if (!movedSpot2b)
             return spot2bTilePosition;
+        else if (!movedSpot3a)
+            return spot3aTilePosition;
+        else if (!movedSpot3b)
+            return spot3bTilePosition;
+        else if (!movedCombat1Spot)
+            return combat1spotTilePosition;
 
         // all milestones reached, no valid target
         return Vector2Int.zero;
@@ -398,7 +470,7 @@ public class TutorialMouseController : MonoBehaviour
         StartMilestoneBlinking(spot1aTilePosition);
     }
 
-    private void StartMilestoneBlinking(Vector2Int tilePosition)
+    public void StartMilestoneBlinking(Vector2Int tilePosition)
     {
         // Get the tile at the position
         OverlayTile1 tile = MapManager1.Instance.GetTile(tilePosition);

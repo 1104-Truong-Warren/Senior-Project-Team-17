@@ -18,4 +18,8 @@ MonoBehaviour:
   - Fortunately, for you, it is unarmed for learning purposes.
   - Here it comes now.
   - On your turn, use your first action to move towards the dummy.
-  - Then, use your second action to attack it!
+  - Then, use your second action to attack.
+  - Press the "Attack" button to enable attack mode.
+  - Then press the 'F' key on the keyboard to confirm the attack on the selected
+    enemy.
+  - Try it now.
