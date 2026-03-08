@@ -19,7 +19,7 @@ MonoBehaviour:
   - Here it comes now.
   - On your turn, use your first action to move towards the dummy.
   - Then, use your second action to attack.
-  - Press the "Attack" button to enable attack mode.
-  - Then press the 'F' key on the keyboard to confirm the attack on the selected
-    enemy.
-  - Try it now.
+  - Press the 'A' key on the keyboard to enable attack mode.
+  - Then press the 'F' key to confirm the attack on the selected enemy.
+  - You may also press 'S' to exit attack mode if you change your mind.
+  - Try attacking now.

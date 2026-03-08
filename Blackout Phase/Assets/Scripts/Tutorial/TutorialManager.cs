@@ -16,6 +16,8 @@ public enum TutorialStep
     PlayerMovement,
     Combat1Intro,
     Combat1,
+    LevelUpIntro,
+    LevelUp,
     Complete
 }
 
@@ -75,6 +77,17 @@ public class TutorialManager : MonoBehaviour
     public GameObject attackStatusImage;
     public GameObject confirmStatusImage;
 
+    [Header("LevelUpIntro Step")]
+    public DialogueAsset levelUpIntroDialogue;
+    public LevelsManager levelsManager;
+
+    [Header("LevelUp Step")]
+    public GameObject levelUpHud;
+    public DialogueAsset levelUpDialogue;
+    public GameObject levelUpPanel;
+    public GameObject selectStatusImage;
+    public bool hudShown = false;
+
     // Dictionary to map tutorial steps to their panel's AudioSource
     private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
 
@@ -97,6 +110,8 @@ public class TutorialManager : MonoBehaviour
     private bool combat1MoveDone = false;
     public bool combat1AttackDone = false;
     private bool combat1ConfirmDone = false;
+
+    public bool levelUpSelectDone = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -202,6 +217,14 @@ public class TutorialManager : MonoBehaviour
 
             case TutorialStep.Combat1:
                 yield return StartCoroutine(RunCombat1Step());
+                break;
+
+            case TutorialStep.LevelUpIntro:
+                yield return StartCoroutine(RunLevelUpIntroStep(dialogueBox));
+                break;
+
+            case TutorialStep.LevelUp:
+                yield return StartCoroutine(RunLevelUpStep(dialogueBox));
                 break;
 
             case TutorialStep.Complete:
@@ -328,6 +351,46 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitUntil(() => currentStepComplete);
     }
 
+    private IEnumerator RunLevelUpIntroStep(Dialogue dialogue)
+    {
+        actionMenuScript.CloseMenu(); // close action menu
+        dialogue.Reinitialize(levelUpIntroDialogue); // set the dialogue asset for the level up intro dialogue
+        dialogue.gameObject.SetActive(true);
+        actionMenu.SetActive(false);
+
+        // Wait until dialogue is done
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            yield return null;
+        }
+        levelsManager.IncreaseXP(100); // give enough XP to level up
+        currentStepComplete = true;
+    }
+
+    private IEnumerator RunLevelUpStep(Dialogue dialogue)
+    {
+        // wait until level up hud appears
+        yield return new WaitUntil(() => levelUpHud.activeInHierarchy);
+        hudShown = true;
+
+        dialogue.Reinitialize(levelUpDialogue); // set the dialogue asset for the level up midpoint dialogue
+        dialogue.gameObject.SetActive(true);
+        // Wait until dialogue is done
+        while (!dialogue.dialogueDone)
+        {
+            yield return null;
+        }
+        stepCompletePanel.SetActive(false);
+        levelUpPanel.SetActive(true);
+
+        yield return new WaitUntil(() => currentStepComplete);
+    }
+
     private void CheckStepCompletion()
     {
         switch (currentStep)
@@ -400,13 +463,14 @@ public class TutorialManager : MonoBehaviour
                     stepMarkedComplete = true;
                 }
                 break;
+
             case TutorialStep.Combat1:
                 if (mouseController.movedCombat1Spot && !combat1MoveDone)
                 {
                     markTaskComplete(moveStatusImage);
                     combat1MoveDone = true;
                 }
-                if (mouseController.attackCombat1Prepare && !combat1AttackDone)
+                if (combat1MoveDone && mouseController.attackCombat1Prepare && !combat1AttackDone)
                 {
                     markTaskComplete(attackStatusImage);
                     combat1AttackDone = true;
@@ -417,7 +481,7 @@ public class TutorialManager : MonoBehaviour
                     attackStatusImage.GetComponent<Image>().sprite = incompleteBox;
                     combat1AttackDone = false;
                 }
-                if (mouseController.confirmedCombat1Attack && !combat1ConfirmDone)
+                if (combat1MoveDone && combat1AttackDone && mouseController.confirmedCombat1Attack && !combat1ConfirmDone)
                 {
                     markTaskComplete(confirmStatusImage);
                     combat1ConfirmDone = true;
@@ -425,6 +489,20 @@ public class TutorialManager : MonoBehaviour
                 if (combat1ConfirmDone && !stepMarkedComplete)
                 {
                     StartCoroutine(CompleteStepWithDelay(currentStep, 2f)); // Pass current step
+                    stepMarkedComplete = true;
+                }
+                break;
+
+            case TutorialStep.LevelUp:
+                // if hud has appeared and disappeared by picking upgrade
+                if (hudShown && !levelUpHud.activeInHierarchy && !levelUpSelectDone)
+                {
+                    markTaskComplete(selectStatusImage);
+                    levelUpSelectDone = true;
+                }
+                if (levelUpSelectDone && !stepMarkedComplete)
+                {
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 1f)); // Pass current step
                     stepMarkedComplete = true;
                 }
                 break;
@@ -461,6 +539,10 @@ public class TutorialManager : MonoBehaviour
             case TutorialStep.Combat1:
                 combat1Panel.SetActive(false);
                 break;
+
+            case TutorialStep.LevelUp:
+                levelUpPanel.SetActive(false);
+                break;
         }
     }
 
@@ -479,7 +561,9 @@ public class TutorialManager : MonoBehaviour
             TutorialStep.PlayerMovementIntro => TutorialStep.PlayerMovement,
             TutorialStep.PlayerMovement => TutorialStep.Combat1Intro,
             TutorialStep.Combat1Intro => TutorialStep.Combat1,
-            TutorialStep.Combat1 => TutorialStep.Complete,
+            TutorialStep.Combat1 => TutorialStep.LevelUpIntro,
+            TutorialStep.LevelUpIntro => TutorialStep.LevelUp,
+            TutorialStep.LevelUp => TutorialStep.Complete,
             _ => TutorialStep.Complete
         };
 

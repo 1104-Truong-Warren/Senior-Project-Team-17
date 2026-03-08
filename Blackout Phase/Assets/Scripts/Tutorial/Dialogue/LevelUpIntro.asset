@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ff468522a88594f835ce1750834844, type: 3}
+  m_Name: LevelUpIntro
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Nice work.
+  - As you gain experience, I gather more data about your piloting style.
+  - I can use this data to improve combat efficiency and mission completion effectiveness.
+  - You may roughly equate this to a level-up system.
+  - Let's convert some of that experience to an upgrade now.
