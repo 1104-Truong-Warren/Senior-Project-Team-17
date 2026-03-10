@@ -18,6 +18,8 @@ public enum TutorialStep
     Combat1,
     LevelUpIntro,
     LevelUp,
+    MoveToNextIntro,
+    MoveToNext,
     Complete
 }
 
@@ -88,6 +90,14 @@ public class TutorialManager : MonoBehaviour
     public GameObject selectStatusImage;
     public bool hudShown = false;
 
+    [Header("MoveToNextIntro Step")]
+    public DialogueAsset moveToNextIntroDialogue;
+
+    [Header("MoveToNext Step")]
+    public GameObject moveToNextPanel;
+    public GameObject move3StatusImage;
+    public GameObject move4StatusImage;
+
     // Dictionary to map tutorial steps to their panel's AudioSource
     private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
 
@@ -112,6 +122,13 @@ public class TutorialManager : MonoBehaviour
     private bool combat1ConfirmDone = false;
 
     public bool levelUpSelectDone = false;
+
+    private bool transition1aDone = false;
+    private bool transition1bDone = false;
+    private bool transition2aDone = false;
+    private bool transition2bDone = false;
+    private bool transition3aDone = false;
+    private bool transition3bDone = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -153,6 +170,12 @@ public class TutorialManager : MonoBehaviour
         else
         {
             Debug.LogWarning("No AudioSource found on combat1Panel");
+        }
+
+        AudioSource moveToNextAudio = moveToNextPanel.GetComponent<AudioSource>();
+        if (moveToNextAudio != null)
+        {
+            Debug.LogWarning("No AudioSource found on moveToNextPanel");
         }
 
         // Add more steps as needed
@@ -225,6 +248,14 @@ public class TutorialManager : MonoBehaviour
 
             case TutorialStep.LevelUp:
                 yield return StartCoroutine(RunLevelUpStep(dialogueBox));
+                break;
+
+            case TutorialStep.MoveToNextIntro:
+                yield return StartCoroutine(RunMoveToNextIntroStep(dialogueBox));
+                break;
+
+            case TutorialStep.MoveToNext:
+                yield return StartCoroutine(RunMoveToNextStep());
                 break;
 
             case TutorialStep.Complete:
@@ -391,6 +422,36 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitUntil(() => currentStepComplete);
     }
 
+    private IEnumerator RunMoveToNextIntroStep(Dialogue dialogue)
+    {
+        dialogue.Reinitialize(moveToNextIntroDialogue);
+        dialogue.gameObject.SetActive(true);
+
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            yield return null;
+        }
+        currentStepComplete = true;
+    }
+
+    private IEnumerator RunMoveToNextStep()
+    {
+        if (!actionMenu.activeSelf)
+        {
+            actionMenu.SetActive(true);
+        }
+        stepCompletePanel.SetActive(false);
+        moveToNextPanel.SetActive(true);
+        mouseController.BeginSecondBlinkingSequence();
+
+        yield return new WaitUntil(() => currentStepComplete);
+    }
+
     private void CheckStepCompletion()
     {
         switch (currentStep)
@@ -506,6 +567,57 @@ public class TutorialManager : MonoBehaviour
                     stepMarkedComplete = true;
                 }
                 break;
+
+            case TutorialStep.MoveToNext:
+                if (mouseController.movedTransition1a && !transition1aDone)
+                {
+                    markTaskComplete(move3StatusImage);
+                    transition1aDone = true;
+                }
+                if (mouseController.movedTransition1b && !transition1bDone)
+                {
+                    markTaskComplete(move4StatusImage);
+                    transition1bDone = true;
+                }
+                // reset
+                if (transition1aDone && transition1bDone && !transition2aDone && !transition2bDone && !stepMarkedComplete)
+                {
+                    move3StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                    move4StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                }
+                if (mouseController.movedTransition2a && !transition2aDone)
+                {
+                    markTaskComplete(move3StatusImage);
+                    transition2aDone = true;
+                }
+                if (mouseController.movedTransition2b && !transition2bDone)
+                {
+                    markTaskComplete(move4StatusImage);
+                    transition2bDone = true;
+                }
+                // reset
+                if (transition2aDone && transition2bDone && !transition3aDone && !transition3bDone && !stepMarkedComplete)
+                {
+                    move3StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                    move4StatusImage.GetComponent<Image>().sprite = incompleteBox;
+                }
+                if (mouseController.movedTransition3a && !transition3aDone)
+                {
+                    markTaskComplete(move3StatusImage);
+                    transition3aDone = true;
+                }
+                if (mouseController.movedTransition3b && !transition3bDone)
+                {
+                    markTaskComplete(move4StatusImage);
+                    transition3bDone = true;
+                }
+                // check final steps
+                if (transition3aDone && transition3bDone && !stepMarkedComplete)
+                {
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 2f)); // Pass current step
+                    stepMarkedComplete = true;
+                }
+                break;
         }
     }
 
@@ -539,9 +651,11 @@ public class TutorialManager : MonoBehaviour
             case TutorialStep.Combat1:
                 combat1Panel.SetActive(false);
                 break;
-
             case TutorialStep.LevelUp:
                 levelUpPanel.SetActive(false);
+                break;
+            case TutorialStep.MoveToNext:
+                moveToNextPanel.SetActive(false);
                 break;
         }
     }
@@ -563,7 +677,9 @@ public class TutorialManager : MonoBehaviour
             TutorialStep.Combat1Intro => TutorialStep.Combat1,
             TutorialStep.Combat1 => TutorialStep.LevelUpIntro,
             TutorialStep.LevelUpIntro => TutorialStep.LevelUp,
-            TutorialStep.LevelUp => TutorialStep.Complete,
+            TutorialStep.LevelUp => TutorialStep.MoveToNextIntro,
+            TutorialStep.MoveToNextIntro => TutorialStep.MoveToNext,
+            TutorialStep.MoveToNext => TutorialStep.Complete,
             _ => TutorialStep.Complete
         };
 

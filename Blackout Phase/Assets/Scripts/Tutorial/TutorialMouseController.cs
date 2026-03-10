@@ -39,6 +39,12 @@ public class TutorialMouseController : MonoBehaviour
     [SerializeField] public Vector2Int spot3aTilePosition;
     [SerializeField] public Vector2Int spot3bTilePosition;
     [SerializeField] public Vector2Int combat1spotTilePosition;
+    [SerializeField] public Vector2Int transition1aTilePosition;
+    [SerializeField] public Vector2Int transition1bTilePosition;
+    [SerializeField] public Vector2Int transition2aTilePosition;
+    [SerializeField] public Vector2Int transition2bTilePosition;
+    [SerializeField] public Vector2Int transition3aTilePosition;
+    [SerializeField] public Vector2Int transition3bTilePosition;
 
     public float blinkSpeed = 0.5f;
     public OverlayTile1 currentMilestoneTile;
@@ -59,6 +65,13 @@ public class TutorialMouseController : MonoBehaviour
     public bool attackCombat1Prepare = false;
     public bool confirmedCombat1Attack = false;
 
+    [Header("MoveToNext Step")]
+    public bool movedTransition1a = false;
+    public bool movedTransition1b = false;
+    public bool movedTransition2a = false;
+    public bool movedTransition2b = false;
+    public bool movedTransition3a = false;
+    public bool movedTransition3b = false;
 
     private IEnumerator Start()
     {
@@ -427,6 +440,62 @@ public class TutorialMouseController : MonoBehaviour
             tile.HideTile();
             // no more blinking
         }
+
+        
+        // later, in transition step
+        if (!movedTransition1a && tile.gridLocation.x == transition1aTilePosition.x &&
+            tile.gridLocation.y == transition1aTilePosition.y && movedCombat1Spot)
+        {
+            movedTransition1a = true;
+            Debug.Log("Player reached Transition1a.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition1bTilePosition);
+        }
+        if (!movedTransition1b && tile.gridLocation.x == transition1bTilePosition.x &&
+            tile.gridLocation.y == transition1bTilePosition.y)
+        {
+            movedTransition1b = true;
+            Debug.Log("Player reached Transition1b.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition2aTilePosition);
+        }
+        if (!movedTransition2a && tile.gridLocation.x == transition2aTilePosition.x &&
+            tile.gridLocation.y == transition2aTilePosition.y)
+        {
+            movedTransition2a = true;
+            Debug.Log("Player reached Transition2a.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition2bTilePosition);
+        }
+        if (!movedTransition2b && tile.gridLocation.x == transition2bTilePosition.x &&
+            tile.gridLocation.y == transition2bTilePosition.y)
+        {
+            movedTransition2b = true;
+            Debug.Log("Player reached Transition2b.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition3aTilePosition);
+        }
+        if (!movedTransition3a && tile.gridLocation.x == transition3aTilePosition.x &&
+            tile.gridLocation.y == transition3aTilePosition.y)
+        {
+            movedTransition3a = true;
+            Debug.Log("Player reached Transition3a.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition3bTilePosition);
+        }
+        if (!movedTransition3b && tile.gridLocation.x == transition3bTilePosition.x &&
+            tile.gridLocation.y == transition3bTilePosition.y)
+        {
+            movedTransition3b = true;
+            Debug.Log("Player reached Transition3b. Done.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+        }
     }
 
     public Vector2Int GetCurrentMilestoneTarget()
@@ -445,15 +514,29 @@ public class TutorialMouseController : MonoBehaviour
             return spot3bTilePosition;
         else if (!movedCombat1Spot)
             return combat1spotTilePosition;
+        else if (!movedTransition1a)
+            return transition1aTilePosition;
+        else if (!movedTransition1b)
+            return transition1bTilePosition;
+        else if (!movedTransition2a)
+            return transition2aTilePosition;
+        else if (!movedTransition2b)
+            return transition2bTilePosition;
+        else if (!movedTransition3a)
+            return transition3aTilePosition;
+        else if (!movedTransition3b)
+            return transition3bTilePosition;
 
-        // all milestones reached, no valid target
-        return Vector2Int.zero;
+            // all milestones reached, no valid target
+            return Vector2Int.zero;
     }
 
    
     private bool IsTargetMilestone(OverlayTile1 tile)
     {
         Vector2Int targetMilestone = GetCurrentMilestoneTarget();
+
+        Debug.Log($"Clicked: {tile.gridLocation} | Target: {targetMilestone}");
 
         // If no valid milestone target, allow movement (tutorial may be complete)
         if (targetMilestone == Vector2Int.zero)
@@ -468,6 +551,11 @@ public class TutorialMouseController : MonoBehaviour
     public void BeginBlinkingSequence()
     {
         StartMilestoneBlinking(spot1aTilePosition);
+    }
+
+    public void BeginSecondBlinkingSequence()
+    {
+        StartMilestoneBlinking(transition1aTilePosition);
     }
 
     public void StartMilestoneBlinking(Vector2Int tilePosition)
