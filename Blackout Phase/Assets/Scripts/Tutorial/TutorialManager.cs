@@ -20,6 +20,8 @@ public enum TutorialStep
     LevelUp,
     MoveToNextIntro,
     MoveToNext,
+    Combat2Intro,
+    Combat2,
     Complete
 }
 
@@ -42,34 +44,28 @@ public class TutorialManager : MonoBehaviour
     [Header("Step-Specific Components")]
 
     [Header("Blackscreen Step")]
-    // Blackscreen Step
     public DialogueAsset blackscreenDialogue;
 
     [Header("CameraMovementIntro Step")]
-    // CameraMovementIntro Step
     public DialogueAsset cameraMovementIntroDialogue;
 
     [Header("CameraMovement Step")]
-    // CameraMovement Step
     public GameObject cameraMovementPanel;
     public GameObject panStatusImage;
     public GameObject zoomStatusImage;
 
     [Header("PlayerMovementIntro Step")]
-    // PlayerMovementIntro Step
     public DialogueAsset playerMovementIntroDialogue;
     public GameObject actionMenu;
     public TutorialActionMenu actionMenuScript;
 
     [Header("PlayerMovement Step")]
-    // PlayerMovement Step
     public GameObject cursor;
     public GameObject playerMovementPanel;
     public GameObject move1StatusImage;
     public GameObject move2StatusImage;
 
     [Header("Combat1Intro Step")]
-    // Combat1Intro Step
     public DialogueAsset combat1IntroDialogue;
     public TutorialEnemySpawner enemySpawner1;
 
@@ -89,6 +85,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject levelUpPanel;
     public GameObject selectStatusImage;
     public bool hudShown = false;
+    public GameObject blocker;
 
     [Header("MoveToNextIntro Step")]
     public DialogueAsset moveToNextIntroDialogue;
@@ -97,6 +94,16 @@ public class TutorialManager : MonoBehaviour
     public GameObject moveToNextPanel;
     public GameObject move3StatusImage;
     public GameObject move4StatusImage;
+
+    [Header("Combat2Intro Step")]
+    public DialogueAsset combat2IntroDialogue;
+    public TutorialEnemySpawner enemySpawner2;
+    public TutorialEnemySpawner enemySpawner3;
+
+    [Header("Combat2 Step")]
+    public GameObject combat2Panel;
+    public GameObject defeat2StatusImage;
+    public GameObject defeat3StatusImage;
 
     // Dictionary to map tutorial steps to their panel's AudioSource
     private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
@@ -129,6 +136,9 @@ public class TutorialManager : MonoBehaviour
     private bool transition2bDone = false;
     private bool transition3aDone = false;
     private bool transition3bDone = false;
+
+    private bool enemy2Defeated = false;
+    private bool enemy3Defeated = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -175,7 +185,21 @@ public class TutorialManager : MonoBehaviour
         AudioSource moveToNextAudio = moveToNextPanel.GetComponent<AudioSource>();
         if (moveToNextAudio != null)
         {
+            stepAudioSources[TutorialStep.MoveToNext] = moveToNextAudio;
+        }
+        else
+        {
             Debug.LogWarning("No AudioSource found on moveToNextPanel");
+        }
+
+        AudioSource combat2Audio = combat2Panel.GetComponent<AudioSource>();
+        if (combat2Audio != null)
+        {
+            stepAudioSources[TutorialStep.MoveToNext] = combat2Audio;
+        }
+        else
+        {
+            Debug.LogWarning("No AudioSource found on combat2Panel");
         }
 
         // Add more steps as needed
@@ -258,6 +282,14 @@ public class TutorialManager : MonoBehaviour
                 yield return StartCoroutine(RunMoveToNextStep());
                 break;
 
+            case TutorialStep.Combat2Intro:
+                yield return StartCoroutine(RunCombat2IntroStep(dialogueBox));
+                break;
+
+            case TutorialStep.Combat2:
+                yield return StartCoroutine(RunCombat2Step());
+                break;
+
             case TutorialStep.Complete:
                 break;
         }
@@ -270,6 +302,10 @@ public class TutorialManager : MonoBehaviour
         // Wait until dialogue is done (check the dialogueDone flag)
         yield return new WaitUntil(() => dialogue.dialogueDone);
         currentStepComplete = true;
+
+        // alse set the 2 enemies' sprites off since there's nowhere else to do it
+        enemySpawner2.spriteRenderer.enabled = false;
+        enemySpawner3.spriteRenderer.enabled = false;
     }
 
     private IEnumerator RunDialogueMovementIntroStep(Dialogue dialogue)
@@ -407,6 +443,7 @@ public class TutorialManager : MonoBehaviour
     {
         // wait until level up hud appears
         yield return new WaitUntil(() => levelUpHud.activeInHierarchy);
+        blocker.SetActive(true);
         hudShown = true;
 
         dialogue.Reinitialize(levelUpDialogue); // set the dialogue asset for the level up midpoint dialogue
@@ -416,6 +453,7 @@ public class TutorialManager : MonoBehaviour
         {
             yield return null;
         }
+        blocker.SetActive(false);
         stepCompletePanel.SetActive(false);
         levelUpPanel.SetActive(true);
 
@@ -448,6 +486,48 @@ public class TutorialManager : MonoBehaviour
         stepCompletePanel.SetActive(false);
         moveToNextPanel.SetActive(true);
         mouseController.BeginSecondBlinkingSequence();
+
+        yield return new WaitUntil(() => currentStepComplete);
+    }
+
+    private IEnumerator RunCombat2IntroStep(Dialogue dialogue)
+    {
+        actionMenuScript.CloseMenu(); // close action menu
+        dialogue.Reinitialize(combat2IntroDialogue); // set the dialogue asset for the combat intro dialogue
+        dialogue.gameObject.SetActive(true);
+        actionMenu.SetActive(false);
+
+        bool enemiesMoving = false;
+        // Wait until dialogue is done
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 0)
+            {
+                enemySpawner2.spriteRenderer.enabled = true;
+                enemySpawner3.spriteRenderer.enabled = true;
+            }
+            if (dialogue.GetCurrentLineIndex() == 1 && !enemiesMoving)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+                enemySpawner2.TriggerPathMove();
+                enemySpawner3.TriggerPathMove();
+                enemiesMoving = true;
+            }
+            yield return null;
+        }
+        actionMenu.SetActive(true);
+        currentStepComplete = true;
+    }
+
+    private IEnumerator RunCombat2Step()
+    {
+        if (!actionMenu.activeSelf)
+        {
+            actionMenu.SetActive(true);
+        }
+        stepCompletePanel.SetActive(false);
+        combat2Panel.SetActive(true);
 
         yield return new WaitUntil(() => currentStepComplete);
     }
@@ -545,6 +625,7 @@ public class TutorialManager : MonoBehaviour
                 if (combat1MoveDone && combat1AttackDone && mouseController.confirmedCombat1Attack && !combat1ConfirmDone)
                 {
                     markTaskComplete(confirmStatusImage);
+                    enemySpawner1.loseHealth(10);
                     combat1ConfirmDone = true;
                 }
                 if (combat1ConfirmDone && !stepMarkedComplete)
@@ -618,6 +699,26 @@ public class TutorialManager : MonoBehaviour
                     stepMarkedComplete = true;
                 }
                 break;
+
+            case TutorialStep.Combat2:
+                if (!enemySpawner2.isAlive && !enemy2Defeated)
+                {
+                    markTaskComplete(defeat2StatusImage);
+                    levelsManager.IncreaseXP(50);
+                    enemy2Defeated = true;
+                }
+                if (!enemySpawner3.isAlive && !enemy3Defeated)
+                {
+                    markTaskComplete(defeat3StatusImage);
+                    levelsManager.IncreaseXP(50);
+                    enemy3Defeated = true;
+                }
+                if (enemy2Defeated && enemy3Defeated && !stepMarkedComplete)
+                {
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 2f));
+                    stepMarkedComplete = true;
+                }
+                break;
         }
     }
 
@@ -657,6 +758,9 @@ public class TutorialManager : MonoBehaviour
             case TutorialStep.MoveToNext:
                 moveToNextPanel.SetActive(false);
                 break;
+            case TutorialStep.Combat2:
+                combat2Panel.SetActive(false);
+                break;
         }
     }
 
@@ -679,7 +783,9 @@ public class TutorialManager : MonoBehaviour
             TutorialStep.LevelUpIntro => TutorialStep.LevelUp,
             TutorialStep.LevelUp => TutorialStep.MoveToNextIntro,
             TutorialStep.MoveToNextIntro => TutorialStep.MoveToNext,
-            TutorialStep.MoveToNext => TutorialStep.Complete,
+            TutorialStep.MoveToNext => TutorialStep.Combat2Intro,
+            TutorialStep.Combat2Intro => TutorialStep.Combat2,
+            TutorialStep.Combat2 => TutorialStep.Complete,
             _ => TutorialStep.Complete
         };
 
@@ -700,6 +806,34 @@ public class TutorialManager : MonoBehaviour
         if (stepAudioSources.ContainsKey(currentStep) && stepAudioSources[currentStep] != null)
         {
             stepAudioSources[currentStep].Play();
+        }
+    }
+
+    public void AttackEnemy(int enemyID, int damage)
+    {
+        if (enemyID == 1)
+        {
+            enemySpawner1.loseHealth(damage);
+        }
+        else if (enemyID == 2)
+        {
+            enemySpawner2.loseHealth(damage);
+        }
+        else if (enemyID == 3)
+        {
+            enemySpawner3.loseHealth(damage);
+        }
+    }
+
+    public void EnemyAttackSequence()
+    {
+        if (enemySpawner2.isAlive)
+        {
+            mouseController.characterInfo.PlayerTakeDamage(5);
+        }
+        if (enemySpawner3.isAlive)
+        {
+            mouseController.characterInfo.PlayerTakeDamage(5);
         }
     }
 }

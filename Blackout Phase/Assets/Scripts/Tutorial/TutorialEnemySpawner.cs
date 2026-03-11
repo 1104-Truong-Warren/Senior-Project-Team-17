@@ -1,4 +1,5 @@
 // tutorial enemy spawner from EnemySpawner.cs
+// has a lot of functionality from enemy movement and stats so we don't edit the prefab
 // -Ellison
 using UnityEngine;
 using System.Collections;
@@ -6,6 +7,9 @@ using System.Collections.Generic;
 
 public class TutorialEnemySpawner : MonoBehaviour
 {
+    public GameObject enemy;
+    public SpriteRenderer spriteRenderer;
+
     [Header("Enemy set up")]
     [SerializeField] private GameObject enemyPrefab; // enemy prefab
     [SerializeField] private EnemyStatsScripObj enemyStats; // enemy stats
@@ -20,9 +24,15 @@ public class TutorialEnemySpawner : MonoBehaviour
 
     [Header("Scripted events")]
     [SerializeField] public Vector2Int spot1TilePosition;
+    [SerializeField] public Vector2Int spot2TilePosition;
+    [SerializeField] public Vector2Int spot3TilePosition;
+    [SerializeField] public Vector2Int spot4TilePosition;
 
     public bool spot1Triggered = false; // flag for the first spot
+    public bool finalSpotTriggered = false;
 
+    public int health = 10;
+    public bool isAlive = true;
 
     private IEnumerator Start()
     {
@@ -46,7 +56,8 @@ public class TutorialEnemySpawner : MonoBehaviour
             return; // get out
         }
 
-        GameObject enemy = Instantiate(enemyPrefab, tile.transform.position, Quaternion.identity); // setup the enemy throgh prefab
+        enemy = Instantiate(enemyPrefab, tile.transform.position, Quaternion.identity); // setup the enemy throgh prefab
+        spriteRenderer = enemy.GetComponent<SpriteRenderer>();
         enemyInfo = enemy.GetComponentInChildren<EnemyInfo>(); // set up the info even the child object
 
         // get the movement component for the enemy
@@ -92,7 +103,7 @@ public class TutorialEnemySpawner : MonoBehaviour
         //enemyController.transform.position = new Vector3(enemyController.transform.position.x, // grid logic fix so it uses correct z
         //    enemyController.transform.position.y, tile.transform.position.z);
 
-        TurnManager.Instance.RegisterEnemy(enemyController); // send over the enemy control 
+        //TurnManager.Instance.RegisterEnemy(enemyController); // send over the enemy control 
 
         Debug.Log($"Enemy spawned at " + tile.gridLocation); // debug
     }
@@ -124,6 +135,28 @@ public class TutorialEnemySpawner : MonoBehaviour
         else
         {
             Debug.LogError("EnemyMovement component not found on the enemy.");
+        }
+    }
+
+    public void TriggerPathMove()
+    {
+        OverlayTile1 target1 = MapManager1.Instance.GetTile(spot1TilePosition);
+        OverlayTile1 target2 = MapManager1.Instance.GetTile(spot2TilePosition);
+        OverlayTile1 target3 = MapManager1.Instance.GetTile(spot3TilePosition);
+        OverlayTile1 target4 = MapManager1.Instance.GetTile(spot4TilePosition);
+
+        StartCoroutine(movement.MoveAlong(new List<OverlayTile1> { target1, target2, target3, target4 }));
+
+        finalSpotTriggered = true;
+    }
+
+    public void loseHealth(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            isAlive = false;
+            spriteRenderer.enabled = false;
         }
     }
 }

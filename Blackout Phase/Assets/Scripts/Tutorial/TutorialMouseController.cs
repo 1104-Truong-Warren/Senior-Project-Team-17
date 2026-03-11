@@ -15,7 +15,7 @@ public class TutorialMouseController : MonoBehaviour
     [SerializeField] private PlayerAction currentAction; // access what kind of skill player is on
     [SerializeField] private GameObject cursor; // for our curosr
     [SerializeField] private GameObject characterPrefab; // object for the character prefab
-    [SerializeField] private CharacterInfo1 characterInfo; // stores the characgter info
+    [SerializeField] public CharacterInfo1 characterInfo; // stores the characgter info
     [SerializeField] private float speed; // move speed for character
     [SerializeField] public Vector2Int spawnGridPosition; // predetermined player spawn point
 
@@ -59,6 +59,8 @@ public class TutorialMouseController : MonoBehaviour
 
     private bool isMoving = false; // track if movement is in progress
 
+    public GameObject attackMessagePanel;
+
     [Header("Combat1 Step")]
     public Vector2Int enemySpot1Position;
     public bool movedCombat1Spot = false;
@@ -72,6 +74,14 @@ public class TutorialMouseController : MonoBehaviour
     public bool movedTransition2b = false;
     public bool movedTransition3a = false;
     public bool movedTransition3b = false;
+
+    [Header("Combat2 Step")]
+    public Vector2Int enemySpot2Position;
+    public Vector2Int enemySpot3Position;
+    public bool attackCombat2Prepare = false;
+    public bool confirmedCombat2Attack1 = false;
+    public bool confirmedCombat2Attack2 = false;
+    public bool highlightingEnemy2Only = false;
 
     private IEnumerator Start()
     {
@@ -121,35 +131,139 @@ public class TutorialMouseController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     enemyTile.ShowEnemyTile(); // This turns the tile red/orange
-                    //if (cursor != null) cursor.SetActive(false); // Hide mouse cursor to mimic lock-on
+                    attackMessagePanel.SetActive(true);
                     Debug.Log("Tutorial: Simulated Lock-on");
                     attackCombat1Prepare = true;
                 }
 
                 // 2. Mimic 'S' to Cancel (Hide Tile)
-                if (Input.GetKeyDown(KeyCode.S))
+                if (Input.GetKeyDown(KeyCode.S) && attackCombat1Prepare)
                 {
                     enemyTile.HideTile();
-                    //if (cursor != null) cursor.SetActive(true); // Bring mouse cursor back
+                    attackMessagePanel.SetActive(false);
                     Debug.Log("Tutorial: Simulated Cancel");
                     attackCombat1Prepare = false;
                 }
 
                 // 3. Mimic 'F' to Confirm Attack
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.F) && attackCombat1Prepare)
                 {
                     // Only count the attack if the tile is currently "highlighted" (mimicking a lock-on)
                     // You can check the sprite color alpha or just assume if they press F they meant it
                     enemyTile.HideTile();
                     confirmedCombat1Attack = true;
-                    //if (cursor != null) cursor.SetActive(true);
+                    attackMessagePanel.SetActive(false);
+                    // send attackt to tutorial manager to bridge gap to enemy spawner and its health
+                    tutorialManager.AttackEnemy(1, 10);
                     Debug.Log("Tutorial: Simulated Attack Confirmed");
                 }
             }
 
-            // If we are "mimicking" targeting, we should block the normal mouse logic
-            // We can check if the enemy tile is visible to determine this
             if (enemyTile != null && enemyTile.GetComponent<SpriteRenderer>().color.a > 0)
+            {
+                return;
+            }
+        }
+
+        // simulated combat for combat2
+        if (tutorialManager.currentStep == TutorialStep.Combat2)
+        {
+            // Get the tiles where the enemies standing
+            OverlayTile1 enemyTile2 = MapManager1.Instance.GetTile(enemySpot2Position);
+            OverlayTile1 enemyTile3 = MapManager1.Instance.GetTile(enemySpot3Position);
+
+            if (enemyTile2 != null && enemyTile3 != null)
+            {
+                // 1. Mimic 'A' to Lock-On (Turn Tile Red)
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    if (tutorialManager.enemySpawner2.isAlive)
+                    {
+                        enemyTile2.ShowEnemyTile();
+                        attackMessagePanel.SetActive(true);
+                        highlightingEnemy2Only = true;
+                    }
+                    else if (tutorialManager.enemySpawner3.isAlive)
+                    {
+                        enemyTile3.ShowEnemyTile();
+                        attackMessagePanel.SetActive(true);
+                        highlightingEnemy2Only = false;
+                    }
+                       
+                    attackCombat2Prepare = true;
+                    Debug.Log("Tutorial: Simulated Lock-on");
+
+                    // if both attacks confirmed then new cycle and reset
+                    if (confirmedCombat2Attack1 && confirmedCombat2Attack2)
+                    {
+                        confirmedCombat2Attack1 = false;
+                        confirmedCombat2Attack2 = false;
+                    }
+                }
+                // 1.5 'Q' and 'E' cycle
+                if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q)) && attackCombat2Prepare)
+                {
+                    if (highlightingEnemy2Only && tutorialManager.enemySpawner2.isAlive)
+                    {
+                        enemyTile2.HideTile();
+                        enemyTile3.ShowEnemyTile();
+                        highlightingEnemy2Only = false;
+                    }
+                    else if (!highlightingEnemy2Only && tutorialManager.enemySpawner3.isAlive)
+                    {
+                        enemyTile2.ShowEnemyTile();
+                        enemyTile3.HideTile();
+                        highlightingEnemy2Only = true;
+                    }
+                }
+
+                // 2. Mimic 'S' to Cancel (Hide Tile)
+                if (Input.GetKeyDown(KeyCode.S) && attackCombat2Prepare)
+                {
+                    enemyTile2.HideTile();
+                    enemyTile3.HideTile();
+                    attackMessagePanel.SetActive(false);
+                    Debug.Log("Tutorial: Simulated Cancel");
+                    attackCombat2Prepare = false;
+                }
+
+                // 3. Mimic 'F' to Confirm Attack
+                if (Input.GetKeyDown(KeyCode.F) && attackCombat2Prepare)
+                {
+                    enemyTile2.HideTile();
+                    enemyTile3.HideTile();
+                    attackMessagePanel.SetActive(false);
+
+                    if (!confirmedCombat2Attack1)
+                    {
+                        confirmedCombat2Attack1 = true;
+                    }
+                    else if (confirmedCombat2Attack1 && !confirmedCombat2Attack2)
+                    {
+                        confirmedCombat2Attack2 = true;
+                    }
+
+                    if (highlightingEnemy2Only)
+                    {
+                        tutorialManager.AttackEnemy(2, 5);
+                    }
+                    else if (!highlightingEnemy2Only)
+                    {
+                        tutorialManager.AttackEnemy(3, 5);
+                    }
+
+                    // all alive enemies immediately attack
+                    if (confirmedCombat2Attack1 && confirmedCombat2Attack2)
+                    {
+                        tutorialManager.EnemyAttackSequence();
+                    }
+
+                    Debug.Log("Tutorial: Simulated Attack Confirmed");
+                }
+            }
+
+            if (enemyTile2 != null && enemyTile2.GetComponent<SpriteRenderer>().color.a > 0
+                && enemyTile3 != null && enemyTile3.GetComponent<SpriteRenderer>().color.a > 0)
             {
                 return;
             }
