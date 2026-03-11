@@ -119,7 +119,7 @@ public class PlayerFuryMode : MonoBehaviour
         }
         
         popup.SetActive(true);
-        animator.Play("FuryModeFlyUp");
+        animator.Play("FuryModePopUp");
         
         StartCoroutine(HideAfterAnimation(popup, 1.5f));
     }
