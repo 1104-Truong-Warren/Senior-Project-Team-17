@@ -109,7 +109,7 @@ MonoBehaviour:
   EN: 25
   MaxEN: 25
   baseMoveRange: 4
-  baseAttk: 5
+  baseAttk: 100
   baseAttkRange: 1
   baseHitRate: 50
   baseCriticalRate: 5

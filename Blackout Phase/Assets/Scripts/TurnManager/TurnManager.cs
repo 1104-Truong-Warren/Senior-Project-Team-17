@@ -386,6 +386,9 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Level Cleared!!!!");
 
+            // Added by Warren, displays victory screen.
+            VictoryManager.Instance.ShowVictory();
+
             SetTurnState(TurnState.ClearLevel); // set it to level cleared
             return;
         }
