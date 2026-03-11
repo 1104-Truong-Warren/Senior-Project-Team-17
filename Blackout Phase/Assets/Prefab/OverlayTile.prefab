@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4113100507690895351}
   - component: {fileID: 1081240140188953856}
   - component: {fileID: 3971266066526951079}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: OverlayTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 531806784436779170}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1716906885
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 99
   m_Sprite: {fileID: 21300000, guid: 08972de6d8aa08a4283230e0d4323bec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
@@ -110,6 +110,8 @@ MonoBehaviour:
   hasPlayer: 0
   hasEnemy: 0
   debugSelected: 0
+  hasItem: 0
+  itemOnTile: {fileID: 0}
 --- !u!60 &1081240140188953856
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -168,7 +170,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531806784436779170}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

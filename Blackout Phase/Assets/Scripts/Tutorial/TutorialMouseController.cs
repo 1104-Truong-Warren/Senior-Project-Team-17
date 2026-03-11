@@ -15,9 +15,11 @@ public class TutorialMouseController : MonoBehaviour
     [SerializeField] private PlayerAction currentAction; // access what kind of skill player is on
     [SerializeField] private GameObject cursor; // for our curosr
     [SerializeField] private GameObject characterPrefab; // object for the character prefab
-    [SerializeField] private CharacterInfo1 characterInfo; // stores the characgter info
+    [SerializeField] public CharacterInfo1 characterInfo; // stores the characgter info
     [SerializeField] private float speed; // move speed for character
     [SerializeField] public Vector2Int spawnGridPosition; // predetermined player spawn point
+
+    [SerializeField] public LayerMask tileLayer;
 
     private OverlayTile1 previouslySelectedTile; // previous tile
     private PathFinder1 pathFinder; // access the pathfinder
@@ -34,6 +36,15 @@ public class TutorialMouseController : MonoBehaviour
     [SerializeField] public Vector2Int spot1bTilePosition; 
     [SerializeField] public Vector2Int spot2aTilePosition;
     [SerializeField] public Vector2Int spot2bTilePosition;
+    [SerializeField] public Vector2Int spot3aTilePosition;
+    [SerializeField] public Vector2Int spot3bTilePosition;
+    [SerializeField] public Vector2Int combat1spotTilePosition;
+    [SerializeField] public Vector2Int transition1aTilePosition;
+    [SerializeField] public Vector2Int transition1bTilePosition;
+    [SerializeField] public Vector2Int transition2aTilePosition;
+    [SerializeField] public Vector2Int transition2bTilePosition;
+    [SerializeField] public Vector2Int transition3aTilePosition;
+    [SerializeField] public Vector2Int transition3bTilePosition;
 
     public float blinkSpeed = 0.5f;
     public OverlayTile1 currentMilestoneTile;
@@ -43,8 +54,34 @@ public class TutorialMouseController : MonoBehaviour
     public bool movedSpot1b = false;
     public bool movedSpot2a = false;
     public bool movedSpot2b = false;
+    public bool movedSpot3a = false;
+    public bool movedSpot3b = false;
 
     private bool isMoving = false; // track if movement is in progress
+
+    public GameObject attackMessagePanel;
+
+    [Header("Combat1 Step")]
+    public Vector2Int enemySpot1Position;
+    public bool movedCombat1Spot = false;
+    public bool attackCombat1Prepare = false;
+    public bool confirmedCombat1Attack = false;
+
+    [Header("MoveToNext Step")]
+    public bool movedTransition1a = false;
+    public bool movedTransition1b = false;
+    public bool movedTransition2a = false;
+    public bool movedTransition2b = false;
+    public bool movedTransition3a = false;
+    public bool movedTransition3b = false;
+
+    [Header("Combat2 Step")]
+    public Vector2Int enemySpot2Position;
+    public Vector2Int enemySpot3Position;
+    public bool attackCombat2Prepare = false;
+    public bool confirmedCombat2Attack1 = false;
+    public bool confirmedCombat2Attack2 = false;
+    public bool highlightingEnemy2Only = false;
 
     private IEnumerator Start()
     {
@@ -68,6 +105,7 @@ public class TutorialMouseController : MonoBehaviour
     {
         // Instantiate player at set position and put on line
         characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+        characterInfo.GetComponent<PlayerTargetSelect>().enabled = false; // disable the target select script on the player for tutorial purposes
         OverlayTile1 tile = MapManager1.Instance.GetTile(spawnGridPosition); // get the tile info for the spawn point
         if (tile != null)
         {
@@ -81,96 +119,257 @@ public class TutorialMouseController : MonoBehaviour
 
     private void LateUpdate()
     {
-        var hit = GetFocusedOnTile(); // reference
-        if (hit.HasValue)
+        // Combat Tutorial Logic (Simulated)
+        if (tutorialManager.currentStep == TutorialStep.Combat1)
         {
-            if (cursor != null)
+            // Get the tile where the enemy is standing
+            OverlayTile1 enemyTile = MapManager1.Instance.GetTile(enemySpot1Position);
+
+            if (enemyTile != null)
             {
-                OverlayTile1 tile = hit.Value.collider.gameObject.GetComponent<OverlayTile1>(); // which tile to spawn                                                                        // get out if tile not found
-                if (tile == null)
-                    return;
-                cursor.transform.position = tile.transform.position; // set cursor location to the overlay
-                cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
-
-
-                if (Input.GetMouseButtonDown(0) && !isMoving) // only allow new movement input if not currently moving
+                // 1. Mimic 'A' to Lock-On (Turn Tile Red)
+                if (Input.GetKeyDown(KeyCode.A))
                 {
-                    Vector2 world = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
-                    Debug.Log("Pointer is over UI: " + MouseController1.IsPointerOverUIObject()); // debug msg
+                    enemyTile.ShowEnemyTile(); // This turns the tile red/orange
+                    attackMessagePanel.SetActive(true);
+                    Debug.Log("Tutorial: Simulated Lock-on");
+                    attackCombat1Prepare = true;
+                }
 
-                    // Clear previous path highlight
-                    foreach (var t in path)
-                        t.HideTile();
+                // 2. Mimic 'S' to Cancel (Hide Tile)
+                if (Input.GetKeyDown(KeyCode.S) && attackCombat1Prepare)
+                {
+                    enemyTile.HideTile();
+                    attackMessagePanel.SetActive(false);
+                    Debug.Log("Tutorial: Simulated Cancel");
+                    attackCombat1Prepare = false;
+                }
 
-                    path.Clear();
-
-                    if (previouslySelectedTile != null)  // hides the previous selected tiles
-                        previouslySelectedTile.HideTile();
-                    MapManager1.Instance.ResetAllTiles(); // before showing tiles reset all
-                    tile.ShowPlayerTile();
-                    previouslySelectedTile = tile; // shows current tile and save it
-
-                    // if the character movement is enabled
-                    if (actionMenu.movementEnabled)
-                    {
-                        if (characterInfo == null)
-                        {
-                            //characterInfo = new CharacterInfo(); // declare it again 
-
-                            characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // get the prefab assign
-
-                            PositionCharacterOnLine(tile);
-
-                            //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
-
-                            characterInfo.PlayerSetTile(tile);
-                        }
-                        else
-                        {
-                            if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) // if tile has enemy/player/blocked get out
-                            {
-                                Debug.Log("Tile is being used!"); // debug
-
-                                return;
-                            }
-
-                            // Check if the clicked tile is the current milestone target
-                            if (!IsTargetMilestone(tile))
-                            {
-                                Debug.Log("Tutorial: Can only move to the milestone tile!");
-                                return;
-                            }
-
-                            int playerMoveteps = characterInfo.GetMoveRange(); // set the move range for player 
-
-                            int distance = pathFinder.GetManhattenDistance(characterInfo.CurrentTile, tile); // find the distance between our current and target tile
-
-                            // path steps > actually movement that's not in the range
-                            if (distance > playerMoveteps)
-                            {
-                                Debug.Log("Out of bound! Moved Too far or Not moving!"); // debug
-                                return;
-                            }
-
-                            path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>()); // if is not out of range player can go there
-
-                            //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
-
-                            //Show the path tiles (highlight)
-                            foreach (var t in path)
-                                t.ShowPlayerTile();
-
-                            // Only start movement if path is valid
-                            if (path.Count > 0)
-                            {
-                                isMoving = true;
-                                actionMenu.BeginMovementProcess(); // Call once when movement starts
-                            }
-                        }
-                    }
-
+                // 3. Mimic 'F' to Confirm Attack
+                if (Input.GetKeyDown(KeyCode.F) && attackCombat1Prepare)
+                {
+                    // Only count the attack if the tile is currently "highlighted" (mimicking a lock-on)
+                    // You can check the sprite color alpha or just assume if they press F they meant it
+                    enemyTile.HideTile();
+                    confirmedCombat1Attack = true;
+                    attackMessagePanel.SetActive(false);
+                    // send attackt to tutorial manager to bridge gap to enemy spawner and its health
+                    tutorialManager.AttackEnemy(1, 10);
+                    Debug.Log("Tutorial: Simulated Attack Confirmed");
                 }
             }
+
+            if (enemyTile != null && enemyTile.GetComponent<SpriteRenderer>().color.a > 0)
+            {
+                return;
+            }
+        }
+
+        // simulated combat for combat2
+        if (tutorialManager.currentStep == TutorialStep.Combat2)
+        {
+            // Get the tiles where the enemies standing
+            OverlayTile1 enemyTile2 = MapManager1.Instance.GetTile(enemySpot2Position);
+            OverlayTile1 enemyTile3 = MapManager1.Instance.GetTile(enemySpot3Position);
+
+            if (enemyTile2 != null && enemyTile3 != null)
+            {
+                // 1. Mimic 'A' to Lock-On (Turn Tile Red)
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    if (tutorialManager.enemySpawner2.isAlive)
+                    {
+                        enemyTile2.ShowEnemyTile();
+                        attackMessagePanel.SetActive(true);
+                        highlightingEnemy2Only = true;
+                    }
+                    else if (tutorialManager.enemySpawner3.isAlive)
+                    {
+                        enemyTile3.ShowEnemyTile();
+                        attackMessagePanel.SetActive(true);
+                        highlightingEnemy2Only = false;
+                    }
+                       
+                    attackCombat2Prepare = true;
+                    Debug.Log("Tutorial: Simulated Lock-on");
+
+                    // if both attacks confirmed then new cycle and reset
+                    if (confirmedCombat2Attack1 && confirmedCombat2Attack2)
+                    {
+                        confirmedCombat2Attack1 = false;
+                        confirmedCombat2Attack2 = false;
+                    }
+                }
+                // 1.5 'Q' and 'E' cycle
+                if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Q)) && attackCombat2Prepare)
+                {
+                    if (highlightingEnemy2Only && tutorialManager.enemySpawner2.isAlive)
+                    {
+                        enemyTile2.HideTile();
+                        enemyTile3.ShowEnemyTile();
+                        highlightingEnemy2Only = false;
+                    }
+                    else if (!highlightingEnemy2Only && tutorialManager.enemySpawner3.isAlive)
+                    {
+                        enemyTile2.ShowEnemyTile();
+                        enemyTile3.HideTile();
+                        highlightingEnemy2Only = true;
+                    }
+                }
+
+                // 2. Mimic 'S' to Cancel (Hide Tile)
+                if (Input.GetKeyDown(KeyCode.S) && attackCombat2Prepare)
+                {
+                    enemyTile2.HideTile();
+                    enemyTile3.HideTile();
+                    attackMessagePanel.SetActive(false);
+                    Debug.Log("Tutorial: Simulated Cancel");
+                    attackCombat2Prepare = false;
+                }
+
+                // 3. Mimic 'F' to Confirm Attack
+                if (Input.GetKeyDown(KeyCode.F) && attackCombat2Prepare)
+                {
+                    enemyTile2.HideTile();
+                    enemyTile3.HideTile();
+                    attackMessagePanel.SetActive(false);
+
+                    if (!confirmedCombat2Attack1)
+                    {
+                        confirmedCombat2Attack1 = true;
+                    }
+                    else if (confirmedCombat2Attack1 && !confirmedCombat2Attack2)
+                    {
+                        confirmedCombat2Attack2 = true;
+                    }
+
+                    if (highlightingEnemy2Only)
+                    {
+                        tutorialManager.AttackEnemy(2, 5);
+                    }
+                    else if (!highlightingEnemy2Only)
+                    {
+                        tutorialManager.AttackEnemy(3, 5);
+                    }
+
+                    // all alive enemies immediately attack
+                    if (confirmedCombat2Attack1 && confirmedCombat2Attack2)
+                    {
+                        tutorialManager.EnemyAttackSequence();
+                    }
+
+                    Debug.Log("Tutorial: Simulated Attack Confirmed");
+                }
+            }
+
+            if (enemyTile2 != null && enemyTile2.GetComponent<SpriteRenderer>().color.a > 0
+                && enemyTile3 != null && enemyTile3.GetComponent<SpriteRenderer>().color.a > 0)
+            {
+                return;
+            }
+        }
+
+        if (!IsPointerOverUIObject())
+        {
+            var hit = GetFocusedOnTile(); // reference
+            if (hit.HasValue)
+            {
+                if (cursor != null)
+                {
+                    OverlayTile1 tile = hit.Value.collider.gameObject.GetComponent<OverlayTile1>(); // which tile to spawn                                                                        // get out if tile not found
+                    if (tile == null)
+                        return;
+                    cursor.transform.position = tile.transform.position; // set cursor location to the overlay
+                    cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
+
+
+                    if (Input.GetMouseButtonDown(0) && !isMoving) // only allow new movement input if not currently moving
+                    {
+                        Vector2 world = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
+                        Debug.Log("Pointer is over UI: " + MouseController1.IsPointerOverUIObject()); // debug msg
+
+                        // Clear previous path highlight
+                        foreach (var t in path)
+                            t.HideTile();
+
+                        path.Clear();
+
+                        if (previouslySelectedTile != null)  // hides the previous selected tiles
+                            previouslySelectedTile.HideTile();
+                        MapManager1.Instance.ResetAllTiles(); // before showing tiles reset all
+                        tile.ShowPlayerTile();
+                        previouslySelectedTile = tile; // shows current tile and save it
+
+                        // if the character movement is enabled
+                        if (actionMenu.movementEnabled)
+                        {
+                            if (characterInfo == null)
+                            {
+                                //characterInfo = new CharacterInfo(); // declare it again 
+
+                                characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // get the prefab assign
+                                PositionCharacterOnLine(tile);
+
+                                //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
+
+                                characterInfo.PlayerSetTile(tile);
+                            }
+                            else
+                            {
+                                if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) // if tile has enemy/player/blocked get out
+                                {
+                                    Debug.Log("Tile is being used!"); // debug
+
+                                    return;
+                                }
+
+                                // Check if the clicked tile is the current milestone target
+                                if (!IsTargetMilestone(tile))
+                                {
+                                    Debug.Log("Tutorial: Can only move to the milestone tile!");
+                                    return;
+                                }
+
+                                int playerMoveteps = characterInfo.GetMoveRange(); // set the move range for player 
+
+                                int distance = pathFinder.GetManhattenDistance(characterInfo.CurrentTile, tile); // find the distance between our current and target tile
+
+                                // path steps > actually movement that's not in the range
+                                if (distance > playerMoveteps)
+                                {
+                                    Debug.Log("Out of bound! Moved Too far or Not moving!"); // debug
+                                    return;
+                                }
+
+                                path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>()); // if is not out of range player can go there
+
+                                //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
+
+                                //Show the path tiles (highlight)
+                                foreach (var t in path)
+                                    t.ShowPlayerTile();
+
+                                // Only start movement if path is valid
+                                if (path.Count > 0)
+                                {
+                                    isMoving = true;
+                                    actionMenu.BeginMovementProcess(); // Call once when movement starts
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            /*else
+            {
+                if (cursor != null)
+                {
+                    cursor.SetActive(false); // hide cursor if not hovering over a tile
+                }
+            }*/
+
+            
         }
 
         // Move along path if there are tiles to move to
@@ -178,6 +377,7 @@ public class TutorialMouseController : MonoBehaviour
         {
             MoveAlongPath();
         }
+
     }
 
     private void MoveAlongPath()
@@ -252,20 +452,30 @@ public class TutorialMouseController : MonoBehaviour
 
         Vector2 mousePosition2d = new Vector2(mousePosition.x, mousePosition.y); // get the 2d position
 
-        RaycastHit2D[] hit = Physics2D.RaycastAll(mousePosition2d, Vector2.zero); // raycast is like a imaginary line to find what's infront 
+        RaycastHit2D[] hit = Physics2D.RaycastAll(mousePosition2d, Vector2.zero, 0f, tileLayer); // raycast is like a imaginary line to find what's infront 
 
         //Debug.DrawRay(mousePosition2d, Vector2.zero, Color.red, 0.2f);
-        Debug.Log($"All Hits: {hit.Length}");
+        //Debug.Log($"All Hits: {hit.Length}");
 
         if (hit.Length > 0)
         {
-            return hit.OrderByDescending(i => i.collider.transform.position.z).First(); // return whatever hits first
+            return hit.OrderByDescending(i => i.collider.transform.position.z).First(); // return whatever hits first 
         }
 
         return null;
     }
 
-    private void CheckMilestoneReached(OverlayTile1 tile)
+    // from https://discussions.unity.com/t/detect-if-pointer-is-over-any-ui-element/138619
+    public static bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
+
+    public void CheckMilestoneReached(OverlayTile1 tile)
     {
         // Check if player reached spot 1a
         if (!movedSpot1a && tile.gridLocation.x == spot1aTilePosition.x &&
@@ -308,11 +518,101 @@ public class TutorialMouseController : MonoBehaviour
             Debug.Log("Player reached Spot 2B!");
             StopMilestoneBlinking();
             tile.HideTile();
-            // All milestones complete - no more blinking needed
+            StartMilestoneBlinking(spot3aTilePosition);
+        }
+
+        // Check if player reached spot 3a
+        if (!movedSpot3a && tile.gridLocation.x == spot3aTilePosition.x &&
+            tile.gridLocation.y == spot3aTilePosition.y)
+        {
+            movedSpot3a = true;
+            Debug.Log("Player reached Spot 3A!");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(spot3bTilePosition);
+        }
+
+        // Check if player reached spot 3b
+        if (!movedSpot3b && tile.gridLocation.x == spot3bTilePosition.x &&
+            tile.gridLocation.y == spot3bTilePosition.y)
+        {
+            movedSpot3b = true;
+            Debug.Log("Player reached Spot 3B! Tutorial movement complete!");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            // no more blinking
+        }
+
+
+        // Later, check if player reached combat1 spot
+        if (!movedCombat1Spot && tile.gridLocation.x == combat1spotTilePosition.x &&
+            tile.gridLocation.y == combat1spotTilePosition.y)
+        {
+            movedCombat1Spot = true;
+            Debug.Log("Player reached Combat 1 Spot! Tutorial combat movement complete!");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            // no more blinking
+        }
+
+        
+        // later, in transition step
+        if (!movedTransition1a && tile.gridLocation.x == transition1aTilePosition.x &&
+            tile.gridLocation.y == transition1aTilePosition.y && movedCombat1Spot)
+        {
+            movedTransition1a = true;
+            Debug.Log("Player reached Transition1a.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition1bTilePosition);
+        }
+        if (!movedTransition1b && tile.gridLocation.x == transition1bTilePosition.x &&
+            tile.gridLocation.y == transition1bTilePosition.y)
+        {
+            movedTransition1b = true;
+            Debug.Log("Player reached Transition1b.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition2aTilePosition);
+        }
+        if (!movedTransition2a && tile.gridLocation.x == transition2aTilePosition.x &&
+            tile.gridLocation.y == transition2aTilePosition.y)
+        {
+            movedTransition2a = true;
+            Debug.Log("Player reached Transition2a.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition2bTilePosition);
+        }
+        if (!movedTransition2b && tile.gridLocation.x == transition2bTilePosition.x &&
+            tile.gridLocation.y == transition2bTilePosition.y)
+        {
+            movedTransition2b = true;
+            Debug.Log("Player reached Transition2b.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition3aTilePosition);
+        }
+        if (!movedTransition3a && tile.gridLocation.x == transition3aTilePosition.x &&
+            tile.gridLocation.y == transition3aTilePosition.y)
+        {
+            movedTransition3a = true;
+            Debug.Log("Player reached Transition3a.");
+            StopMilestoneBlinking();
+            tile.HideTile();
+            StartMilestoneBlinking(transition3bTilePosition);
+        }
+        if (!movedTransition3b && tile.gridLocation.x == transition3bTilePosition.x &&
+            tile.gridLocation.y == transition3bTilePosition.y)
+        {
+            movedTransition3b = true;
+            Debug.Log("Player reached Transition3b. Done.");
+            StopMilestoneBlinking();
+            tile.HideTile();
         }
     }
 
-    private Vector2Int GetCurrentMilestoneTarget()
+    public Vector2Int GetCurrentMilestoneTarget()
     {
         if (!movedSpot1a)
             return spot1aTilePosition;
@@ -322,15 +622,35 @@ public class TutorialMouseController : MonoBehaviour
             return spot2aTilePosition;
         else if (!movedSpot2b)
             return spot2bTilePosition;
+        else if (!movedSpot3a)
+            return spot3aTilePosition;
+        else if (!movedSpot3b)
+            return spot3bTilePosition;
+        else if (!movedCombat1Spot)
+            return combat1spotTilePosition;
+        else if (!movedTransition1a)
+            return transition1aTilePosition;
+        else if (!movedTransition1b)
+            return transition1bTilePosition;
+        else if (!movedTransition2a)
+            return transition2aTilePosition;
+        else if (!movedTransition2b)
+            return transition2bTilePosition;
+        else if (!movedTransition3a)
+            return transition3aTilePosition;
+        else if (!movedTransition3b)
+            return transition3bTilePosition;
 
-        // all milestones reached, no valid target
-        return Vector2Int.zero;
+            // all milestones reached, no valid target
+            return Vector2Int.zero;
     }
 
    
     private bool IsTargetMilestone(OverlayTile1 tile)
     {
         Vector2Int targetMilestone = GetCurrentMilestoneTarget();
+
+        Debug.Log($"Clicked: {tile.gridLocation} | Target: {targetMilestone}");
 
         // If no valid milestone target, allow movement (tutorial may be complete)
         if (targetMilestone == Vector2Int.zero)
@@ -347,7 +667,12 @@ public class TutorialMouseController : MonoBehaviour
         StartMilestoneBlinking(spot1aTilePosition);
     }
 
-    private void StartMilestoneBlinking(Vector2Int tilePosition)
+    public void BeginSecondBlinkingSequence()
+    {
+        StartMilestoneBlinking(transition1aTilePosition);
+    }
+
+    public void StartMilestoneBlinking(Vector2Int tilePosition)
     {
         // Get the tile at the position
         OverlayTile1 tile = MapManager1.Instance.GetTile(tilePosition);

@@ -21,8 +21,8 @@ TagManager:
   - CursorLayer
   - Enemy
   - WorldItem
-  - 
-  - 
+  - Dialogue
+  - Tiles
   - 
   - 
   - Transitions

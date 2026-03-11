@@ -105,17 +105,17 @@ public class CharacterInfoDisplay : MonoBehaviour
             if (hpPercentage > 0.6f)
             {
                 hpBar.color = Color.green;
-                Debug.Log($"HP {hpPercentage*100}% = GREEN");
+                //Debug.Log($"HP {hpPercentage*100}% = GREEN");
             }
             else if (hpPercentage > 0.3f) // If health is greater than 30%, it will turn yellow
             {
                 hpBar.color = Color.yellow;
-                Debug.Log($"HP {hpPercentage*100}% = YELLOW");
+                //Debug.Log($"HP {hpPercentage*100}% = YELLOW");
             }
             else
             {
                 hpBar.color = Color.red; // If health is less than 30%, it will turn red
-                Debug.Log($"HP {hpPercentage*100}% = RED");
+                //Debug.Log($"HP {hpPercentage*100}% = RED");
             }
         }
         else if (hpBar != null && playerInfo.maxHP <= 0)
