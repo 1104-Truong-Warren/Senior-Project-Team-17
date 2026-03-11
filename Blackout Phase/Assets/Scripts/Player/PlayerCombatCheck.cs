@@ -53,6 +53,13 @@ public class PlayerCombatCheck : MonoBehaviour
         if (player.currentAP < basicAttkAPcost)
         {
             Debug.Log("Not enough AP to attack!");
+
+            // Added by Warren, displays "Not Enough AP!" on the screen.
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowInsufficientAP(player.transform.position);
+            }
+
             return;
         }
 
@@ -95,6 +102,13 @@ public class PlayerCombatCheck : MonoBehaviour
         if (distance > basicAttckRange)
         {
             Debug.Log("Enemy out of reach!");
+
+            // Added by Warren, displays "Out of range!" on the screen.
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowOutOfRange(player.transform.position);
+            }
+
             return;
         }
 
@@ -102,6 +116,13 @@ public class PlayerCombatCheck : MonoBehaviour
         if (!playerInfo.PlayerEnCheck(basicAttkENcost))
         {
             Debug.Log("Insufficent EN amount!"); // debug msg
+
+            // Added by Warren, displays "Insufficent EN!" on the screen.
+            if (DamageObserver.Instance != null)
+            {
+                DamageObserver.Instance.ShowInsufficientEN(player.transform.position);
+            }
+
             return;
         }
 
@@ -157,6 +178,13 @@ public class PlayerCombatCheck : MonoBehaviour
             if (dodge)
             {
                 Debug.Log("Enemy Dodged! Attack Missed!"); // debug msg
+
+                // Added by Warren, shows the "Enemy Dodged!" text on the screen.
+                if (DamageObserver.Instance != null)
+                {
+                    DamageObserver.Instance.ShowDodgedText(enemy.transform.position, true);
+                }
+
                 return;
             }
         }

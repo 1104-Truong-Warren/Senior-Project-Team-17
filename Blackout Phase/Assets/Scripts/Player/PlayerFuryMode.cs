@@ -8,6 +8,9 @@ public class PlayerFuryMode : MonoBehaviour
     [SerializeField] private int killsToTrigger = 2; // how many kills it needs to trigger Fury Mode
     [SerializeField] private int baseFuryModeActionTurns = 2; // how long the base Fury mode lasts
 
+    // Added by Warren
+    private Animator animator;
+
     // Player in game stats
     private int currentKills = 0; // starting with 0 kills
 
@@ -48,6 +51,9 @@ public class PlayerFuryMode : MonoBehaviour
         effect.FuryFlashEffect(); // start playing the flashing effects
 
         Debug.Log("Fury Mode Active!"); // debug msg
+
+        // Added by Warren
+        ShowFuryModePopup();
     }
 
     public bool FuryModeGoingDown()
@@ -83,5 +89,48 @@ public class PlayerFuryMode : MonoBehaviour
     public void ResetCurrentKills()
     {
         currentKills = 0; // reset the current kills
+    }
+
+    // Added by Warren, allows the image to appear for a brief moment Fury Mode is active, and then disappears with a zoom in and out animation.
+    private void ShowFuryModePopup()
+    {
+        GameObject canvas = GameObject.Find("FuryModeCanvas");
+        
+        if (canvas == null)
+        {
+            Debug.LogError("Could not find FuryModeCanvas!");
+            return;
+        }
+        
+        Transform popupTransform = canvas.transform.Find("FuryModePopup");
+        
+        if (popupTransform == null)
+        {
+            Debug.LogError("Could not find FuryModePopup under FuryModeCanvas!");
+            return;
+        }
+        
+        GameObject popup = popupTransform.gameObject;
+        
+        animator = popup.GetComponent<Animator>();
+        if (animator == null)
+        {
+            animator = popup.AddComponent<Animator>();
+        }
+        
+        popup.SetActive(true);
+        animator.Play("FuryModePopUp");
+        
+        StartCoroutine(HideAfterAnimation(popup, 1.5f));
+    }
+
+    // Added by Warren, this function waits for the animation to complete, and then hides the popup.
+    private System.Collections.IEnumerator HideAfterAnimation(GameObject popup, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (popup != null)
+        {
+            popup.SetActive(false);
+        }
     }
 }
