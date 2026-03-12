@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ff468522a88594f835ce1750834844, type: 3}
+  m_Name: Combat3Intro
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Of course, it would be irresponsible piloting to just sit there and let the enemy
+    attack you.
+  - When you are about to take a hit, you have some reactions available to you.
+  - Let's try it now with this other enemy.
+  - On your turn, you can press the Space button to yield all remaining actions and
+    end your turn.
+  - Skip this next turn so the enemy can try to hit you.

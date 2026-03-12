@@ -15,7 +15,7 @@ public class TutorialEnemySpawner : MonoBehaviour
     [SerializeField] private EnemyStatsScripObj enemyStats; // enemy stats
     [SerializeField] private Vector2Int spawnGridPosition;// where it starts
 
-    private EnemyInfo enemyInfo; // set up accessor
+    public EnemyInfo enemyInfo; // set up accessor
 
     [Header("Patrol points")]
     [SerializeField] private List<Vector2Int> patrolPoints = new List<Vector2Int>(); // array list of enemy patrol points

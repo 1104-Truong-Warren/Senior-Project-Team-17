@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ff468522a88594f835ce1750834844, type: 3}
+  m_Name: ItemIntro
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Here is your inventory.
+  - Any picked up consumables and equipment will be stored here, assuming you have
+    the space to hold it.
+  - You can hover over any stored items to view more information about them.
+  - You already have consumables to restore health and EN. Use them both to proceed.

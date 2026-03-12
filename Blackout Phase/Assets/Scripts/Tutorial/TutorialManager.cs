@@ -1,9 +1,12 @@
 // Manages the entire tutorial sequence
+// Apologize in advance for how long it is, I didn't realize how much this was going to be
+// until I was like halfway done
 // Ellison
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 // enum to track current step of the tutorial
@@ -22,6 +25,15 @@ public enum TutorialStep
     MoveToNext,
     Combat2Intro,
     Combat2,
+    Combat3Intro,
+    Combat3,
+    Reaction,
+    ReactionCleanup,
+    InventoryIntro,
+    Inventory,
+    UseItemIntro,
+    UseItem,
+    Conclusion,
     Complete
 }
 
@@ -74,6 +86,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject moveStatusImage;
     public GameObject attackStatusImage;
     public GameObject confirmStatusImage;
+    public DamageObserver damageObserver;
 
     [Header("LevelUpIntro Step")]
     public DialogueAsset levelUpIntroDialogue;
@@ -105,6 +118,47 @@ public class TutorialManager : MonoBehaviour
     public GameObject defeat2StatusImage;
     public GameObject defeat3StatusImage;
 
+    [Header("Combat3Intro Step")]
+    public DialogueAsset combat3IntroDialogue;
+    public TutorialEnemySpawner enemySpawner4;
+
+    [Header("Combat3 Step")]
+    public GameObject combat3Panel;
+    public GameObject skipStatusImage;
+
+    [Header("Reaction Step")]
+    public ReactionUI reactionUI;
+    public GameObject reactionScreenObject;
+    public DialogueAsset reactionDialogue;
+    public GameObject reactionPanel;
+    public GameObject reactStatusImage;
+    public bool reactionShown = false;
+    public GameObject blocker2;
+    public GameObject blocker3;
+    public GameObject blocker4;
+
+    [Header("ReactionCleanup Step")]
+    public DialogueAsset reactionCleanupDialogue;
+
+    [Header("InventoryIntro Step")]
+    public DialogueAsset inventoryIntroDialogue;
+
+    [Header("Inventory Step")]
+    public GameObject inventoryButton;
+    public GameObject openInventoryPanel;
+    public GameObject openInventoryStatusImage;
+    public Inventory inventory;
+
+    [Header("UseItemIntro Step")]
+    public DialogueAsset useItemIntroDialogue;
+
+    [Header("UseItem Step")]
+    public GameObject useItemPanel;
+    public GameObject useBothStatusImage;
+
+    [Header("Conclusion Step")]
+    public DialogueAsset conclusionDialogue;
+
     // Dictionary to map tutorial steps to their panel's AudioSource
     private Dictionary<TutorialStep, AudioSource> stepAudioSources = new Dictionary<TutorialStep, AudioSource>();
 
@@ -115,7 +169,7 @@ public class TutorialManager : MonoBehaviour
     private bool zoomMarkedComplete = false;
     private bool panMarkedComplete = false;
 
-    private bool stepMarkedComplete = false;
+    public bool stepMarkedComplete = false;
 
     private bool move1aDone = false;
     private bool move1bDone = false;
@@ -139,6 +193,10 @@ public class TutorialManager : MonoBehaviour
 
     private bool enemy2Defeated = false;
     private bool enemy3Defeated = false;
+
+    private bool combat3Skipped = false;
+
+    public bool reactionSelectDone = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -290,6 +348,42 @@ public class TutorialManager : MonoBehaviour
                 yield return StartCoroutine(RunCombat2Step());
                 break;
 
+            case TutorialStep.Combat3Intro:
+                yield return StartCoroutine(RunCombat3IntroStep(dialogueBox));
+                break;
+
+            case TutorialStep.Combat3:
+                yield return StartCoroutine(RunCombat3Step());
+                break;
+
+            case TutorialStep.Reaction:
+                yield return StartCoroutine(RunReactionStep(dialogueBox));
+                break;
+
+            case TutorialStep.ReactionCleanup:
+                yield return StartCoroutine(RunReactionCleanupStep(dialogueBox));
+                break;
+
+            case TutorialStep.InventoryIntro:
+                yield return StartCoroutine(RunInventoryIntroStep(dialogueBox));
+                break;
+
+            case TutorialStep.Inventory:
+                yield return StartCoroutine(RunInventoryStep());
+                break;
+
+            case TutorialStep.UseItemIntro:
+                yield return StartCoroutine(RunUseItemIntroStep(dialogueBox));
+                break;
+
+            case TutorialStep.UseItem:
+                yield return StartCoroutine(RunUseItemStep());
+                break;
+
+            case TutorialStep.Conclusion:
+                yield return StartCoroutine(RunConclusionStep(dialogueBox));
+                break;
+
             case TutorialStep.Complete:
                 break;
         }
@@ -303,9 +397,10 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitUntil(() => dialogue.dialogueDone);
         currentStepComplete = true;
 
-        // alse set the 2 enemies' sprites off since there's nowhere else to do it
+        // alse set the 3 enemies' sprites off since there's nowhere else to do it
         enemySpawner2.spriteRenderer.enabled = false;
         enemySpawner3.spriteRenderer.enabled = false;
+        enemySpawner4.spriteRenderer.enabled = false;
     }
 
     private IEnumerator RunDialogueMovementIntroStep(Dialogue dialogue)
@@ -532,6 +627,162 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitUntil(() => currentStepComplete);
     }
 
+    private IEnumerator RunCombat3IntroStep(Dialogue dialogue)
+    {
+        actionMenuScript.CloseMenu(); // close action menu
+        dialogue.Reinitialize(combat3IntroDialogue); // set the dialogue asset for the combat intro dialogue
+        dialogue.gameObject.SetActive(true);
+        actionMenu.SetActive(false);
+
+        bool enemiesMoving = false;
+        // Wait until dialogue is done
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            if (dialogue.GetCurrentLineIndex() == 2)
+            {
+                enemySpawner4.spriteRenderer.enabled = true;
+            }
+            if (dialogue.GetCurrentLineIndex() == 3 && !enemiesMoving)
+            {
+                enemySpawner4.TriggerPathMove();
+                enemiesMoving = true;
+            }
+            yield return null;
+        }
+        actionMenu.SetActive(true);
+        currentStepComplete = true;
+    }
+
+    private IEnumerator RunCombat3Step()
+    {
+        actionMenu.SetActive(false);
+        stepCompletePanel.SetActive(false);
+        combat3Panel.SetActive(true);
+
+        yield return new WaitUntil(() => currentStepComplete);
+    }
+
+    private IEnumerator RunReactionStep(Dialogue dialogue)
+    {
+        reactionUI.ShowReactionUI();
+        reactionUI.isTutorial = true;
+        // wait for appear
+        yield return new WaitUntil(() => reactionScreenObject.activeInHierarchy);
+        blocker2.SetActive(true);
+        blocker3.SetActive(true);
+        blocker4.SetActive(true);
+        reactionShown = true;
+        stepCompletePanel.SetActive(false);
+
+        dialogue.Reinitialize(reactionDialogue); // set the dialogue asset for the level up midpoint dialogue
+        dialogue.gameObject.SetActive(true);
+        // Wait until dialogue is done
+        while (!dialogue.dialogueDone)
+        {
+            yield return null;
+        }
+        blocker4.SetActive(false);
+
+        reactionPanel.SetActive(true);
+
+        yield return new WaitUntil(() => currentStepComplete);
+        reactionUI.isTutorial = false;
+        blocker2.SetActive(false);
+        blocker3.SetActive(false);
+    }
+
+    private IEnumerator RunReactionCleanupStep(Dialogue dialogue)
+    {
+        dialogue.Reinitialize(reactionCleanupDialogue); // set the dialogue asset for the combat intro dialogue
+        dialogue.gameObject.SetActive(true);
+        bool countered = false;
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1 && !countered)
+            {
+                stepCompletePanel.SetActive(false);
+                AttackEnemy(4, 10);
+                levelsManager.IncreaseXP(25);
+                countered = true;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator RunInventoryIntroStep(Dialogue dialogue)
+    {
+        dialogue.Reinitialize(inventoryIntroDialogue); // set the dialogue asset for the combat intro dialogue
+        dialogue.gameObject.SetActive(true);
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator RunInventoryStep()
+    {
+        inventoryButton.gameObject.SetActive(true);
+        if (!actionMenu.activeSelf)
+        {
+            actionMenu.SetActive(true);
+        }
+        stepCompletePanel.SetActive(false);
+        openInventoryPanel.SetActive(true);
+
+        yield return new WaitUntil(() => currentStepComplete);
+        // prompt UI refresh to get the pre added items to appear
+        inventory.onItemChangedCallback.Invoke();
+
+    }
+
+    private IEnumerator RunUseItemIntroStep(Dialogue dialogue)
+    {
+        dialogue.Reinitialize(useItemIntroDialogue); // set the dialogue asset for the combat intro dialogue
+        dialogue.gameObject.SetActive(true);
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator RunUseItemStep()
+    {
+        stepCompletePanel.SetActive(false);
+        useItemPanel.SetActive(true);
+
+        yield return new WaitUntil(() => currentStepComplete);
+    }
+
+    private IEnumerator RunConclusionStep(Dialogue dialogue)
+    {
+        dialogue.Reinitialize(conclusionDialogue); // set the dialogue asset for the combat intro dialogue
+        dialogue.gameObject.SetActive(true);
+        while (!dialogue.dialogueDone)
+        {
+            if (dialogue.GetCurrentLineIndex() == 1)
+            {
+                // clear step complete panel from last step
+                stepCompletePanel.SetActive(false);
+            }
+            yield return null;
+        }
+    }
+
     private void CheckStepCompletion()
     {
         switch (currentStep)
@@ -626,6 +877,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     markTaskComplete(confirmStatusImage);
                     enemySpawner1.loseHealth(10);
+                    //damageObserver.ShowDamage(mouseController.characterInfo.BaseAttk);
                     combat1ConfirmDone = true;
                 }
                 if (combat1ConfirmDone && !stepMarkedComplete)
@@ -719,6 +971,48 @@ public class TutorialManager : MonoBehaviour
                     stepMarkedComplete = true;
                 }
                 break;
+
+            case TutorialStep.Combat3:
+                if (mouseController.skipCombat3 && !combat3Skipped)
+                {
+                    markTaskComplete(skipStatusImage);
+                    combat3Skipped = true;
+                }
+                if (combat3Skipped && !stepMarkedComplete)
+                {
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 2f));
+                    stepMarkedComplete = true;
+                }
+                break;
+
+            case TutorialStep.Reaction:
+                // get from ReactionUI
+                if (reactionSelectDone && !stepMarkedComplete)
+                {
+                    markTaskComplete(reactStatusImage);
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 0.5f)); // Pass current step
+                    stepMarkedComplete = true;
+                }
+                break;
+
+            case TutorialStep.Inventory:
+                if (actionMenuScript.inventoryOpen && !stepMarkedComplete)
+                {
+                    markTaskComplete(openInventoryStatusImage);
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 1f));
+                    stepMarkedComplete = true;
+                }
+                break;
+
+            case TutorialStep.UseItem:
+                if (inventory.items.Count == 0 && !stepMarkedComplete)
+                {
+                    markTaskComplete(useBothStatusImage);
+                    StartCoroutine(CompleteStepWithDelay(currentStep, 1f));
+                    stepMarkedComplete = true;
+                    actionMenuScript.CloseInventoryScreen();
+                }
+                break;
         }
     }
 
@@ -761,15 +1055,25 @@ public class TutorialManager : MonoBehaviour
             case TutorialStep.Combat2:
                 combat2Panel.SetActive(false);
                 break;
+            case TutorialStep.Combat3:
+                combat3Panel.SetActive(false);
+                break;
+            case TutorialStep.Reaction:
+                reactionPanel.SetActive(false);
+                break;
+            case TutorialStep.Inventory:
+                openInventoryPanel.SetActive(false);
+                break;
+            case TutorialStep.UseItem:
+                useItemPanel.SetActive(false);
+                break;
         }
     }
 
     private void ProgressToNextStep()
     {
-        // Reset completion flags for next step
+        // Reset completion flag for next step
         stepMarkedComplete = false;
-        //zoomMarkedComplete = false;
-        //panMarkedComplete = false;
 
         currentStep = currentStep switch
         {
@@ -785,17 +1089,32 @@ public class TutorialManager : MonoBehaviour
             TutorialStep.MoveToNextIntro => TutorialStep.MoveToNext,
             TutorialStep.MoveToNext => TutorialStep.Combat2Intro,
             TutorialStep.Combat2Intro => TutorialStep.Combat2,
-            TutorialStep.Combat2 => TutorialStep.Complete,
+            TutorialStep.Combat2 => TutorialStep.Combat3Intro,
+            TutorialStep.Combat3Intro => TutorialStep.Combat3,
+            TutorialStep.Combat3 => TutorialStep.Reaction,
+            TutorialStep.Reaction => TutorialStep.ReactionCleanup,
+            TutorialStep.ReactionCleanup => TutorialStep.InventoryIntro,
+            TutorialStep.InventoryIntro => TutorialStep.Inventory,
+            TutorialStep.Inventory => TutorialStep.UseItemIntro,
+            TutorialStep.UseItemIntro => TutorialStep.UseItem,
+            TutorialStep.UseItem => TutorialStep.Conclusion,
+            TutorialStep.Conclusion => TutorialStep.Complete,
             _ => TutorialStep.Complete
         };
 
         Debug.Log($"Tutorial progressed to: {currentStep}");
     }
 
+    private IEnumerator Delay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    }
+
     private void OnTutorialComplete()
     {
         Debug.Log("Tutorial Complete!");
-        // Handle tutorial completion - disable tutorial systems, enable normal gameplay, etc.
+        StartCoroutine(Delay(2f));
+        SceneManager.LoadScene("Demo_pxiel_2D_Test_Grid");
     }
 
     private void markTaskComplete(GameObject statusImage)
@@ -811,17 +1130,22 @@ public class TutorialManager : MonoBehaviour
 
     public void AttackEnemy(int enemyID, int damage)
     {
-        if (enemyID == 1)
+        TutorialEnemySpawner targetSpawner = null;
+
+        if (enemyID == 1) targetSpawner = enemySpawner1;
+        else if (enemyID == 2) targetSpawner = enemySpawner2;
+        else if (enemyID == 3) targetSpawner = enemySpawner3;
+        else if (enemyID == 4) targetSpawner = enemySpawner4;
+
+        if (targetSpawner != null)
         {
-            enemySpawner1.loseHealth(damage);
-        }
-        else if (enemyID == 2)
-        {
-            enemySpawner2.loseHealth(damage);
-        }
-        else if (enemyID == 3)
-        {
-            enemySpawner3.loseHealth(damage);
+            targetSpawner.loseHealth(damage);
+
+            if (damageObserver != null)
+            {
+                Debug.Log("Damage being shown allegedly");
+                damageObserver.ShowPlayerDamage(damage, targetSpawner.enemyInfo.transform.position);
+            }
         }
     }
 

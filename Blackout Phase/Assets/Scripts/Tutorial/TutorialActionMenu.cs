@@ -17,6 +17,8 @@ public class TutorialActionMenu : MonoBehaviour
 
     public GameObject moveMessagePanel;
 
+    public bool inventoryOpen = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -62,7 +64,7 @@ public class TutorialActionMenu : MonoBehaviour
             menuAnimator.SetBool("isCollapsed", true);
         }
 
-
+        inventoryOpen = true;
     }
 
     public void CloseInventoryScreen()
@@ -74,6 +76,8 @@ public class TutorialActionMenu : MonoBehaviour
         {
             menuAnimator.SetBool("isCollapsed", false);
         }
+
+        inventoryOpen = false;
     }
 
     public void ToggleInventoryScreen()
