@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9178e53d98f6f3c4f832d9310163cb1d, type: 3}
   m_Name: MeleeEnemy
   m_EditorClassIdentifier: 
-  maxHP: 10
+  maxHP: 15
   attackRange: 1
   damage: 3
   detectionRange: 3
   movementRange: 3
   evasionRate: 10
-  hitRate: 85
+  hitRate: 75
   enemyType: Melee

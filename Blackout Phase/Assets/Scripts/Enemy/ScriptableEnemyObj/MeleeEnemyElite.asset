@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9178e53d98f6f3c4f832d9310163cb1d, type: 3}
-  m_Name: MeleeEnemy 1
+  m_Name: MeleeEnemyElite
   m_EditorClassIdentifier: 
-  maxHP: 15
+  maxHP: 25
   attackRange: 1
   damage: 5
   detectionRange: 3
