@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 1583326769
   m_SortingLayer: 0
   m_SortingOrder: 33
-  m_Sprite: {fileID: 8248543377919322394, guid: cc8cb170ff11da442bedd0e9e3be0e9a, type: 3}
+  m_Sprite: {fileID: -8869258992013274670, guid: fd2eb2d0404efcb44ab1cc984baee3cc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -223,6 +223,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 442efa83434da2c45aa35edac04624ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedActiveSkills: []
-  unlockedActiveSkills: []
+  equippedActiveSkills:
+  - {fileID: 11400000, guid: 3b316f204c24d984abf1ebf53db74c82, type: 2}
+  - {fileID: 11400000, guid: 045e9b27712b07e46993cdbdddee5f4a, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  unlockedActiveSkills:
+  - {fileID: 11400000, guid: 3b316f204c24d984abf1ebf53db74c82, type: 2}
+  - {fileID: 11400000, guid: 045e9b27712b07e46993cdbdddee5f4a, type: 2}
   unlockedPassiveSkills: []

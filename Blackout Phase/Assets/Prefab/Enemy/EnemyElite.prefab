@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1283290579460195088}
   - component: {fileID: 7919476336222347911}
   m_Layer: 9
-  m_Name: Enemy
+  m_Name: EnemyElite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.66, y: 0.7}
+    oldSize: {x: 0.54, y: 0.65}
     newSize: {x: 0.53125, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -130,7 +130,7 @@ SpriteRenderer:
   m_SortingLayerID: 1583326769
   m_SortingLayer: 0
   m_SortingOrder: 69
-  m_Sprite: {fileID: -1153770731981192090, guid: fd2eb2d0404efcb44ab1cc984baee3cc, type: 3}
+  m_Sprite: {fileID: 1479568654078214800, guid: fd2eb2d0404efcb44ab1cc984baee3cc, type: 3}
   m_Color: {r: 0.9547169, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
