@@ -36,7 +36,13 @@ public class PlayerCombatCheck : MonoBehaviour
     private void Awake()
     {
         // if Innstance(copy) exsist and not the same as pointer deleted
-        if (Instance != null && Instance != this)
+        // Ellison - added check to unbreak tutorial
+        // this was destroying the player instance so the whole thing doesn't work
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            Debug.Log("PlayerCombatCheck: Skipping auto-destruct because this is the Tutorial.");
+        }
+        else if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;

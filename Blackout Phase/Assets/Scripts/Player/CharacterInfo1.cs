@@ -247,5 +247,5 @@ public class CharacterInfo1 : MonoBehaviour
         
         Debug.Log($"Game loaded! HP: {HP}/{MaxHP}, EN: {EN}/{MaxEN}");
     }
-        
+
 }
