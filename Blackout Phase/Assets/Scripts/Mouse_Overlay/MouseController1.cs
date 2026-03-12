@@ -50,7 +50,7 @@ public class MouseController1 : MonoBehaviour
     private void LateUpdate()
     {
         if (TurnManager.Instance.State != TurnState.PlayerAction && TurnManager.Instance.State != TurnState.PlayerSpawn) return; // preventing player moving before other things are setup
-
+        { 
         //// mouse test for enemy collider
         //Vector3 mPosition = Input.mousePosition; // set up the mousse position
 
@@ -129,23 +129,27 @@ public class MouseController1 : MonoBehaviour
                         Debug.Log("Attack Mode on!");
                     }
 
-                    // if the keycode is preview first clear highlights then show the player attack range
-                    if (Input.GetKeyDown(previewAttkRange))
-                    {
-                        currentAction = PlayerAction.Attack; // change to attack state
-
-                        TurnManager.Instance.ClearHighlights(); // clears highlight
-
-                        PlayerHighlighter highlight = FindFirstObjectByType<PlayerHighlighter>(); // set up the highlight access
-
-                        SkillData currentSkill = PlayerCombatCheck.Instance != null ? PlayerCombatCheck.Instance.GetCurrentSkill() : null; // find the current skill range if it's not null
-
-                        // if player and current tile is found, highlight it by passing the current tile and player attack range
-                        if (characterInfo != null && characterInfo.CurrentTile != null && currentSkill != null)
+                        // if the keycode is preview first clear highlights then show the player attack range
+                        if (Input.GetKeyDown(previewAttkRange))
                         {
-                            int AttackRangeDisplay = currentSkill != null ? currentSkill.AttackRange : characterInfo.BaseRange; // check to see if currentSkill is null
+                            currentAction = PlayerAction.Attack; // change to attack state
 
-                            highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, AttackRangeDisplay); // use the none-null attack range, skill null, use base range
+                            TurnManager.Instance.ClearHighlights(); // clears highlight
+
+                            PlayerHighlighter highlight = FindFirstObjectByType<PlayerHighlighter>(); // set up the highlight access
+
+                            SkillData currentSkill = PlayerCombatCheck.Instance != null ? PlayerCombatCheck.Instance.GetCurrentSkill() : null; // find the current skill range if it's not null
+
+                            if (characterInfo != null && characterInfo.CurrentTile != null)
+                                highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, characterInfo.BaseRange);
+
+                            // if player and current tile is found, highlight it by passing the current tile and player attack range
+                            if (characterInfo != null && characterInfo.CurrentTile != null && currentSkill != null)
+                            {
+                                int AttackRangeDisplay = currentSkill != null ? currentSkill.AttackRange : characterInfo.BaseRange; // check to see if currentSkill is null
+
+                                highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, AttackRangeDisplay); // use the none-null attack range, skill null, use base range
+                            }
                         }
 
                         // reset the highlight tile

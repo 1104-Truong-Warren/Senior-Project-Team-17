@@ -109,8 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 20
   MaxHP: 20
-  EN: 25
-  MaxEN: 25
+  EN: 40
+  MaxEN: 40
   baseMoveRange: 4
   baseAttk: 5
   baseAttkRange: 1
@@ -118,7 +118,7 @@ MonoBehaviour:
   baseCriticalRate: 5
   baseCritDamage: 50
   baseEvasion: 10
-  Level: 0
+  Level: 1
 --- !u!114 &7194712552239500322
 MonoBehaviour:
   m_ObjectHideFlags: 0
