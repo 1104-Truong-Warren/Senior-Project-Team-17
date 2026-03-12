@@ -23,6 +23,7 @@ public class CharacterInfo1 : MonoBehaviour
     [SerializeField] private int baseCriticalRate; // the basic critical rate for player
     [SerializeField] private int baseCritDamage; // the basic critical damage for player
     [SerializeField] private int baseEvasion; // evasion rate of the player
+    [SerializeField] private int Level; // what level is the character
 
     private OverlayTile1 standingOnTile; // stores the tile
 
@@ -36,7 +37,8 @@ public class CharacterInfo1 : MonoBehaviour
     public int BaseHitRate => baseHitRate;
     public int BaseCriticalRate => baseCriticalRate;
     public int BaseCritDamage => baseCritDamage;    
-    public int BaseEvasion => baseEvasion; 
+    public int BaseEvasion => baseEvasion;
+    public int CurrentLevel => Level;
 
     // check EN
     public bool HasEN(int costEN) => EN >= costEN; // left EN right cost (>=) a right symbol
@@ -56,6 +58,18 @@ public class CharacterInfo1 : MonoBehaviour
 
         currentAP = maxAP; // Start with 2AP
     }
+    public void LevelUp()
+    {
+        // check to see if player can be leveled up
+        if (Level < 20)
+            Level++; // player leveled up
+
+        else
+        {
+            Debug.Log("You have reached max level!"); // debug msg
+            return;
+        }
+    }
 
     public void ResetAP()
     {
@@ -72,7 +86,7 @@ public class CharacterInfo1 : MonoBehaviour
     public int GetMoveRange()
     {
         // AP is at 2 use the base movement range
-        if (currentAP == 2)
+        if (currentAP == 2 || PlayerFuryMode.Instance.inFuryMode)
             return baseMoveRange;
 
         else if (currentAP == 1)
@@ -109,8 +123,8 @@ public class CharacterInfo1 : MonoBehaviour
 
     public bool PlayerEnCheck(int costEN)
     {
-        // if the costEN is less than or equal to 0 free turn, for the rage mode 
-        if (costEN <= 0) return true;
+        //// if the costEN is less than or equal to 0 free turn, for the rage mode 
+        //if (costEN <= 0) return true;
 
         // if the player EN is less than EN cost return false
         if (EN < costEN) return false;
@@ -226,7 +240,8 @@ public class CharacterInfo1 : MonoBehaviour
         baseCriticalRate = data.baseCriticalRate;
         baseCritDamage = data.baseCritDamage;
         baseEvasion = data.baseEvasion;
-        
+        Level = data.level;
+
         // Set position
         transform.position = new Vector3(data.posX, data.posY, data.posZ);
         

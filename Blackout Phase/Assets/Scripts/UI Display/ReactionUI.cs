@@ -31,15 +31,15 @@ public class ReactionUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counterButtonText; // Text component of counter button
     
     [Header("Settings")]
-    [SerializeField] private int dodgeENCost = 10; // How much EN it costs to dodge (for display only) - No longer need, but keep in case
-    [SerializeField] private int counterENCost = 5; // How much EN it costs to counterattack
+    //[SerializeField] private int dodgeENCost = 10; // How much EN it costs to dodge (for display only) - No longer need, but keep in case
+    [SerializeField] private int counterENCost; // How much EN it costs to counterattack
     
     [Header("Timing Settings")]
     [SerializeField] private float uiAppearDelay = 0.8f; // Delay before UI appears (adjust in Inspector)
     
     private CharacterInfo1 playerInfo; // Reference to player info for EN checks
     private bool isWaitingToShow = false; // Flag to prevent multiple coroutines
-    
+
     void Start()
     {
         // Hide panel at start, GameObjects are inactive until enemy attacks
@@ -77,8 +77,10 @@ public class ReactionUI : MonoBehaviour
         // Check TurnManager state to see if we should show/hide the panel
         if (TurnManager.Instance != null)
         {
-            bool shouldShow = TurnManager.Instance.WaitForPlayerReact;
-            
+            // Weijun
+            bool shouldShow = TurnManager.Instance.WaitForPlayerReact && TurnManager.Instance.inComingAttackEnemy != null &&
+                TurnManager.Instance.inComingAttackEnemy.CurrentHP > 0;
+
             // CHANGED: Use coroutine for delayed show, but immediate hide
             if (shouldShow && !reactionPanel.activeSelf && !isWaitingToShow)
             {
@@ -148,7 +150,7 @@ public class ReactionUI : MonoBehaviour
             // Dodge success = 100 - enemy hit chance (if enemy misses, you dodge)
             int dodgeSuccessRate = 100 - enemyHitChance;
             // Counter success = half of dodge rate (counter is harder to pull off)
-            int counterSuccessRate = (100 - enemyHitChance) / 2;
+            int counterSuccessRate = 100; //(100 - enemyHitChance) / 2;
             
             // Update info text with damage and enemy hit chance
             if (infoText != null)
@@ -184,7 +186,9 @@ public class ReactionUI : MonoBehaviour
     void UpdateButtonStates()
     {
         if (playerInfo == null || TurnManager.Instance == null) return;
-        
+
+        RefreshCounterSkillCost(); // update in real time
+
         int enemyHitChance = TurnManager.Instance.inComingHitChance;
         int dodgeSuccessRate = 100 - enemyHitChance;
         int counterSuccessRate = (100 - enemyHitChance) / 2;
@@ -279,5 +283,18 @@ public class ReactionUI : MonoBehaviour
         // Call TurnManager directly 
         // Counter EN cost is handled inside PlayerCounterAttackReaction or PlayerCombatCheck
         TurnManager.Instance.PlayerCounterAttackReaction();
+    }
+    private void RefreshCounterSkillCost()
+    {
+        // Now it displays the correct EN cost
+        // Weijun
+        // the player attack is null setup 
+
+        SkillData currentSkill = PlayerCombatCheck.Instance.GetCurrentSkill(); // find the current skill index
+
+        // check to see if currentSkill is not null before using
+        if (currentSkill == null) return;
+
+        counterENCost = currentSkill.skillENCost; // setup how much the EN cost
     }
 }

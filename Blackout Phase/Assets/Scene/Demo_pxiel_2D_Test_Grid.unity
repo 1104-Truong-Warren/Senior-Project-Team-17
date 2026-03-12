@@ -379,7 +379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 491550074}
   - component: {fileID: 491550073}
-  - component: {fileID: 491550075}
   m_Layer: 0
   m_Name: TurnManager
   m_TagString: Untagged
@@ -415,26 +414,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1783073762}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &491550075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491550072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6988e471686085f4eb9b1c49cdaddf06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  basicAttkDamage: 0
-  basicAttckRange: 0
-  basicAttkAPcost: 0
-  basicAttkENcost: 0
-  basicAttkHitRate: 0
-  basicAttkSkillCrit: 0
-  basicAttkCritDmg: 0
-  SDbasicAttkSkill: {fileID: 11400000, guid: afdec3a6de293f644b2f2dac6b4db4a9, type: 2}
 --- !u!1 &494270350
 GameObject:
   m_ObjectHideFlags: 0
@@ -5611,6 +5590,30 @@ PrefabInstance:
       propertyPath: levelUpChoicePanel
       value: 
       objectReference: {fileID: 1705977524}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: allSkills.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: playerSkillAttachment
+      value: 
+      objectReference: {fileID: 2578768629942209860, guid: e551b6a8dc33ec745919d1ebf9efcf62, type: 3}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b316f204c24d984abf1ebf53db74c82, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 045e9b27712b07e46993cdbdddee5f4a, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 88e4d18799d25c7439680d695127345b, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 43c3af2e72b17b342abe217ba11b3d01, type: 2}
     - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
       propertyPath: 'choiceTexts.Array.data[0]'
       value: 

@@ -46,6 +46,11 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] int targetXPIncrease = 50;
     [SerializeField] int xpPerEnemy = 25;
 
+    // Reference to the attached skills
+    // Weijun
+    [Header("Player Attachment")]
+    [SerializeField] private SkillAttachment playerSkillAttachment; // accessor for player
+
     int currentLevel;
     int currentXP;
     
@@ -97,28 +102,36 @@ public class LevelsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         currentLevel = 1;
-        
+
         // Hides the level up text and choice panel
         if (levelUpText != null)
         {
             levelUpText.gameObject.SetActive(false);
         }
-        
+
         if (levelUpChoicePanel != null)
         {
             levelUpChoicePanel.SetActive(false);
         }
-        
+
         // Initialize unlocked skills (start with basic attack if exists)
-        InitializeStartingSkills();
-        
+        //InitializeStartingSkills();
+
         UpdateHUD();
         ScanForEnemies();
-        
+
         // Setup button listeners
         SetupChoiceButtons();
+    }
+    private void Start()
+    {
+        Debug.Log("LevelManager Start!"); // debug msg
+
+        UnlockSkillsForCurrentLevel(); // check what skills can be unlocked
+
+        AutoEquipUnlockedSkillsTest(); // equip the skills
     }
 
     private void Update()
@@ -136,16 +149,27 @@ public class LevelsManager : MonoBehaviour
     }
 
     // Initialize starting skills (like basic attack)
-    private void InitializeStartingSkills()
-    {
-        // Find basic attack skill
-        SkillData basicAttack = System.Array.Find(allSkills, skill => skill.id == Skill_ID.BasicAttack);
-        if (basicAttack != null && !unlockedSkills.Contains(basicAttack))
-        {
-            unlockedSkills.Add(basicAttack);
-            Debug.Log($"Starting skill unlocked: {basicAttack.Attack}");
-        }
-    }
+    // Addon
+    // Weijun
+    //private void InitializeStartingSkills()
+    //{
+    //    // Find basic attack skill
+    //    SkillData basicAttack = System.Array.Find(allSkills, skill => skill.id == Skill_ID.NormalAttack);
+
+    //    if (basicAttack != null && !unlockedSkills.Contains(basicAttack))
+    //    {
+    //        unlockedSkills.Add(basicAttack);
+
+    //        // player attachment exsit equit the skill
+    //        if (playerSkillAttachment != null)
+    //        {
+    //            playerSkillAttachment.UnlockSkill(basicAttack); // unlock the skill
+
+    //            playerSkillAttachment.EquipActiveSkillToSlot(basicAttack, 0); // equip the skill
+    //        }
+    //        Debug.Log($"Starting skill unlocked: {basicAttack.AttackDamage}");
+    //    }
+    //}
 
     // This method tracks all of the enemies that are still alive in the scene.
     private void ScanForEnemies()
@@ -195,7 +219,10 @@ public class LevelsManager : MonoBehaviour
         UpdateHUD();
     }
 
-    // This method checks if the player earned enough XP to level up, then it will display it on the screen that you've leveled up and what level you are now.
+    // This method checks if the player earned enough XP to level up,
+    // then it will display it on the screen that you've leveled up and what level you are now.
+    // Addon
+    // Weijun
     private void CheckForLevelUp()
     {
         while(currentXP >= targetXP)
@@ -203,7 +230,17 @@ public class LevelsManager : MonoBehaviour
             currentLevel++;
             currentXP -= targetXP;
             targetXP += targetXPIncrease;
-            
+
+            UnlockSkillsForCurrentLevel(); // check for new unlockable skill
+
+            AutoEquipUnlockedSkillsTest(); // equip the skills
+
+            CharacterInfo1 player = CharacterInfo1.Instance; // set up the copy of the playerInfo
+
+            // if player found keep track of the player's level
+            if (player != null)
+                player.LevelUp();
+
             // Show level up celebration first
             ShowLevelUpEffect();
             
@@ -315,8 +352,8 @@ public class LevelsManager : MonoBehaviour
                 {
                     type = ChoiceType.Skill,
                     skill = skill,
-                    title = skill.Attack,
-                    description = $"{skill.AttkDescription}\nCost: {skill.AttkAPCost} AP, {skill.AttkENCost} EN"
+                    title = skill.skillDisplayName,
+                    description = $"{skill.skillDescription}\nCost: {skill.skillAPCost} AP, {skill.skillENCost} EN"
                 };
                 allPossibleChoices.Add(skillChoice);
             }
@@ -367,12 +404,12 @@ public class LevelsManager : MonoBehaviour
     // Check if skill requirements are met
     private bool AreSkillRequirementsMet(SkillData skill)
     {
-        if (skill.requirements == null || skill.requirements.Length == 0)
+        if (skill.requirdSkills == null || skill.requirdSkills.Length == 0)
         {
             return true;
         }
             
-        foreach (Skill_ID requiredSkill in skill.requirements)
+        foreach (Skill_ID requiredSkill in skill.requirdSkills)
         {
             bool hasRequired = unlockedSkills.Exists(s => s.id == requiredSkill);
             if (!hasRequired)
@@ -488,21 +525,34 @@ public class LevelsManager : MonoBehaviour
         
         HideLevelUpChoice();
     }
-    
+
     // Unlock a skill
+    // Addons 
+    // Weijun
     private void UnlockSkill(SkillData skill)
     {
+        // skill exist?
+        if (skill == null) return;
+
         if (!unlockedSkills.Contains(skill))
         {
             unlockedSkills.Add(skill);
-            Debug.Log($"Unlocked skill: {skill.Attack}");
-            
+            Debug.Log($"Unlocked skill: {skill.AttackDamage}");
+
+            // playerSkillAttachment found 
+            if (playerSkillAttachment != null)
+            {
+                playerSkillAttachment.UnlockSkill(skill); // check the skill to unlock
+            }
+
+            Debug.Log($"Unlocked skill:{skill.skillDisplayName}");
+
             // TODO: Notify skill system
             // SkillSystem.Instance?.AddSkill(skill); 
             // Depends on SkillSystem script, unsure if it will work.
         }
     }
-    
+
     // Increase player health
     private void IncreasePlayerHealth()
     {
@@ -538,7 +588,67 @@ public class LevelsManager : MonoBehaviour
             Debug.Log($"Attack increased by {attackIncreaseAmount}");
         }
     }
-    
+
+    // Unlock Skills depending on level
+    // Weijun
+    private void UnlockSkillsForCurrentLevel()
+    {
+        Debug.Log("UnlockSkills called"); // debug msg
+
+        // check to see player skill attachment exist
+        if (playerSkillAttachment == null) return;
+
+        // loop through all the skill in skills data
+        foreach (SkillData skill in allSkills)
+        {
+            // skill not found skip
+            if (skill == null) continue;
+
+            // player level greater than or equal to unlockable level and name is found
+            if (currentLevel >= skill.requiredLevel && AreSkillRequirementsMet(skill))
+            {
+                // if skill is not unlocked 
+                if (!unlockedSkills.Contains(skill))
+                {
+                    unlockedSkills.Add(skill); // unlock the skill
+
+                    playerSkillAttachment.UnlockSkill(skill); // add it to the attachment
+
+                    Debug.Log($"Unlocked skill from Level: {skill.skillDisplayName}"); // debug msg
+                }
+            }
+        }
+    }
+
+    // Test for auto skill equipment 
+    // Weijun
+    private void AutoEquipUnlockedSkillsTest()
+    {
+        Debug.Log("AutoEquipSkills called"); // debug msg
+
+        // attachment skill exist?
+        if (playerSkillAttachment == null) return;
+
+        // using loop to go through the skill and equip the ones meets the condition, player lvl, has skills
+        foreach (SkillData skill in playerSkillAttachment.UnlockedActiveSkills)
+        {
+            // skill not found skip
+            if (skill == null) continue;
+
+            // ignores the passive skills
+            if (skill.skillType != SkillType.Active) continue;
+
+            // if skill is equipped skip
+            if (playerSkillAttachment.IsSkillEquipped(skill)) continue;
+
+            bool equippedSkill = playerSkillAttachment.EquipActiveSkillToEmptySlot(skill); // check to see if skill is equipped
+
+            // if the skill is equipped display a msg
+            if (equippedSkill)
+                Debug.Log($"Equipped{skill.skillDisplayName} to empty slot"); // debug msg      
+        }
+    }
+
     // This method to checks if a skill is unlocked
     public bool IsSkillUnlocked(Skill_ID skillId)
     {

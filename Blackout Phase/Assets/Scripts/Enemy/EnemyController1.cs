@@ -70,6 +70,9 @@ public class EnemyController1 : MonoBehaviour
     // using finite states to control the enemy ai
     public IEnumerator TakeTurn()
     {
+        // check to see if enemy is vaild and not dead
+        if (enemyInfo == null || enemyInfo.CurrentHP <= 0) yield break;
+
         SetPlayerInfo(); // set up player info
 
         // before moving check if player is in range if so attack (attack state)
@@ -81,19 +84,26 @@ public class EnemyController1 : MonoBehaviour
         //    yield break; // get out, not moving this turn
         //}
 
-        Debug.Log($"{name} " +
-            $"EnemyAttkscript null:{(enemyAttk == null)} " +
-            $"attkEnemyInfo null:{(enemyInfo == null)} " +
-            $"enemyTile null:{(enemyInfo.currentTile == null)} " +
-            $"player null:{(player == null)} " +
-            $"playerTile null:{(player.CurrentTile == null)}"); // debug msg
+        //Debug.Log($"{name} " +
+        //    $"EnemyAttkscript null:{(enemyAttk == null)} " +
+        //    $"attkEnemyInfo null:{(enemyInfo == null)} " +
+        //    $"enemyTile null:{(enemyInfo.currentTile == null)} " +
+        //    $"player null:{(player == null)} " +
+        //    $"playerTile null:{(player.CurrentTile == null)}"); // debug msg
+
+
+        Debug.Log($"[Enemy:{name}] TakeTurn start | State:{enemyState}"); // debug msg
 
         // check if player is in enemy attack range if so, attack
-        if (enemyAttk != null && enemyAttk.CanAttackPlayer(player))
+        if (enemyAttk != null && player != null && player.CurrentTile != null)
         {
+            bool canAttack = enemyAttk.CanAttackPlayer(player); // flag to see if enemy can attack player
+
             //var player = GetPlayer(); // set up player
 
-            if (player != null || player.CurrentTile != null)
+            Debug.Log($"[Enemy:{name}] CanAttackPlayer = {canAttack}"); // debug msg
+
+            if (canAttack)
             {
                 Debug.Log($"Player In Range:{name} attck player!"); // debug msg
 
@@ -101,6 +111,11 @@ public class EnemyController1 : MonoBehaviour
 
                 AttackQeue(player);
                 yield break;
+            }
+            else
+            {
+                Debug.Log($"[Enemy:{name}] Attack check skipped | enemyAttackerNull? {enemyAttk == null} | PlayerNull? {player == null} " +
+                    $"| playerTIleNull? {(player != null ? player.CurrentTile == null : true)}"); // debug msg
             }
         }
 

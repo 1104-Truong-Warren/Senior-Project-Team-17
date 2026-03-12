@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
+  m_Name: SwordToss(Lvl3)
+  m_EditorClassIdentifier: 
+  id: 3
+  skillType: 0
+  targetType: 0
+  weaponType: 1
+  classType: 1
+  subClassType: 1
+  skillEffectType: 0
+  skillDisplayName: Sword Toss
+  skillDescription: Throw extra swords to target.
+  HitRate: 20
+  CritChance: 15
+  AttackDamage: 8
+  AttackRange: 3
+  critBonus: 0
+  critDmgBonus: 0
+  hitRateBonus: 0
+  hpRecoverP: 0
+  enRecoverP: 0
+  attackBonus: 0
+  hpBonus: 0
+  enBouns: 0
+  movementBonus: 0
+  apBonus: 0
+  skillENCost: 10
+  skillAPCost: 1
+  skillCoolDown: 0
+  skillDuration: 0
+  requiredLevel: 3
+  requirdSkills: 02000000

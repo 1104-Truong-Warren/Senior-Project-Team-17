@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 9097942805516662175}
   - component: {fileID: 1259040166856660165}
   - component: {fileID: 2987649893209457728}
+  - component: {fileID: 1051597823299968842}
+  - component: {fileID: 5483337668809541789}
+  - component: {fileID: 2578768629942209860}
   m_Layer: 0
   m_Name: Characters_2
   m_TagString: Player1
@@ -115,6 +118,7 @@ MonoBehaviour:
   baseCriticalRate: 5
   baseCritDamage: 50
   baseEvasion: 10
+  Level: 0
 --- !u!114 &7194712552239500322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +164,6 @@ MonoBehaviour:
   nextKey: 101
   cancelKey: 115
   confirmKey: 102
-  enemyInRange: 1
   keepTargetAfterAttk: 0
 --- !u!114 &2987649893209457728
 MonoBehaviour:
@@ -177,3 +180,49 @@ MonoBehaviour:
   dodgeKey: 100
   takeHitKey: 116
   counterAttkKey: 99
+--- !u!114 &1051597823299968842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142501310898631158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6988e471686085f4eb9b1c49cdaddf06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillKey1: 49
+  skillKey2: 50
+  skillKey3: 51
+  skillKey4: 52
+  playerSkillattach: {fileID: 2578768629942209860}
+  playerSkillExecutor: {fileID: 5483337668809541789}
+  playerSkillIndexSelect: 0
+--- !u!114 &5483337668809541789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142501310898631158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0909f18e31fdc45af323dbd7f02364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2578768629942209860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142501310898631158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442efa83434da2c45aa35edac04624ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equippedActiveSkills: []
+  unlockedActiveSkills: []
+  unlockedPassiveSkills: []

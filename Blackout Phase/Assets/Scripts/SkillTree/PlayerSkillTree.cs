@@ -29,7 +29,7 @@ public class PlayerSkillTree : MonoBehaviour
     public bool SkillUnlock(SkillData skillData)
     {
         // using a foreach to go through the requirements
-        foreach (var req in skillData.requirements)
+        foreach (var req in skillData.requirdSkills)
             if (!HasSkill(req)) return false; // if name is not found return false
 
         return true; // if passed test return true

@@ -136,138 +136,144 @@ public class MouseController1 : MonoBehaviour
 
                         TurnManager.Instance.ClearHighlights(); // clears highlight
 
-                        var highlight = FindFirstObjectByType<PlayerHighlighter>(); // set up the highlight access
+                        PlayerHighlighter highlight = FindFirstObjectByType<PlayerHighlighter>(); // set up the highlight access
+
+                        SkillData currentSkill = PlayerCombatCheck.Instance != null ? PlayerCombatCheck.Instance.GetCurrentSkill() : null; // find the current skill range if it's not null
 
                         // if player and current tile is found, highlight it by passing the current tile and player attack range
-                        if (characterInfo != null && characterInfo.CurrentTile != null)
-                            highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, characterInfo.BaseRange);
-                    }
-
-                    // reset the highlight tile
-                    if (currentAction == PlayerAction.Attack && Input.GetKeyDown(cancelAttkPreview))
-                    {
-                        currentAction = PlayerAction.None; // reset the action
-
-                        TurnManager.Instance.ClearHighlights(); // clears the highlights
-
-                        TurnManager.Instance.ShowPlayerPreviews(); // display the movement tile again
-                    }
-
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        //tile.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); // changes the selected color
-
-                        //tile.ShowTile(); // get the color
-
-                        Vector2 world = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
-
-                        DebugMouseClickHits(world); // function call to check
-
-                        Debug.Log("Pointer is over UI: " + MouseController1.IsPointerOverUIObject()); // debug msg
-
-                        // Clear previous path highlight
-                        foreach (var t in path)
-                            t.HideTile();
-
-                        path.Clear();
-
-                        if (previouslySelectedTile != null)  // hides the previous selected tiles
-                            previouslySelectedTile.HideTile();
-
-                        //MapManager1.Instance.ResetAllTiles(); // before showing tiles reset all
-
-                        tile.ShowPlayerTile();
-
-                        previouslySelectedTile = tile; // shows current tile and save it
-
-                        //Debug.Log($"Clicked on tile: {overlayTile.name}");
-
-                        // Attack mode on
-                        if (currentAction == PlayerAction.Attack && Input.GetMouseButtonDown(0))
+                        if (characterInfo != null && characterInfo.CurrentTile != null && currentSkill != null)
                         {
-                            //Vector2 worldP = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
+                            int AttackRangeDisplay = currentSkill != null ? currentSkill.AttackRange : characterInfo.BaseRange; // check to see if currentSkill is null
 
-                            EnemyInfo enemy = GetEnemyMouseClick(); // check for enemy status
-
-                            //EnemyInfo enemy = GetEnemyUnderMouse(worldP); // find the enemyInfo using world position
-
-                            Debug.Log(enemy == null ? "No enemy under mouse click" : $"Enemy clicked: {enemy.name}"); // display enemy if clicked works
-
-                            // enemy exist attack
-                            if (enemy != null)
-                                PlayerCombatCheck.Instance.PlayerAttackCheck(enemy); // passes the enemy over to finalize the attack
-
-                            currentAction = PlayerAction.None; // set the player action to none
-                            return;
+                            highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, AttackRangeDisplay); // use the none-null attack range, skill null, use base range
                         }
 
-                        // if the character movement is enabled
-                        if (movementEnabled)
+                        // reset the highlight tile
+                        if (currentAction == PlayerAction.Attack && Input.GetKeyDown(cancelAttkPreview))
                         {
-                            if (characterInfo == null)
-                            {
-                                //characterInfo = new CharacterInfo(); // declare it again 
+                            currentAction = PlayerAction.None; // reset the action
 
-                                characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // get the prefab assign
+                            TurnManager.Instance.ClearHighlights(); // clears the highlights
 
-                                PositionCharacterOnLine(tile);
-
-                                //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
-
-                                characterInfo.PlayerSetTile(tile);
-                            }
-                            else
-                            {
-                                if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) // if tile has enemy/player/blocked get out
-                                {
-                                    Debug.Log("Tile is being used!"); // debug
-
-                                    return;
-                                }
-
-                                int playerMoveteps = characterInfo.GetMoveRange(); // set the move range for player 
-
-                                int distance = pathFinder.GetManhattenDistance(characterInfo.CurrentTile, tile); // find the distance between our current and target tile
-
-                                // path steps > actually movement that's not in the range
-                                if (distance > playerMoveteps)
-                                {
-                                    Debug.Log("Out of bound! Moved Too far or Not moving!"); // debug
-                                    return;
-                                }
-
-                                path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>()); // if is not out of range player can go there
-
-                                //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
-
-                                //Show the path tiles (highlight)
-                                foreach (var t in path)
-                                    t.ShowPlayerTile();
-                            }
+                            TurnManager.Instance.ShowPlayerPreviews(); // display the movement tile again
                         }
 
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            //tile.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); // changes the selected color
+
+                            //tile.ShowTile(); // get the color
+
+                            Vector2 world = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
+
+                            DebugMouseClickHits(world); // function call to check
+
+                            Debug.Log("Pointer is over UI: " + MouseController1.IsPointerOverUIObject()); // debug msg
+
+                            // Clear previous path highlight
+                            foreach (var t in path)
+                                t.HideTile();
+
+                            path.Clear();
+
+                            if (previouslySelectedTile != null)  // hides the previous selected tiles
+                                previouslySelectedTile.HideTile();
+
+                            //MapManager1.Instance.ResetAllTiles(); // before showing tiles reset all
+
+                            tile.ShowPlayerTile();
+
+                            previouslySelectedTile = tile; // shows current tile and save it
+
+                            //Debug.Log($"Clicked on tile: {overlayTile.name}");
+
+                            // Attack mode on
+                            if (currentAction == PlayerAction.Attack && Input.GetMouseButtonDown(0))
+                            {
+                                //Vector2 worldP = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get the input position of mouse
+
+                                EnemyInfo enemy = GetEnemyMouseClick(); // check for enemy status
+
+                                //EnemyInfo enemy = GetEnemyUnderMouse(worldP); // find the enemyInfo using world position
+
+                                Debug.Log(enemy == null ? "No enemy under mouse click" : $"Enemy clicked: {enemy.name}"); // display enemy if clicked works
+
+                                // enemy exist attack
+                                if (enemy != null)
+                                    PlayerCombatCheck.Instance.UseSelectedSkill(enemy); // passes the enemy over to finalize the attack
+
+                                currentAction = PlayerAction.None; // set the player action to none
+                                return;
+                            }
+
+                            // if the character movement is enabled
+                            if (movementEnabled)
+                            {
+                                if (characterInfo == null)
+                                {
+                                    //characterInfo = new CharacterInfo(); // declare it again 
+
+                                    characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // get the prefab assign
+
+                                    PositionCharacterOnLine(tile);
+
+                                    //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
+
+                                    characterInfo.PlayerSetTile(tile);
+                                }
+                                else
+                                {
+                                    if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) // if tile has enemy/player/blocked get out
+                                    {
+                                        Debug.Log("Tile is being used!"); // debug
+
+                                        return;
+                                    }
+
+                                    int playerMoveteps = characterInfo.GetMoveRange(); // set the move range for player 
+
+                                    int distance = pathFinder.GetManhattenDistance(characterInfo.CurrentTile, tile); // find the distance between our current and target tile
+
+                                    // path steps > actually movement that's not in the range
+                                    if (distance > playerMoveteps)
+                                    {
+                                        Debug.Log("Out of bound! Moved Too far or Not moving!"); // debug
+                                        return;
+                                    }
+
+                                    path = pathFinder.FindPath(characterInfo.CurrentTile, tile); //(characterInfo.standingOnTile, overlayTile.GetComponent<OverlayTile>()); // if is not out of range player can go there
+
+                                    //tile.gameObject.GetComponent<OverlayTile>().HideTile(); // hides the tile
+
+                                    //Show the path tiles (highlight)
+                                    foreach (var t in path)
+                                        t.ShowPlayerTile();
+                                }
+                            }
+
+                        }
+                        //overlayTile.GetComponent<SpriteRenderer>().sortingOrder; // also matches the sprite render
+
+                        //cursor.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
+                        //cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
+                        //cursor.GetComponent<SpriteRenderer>().color = Color.red; // bright color to check visibility
+
                     }
-                    //overlayTile.GetComponent<SpriteRenderer>().sortingOrder; // also matches the sprite render
 
-                    //cursor.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
-                    //cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
-                    //cursor.GetComponent<SpriteRenderer>().color = Color.red; // bright color to check visibility
+                    //transform.position = overlayTile.transform.position; // position = overlay position
 
+                    //gameObject.GetComponent<SpriteRenderer>().sortingLayerID = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
                 }
 
-                //transform.position = overlayTile.transform.position; // position = overlay position
-
-                //gameObject.GetComponent<SpriteRenderer>().sortingLayerID = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
+                if (path.Count > 0)
+                {
+                    MoveAlongPath();
+                }
+                //else
+                //{
+                //Debug.Log("No hit");
+                //}
             }
-
-            if (path.Count > 0)
-            {
-                MoveAlongPath();
-            }
-            //else
-            //{
-            //Debug.Log("No hit");
-            //}
         }
     }
 
@@ -441,7 +447,7 @@ public class MouseController1 : MonoBehaviour
 
             if (enemy != null)
             {
-                PlayerCombatCheck.Instance.PlayerAttackCheck(enemy);
+                PlayerCombatCheck.Instance.UseSelectedSkill(enemy);
                 return;
             }
 

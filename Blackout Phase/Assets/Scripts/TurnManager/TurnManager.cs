@@ -59,6 +59,8 @@ public class TurnManager : MonoBehaviour
 
     private PlayerHighlighter playerHighlighter; // for displaying the highlights
 
+    private PlayerSkillExecutor playerSkillExecutor; // accessor to the skill effect
+
     private void Awake()
     {
         if (Instance != null && Instance != this)  // if gameobject not found destory it, else set it to this
@@ -71,6 +73,10 @@ public class TurnManager : MonoBehaviour
         Instance = this; // found set it up
 
         //isInitialized = true; // toggle flag everything is set up
+
+        // if skill accessor not found set up
+        if (playerSkillExecutor == null)
+            playerSkillExecutor = GetComponent<PlayerSkillExecutor>();
 
         DontDestroyOnLoad(gameObject); // keeps the game object
 
@@ -144,10 +150,10 @@ public class TurnManager : MonoBehaviour
 
             case TurnState.PlayerStart: // player starts the turn, reset AP
                 PlayerTurnStart(); // start
-                ShowPlayerPreviews(); // show highlights
                 break;
 
             case TurnState.PlayerAction: // since the mouse controlls the turn do nothing, once AP used end, or manully end
+                ShowPlayerPreviews(); // show highlights
                 break;
 
             case TurnState.PlayerReaction: // player reaction to enemy attacks, counter/dodge/tank
@@ -210,6 +216,10 @@ public class TurnManager : MonoBehaviour
 
     private void PlayerTurnStart()
     {
+        // if skill effect accessor set up call it 
+        if (playerSkillExecutor != null)
+            playerSkillExecutor.CountCoolDownAtStart(); // skill coold down goes down
+
         // check if the playerInfo finished loading
         if (!PlayerSetUp())
         {
@@ -244,6 +254,22 @@ public class TurnManager : MonoBehaviour
         if (playerInfo == null || playerInfo.CurrentTile == null) return;
 
         playerHighlighter.ShowPlayerMovementTiles(playerInfo.CurrentTile, playerInfo.GetMoveRange()); // highlight the range around the player, passing current tile and the getRange to find the correct range
+    }
+    private void FlashIncomingEnemyTile()
+    {
+        // is the enemy null if so get out
+        if (inComingAttackEnemy == null) return;
+
+        OverlayTile1 enemyTile = inComingAttackEnemy.currentTile; // save the enemy tile
+
+        // check to see if enemy tile is null
+        if (enemyTile == null)
+            enemyTile = MapManager1.Instance.GetWorldTileFromTransform(inComingAttackEnemy.transform); // if not found use the map world position to locate the transform
+
+        // check to see if the tile is still null
+        if (enemyTile == null) return;
+
+        playerHighlighter?.SingleTileHighlight(enemyTile, enemy: true); // highlight the enemy 
     }
 
     private void FlashPlayerTile()
@@ -425,6 +451,22 @@ public class TurnManager : MonoBehaviour
 
     public void StartPlayerReaction(EnemyInfo enemyAttker, int dmg, int hitChance)
     {
+        // if it's reaction state get out
+        if (State == TurnState.PlayerReaction)
+        {
+            Debug.Log("Already in reaction state!"); // debug msg
+            return;
+        }
+
+        // check if enemy is dead or missing before reacting
+        if (enemyAttker == null || enemyAttker.CurrentHP <= 0)
+        {
+            Debug.Log("Enemy is dead or missing!"); // debug msg
+
+            ResetIncomingPlayerReaction();
+            return;
+        }
+
         inComingAttackEnemy = enemyAttker; // set up enemy attacker
 
         inComingDamage = dmg; // how much damage is from enemy
@@ -437,6 +479,8 @@ public class TurnManager : MonoBehaviour
 
         FlashPlayerTile(); // flashings player tile while being attacked
 
+        FlashIncomingEnemyTile(); // highlight enemy attack tile
+
         SetTurnState(TurnState.PlayerReaction); // change state to player react 
     }
 
@@ -447,7 +491,7 @@ public class TurnManager : MonoBehaviour
 
         int playerDodgeBonus = 10; // extra 10 dodge chance
 
-        int HitChanceAdjustment = Mathf.Clamp(inComingDamage - playerDodgeBonus, 5, 95); // make sure after the bonus chance it is still within 5 - 95
+        int HitChanceAdjustment = Mathf.Clamp(inComingHitChance - playerDodgeBonus, 5, 95); // make sure after the bonus chance it is still within 5 - 95
 
         bool enemyHit = HitRollCheck.HitRollPercent(HitChanceAdjustment); // use flag to check the hit chance roll
 
@@ -494,11 +538,11 @@ public class TurnManager : MonoBehaviour
         if (State != TurnState.PlayerReaction) return;
 
         // check if the enemy attacker exist
-        if (inComingAttackEnemy == null)
+        if (inComingAttackEnemy == null || inComingAttackEnemy.CurrentHP <= 0)
         {
-            Debug.LogWarning("No incoming enemy to counter attack!"); // debug msg
+            Debug.Log("Enemy is dead or missing!"); // debug msg
 
-            playerReactionSuccessful = true; // player did an reaction
+            EndPlayerReaction();
             return;
         }
 
@@ -509,7 +553,18 @@ public class TurnManager : MonoBehaviour
         //playerReactionSuccessful = true; // set player did an reaction
     }
 
-    
+    public void ResetIncomingPlayerReaction()
+    {
+        playerReactionSuccessful = true; // toggle the raction flag
+
+        // reset everything
+        inComingAttackEnemy = null;
+
+        inComingDamage = 0;
+
+        inComingHitChance = 0;
+    }
+
     public IEnumerator WaitForPlayerReaction()
     {
 
@@ -522,6 +577,10 @@ public class TurnManager : MonoBehaviour
         inComingDamage = 0;
 
         inComingHitChance = 0;
+
+        // check to see if player is in reaction state, change to enemyAction so enemy can attack
+        if (State == TurnState.PlayerReaction)
+            State = TurnState.EnemyAction;
 
         //State = TurnState.EnemyAction; // after enemy attack player react goes back to loop, check for next enemy action
     }
@@ -588,16 +647,6 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void DeleteEnemy(EnemyController1 enemy)
-    {
-        // enemy is not found get out
-        if (enemy == null) return;
-
-        // if the enemy removal list is not empty, remove them
-        if (!pendingEnemyRemovals.Contains(enemy))
-            pendingEnemyRemovals.Add(enemy); // add them to removal list
-    }
-
     public void DeleteEnmey(EnemyController1 enemy)
     {
         PlayerFuryMode.Instance.EnemyKilledUpdate(); // add to kills
@@ -614,6 +663,15 @@ public class TurnManager : MonoBehaviour
 
 }
 
+//public void DeleteEnemy(EnemyController1 enemy)
+//{
+//    // enemy is not found get out
+//    if (enemy == null) return;
+
+//    // if the enemy removal list is not empty, remove them
+//    if (!pendingEnemyRemovals.Contains(enemy))
+//        pendingEnemyRemovals.Add(enemy); // add them to removal list
+//}
 
 
 //private void Update()

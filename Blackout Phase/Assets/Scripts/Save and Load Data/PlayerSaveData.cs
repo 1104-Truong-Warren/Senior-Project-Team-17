@@ -24,7 +24,8 @@ public class PlayerSaveData
     public int baseCriticalRate;
     public int baseCritDamage;
     public int baseEvasion;
-    
+    public int level;
+
     // Position
     public float posX;
     public float posY;
@@ -46,7 +47,8 @@ public class PlayerSaveData
         baseCriticalRate = player.BaseCriticalRate;
         baseCritDamage = player.BaseCritDamage;
         baseEvasion = player.BaseEvasion;
-        
+        level = player.CurrentLevel;
+
         // Save position
         posX = player.transform.position.x;
         posY = player.transform.position.y;

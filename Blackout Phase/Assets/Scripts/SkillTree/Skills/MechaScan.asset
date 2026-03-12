@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
+  m_Name: MechaScan
+  m_EditorClassIdentifier: 
+  id: 1
+  skillType: 0
+  targetType: 0
+  weaponType: 0
+  classType: 0
+  subClassType: 0
+  skillEffectType: 2
+  skillDisplayName: Mecha Scan
+  skillDescription: Fixing the Mecha restore HP/EN.
+  HitRate: 0
+  CritChance: 0
+  AttackDamage: 0
+  AttackRange: 0
+  critBonus: 0
+  critDmgBonus: 0
+  hitRateBonus: 0
+  hpRecoverP: 0.3
+  enRecoverP: 0.3
+  attackBonus: 0
+  hpBonus: 0
+  enBouns: 0
+  movementBonus: 0
+  apBonus: 0
+  skillENCost: 0
+  skillAPCost: 2
+  skillCoolDown: 3
+  skillDuration: 0
+  requiredLevel: 0
+  requirdSkills: 

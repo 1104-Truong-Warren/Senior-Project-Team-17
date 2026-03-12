@@ -30,65 +30,78 @@ public class EnemyReactionController : MonoBehaviour
         // if player not found return false
         if (player == null || player.CurrentTile == null) return false;
 
+        bool canCounter = allowToCounter && enemyAttackCore != null && enemyAttackCore.CanAttackPlayer(player); // check to see if condition are met, enemy in attack range, attack exist
+
         Debug.Log($"[Enemy React] allow:{allowToCounter} core:{(enemyAttackCore != null)}" +
             $"enemyTile:{(enemyInfo?.currentTile != null)} playerTile:{(player?.CurrentTile != null)}" +
             $"inRange:{(enemyAttackCore != null ? enemyAttackCore.CanAttackPlayer(player) : false)}"); //debug msg
 
-        int playerHitChance = HitRollCheck.FinalHitChanceCal(player.BaseHitRate, playerSkillHitBonus, enemyInfo.EvasionRate + 10); // enemy dodge roll
-
-        bool playerHit = HitRollCheck.HitRollPercent(playerHitChance); // roll check
+        //bool playerHit = HitRollCheck.HitRollPercent(playerHitChance); // roll check
 
         // if hit check miss display a msg
+        if (canCounter)
+        {
+            Debug.Log($"{name}: Enemy counterAttacks Player!"); // debug msg
+
+            enemyAttackCore.AttackPlayer(player);  // attacks the player
+            return false; // counter didn't dodge
+        }
+
+        int playerHitChance = HitRollCheck.FinalHitChanceCal(player.BaseHitRate, playerSkillHitBonus, enemyInfo.EvasionRate + activeDodgeBounus); // enemy dodge roll
+
+        bool playerHit = HitRollCheck.HitRollPercent(playerHitChance); // hit roll 
+
         if (!playerHit)
         {
-            Debug.Log($"{name}: Enemy dodged Player Attack!"); // debug msg
+            Debug.Log($"{name}: Enemy dodged player attack!"); // debug msg
 
-            // Added by Warren, shows "Enemy Dodged" text on the screen.
+            // Added by Warren, for player's damage UI on the enemy
             if (DamageObserver.Instance != null)
             {
-                DamageObserver.Instance.ShowDodgedText(transform.position, true); // true = isEnemy
+                DamageObserver.Instance.ShowDodgedText(enemyInfo.transform.position); // enemy dodge
             }
 
-            return true; 
+            return true; // enemy dodged
         }
 
-        // if enemyAttack is not null and player is in range attack
-        if (allowToCounter && enemyAttackCore != null && enemyAttackCore.CanAttackPlayer(player))
-        {
-           // // flag check to see if player pressed dodge
-
-           // counterAttackChance = HitRollCheck.FinalHitChanceCal(enemyInfo.EnemyHitRate, 0, player.BaseEvasion); // check for the chance of attack hit rate
-
-           //// check too see if attack landed
-           //if (!HitRollCheck.HitRollPercent(counterAttackChance))
-           // {
-           //     Debug.Log($"{name}: CounterAttacked Missed!"); // debug msg
-
-           //     return false; 
-           // }
-            
-            enemyAttackCore.AttackPlayer(player); // if it landed attack player
-            //return false;
-        }
-
-        return false;
-
-        //int playerSkillHitChance = playerSkillHitRate.AttkHitRate; // find the attack/skill chance
-
-        //int playerHitChance = HitRollCheck.FinalHitChanceCal(player.BaseHitRate, playerSkillHitChance, (enemyInfo.EvasionRate + activeDodgeBounus)); // calculate the player hit chance
-
-        //bool playerHit = HitRollCheck.HitRollPercent(playerHitChance);
-
-        //// if attck missed
-        //if (!playerHit)
-        //{
-        //    Debug.Log($"{name}: Dodged the Attack! (Evasion successed)"); // debug msg
-
-        //    return true;
-        //}
-
-        //Debug.Log($"{name}: Failled to Dodge the Attack!"); // debug msg
-
-        //return false;
+        return false; // didn't dodge
     }
 }
+
+//// if enemyAttack is not null and player is in range attack
+//if (allowToCounter && enemyAttackCore != null && enemyAttackCore.CanAttackPlayer(player))
+//{
+//   // // flag check to see if player pressed dodge
+
+//   // counterAttackChance = HitRollCheck.FinalHitChanceCal(enemyInfo.EnemyHitRate, 0, player.BaseEvasion); // check for the chance of attack hit rate
+
+//   //// check too see if attack landed
+//   //if (!HitRollCheck.HitRollPercent(counterAttackChance))
+//   // {
+//   //     Debug.Log($"{name}: CounterAttacked Missed!"); // debug msg
+
+//   //     return false; 
+//   // }
+
+//    enemyAttackCore.AttackPlayer(player); // if it landed attack player
+//    //return false;
+//}
+
+// old
+//int playerSkillHitChance = playerSkillHitRate.AttkHitRate; // find the attack/skill chance
+
+//int playerHitChance = HitRollCheck.FinalHitChanceCal(player.BaseHitRate, playerSkillHitChance, (enemyInfo.EvasionRate + activeDodgeBounus)); // calculate the player hit chance
+
+//bool playerHit = HitRollCheck.HitRollPercent(playerHitChance);
+
+//// if attck missed
+//if (!playerHit)
+//{
+//    Debug.Log($"{name}: Dodged the Attack! (Evasion successed)"); // debug msg
+
+//    return true;
+//}
+
+//Debug.Log($"{name}: Failled to Dodge the Attack!"); // debug msg
+
+//return false;

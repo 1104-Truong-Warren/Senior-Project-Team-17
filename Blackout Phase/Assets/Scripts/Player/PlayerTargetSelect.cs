@@ -6,6 +6,8 @@ using System.Collections.Generic;
 //using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerTargetSelect : MonoBehaviour
 {
@@ -17,7 +19,7 @@ public class PlayerTargetSelect : MonoBehaviour
     [SerializeField] private KeyCode confirmKey; // key for comfirming the attack
 
     [Header("Targeting Settings")]
-    [SerializeField] private bool enemyInRange = true; // enemy has to be in range for the attack
+    //[SerializeField] private bool enemyInRange = true; // enemy has to be in range for the attack
     [SerializeField] private bool keepTargetAfterAttk = false; // keeps on the same target after attack
 
     private readonly List<EnemyInfo> enemyCandidates = new List<EnemyInfo>(); // enemy list for reading
@@ -40,6 +42,9 @@ public class PlayerTargetSelect : MonoBehaviour
         // player pressed the attack key 
         if (Input.GetKeyDown(lockOnKey))
         {
+            // try to heal right away 
+            if (TrySelfTargetSkill()) return;
+
             // if the target is not found
             if (currentTarget == null)
                 LockOnTarget();
@@ -66,6 +71,15 @@ public class PlayerTargetSelect : MonoBehaviour
         // current enemy target exist and key press is confirm attack
         if (currentTarget != null && Input.GetKeyDown(confirmKey))
         {
+            // check to see if target is vaild before attacking
+            if (!IsEnemyValid(currentTarget))
+            {
+                Debug.Log("Enemy is no longer a valid target!"); // debug msg
+
+                ClearTarget();
+                return;
+            }
+
             ConfirmAttack(); // calls the confirm function
 
             //  // defalut is f, so always clears after
@@ -97,9 +111,17 @@ public class PlayerTargetSelect : MonoBehaviour
 
     private int GetPlayerRange()
     {
-        var player = CharacterInfo1.Instance; // copies player stats
+        // check to see if playercombate can be copy
+        if (PlayerCombatCheck.Instance == null) return 1;
 
-        return (player != null) ? player.BaseRange : 1; // returns the player's baseRange if playerInfo is found        
+        SkillData currentSkill = PlayerCombatCheck.Instance.GetCurrentSkill(); // get the current skill
+
+        //var player = CharacterInfo1.Instance; // copies player stats
+
+        // check to see if current skill is null
+        if (currentSkill == null) return 1;
+
+        return currentSkill.AttackRange; //(player != null) ? player.BaseRange : 1; // returns the player's baseRange if playerInfo is found        
     }
 
     private void EnemyCycleKey(int cycleDir)
@@ -201,7 +223,9 @@ public class PlayerTargetSelect : MonoBehaviour
             //if (enemyInRange && distance > player.BaseRange) continue;
 
             // keep on going if distance is bigger than player attack range or enemy not in range                                                              if current distance less than the closest range sawap them
-            if (distance > pAttkRange && enemyInRange) continue;
+            if (distance > pAttkRange) continue; //&& enemyInRange) continue;
+
+            //if (distance > pAttkRange && enemyInRange) continue;
             //{
             //    closestDistance = distance; // swap the closest range
 
@@ -274,7 +298,7 @@ public class PlayerTargetSelect : MonoBehaviour
         // current target doesn't exist get out
         if (currentTarget == null) return;
 
-        PlayerCombatCheck.Instance.PlayerAttackCheck(currentTarget); // attack the locked on target
+        PlayerCombatCheck.Instance.UseSelectedSkill(currentTarget); // attack the locked on target
 
         ClearAttackTargetHighlight(); // clear the target after (clear the target highlight
     }
@@ -297,6 +321,40 @@ public class PlayerTargetSelect : MonoBehaviour
         }
 
         Debug.Log($"Targetting:{enemy.name}"); // debug msg
+    }
+        private bool TrySelfTargetSkill()
+    {
+        // if player combat can't be access return
+        if (PlayerCombatCheck.Instance == null) return false;
+
+        SkillData currentSkill = PlayerCombatCheck.Instance.GetCurrentSkill(); // find the currentskill
+
+        // if the current skill is not found return
+        if (currentSkill == null) return false;
+
+        // if skill type matches and target is player
+        if (currentSkill.skillEffectType == SkillEffectType.Heal && currentSkill.targetType == TargetType.Player)
+        {
+            Debug.Log($"Using Self-Target skill:{currentSkill.skillDisplayName}"); // debug msg
+
+            PlayerCombatCheck.Instance.UseSelectedSkill(); // use heal on slef
+            return true; // success
+        }
+
+        return false; // failed
+    }
+
+    private bool IsEnemyValid(EnemyInfo enemy)
+    {
+        // if enemy is not found or dead return false
+        if (enemy == null || enemy.CurrentHP <= 0) return false;
+
+        OverlayTile1 enemyTile = GetEnemyTile(enemy); // enemy tile access
+
+        // if enemy tile doesn't exist return false
+        if (enemyTile == null) return false;
+
+        return true; // pass all the test return true
     }
 
     private void ClearAttackTargetHighlight()
