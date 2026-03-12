@@ -7,6 +7,13 @@ public class EnemyReactionController : MonoBehaviour
     [SerializeField] private int counterAttackChance; // 100 = always counterAttack
     [SerializeField] private bool allowToCounter = true; // flag for triggering counterAttack
 
+    // Added by Warren, enemy reaction sound effects.
+    [Header("Enemy Reaction Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip enemyCounterSound;    
+    [SerializeField] private AudioClip enemyDodgeSound;     
+    [SerializeField] private AudioClip enemyCounterMissSound;
+
     private SkillData playerSkillHitRate; // access the playerSkills
 
     private EnemyInfo enemyInfo; // access enemyInfo
@@ -18,6 +25,17 @@ public class EnemyReactionController : MonoBehaviour
         enemyInfo = GetComponent<EnemyInfo>(); // set up the enemyInfo
 
         enemyAttackCore = GetComponentInChildren<EnemyAttackCore>(); // get all of them, if attack is on chidren
+
+        // Added by Warren, sets up audio source
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+    
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     public bool ReactToPlayerAttack(CharacterInfo1 player, int playerSkillHitBonus)
@@ -43,6 +61,8 @@ public class EnemyReactionController : MonoBehaviour
         {
             Debug.Log($"{name}: Enemy counterAttacks Player!"); // debug msg
 
+            PlaySound(enemyCounterSound); // Added by Warren
+
             enemyAttackCore.AttackPlayer(player);  // attacks the player
             return false; // counter didn't dodge
         }
@@ -55,6 +75,8 @@ public class EnemyReactionController : MonoBehaviour
         {
             Debug.Log($"{name}: Enemy dodged player attack!"); // debug msg
 
+            PlaySound(enemyDodgeSound);
+            
             // Added by Warren, for player's damage UI on the enemy
             if (DamageObserver.Instance != null)
             {
@@ -65,6 +87,15 @@ public class EnemyReactionController : MonoBehaviour
         }
 
         return false; // didn't dodge
+    }
+
+    // Added by Warren, plays sound effects
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }
 

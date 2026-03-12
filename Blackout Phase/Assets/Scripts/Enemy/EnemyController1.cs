@@ -41,6 +41,12 @@ public class EnemyController1 : MonoBehaviour
 
     //private bool isReady = false; // for enemy
 
+    // Added by Warren, attributes for enemy sound effects.
+    [Header("Enemy Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip enemyAttackSound; 
+    [SerializeField] private AudioClip enemyMissSound; 
+
     private void Awake()
     {
         enemyInfo = GetComponent<EnemyInfo>(); // setup enemyinfo
@@ -438,6 +444,8 @@ private IEnumerator MoveTowardPlayer()
 
         int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.EnemyHitRate, 0, player.BaseEvasion);
 
+        PlaySound(enemyAttackSound); // Added by Warren
+
         TurnManager.Instance.StartPlayerReaction(enemyInfo, enemyInfo.EnemyDmg, hitChance); // copies over the enemy/player data
     }
 
@@ -450,7 +458,16 @@ private IEnumerator MoveTowardPlayer()
         // Added by Warren, stops all running coroutines when enemies are destroyed, bug should be fixed.
         StopAllCoroutines();
     }
-    
+
+    // Added by Warren, function that plays the sound effect when called.
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+        
 }
 
 // not in use anymore 

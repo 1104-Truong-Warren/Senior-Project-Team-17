@@ -35,6 +35,12 @@ public class TurnManager : MonoBehaviour
     [Header("Enemies")]
     [SerializeField] private List<EnemyController1> enemies = new List<EnemyController1>(); // set up the enmey controller
 
+    // Added by Warren, for enemy SFX.
+    [Header("Enemy Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip enemyMissSound;
+    [SerializeField] private AudioClip enemyHitSound;
+
     private readonly List<EnemyController1> pendingEnemyRemovals = new List<EnemyController1>(); // for the dead enemies
 
     public static TurnManager Instance { get; private set; }  // accessor for other scripts
@@ -500,11 +506,15 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Player Failed to Dodge!"); // debug msg
 
+            PlaySound(enemyHitSound); // Added by Warren
+
             CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // player take damage
         }
         else
         {
             Debug.Log("Player Dodged the Attack!"); // debug msg
+
+            PlaySound(enemyMissSound); // Added by Warren, plays miss sound effect.
 
             // Added by Warren, displays on the screen that the player dodged the attack
             if (DamageObserver.Instance != null)
@@ -659,6 +669,15 @@ public class TurnManager : MonoBehaviour
     public static void SetInstaceForEnemyTest(TurnManager inst)
     {
         Instance = inst; // set up the same instance for test
+    }
+
+    // Added by Warren, plays sound effects
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 
 }

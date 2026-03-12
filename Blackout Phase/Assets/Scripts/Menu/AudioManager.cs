@@ -18,10 +18,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] string masterVolumeParameter = "MasterVolume";
     [SerializeField] string sfxVolumeParameter = "SFXVolume"; 
+    [SerializeField] string musicVolumeParameter = "MusicVolume";
     
     [Header("UI References")]
     [SerializeField] Slider masterVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;    
+    [SerializeField] Slider musicVolumeSlider;
     
     public static AudioManager Instance { get; private set; }
     
@@ -59,12 +61,23 @@ public class AudioManager : MonoBehaviour
             }
         }
         
+        if (musicVolumeSlider == null)
+        {
+            GameObject sliderObj = GameObject.FindGameObjectWithTag("Music Volume slider");
+            if (sliderObj != null)
+            {
+                musicVolumeSlider = sliderObj.GetComponent<Slider>();
+            }
+        }
+        
         // Load saved volumes when game starts
         float savedMasterVolume = GetMasterVolume();
         float savedSFXVolume = GetSFXVolume();
+        float savedMusicVolume = GetMusicVolume();
         
         SetMasterVolume(savedMasterVolume);
         SetSFXVolume(savedSFXVolume);
+        SetMusicVolume(savedMusicVolume);
         
         // Update sliders if they're assigned
         if (masterVolumeSlider != null)
@@ -77,6 +90,12 @@ public class AudioManager : MonoBehaviour
         {
             sfxVolumeSlider.value = savedSFXVolume;
             sfxVolumeSlider.onValueChanged.AddListener(SetSFXVolume);
+        }
+        
+        if (musicVolumeSlider != null)
+        {
+            musicVolumeSlider.value = savedMusicVolume;
+            musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
         }
     }
     
@@ -117,6 +136,26 @@ public class AudioManager : MonoBehaviour
         }
         
         PlayerPrefs.SetFloat("SFXVolume", volume);
+        PlayerPrefs.Save();
+    }
+    
+    public float GetMusicVolume()
+    {
+        return PlayerPrefs.GetFloat("MusicVolume", 0.75f); // Default 75%
+    }
+    
+    public void SetMusicVolume(float volume)
+    {
+        if (volume <= 0.001f)
+        {
+            audioMixer.SetFloat(musicVolumeParameter, -80f);
+        }
+        else
+        {
+            audioMixer.SetFloat(musicVolumeParameter, Mathf.Log10(volume) * 20);
+        }
+        
+        PlayerPrefs.SetFloat("MusicVolume", volume);
         PlayerPrefs.Save();
     }
 }

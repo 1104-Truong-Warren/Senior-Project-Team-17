@@ -26,6 +26,13 @@ public class PlayerCombatCheck : MonoBehaviour
     [SerializeField] private PlayerSkillExecutor playerSkillExecutor; // accessor to the skill executor
     [SerializeField] private int playerSkillIndexSelect; // index for player skill
 
+    // Added by Warren, sound effect attributes for the player.
+    [Header("Sound Effects")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip missSound;
+
+
     public int playerSkillIndexCheck => playerSkillIndexSelect; // accessor for other scripts
 
     //// ================== SkillData Settings ===========================
@@ -89,13 +96,19 @@ public class PlayerCombatCheck : MonoBehaviour
         if (enemyDodge)
         {
             Debug.Log("Enemy dodged the player's attack!"); // debug msg
+            PlaySound(missSound); // Added by Warren
             return;
         }
 
         // if player attack missed return
-        if (!PlayerAttackHits(currentSkill, player, enemy)) return;
+        if (!PlayerAttackHits(currentSkill, player, enemy))
+        {
+            PlaySound(missSound); // Added by Warren
+            return;
+        }
 
         int dmg = CalculatePlayerSkillDmg(currentSkill, player, enemy); // for the final attack crit hit
+        PlaySound(attackSound); // Added by Warren
 
         // making sure the dmg is vaild
         if (dmg <= 0) return;
@@ -413,6 +426,15 @@ public class PlayerCombatCheck : MonoBehaviour
     private int Manhattan(Vector3Int a, Vector3Int b)
     {
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // returns the player/enemy distance
+    }
+
+    // Added by Warren, function is used to play the audio clip.
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }
 
