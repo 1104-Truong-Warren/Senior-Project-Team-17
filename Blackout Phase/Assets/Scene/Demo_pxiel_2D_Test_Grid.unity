@@ -6953,6 +6953,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP Boost(Head)
       objectReference: {fileID: 0}
+    - target: {fileID: 4341928498832212384, guid: 365ef874169b7c949a15b0ce7e85ca4c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7017,6 +7021,10 @@ PrefabInstance:
     - target: {fileID: 6123082533995659375, guid: 63b8505443e6a6c42afac6945f6dee53, type: 3}
       propertyPath: m_Name
       value: Player Keybind Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6123082533995659375, guid: 63b8505443e6a6c42afac6945f6dee53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7242,6 +7250,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EN(Restore)
       objectReference: {fileID: 0}
+    - target: {fileID: 5619690982223404165, guid: 8f575d2c6ab1de64695f7614412e8f45, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7302,6 +7314,10 @@ PrefabInstance:
     - target: {fileID: 5615831392377947958, guid: 7c5059445f2356746bb404bd279a1286, type: 3}
       propertyPath: m_Name
       value: PauseManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615831392377947958, guid: 7c5059445f2356746bb404bd279a1286, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7368,6 +7384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Range Weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 5778785597523079967, guid: 3c0d0f18b2cd9dd418ebe50729a2cdb4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7384,6 +7404,10 @@ PrefabInstance:
     - target: {fileID: 5765630834301226708, guid: d42823966ad58ed4ba4a65922117fe02, type: 3}
       propertyPath: m_Name
       value: HP(Heal)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765630834301226708, guid: d42823966ad58ed4ba4a65922117fe02, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8400009352838071515, guid: d42823966ad58ed4ba4a65922117fe02, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7438,6 +7462,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 71701547}
     m_Modifications:
+    - target: {fileID: 968080646336695148, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 968080646336695148, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 968080646336695148, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 409.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614868360137610036, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614868360137610036, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614868360137610036, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 212.06
+      objectReference: {fileID: 0}
     - target: {fileID: 3269153184742172250, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -7547,6 +7595,10 @@ PrefabInstance:
     - target: {fileID: 1044573630362523829, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
       propertyPath: m_Name
       value: Level System Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044573630362523829, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1670817629996446842, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
       propertyPath: m_LocalPosition.x

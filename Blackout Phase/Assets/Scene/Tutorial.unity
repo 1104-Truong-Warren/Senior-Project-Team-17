@@ -4782,14 +4782,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6988e471686085f4eb9b1c49cdaddf06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicAttkDamage: 0
-  basicAttckRange: 0
-  basicAttkAPcost: 0
-  basicAttkENcost: 0
-  basicAttkHitRate: 0
-  basicAttkSkillCrit: 0
-  basicAttkCritDmg: 0
-  SDbasicAttkSkill: {fileID: 11400000, guid: afdec3a6de293f644b2f2dac6b4db4a9, type: 2}
+  skillKey1: 0
+  skillKey2: 0
+  skillKey3: 0
+  skillKey4: 0
+  playerSkillattach: {fileID: 0}
+  playerSkillExecutor: {fileID: 0}
+  playerSkillIndexSelect: 0
 --- !u!114 &731043545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11890,6 +11889,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 968080646336695148, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 968080646336695148, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 968080646336695148, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 406.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614868360137610036, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614868360137610036, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614868360137610036, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 209.06
+      objectReference: {fileID: 0}
     - target: {fileID: 3269153184742172250, guid: 02aa11092024388429a1ac31de9241a9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -23140,6 +23163,7 @@ MonoBehaviour:
   targetXP: 100
   targetXPIncrease: 50
   xpPerEnemy: 100
+  playerSkillAttachment: {fileID: 0}
 --- !u!4 &2123584617
 Transform:
   m_ObjectHideFlags: 0
