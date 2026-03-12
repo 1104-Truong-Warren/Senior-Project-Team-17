@@ -36,6 +36,11 @@ public class ReactionUI : MonoBehaviour
     
     [Header("Timing Settings")]
     [SerializeField] private float uiAppearDelay = 0.8f; // Delay before UI appears (adjust in Inspector)
+    private CharacterInfo1 playerInfo; // Reference to player info for EN checks
+
+    // Ellison - added for tutorial support
+    public bool isTutorial = false;
+    public TutorialManager tutorialManager;
     
     private CharacterInfo1 playerInfo; // Reference to player info for EN checks
     private bool isWaitingToShow = false; // Flag to prevent multiple coroutines
@@ -74,6 +79,8 @@ public class ReactionUI : MonoBehaviour
     
     void Update()
     {
+        if (isTutorial) return;
+
         // Check TurnManager state to see if we should show/hide the panel
         if (TurnManager.Instance != null)
         {
@@ -137,7 +144,7 @@ public class ReactionUI : MonoBehaviour
     }
     
     // Displays the reaction UI with current attack information
-    void ShowReactionUI()
+    public void ShowReactionUI()
     {
         if (reactionPanel == null) return;
         
@@ -269,6 +276,12 @@ public class ReactionUI : MonoBehaviour
     // Counter Attack button function where player will have a chance in counter attacking the enemy, costs 5 EN, and will be deducted in the game scene interface.
     public void OnCounterClicked()
     {
+        if (isTutorial)
+        {
+            tutorialManager.reactionSelectDone = true;
+            return;
+        }
+
         Debug.Log("ReactionUI: Counter button clicked");
         
         if (TurnManager.Instance == null)

@@ -83,6 +83,9 @@ public class TutorialMouseController : MonoBehaviour
     public bool confirmedCombat2Attack2 = false;
     public bool highlightingEnemy2Only = false;
 
+    [Header("Combat3 Step")]
+    public bool skipCombat3 = false;
+
     private IEnumerator Start()
     {
         pathFinder = new PathFinder1(); // create it
@@ -130,7 +133,7 @@ public class TutorialMouseController : MonoBehaviour
                 // 1. Mimic 'A' to Lock-On (Turn Tile Red)
                 if (Input.GetKeyDown(KeyCode.A))
                 {
-                    enemyTile.ShowEnemyTile(); // This turns the tile red/orange
+                    enemyTile.ShowEnemyTile();
                     attackMessagePanel.SetActive(true);
                     Debug.Log("Tutorial: Simulated Lock-on");
                     attackCombat1Prepare = true;
@@ -148,8 +151,6 @@ public class TutorialMouseController : MonoBehaviour
                 // 3. Mimic 'F' to Confirm Attack
                 if (Input.GetKeyDown(KeyCode.F) && attackCombat1Prepare)
                 {
-                    // Only count the attack if the tile is currently "highlighted" (mimicking a lock-on)
-                    // You can check the sprite color alpha or just assume if they press F they meant it
                     enemyTile.HideTile();
                     confirmedCombat1Attack = true;
                     attackMessagePanel.SetActive(false);
@@ -266,6 +267,16 @@ public class TutorialMouseController : MonoBehaviour
                 && enemyTile3 != null && enemyTile3.GetComponent<SpriteRenderer>().color.a > 0)
             {
                 return;
+            }
+        }
+
+        // simulated skip for combat3
+        if (tutorialManager.currentStep == TutorialStep.Combat3)
+        {
+            // don't allow anything else
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                skipCombat3 = true;
             }
         }
 

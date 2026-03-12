@@ -83,7 +83,7 @@ public class CharacterInfoDisplay : MonoBehaviour
         // Debug log to see values
         if (Time.frameCount % 60 == 0) // Log every second
         {
-            Debug.Log($"UI Update - HP: {playerInfo.CurrentHP}/{playerInfo.maxHP}, ATK: {playerInfo.BaseAttk}");
+            //Debug.Log($"UI Update - HP: {playerInfo.CurrentHP}/{playerInfo.maxHP}, ATK: {playerInfo.BaseAttk}");
         }
         
         // Update HP text display

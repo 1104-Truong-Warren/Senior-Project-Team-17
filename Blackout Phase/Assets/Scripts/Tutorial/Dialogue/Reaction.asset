@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ff468522a88594f835ce1750834844, type: 3}
+  m_Name: Reaction
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Here is the reaction menu.
+  - You have the option of attempting to dodge the enemy attack and take no damage.
+  - You can also try to counter and hit them back instead.
+  - However, these actions will also use EN.
+  - You may also choose to just "tank" and get hit normally, if you deem it necessary.
+  - For this example, let's counter.
