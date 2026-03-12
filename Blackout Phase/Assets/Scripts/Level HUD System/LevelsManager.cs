@@ -146,6 +146,14 @@ public class LevelsManager : MonoBehaviour
                 CheckForEnemyDeaths(); 
             }
         }
+
+        // Level test if L is pressed
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("[LevelManager] EXP Debug key pressed!"); // debug msg
+
+            IncreaseXP(100);
+        } 
     }
 
     // Initialize starting skills (like basic attack)
