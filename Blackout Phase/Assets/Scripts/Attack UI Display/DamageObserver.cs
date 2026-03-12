@@ -527,40 +527,41 @@ public class DamageObserver : MonoBehaviour
             Debug.LogError("PlayerDamagePrefab or CanvasTransform not assigned in DamageObserver!");
             return;
         }
-        
+
         // Convert player world position to screen position
         Vector3 screenPos = Camera.main.WorldToScreenPoint(playerPosition + Vector3.up * 2f);
-        
+
         // Spawn a new text instance
         GameObject warningInstance = Instantiate(playerDamagePrefab, canvasTransform);
         TextMeshProUGUI warningTMP = warningInstance.GetComponent<TextMeshProUGUI>();
-        
+
         if (warningTMP != null)
         {
             // Position the text above the player
             warningTMP.rectTransform.position = screenPos + new Vector3(warningOffset.x, warningOffset.y, 0);
-            
+
             // Set the text to "Out of Range!"
             warningTMP.text = "Out of Range!";
-            
+
             // Set color to gray
             warningTMP.color = outOfRangeColor;
-            
+
             // Make text slightly larger for warnings
             warningTMP.fontSize = warningTMP.fontSize * 1.2f;
-            
+
             Debug.Log($"Out of Range text shown at: {warningTMP.rectTransform.position}");
         }
-        
+
         // Play the animation
         Animation anim = warningInstance.GetComponent<Animation>();
         if (anim != null)
         {
             anim.Play("DamageTextBounce");
         }
-        
+
         // Destroy after delay
         StartCoroutine(HidePlayerDamage(warningInstance));
+    }
 
     // Ellison - added for tutorial use
     // Created specifically for Tutorial use to avoid messing with Warren's original code

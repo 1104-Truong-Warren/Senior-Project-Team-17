@@ -42,7 +42,7 @@ public class ReactionUI : MonoBehaviour
     public bool isTutorial = false;
     public TutorialManager tutorialManager;
     
-    private CharacterInfo1 playerInfo; // Reference to player info for EN checks
+    //private CharacterInfo1 playerInfo; // Reference to player info for EN checks (redundant)
     private bool isWaitingToShow = false; // Flag to prevent multiple coroutines
 
     void Start()
