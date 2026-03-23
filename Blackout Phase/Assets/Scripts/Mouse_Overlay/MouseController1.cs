@@ -30,6 +30,11 @@ public class MouseController1 : MonoBehaviour
 
     private List<OverlayTile1> path; // tile list
 
+    // Added by Warren, for movement animations.
+    private Animator characterAnimator;
+    private bool isMoving = false;
+
+
     // Ellison - Added bool to enable or disable movement (disabled by default)
     public bool movementEnabled = false;
 
@@ -109,6 +114,10 @@ public class MouseController1 : MonoBehaviour
                         if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) return;
 
                         characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+
+                        // Added by Warren, to get animator for animations
+                        characterAnimator = characterInfo.GetComponent<Animator>();
+                        if (characterAnimator != null) characterAnimator.SetFloat("MoveY", 0f);
 
                         PositionCharacterOnLine(tile); // where to spawn
 
@@ -219,6 +228,10 @@ public class MouseController1 : MonoBehaviour
 
                                     characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // get the prefab assign
 
+                                    // Added by Warren, to get animator for animations
+                                    characterAnimator = characterInfo.GetComponent<Animator>();
+                                    if (characterAnimator != null) characterAnimator.SetFloat("MoveY", 0f);
+
                                     PositionCharacterOnLine(tile);
 
                                     //PositionCharacterOnLine(overlayTile.GetComponent<OverlayTile>()); // spawn the character
@@ -283,6 +296,29 @@ public class MouseController1 : MonoBehaviour
 
     private void MoveAlongPath()
     {
+        // Added by Warren, setting animation parameters when movement starts
+        if (!isMoving && characterAnimator != null && path.Count > 0)
+        {
+            isMoving = true;
+            float directionY = path[0].transform.position.y - characterInfo.transform.position.y;
+            float directionX = path[0].transform.position.x - characterInfo.transform.position.x;
+            
+            // If moving up (positive Y)
+            if (directionY > 0.1f)
+            {
+                characterAnimator.SetFloat("MoveY", 1f);
+            }
+            // If moving down (negative Y)
+            else if (directionY < -0.1f)
+            {
+                characterAnimator.SetFloat("MoveY", -1f);
+            }
+            // If moving left/right (no vertical movement)
+            else if (Mathf.Abs(directionX) > 0.1f)
+            {
+                characterAnimator.SetFloat("MoveY", -1f); // Use Moving animation for left/right
+            }
+        }
         // Ellison - added to disable collapse button while moving
         collapseButton.interactable = false;
 
@@ -312,6 +348,9 @@ public class MouseController1 : MonoBehaviour
             // finishes moving Turn starts
             if (path.Count == 0)
             {
+                // Added by Warren, resets MoveY when movement finishes
+                if (characterAnimator != null) characterAnimator.SetFloat("MoveY", 0f);
+
                 //characterInfo.ApUsed(1); // used 1 AP after moved
 
                 TurnManager.Instance.PlayerSpendAP(1); // checks for the AP each turn, 1 AP per movement
@@ -469,6 +508,10 @@ public class MouseController1 : MonoBehaviour
         if (movementEnabled)
         {
             movementEnabled = false;
+            isMoving = false;
+
+            // Added by Warren, stops the MoveY animation
+            if (characterAnimator != null) characterAnimator.SetFloat("MoveY", 0f);
         }
     }
 }

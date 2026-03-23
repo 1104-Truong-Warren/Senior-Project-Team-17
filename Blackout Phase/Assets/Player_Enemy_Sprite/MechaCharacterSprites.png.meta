@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: 105fa6d5ba2c0204d8bb86f98104ea1e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2222518911423054825
+    second: MechaCharacterSprites_0
+  - first:
+      213: 594845785286084198
+    second: MechaCharacterSprites_1
+  - first:
+      213: -3623881371547854842
+    second: MechaCharacterSprites_2
+  - first:
+      213: 7917456272972838477
+    second: MechaCharacterSprites_3
+  - first:
+      213: 2518064944659873619
+    second: MechaCharacterSprites_4
+  - first:
+      213: -6872797948798436355
+    second: MechaCharacterSprites_5
+  - first:
+      213: -5876045965660988516
+    second: MechaCharacterSprites_6
+  - first:
+      213: -4593575623194247166
+    second: MechaCharacterSprites_7
+  - first:
+      213: -5434756357527568270
+    second: MechaCharacterSprites_8
+  - first:
+      213: -1751106670939447717
+    second: MechaCharacterSprites_9
+  - first:
+      213: -4419124734039573523
+    second: MechaCharacterSprites_10
+  - first:
+      213: 5133553954873458976
+    second: MechaCharacterSprites_11
+  - first:
+      213: -8583735888381535029
+    second: MechaCharacterSprites_12
+  - first:
+      213: 4656341438902952156
+    second: MechaCharacterSprites_13
+  - first:
+      213: 7468649891068626767
+    second: MechaCharacterSprites_14
+  - first:
+      213: 5267206073904075979
+    second: MechaCharacterSprites_15
+  - first:
+      213: -225276407842123447
+    second: MechaCharacterSprites_16
+  - first:
+      213: -7112850296985596257
+    second: MechaCharacterSprites_17
+  - first:
+      213: -11123339369242415
+    second: MechaCharacterSprites_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MechaCharacterSprites_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 387
+        width: 60
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e385fdac29f7de10800000000000000
+      internalID: 2222518911423054825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_1
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 385
+        width: 62
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6668d101711514800800000000000000
+      internalID: 594845785286084198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_2
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 386
+        width: 62
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6081cbcb71365bdc0800000000000000
+      internalID: -3623881371547854842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_3
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 385
+        width: 63
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d46fb33288470ed60800000000000000
+      internalID: 7917456272972838477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_4
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 300
+        width: 77
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35fb0d3d9b6f1f220800000000000000
+      internalID: 2518064944659873619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_5
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 300
+        width: 61
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfbf5d0edaaee90a0800000000000000
+      internalID: -6872797948798436355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_6
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 301
+        width: 73
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9bd8eca357147ea0800000000000000
+      internalID: -5876045965660988516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_7
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 302
+        width: 86
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2000d9afe475040c0800000000000000
+      internalID: -4593575623194247166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_8
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 207
+        width: 81
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27006cc23edd394b0800000000000000
+      internalID: -5434756357527568270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_9
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 211
+        width: 86
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5e56d2b2c1d2b7e0800000000000000
+      internalID: -1751106670939447717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_10
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 209
+        width: 96
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: debbd69c77d1ca2c0800000000000000
+      internalID: -4419124734039573523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_11
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 252
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 021c88b8f1c0e3740800000000000000
+      internalID: 5133553954873458976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_12
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 209
+        width: 112
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcc1f3720b170e880800000000000000
+      internalID: -8583735888381535029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_13
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 185
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd0edba4ed5ae9040800000000000000
+      internalID: 4656341438902952156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_14
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 108
+        width: 102
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f47c7ec5189f5a760800000000000000
+      internalID: 7468649891068626767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_15
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 108
+        width: 87
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc415d17400e81940800000000000000
+      internalID: 5267206073904075979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_16
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 109
+        width: 106
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9415b46fc48afdcf0800000000000000
+      internalID: -225276407842123447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_17
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 103
+        width: 118
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9e44a327541a4d90800000000000000
+      internalID: -7112850296985596257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterSprites_18
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 136
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d02e2cb16b78dff0800000000000000
+      internalID: -11123339369242415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 66f7bf52ccc74c04ea79d925372e9ce4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MechaCharacterSprites_0: 2222518911423054825
+      MechaCharacterSprites_1: 594845785286084198
+      MechaCharacterSprites_10: -4419124734039573523
+      MechaCharacterSprites_11: 5133553954873458976
+      MechaCharacterSprites_12: -8583735888381535029
+      MechaCharacterSprites_13: 4656341438902952156
+      MechaCharacterSprites_14: 7468649891068626767
+      MechaCharacterSprites_15: 5267206073904075979
+      MechaCharacterSprites_16: -225276407842123447
+      MechaCharacterSprites_17: -7112850296985596257
+      MechaCharacterSprites_18: -11123339369242415
+      MechaCharacterSprites_2: -3623881371547854842
+      MechaCharacterSprites_3: 7917456272972838477
+      MechaCharacterSprites_4: 2518064944659873619
+      MechaCharacterSprites_5: -6872797948798436355
+      MechaCharacterSprites_6: -5876045965660988516
+      MechaCharacterSprites_7: -4593575623194247166
+      MechaCharacterSprites_8: -5434756357527568270
+      MechaCharacterSprites_9: -1751106670939447717
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
