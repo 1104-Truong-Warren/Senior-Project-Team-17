@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: f10ee345be5e43340a0b80656540d5de
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3922585969620736558
+    second: MechaLEFTMovement_0
+  - first:
+      213: -3308930221875179111
+    second: MechaLEFTMovement_1
+  - first:
+      213: 4703831002113948574
+    second: MechaLEFTMovement_2
+  - first:
+      213: -729941050565799478
+    second: MechaLEFTMovement_3
+  - first:
+      213: 6765147045210964682
+    second: MechaLEFTMovement_4
+  - first:
+      213: -8960926711095117304
+    second: MechaLEFTMovement_5
+  - first:
+      213: 8602254895558760644
+    second: MechaLEFTMovement_6
+  - first:
+      213: 7530939014314251812
+    second: MechaLEFTMovement_7
+  - first:
+      213: 8465829815931038321
+    second: MechaLEFTMovement_8
+  - first:
+      213: 2512193076027412968
+    second: MechaLEFTMovement_9
+  - first:
+      213: 7248333265025221867
+    second: MechaLEFTMovement_10
+  - first:
+      213: 6112322471416033322
+    second: MechaLEFTMovement_11
+  - first:
+      213: -7769408139479422448
+    second: MechaLEFTMovement_12
+  - first:
+      213: 9174131163656286296
+    second: MechaLEFTMovement_13
+  - first:
+      213: -3790459202036999078
+    second: MechaLEFTMovement_14
+  - first:
+      213: 9065251862129786095
+    second: MechaLEFTMovement_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MechaLEFTMovement_0
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 818
+        width: 254
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d523d7e7dc2099c0800000000000000
+      internalID: -3922585969620736558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_1
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 905
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9915392ae715412d0800000000000000
+      internalID: -3308930221875179111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_2
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 817
+        width: 265
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9bb87cdf5d574140800000000000000
+      internalID: 4703831002113948574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_3
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 819
+        width: 313
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac1dc0e5b7abed5f0800000000000000
+      internalID: -729941050565799478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_4
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 902
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac24513f461a2ed50800000000000000
+      internalID: 6765147045210964682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_5
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 541
+        width: 273
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80abdde12a464a380800000000000000
+      internalID: -8960926711095117304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_6
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 542
+        width: 271
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c815253049516770800000000000000
+      internalID: 8602254895558760644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_7
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 541
+        width: 340
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 426d4550225438860800000000000000
+      internalID: 7530939014314251812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_8
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 529
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17aea7b1d5bac7570800000000000000
+      internalID: 8465829815931038321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_9
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 528
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e15fcfda4a1dd220800000000000000
+      internalID: 2512193076027412968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_10
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 307
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be4c97383b0479460800000000000000
+      internalID: 7248333265025221867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_11
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 214
+        width: 270
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a20f36d37e453d450800000000000000
+      internalID: 6112322471416033322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_12
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 211
+        width: 287
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01aec4316748d2490800000000000000
+      internalID: -7769408139479422448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_13
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 211
+        width: 299
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 850f29ccfaf015f70800000000000000
+      internalID: 9174131163656286296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_14
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 253
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5c59fe3075956bc0800000000000000
+      internalID: -3790459202036999078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaLEFTMovement_15
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 244
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fecb1b1f98e3ecd70800000000000000
+      internalID: 9065251862129786095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MechaLEFTMovement_0: -3922585969620736558
+      MechaLEFTMovement_1: -3308930221875179111
+      MechaLEFTMovement_10: 7248333265025221867
+      MechaLEFTMovement_11: 6112322471416033322
+      MechaLEFTMovement_12: -7769408139479422448
+      MechaLEFTMovement_13: 9174131163656286296
+      MechaLEFTMovement_14: -3790459202036999078
+      MechaLEFTMovement_15: 9065251862129786095
+      MechaLEFTMovement_2: 4703831002113948574
+      MechaLEFTMovement_3: -729941050565799478
+      MechaLEFTMovement_4: 6765147045210964682
+      MechaLEFTMovement_5: -8960926711095117304
+      MechaLEFTMovement_6: 8602254895558760644
+      MechaLEFTMovement_7: 7530939014314251812
+      MechaLEFTMovement_8: 8465829815931038321
+      MechaLEFTMovement_9: 2512193076027412968
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

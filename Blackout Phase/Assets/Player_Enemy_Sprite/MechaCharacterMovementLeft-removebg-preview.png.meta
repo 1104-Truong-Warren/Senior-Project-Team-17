@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: 8022bd2647994804db87b6f9cbf07a29
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4113363832889660452
+    second: MechaCharacterMovementLeft-removebg-preview_0
+  - first:
+      213: 5529837399617945000
+    second: MechaCharacterMovementLeft-removebg-preview_1
+  - first:
+      213: 5349053717015807684
+    second: MechaCharacterMovementLeft-removebg-preview_2
+  - first:
+      213: -3626233654997541125
+    second: MechaCharacterMovementLeft-removebg-preview_3
+  - first:
+      213: -4127459877402771181
+    second: MechaCharacterMovementLeft-removebg-preview_4
+  - first:
+      213: -6902003401825726302
+    second: MechaCharacterMovementLeft-removebg-preview_5
+  - first:
+      213: -2466803472991563919
+    second: MechaCharacterMovementLeft-removebg-preview_6
+  - first:
+      213: -1112858109636205609
+    second: MechaCharacterMovementLeft-removebg-preview_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 361
+        width: 118
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424d35bcc9a951930800000000000000
+      internalID: 4113363832889660452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 359
+        width: 121
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8adb5ed01ddedbc40800000000000000
+      internalID: 5529837399617945000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 361
+        width: 142
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c6c53fd308ab3a40800000000000000
+      internalID: 5349053717015807684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 238
+        width: 124
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfe1e4114b70dadc0800000000000000
+      internalID: -3626233654997541125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 233
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3110bb61c1158b6c0800000000000000
+      internalID: -4127459877402771181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 218
+        width: 169
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a0d3a379782730a0800000000000000
+      internalID: -6902003401825726302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 238
+        width: 153
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17f43ad9f4724cdd0800000000000000
+      internalID: -2466803472991563919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechaCharacterMovementLeft-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 66
+        width: 429
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d3a8b902755e80f0800000000000000
+      internalID: -1112858109636205609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MechaCharacterMovementLeft-removebg-preview_0: 4113363832889660452
+      MechaCharacterMovementLeft-removebg-preview_1: 5529837399617945000
+      MechaCharacterMovementLeft-removebg-preview_2: 5349053717015807684
+      MechaCharacterMovementLeft-removebg-preview_3: -3626233654997541125
+      MechaCharacterMovementLeft-removebg-preview_4: -4127459877402771181
+      MechaCharacterMovementLeft-removebg-preview_5: -6902003401825726302
+      MechaCharacterMovementLeft-removebg-preview_6: -2466803472991563919
+      MechaCharacterMovementLeft-removebg-preview_7: -1112858109636205609
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
