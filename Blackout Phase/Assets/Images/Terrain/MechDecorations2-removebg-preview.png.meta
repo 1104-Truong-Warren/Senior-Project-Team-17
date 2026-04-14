@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: 03a1264e07ddf9b498eeea448ac2e112
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6452203050399488775
+    second: MechDecorations2-removebg-preview_0
+  - first:
+      213: 1368407494976892218
+    second: MechDecorations2-removebg-preview_1
+  - first:
+      213: -2418452263382376728
+    second: MechDecorations2-removebg-preview_2
+  - first:
+      213: 1794820724081865363
+    second: MechDecorations2-removebg-preview_3
+  - first:
+      213: 2253289728110849455
+    second: MechDecorations2-removebg-preview_4
+  - first:
+      213: -6215615431276311105
+    second: MechDecorations2-removebg-preview_5
+  - first:
+      213: 4644098442243206274
+    second: MechDecorations2-removebg-preview_6
+  - first:
+      213: -7347792894979288053
+    second: MechDecorations2-removebg-preview_7
+  - first:
+      213: -7984282286757213870
+    second: MechDecorations2-removebg-preview_8
+  - first:
+      213: 8972308989362403260
+    second: MechDecorations2-removebg-preview_9
+  - first:
+      213: 882402412663293916
+    second: MechDecorations2-removebg-preview_10
+  - first:
+      213: 7609687532148505105
+    second: MechDecorations2-removebg-preview_11
+  - first:
+      213: 8415852803290894479
+    second: MechDecorations2-removebg-preview_12
+  - first:
+      213: -5988188454948319790
+    second: MechDecorations2-removebg-preview_13
+  - first:
+      213: 1151566908820647281
+    second: MechDecorations2-removebg-preview_14
+  - first:
+      213: -2226442474244041904
+    second: MechDecorations2-removebg-preview_15
+  - first:
+      213: 1509510926609660387
+    second: MechDecorations2-removebg-preview_16
+  - first:
+      213: 7912219820326967029
+    second: MechDecorations2-removebg-preview_17
+  - first:
+      213: -1778559995802147070
+    second: MechDecorations2-removebg-preview_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 344
+        width: 85
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f42f3ac28b2576a0800000000000000
+      internalID: -6452203050399488775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 343
+        width: 89
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d6416dd5f8df210800000000000000
+      internalID: 1368407494976892218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 343
+        width: 94
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ee9adeda7eef6ed0800000000000000
+      internalID: -2418452263382376728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 343
+        width: 88
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 392b86e60fb78e810800000000000000
+      internalID: 1794820724081865363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 344
+        width: 81
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fad651cb11b454f10800000000000000
+      internalID: 2253289728110849455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 263
+        width: 91
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbdc65e62b2bdb9a0800000000000000
+      internalID: -6215615431276311105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 253
+        width: 93
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28ce9df7de6237040800000000000000
+      internalID: 4644098442243206274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 252
+        width: 85
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b04de93da45670a90800000000000000
+      internalID: -7347792894979288053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 262
+        width: 90
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 259846f0091223190800000000000000
+      internalID: -7984282286757213870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 258
+        width: 80
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb77dfd0d7b048c70800000000000000
+      internalID: 8972308989362403260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 156
+        width: 80
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd74eb3b15cee3c00800000000000000
+      internalID: 882402412663293916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 180
+        width: 85
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11a3e6d1e7a0b9960800000000000000
+      internalID: 7609687532148505105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 177
+        width: 117
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f801126198d1bc470800000000000000
+      internalID: 8415852803290894479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 168
+        width: 81
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ddc5b6b35ea5eca0800000000000000
+      internalID: -5988188454948319790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 77
+        width: 76
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d695790003bff00800000000000000
+      internalID: 1151566908820647281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_15
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 54
+        width: 105
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05397d9ad561a11e0800000000000000
+      internalID: -2226442474244041904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_16
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 55
+        width: 86
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e9b325a03cd2f410800000000000000
+      internalID: 1509510926609660387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_17
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 49
+        width: 121
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f6d46f710addcd60800000000000000
+      internalID: 7912219820326967029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MechDecorations2-removebg-preview_18
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 52
+        width: 101
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2072e766b194157e0800000000000000
+      internalID: -1778559995802147070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MechDecorations2-removebg-preview_0: -6452203050399488775
+      MechDecorations2-removebg-preview_1: 1368407494976892218
+      MechDecorations2-removebg-preview_10: 882402412663293916
+      MechDecorations2-removebg-preview_11: 7609687532148505105
+      MechDecorations2-removebg-preview_12: 8415852803290894479
+      MechDecorations2-removebg-preview_13: -5988188454948319790
+      MechDecorations2-removebg-preview_14: 1151566908820647281
+      MechDecorations2-removebg-preview_15: -2226442474244041904
+      MechDecorations2-removebg-preview_16: 1509510926609660387
+      MechDecorations2-removebg-preview_17: 7912219820326967029
+      MechDecorations2-removebg-preview_18: -1778559995802147070
+      MechDecorations2-removebg-preview_2: -2418452263382376728
+      MechDecorations2-removebg-preview_3: 1794820724081865363
+      MechDecorations2-removebg-preview_4: 2253289728110849455
+      MechDecorations2-removebg-preview_5: -6215615431276311105
+      MechDecorations2-removebg-preview_6: 4644098442243206274
+      MechDecorations2-removebg-preview_7: -7347792894979288053
+      MechDecorations2-removebg-preview_8: -7984282286757213870
+      MechDecorations2-removebg-preview_9: 8972308989362403260
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
