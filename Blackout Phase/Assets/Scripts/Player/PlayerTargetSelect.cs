@@ -283,7 +283,7 @@ public class PlayerTargetSelect : MonoBehaviour
         if (enemy == null) return null;
 
         // if enemy currentile is found use it
-        if (enemy.currentTile != null) return enemy.currentTile;
+        if (enemy.CurrentTile != null) return enemy.CurrentTile;
 
         //Collider2D eCollider = enemy.GetComponentInChildren<Collider2D>(); // get enemy prefab collider2d
 

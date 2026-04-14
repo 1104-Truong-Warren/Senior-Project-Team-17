@@ -6,7 +6,7 @@ public class EnemyStatsScripObj : ScriptableObject
     [Header("Enemy Base Stats Settings")]
     public int maxHP; // health
     public int attackRange; // enemy attk range
-    public int damage; // base dmg
+    public int baseAttack; // base attack
     public int detectionRange; // how far it can detect player
     public int movementRange; // how far it can move
 

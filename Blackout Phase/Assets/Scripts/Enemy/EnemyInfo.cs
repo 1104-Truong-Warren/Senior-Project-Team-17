@@ -9,10 +9,11 @@
 using Unity.VisualScripting;
 using UnityEngine; // default
 
-public class EnemyInfo : MonoBehaviour
+public class EnemyInfo : UnitCore
 {
     [Header("Enemy Stats")]
     [SerializeField] private EnemyStatsScripObj stats; // enemy stats
+    [SerializeField] private int currentHP; // current hp for enemy
     //[SerializeField] private int Health; // enmey's health
     //[SerializeField] private int AttackRange; // enemy's attk range
     //[SerializeField] private int enemyDamage; // how much damage enemy does
@@ -21,24 +22,20 @@ public class EnemyInfo : MonoBehaviour
     //[SerializeField] private int evasionRate; // enemy's dodge rate
     //[SerializeField] private int enemyHitRate; // enemy base hit rate
 
-    [SerializeField] OverlayTile1 Tile; // current tile enmey is on
+    [SerializeField] private OverlayTile1 tile; // current tile enmey is on
 
     // public accessor
-    public int CurrentHP { get; private set; } // enemy currentHp set up
+    public override int CurrentHP => currentHP; //{ get; protected set; } // enemy currentHp set up
+    public override int MaxHP => stats != null ? stats.maxHP : 0; // for the abstract
     public int moveRange => stats.movementRange;// set move range
-
-    public int attackRange => stats.attackRange; // attack range
-
-    public int EnemyDmg => stats.damage; // get the enemy's dmg
-
+    public override int AttackRange => stats != null ? stats.attackRange : 0; // attack range
+    public override int BaseAttack => stats.baseAttack; // get the enemy's dmg
     public int EnemyDetect => stats.detectionRange; // get the enemy's detection range
 
     // public int health => stats != null ? stats.maxHP; // hit points
-    public int EvasionRate => stats.evasionRate; // get enemy evasion rate 
-    public int EnemyHitRate => stats.hitRate; // enemy base hit rate   
-
-
-    public OverlayTile1 currentTile => Tile; // where the enemy tile is
+    public override int EvasionRate => stats != null ? stats.evasionRate : 0; // get enemy evasion rate 
+    public override int HitRate => stats != null ? stats.hitRate : 0; // enemy base hit rate   
+    public override OverlayTile1 CurrentTile => tile; // where the enemy tile is
 
     private void Awake()
     {
@@ -53,14 +50,14 @@ public class EnemyInfo : MonoBehaviour
     public void EnemySetTile(OverlayTile1 newtile)
     {
         // tile exsit, flag is f, before we set enemy, nothing
-        if (Tile != null)
-            Tile.hasEnemy = false;
+        if (tile != null)
+            tile.hasEnemy = false;
 
-        Tile = newtile; // set up the tile
+        tile = newtile; // set up the tile
 
         // after we set the tile, toggle flag to t
-        if (Tile != null)
-            Tile.hasEnemy = true;
+        if (tile != null)
+            tile.hasEnemy = true;
     }
 
     public void SetStats(EnemyStatsScripObj newStats)
@@ -73,32 +70,38 @@ public class EnemyInfo : MonoBehaviour
 
         //enabled = true; // reenable if passed the null test
 
-        CurrentHP = stats.maxHP; // HP set up
+        currentHP = stats.maxHP; // HP set up
     }
 
     public void ResetHPToMAX()
     {
-        CurrentHP = stats.maxHP; // set hp to max HP
+        currentHP = stats.maxHP; // set hp to max HP
 
         Debug.LogWarning($"Enemy currentHP:{CurrentHP}"); // debug msg
     }
 
     public void EnemyTakeDamage(int dmg)
     {
-        CurrentHP -= dmg; // total heal - dmg
+        currentHP -= dmg; // total heal - dmg
 
         if (CurrentHP <= 0)
         {
-            CurrentHP = 0;
+            currentHP = 0;
 
             // reset the tile to empty
-            if (Tile != null)
-                Tile.hasEnemy = false;
+            if (tile != null)
+                tile.hasEnemy = false;
 
             Debug.Log($"{name} has died.");
 
             Destroy(this.gameObject);  // destory object enemy
         }
+    }
+
+    // abstract override 
+    public override void TakeDamage(int dmg)
+    {
+        EnemyTakeDamage(dmg);
     }
 }
 

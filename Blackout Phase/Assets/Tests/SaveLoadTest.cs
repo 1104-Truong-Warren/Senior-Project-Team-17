@@ -39,15 +39,15 @@ public class SaveLoadTest
         // Verify that all stats were correctly applied onto the player. 
         // This ensures that the player's runtime values match the saved data.
         Assert.AreEqual(dataToSave.hp, player.CurrentHP, "HP should match");
-        Assert.AreEqual(dataToSave.maxHP, player.maxHP, "Max HP should match");
+        Assert.AreEqual(dataToSave.maxHP, player.MaxHP, "Max HP should match");
         Assert.AreEqual(dataToSave.en, player.CurrentEN, "EN should match");
-        Assert.AreEqual(dataToSave.maxEN, player.maxEN, "Max EN should match");
-        Assert.AreEqual(dataToSave.baseAttk, player.BaseAttk, "Base Attack should match");
-        Assert.AreEqual(dataToSave.baseAttkRange, player.BaseRange, "Attack Range should match");
-        Assert.AreEqual(dataToSave.baseHitRate, player.BaseHitRate, "Hit Rate should match");
+        Assert.AreEqual(dataToSave.maxEN, player.MaxEN, "Max EN should match");
+        Assert.AreEqual(dataToSave.baseAttk, player.BaseAttack, "Base Attack should match");
+        Assert.AreEqual(dataToSave.baseAttkRange, player.AttackRange, "Attack Range should match");
+        Assert.AreEqual(dataToSave.baseHitRate, player.HitRate, "Hit Rate should match");
         Assert.AreEqual(dataToSave.baseCriticalRate, player.BaseCriticalRate, "Critical Rate should match");
         Assert.AreEqual(dataToSave.baseCritDamage, player.BaseCritDamage, "Crit Damage should match");
-        Assert.AreEqual(dataToSave.baseEvasion, player.BaseEvasion, "Evasion should match");
+        Assert.AreEqual(dataToSave.baseEvasion, player.EvasionRate, "Evasion should match");
 
         // Verify that the player's position matches the saved data.
         // Will show up invisible during testing.

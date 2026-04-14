@@ -1,3 +1,6 @@
+//
+// Weijun
+
 using UnityEngine;
 
 public abstract class EnemyAttackCore : MonoBehaviour
@@ -6,12 +9,18 @@ public abstract class EnemyAttackCore : MonoBehaviour
 
     protected virtual void Awake()
     {
-        enemyInfo = GetComponentInParent<EnemyInfo>(); // set up the enemyInfo, garb it from parent the main not copies
+        enemyInfo = GetComponentInParent<EnemyInfo>() ?? GetComponentInParent<EnemyInfo>(); // set up the enemyInfo, garb it from parent the main not copies
+
+        // check to see if enemy is setup correctly
+        if (enemyInfo == null)
+            Debug.LogError($"{name} is not find: EnemyInfo"); // debug msg
     }
 
-    public abstract bool CanAttackPlayer(CharacterInfo1 player); // just a inheritance, for distance check0
+    public abstract bool CanAttackTarget(UnitCore target); // just a inheritance, for distance check
 
-    public abstract void AttackPlayer(CharacterInfo1 player); // the actual attk function check
+    public abstract void AttackTarget(UnitCore target); // the actual attk function check, Normal Attack
+
+    public abstract void AttackTarget(UnitCore target, SkillData skill); // the skill versioin
 
     protected int Manhattan(Vector3Int a, Vector3Int b) // returns the correct distance bewteen player/enemy
     {

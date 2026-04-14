@@ -23,7 +23,7 @@ public class PlayerCombatCheck : MonoBehaviour
 
     [Header("Active Skill Settings")]
     [SerializeField] private SkillAttachment playerSkillattach; // accessor the player skills
-    [SerializeField] private PlayerSkillExecutor playerSkillExecutor; // accessor to the skill executor
+    [SerializeField] private SkillExecutor playerSkillExecutor; // accessor to the skill executor
     [SerializeField] private int playerSkillIndexSelect; // index for player skill
 
     public int playerSkillIndexCheck => playerSkillIndexSelect; // accessor for other scripts
@@ -56,7 +56,7 @@ public class PlayerCombatCheck : MonoBehaviour
 
         // skill executor null set up
         if (playerSkillExecutor == null)
-            playerSkillExecutor = GetComponent<PlayerSkillExecutor>();
+            playerSkillExecutor = GetComponent<SkillExecutor>();
 
         PlayerSetUp(); // void function to set up the player status
 
@@ -73,38 +73,41 @@ public class PlayerCombatCheck : MonoBehaviour
         SetupSkillKeyInput();
     }
 
-    public void PlayerAttackCheck(EnemyInfo enemy)
+    public bool PlayerSkillDmgChecker(SkillData skill, EnemyInfo enemy)
     {
         // make sure it's player's turn
-        if (TurnManager.Instance.State != TurnState.PlayerAction) return;
+        if (TurnManager.Instance.State != TurnState.PlayerAction) return false;
 
-        SkillData currentSkill = playerSkillattach.GetActiveSkill(playerSkillIndexSelect); // setup the currentSkill
+        //SkillData currentSkill = playerSkillattach.GetActiveSkill(playerSkillIndexSelect); // setup the currentSkill
 
-        var player = CharacterInfo1.Instance; // make a copy of characterInfo as reference
+        //var player = CharacterInfo1.Instance; // make a copy of characterInfo as reference
+
+        // check to see if skill, player, enemy exist
+        if (skill == null || playerInfo == null || enemy == null) return false;
 
         // check if the player is able to use the skill 
-        if (!CanPlayerUseSkill(currentSkill, player, enemy)) return;
+        if (!CanPlayerUseSkill(skill, playerInfo, enemy)) return false;
 
-        TurnManager.Instance.PlayerSpendAP(currentSkill.skillAPCost); // still cost ap if pass the test
+        //TurnManager.Instance.PlayerSpendAP(currentSkill.skillAPCost); // still cost ap if pass the test
 
-        player.PlayerSpendEN(currentSkill.skillENCost); // EN goes down before attack lands
-
-        bool enemyDodge = EnemyReactToAttack(currentSkill, player, enemy); // did the attack hit?
-
-        // if enemy dodged return 
-        if (enemyDodge)
-        {
-            Debug.Log("Enemy dodged the player's attack!"); // debug msg
-            return;
-        }
+        //player.PlayerSpendEN(currentSkill.skillENCost); // EN goes down before attack lands
 
         // if player attack missed return
-        if (!PlayerAttackHits(currentSkill, player, enemy)) return;
+        if (!PlayerAttackHits(skill, playerInfo, enemy)) return false;
 
-        int dmg = CalculatePlayerSkillDmg(currentSkill, player, enemy); // for the final attack crit hit
+        //bool enemyDodge = EnemyReactToAttack(skill, playerInfo, enemy); // did the attack hit?
+
+        //// if enemy dodged return 
+        //if (enemyDodge)
+        //{
+        //    Debug.Log("Enemy dodged the player's attack!"); // debug msg
+        //    return false;
+        //}
+
+        int dmg = CalculatePlayerSkillDmg(skill, playerInfo, enemy); // for the final attack crit hit
 
         // making sure the dmg is vaild
-        if (dmg <= 0) return;
+        if (dmg <= 0) return false;
 
         Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
 
@@ -115,40 +118,44 @@ public class PlayerCombatCheck : MonoBehaviour
         {
             DamageObserver.Instance.ShowPlayerDamage(dmg, enemy.transform.position);
         }
+
+        EnemyReactToAttack(skill, playerInfo, enemy); // enemy reaction to player's attack
+
+        return true; // attack hit
     }
 
-    public void PlayerCounterAttack(EnemyInfo enemy)
+    public void PlayerCounterAttack(EnemyInfo enemy, bool allowEnemyReaction = true) // added bool flag to make sure enemy can only counter once
     {
         SkillData currentSkill = playerSkillattach.GetActiveSkill(playerSkillIndexSelect); // setup the currentSkill
 
-        var player = CharacterInfo1.Instance; // make a copy of characterInfo as reference
+        //var player = CharacterInfo1.Instance; // make a copy of characterInfo as reference
 
         // check if the player is able to use the skill 
-        if (!CanPlayerUseSkill(currentSkill, player, enemy)) return;
+        if (!CanPlayerUseSkill(currentSkill, playerInfo, enemy)) return;
 
-        player.PlayerSpendEN(currentSkill.skillENCost); // EN goes down before attack lands
+        playerInfo.PlayerSpendEN(currentSkill.skillENCost); // EN goes down before attack lands
 
-        bool enemyDodge = EnemyReactToAttack(currentSkill, player, enemy); // did the attack hit?
+        //bool enemyDodge = EnemyReactToAttack(currentSkill, playerInfo, enemy); // did the attack hit?
 
-        // if enemy dodged return 
-        if (enemyDodge)
-        {
-            Debug.Log("Enemy dodged the player's attack!"); // debug msg
-            return;
-        }
+        //// if enemy dodged return 
+        //if (enemyDodge)
+        //{
+        //    Debug.Log("Enemy dodged the player's attack!"); // debug msg
+        //    return;
+        //}
 
         // if player attack missed return
-        if (!PlayerAttackHits(currentSkill, player, enemy)) return;
+        if (!PlayerAttackHits(currentSkill, playerInfo, enemy)) return;
 
         // if the enemy react to player dodged get out
-        if (EnemyReactToAttack(currentSkill, player, enemy)) return;
+        //if (EnemyReactToAttack(currentSkill, playerInfo, enemy)) return;
 
-        int dmg = CalculatePlayerSkillDmg(currentSkill, player, enemy); // for the final attack crit hit
+        int dmg = CalculatePlayerSkillDmg(currentSkill, playerInfo, enemy); // for the final attack crit hit
 
         // making sure the dmg is vaild
         if (dmg <= 0) return;
 
-        Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
+        //Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
 
@@ -157,6 +164,8 @@ public class PlayerCombatCheck : MonoBehaviour
         {
             DamageObserver.Instance.ShowPlayerDamage(dmg, enemy.transform.position);
         }
+
+        //EnemyReactToAttack(currentSkill, playerInfo, enemy); // enemy reaction to player's attack
     }
 
     private bool PlayerCritOrFuryActiveCheck(int critChance)
@@ -170,12 +179,18 @@ public class PlayerCombatCheck : MonoBehaviour
 
     public void PlayerSetUp()
     {
-        playerInfo = GetComponent<CharacterInfo1>(); // setup the playerInfo
+        //playerInfo = GetComponent<CharacterInfo1>(); // setup the playerInfo
+
+        playerInfo = CharacterInfo1.Instance; // setup the playerInfo
 
         // if player exist set up the status
         if (playerInfo != null)
         {
             playerSkillattach = playerInfo.GetComponent<SkillAttachment>(); // get the skills from player attachment
+
+            playerSkillExecutor = playerInfo.GetComponent<SkillExecutor>(); // set up the skill executor
+
+            Debug.Log($"[PCC] PlayerSetup complete | attachment:{(playerSkillattach != null ? playerSkillattach.GetInstanceID() : -1)}"); // debug msg
 
             //PlayerStatusSetUp(); // set up player status
             return;
@@ -190,6 +205,10 @@ public class PlayerCombatCheck : MonoBehaviour
             playerInfo = playerObj.GetComponent<CharacterInfo1>(); // set up the playerInfo using object
 
             playerSkillattach = playerInfo.GetComponent<SkillAttachment>(); // get the skills from player attachment
+
+            playerSkillExecutor = playerInfo.GetComponent<SkillExecutor>(); // set up the skill executor
+
+            Debug.Log($"[PCC] PlayerSetup complete | attachment:{(playerSkillattach != null ? playerSkillattach.GetInstanceID() : -1)}"); // debug msg
 
             //PlayerStatusSetUp(); // calls the player stats function
         }
@@ -235,7 +254,7 @@ public class PlayerCombatCheck : MonoBehaviour
         // if player is not found or player tile not found get out
         if (player == null || player.CurrentTile == null) return -1;
 
-        int dmg = (player.BaseAttk + skill.AttackDamage); // for the final attack crit hit
+        int dmg = (player.BaseAttack + skill.AttackDamage); // for the final attack crit hit
 
         int critChance = HitRollCheck.FinalCritChanceCal(player.BaseCriticalRate, skill.CritChance); // find the crit chance of attack
 
@@ -265,7 +284,7 @@ public class PlayerCombatCheck : MonoBehaviour
         // if player is not found or player tile not found get out
         if (player == null || player.CurrentTile == null) return false;
 
-        int hitChance = HitRollCheck.FinalHitChanceCal(player.BaseHitRate, skill.HitRate, enemy.EvasionRate); // pass over the data to roll a hit
+        int hitChance = HitRollCheck.FinalHitChanceCal(player.HitRate, skill.HitRate, enemy.EvasionRate); // pass over the data to roll a hit
 
         Debug.Log($"HitChance:{hitChance}"); // debug msg
 
@@ -280,7 +299,9 @@ public class PlayerCombatCheck : MonoBehaviour
                 DamageObserver.Instance.ShowMissText(enemy.transform.position);
             }
 
-            player.PlayerSpendEN(skill.skillENCost); // EN goes down before attack lands
+            player.PlayerSpendEN(skill.skillENCost); // EN goes down before return
+
+            player.ApUsed(skill.skillAPCost); // AP goes down before 
 
             return false;
         }
@@ -299,23 +320,9 @@ public class PlayerCombatCheck : MonoBehaviour
         // check if enemy still has health left
         if (enemy.CurrentHP <= 0) return false;
 
-        // if player AP is not enough display message
-        if (player.currentAP < skill.skillAPCost)
-        {
-            Debug.Log("Not enough AP to attack!");
-            return false;
-        }
-
-        // check if the player has enough EN
-        if (!player.PlayerEnCheck(skill.skillENCost))
-        {
-            Debug.Log("Insufficent EN amount!"); // debug msg
-            return false;
-        }
-
         OverlayTile1 playerTile = player.CurrentTile; // player tile location
 
-        OverlayTile1 enemyTile = enemy.currentTile; //MapManager1.Instance.GetWorldTileFromTransform(enemy.transform); // enemy tile location
+        OverlayTile1 enemyTile = enemy.CurrentTile; //MapManager1.Instance.GetWorldTileFromTransform(enemy.transform); // enemy tile location
 
         //var e = enemyTile.gridLocation; // enemy tile location
 
@@ -327,7 +334,7 @@ public class PlayerCombatCheck : MonoBehaviour
         }
         int distance = Manhattan(playerTile.gridLocation, enemyTile.gridLocation); //Mathf.Abs(playerTile.gridLocation.x - enemyTile.gridLocation.x) + Mathf.Abs(playerTile.gridLocation.y - enemyTile.gridLocation.y);
 
-        Debug.Log($"Distance = {distance}, PlayerAttkRange:{skill.AttackRange} (PlayerBaseRange:{player.BaseRange})");
+        Debug.Log($"[PCC] Distance = {distance}, PlayerAttkRange:{skill.AttackRange} (PlayerBaseRange:{player.AttackRange})");
 
         // check to see if enemy is in range for attk
         if (distance > skill.AttackRange)
@@ -339,55 +346,72 @@ public class PlayerCombatCheck : MonoBehaviour
         return true; // true if passed all the test
     }
 
-    private bool EnemyReactToAttack(SkillData skill, CharacterInfo1 player, EnemyInfo enemy)
+    private void EnemyReactToAttack(SkillData skill, CharacterInfo1 player, EnemyInfo enemy)
     {
         // check to see if player, skill, enemy exist
-        if (skill == null || player == null || enemy == null) return false;
+        if (skill == null || player == null || enemy == null) return;
 
         EnemyReactionController enemyReact = enemy.GetComponent<EnemyReactionController>(); // set up the enemy ract access
 
         // does the enemy reaction exist? 
-        if (enemyReact == null) return false;
+        if (enemyReact == null) return;
 
-        bool dodge = enemyReact.ReactToPlayerAttack(player, skill.HitRate); // check for enemy dodged 
+        //bool dodge = enemyReact.ReactToPlayerAttack(player, skill.HitRate); // check for enemy dodged 
 
-        // did the dodge went through?
-        if (dodge)
-        {
-            Debug.Log("Enemy Dodged! Attack Missed!"); // debug msg
-            return true; // dodge 
-        }
+        //// did the dodge went through?
+        //if (dodge)
+        //{
+        //    Debug.Log("Enemy Dodged! Attack Missed!"); // debug msg
+        //    return true; // dodge 
+        //}
 
-        return false;  // hit
+        enemyReact.ReactToPlayerAttack(player, skill);  // hit
     }
 
     public void UseSelectedSkill(EnemyInfo enemy = null)
     {
         SkillData currentSkill = GetCurrentSkill(); // find the current skill
 
+        // if it's not in player action state get out
+        if (TurnManager.Instance.State != TurnState.PlayerAction) return;
+
         // if skill not foun return
         if (currentSkill == null) return;
 
-        // switch statment to decided what tyep of skills player is using
-        switch (currentSkill.skillEffectType)
+        // check to see if skill executor exist
+        if (playerSkillExecutor == null) return;
+
+        Debug.Log($"[PCC] UseSelectedSkill, state:{TurnManager.Instance.State} | skill:{currentSkill?.skillDisplayName} | enemy:{enemy?.name})"); // debug msg
+
+        // if the current skill is heal and target is player
+        if (currentSkill.skillEffectType == SkillEffectType.Heal || currentSkill.targetType == TargetType.Player)
         {
-            case SkillEffectType.Damage: // damage skill
+            Debug.Log($"[PCC] Using Self-Target Skill:{currentSkill.skillDisplayName}"); // debug msg
 
-                // if enemy not found return
-                if (enemy == null) return;
-
-                PlayerAttackCheck(enemy); // if enemy found attack
-                break;
-
-            case SkillEffectType.Heal: // heal skill
-                playerSkillExecutor.UseSkill(currentSkill);
-                break;
+            playerSkillExecutor.UseSkill(currentSkill, null); // try to use the skill
+            return;
         }
 
+        // if the enemy is not found using a damage skill display a msg
+        if (enemy == null)
+        {
+            Debug.Log($"[PCC] No Enemy found for target selection for damage skill!"); // debug msg
+            return;
+        }
+
+        playerSkillExecutor.UseSkill(currentSkill, enemy); // use damage skill to an enemy
+
+        //bool used = playerSkillExecutor.UseSkill(currentSkill, enemy); // using the executor to check the skill type
+
+        //Debug.Log($"[PCC] UsedSkill return:{used}"); // debug msg
     }
 
     public void SetSelectedSkillIndex(int index)
     {
+        // if the skill attachment is null set up again
+        if (playerSkillattach == null)
+            PlayerSetUp();
+
         // if player has no skills attach get out
         if (playerSkillattach == null) return;
 
@@ -406,10 +430,24 @@ public class PlayerCombatCheck : MonoBehaviour
         playerSkillIndexSelect = index; // setup the player skill index
 
         Debug.Log($"Skill slot:{index + 1} : {selectedSkill.skillDisplayName}"); // debug msg
+
+        Debug.Log($"[PCC] Checking skill slot:{index + 1}"); // debug msg
+
+        // Debug test to see if [PCC] matches the [PA] skills
+        for (int i = 0; i < playerSkillattach.EquippedActiveSkills.Count; i++)
+        {
+            SkillData skill = playerSkillattach.EquippedActiveSkills[i];
+
+            Debug.Log($"[PCC] Slot:{i + 1} = {(skill != null ? skill.skillDisplayName : "EMPTY")}"); // debug msg
+        }
     }
 
     public SkillData GetCurrentSkill()
     {
+        // make sure attachment is not null
+        if (playerSkillattach == null)
+            PlayerSetUp();
+
         // check too see if player skill attach is null
         if (playerSkillattach == null) return null;
 
@@ -421,6 +459,21 @@ public class PlayerCombatCheck : MonoBehaviour
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // returns the player/enemy distance
     }
 }
+
+
+// if player AP is not enough display message
+//if (player.currentAP < skill.skillAPCost)
+//{
+//    Debug.Log("Not enough AP to attack!");
+//    return false;
+//}
+
+//// check if the player has enough EN
+//if (!player.PlayerEnCheck(skill.skillENCost))
+//{
+//    Debug.Log("Insufficent EN amount!"); // debug msg
+//    return false;
+//}
 
 //private void TestLoadSkills()
 //{
@@ -436,6 +489,22 @@ public class PlayerCombatCheck : MonoBehaviour
 //    playerSkillattach.EquipActiveSkillToSlot(skill2, 1);
 //    playerSkillattach.EquipActiveSkillToSlot(skill3, 2);
 //    playerSkillattach.EquipActiveSkillToSlot(skill4, 3);
+//}
+
+//// switch statment to decided what tyep of skills player is using
+//switch (currentSkill.skillEffectType)
+//{
+//    case SkillEffectType.Damage: // damage skill
+
+//        // if enemy not found return
+//        if (enemy == null) return;
+
+//        PlayerAttackCheck(enemy); // if enemy found attack
+//        break;
+
+//    case SkillEffectType.Heal: // heal skill
+//        playerSkillExecutor.UseSkill(currentSkill);
+//        break;
 //}
 
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   skillType: 0
-  targetType: 0
+  targetType: 1
   weaponType: 1
   classType: 1
   subClassType: 1
@@ -40,4 +40,4 @@ MonoBehaviour:
   skillCoolDown: 0
   skillDuration: 0
   requiredLevel: 3
-  requirdSkills: 
+  requirdSkills: 02000000

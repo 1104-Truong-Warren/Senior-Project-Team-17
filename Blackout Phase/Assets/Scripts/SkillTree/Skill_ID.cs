@@ -35,4 +35,9 @@ public enum Skill_ID
 
     ExtraMovement, // more move range level or skill dependent 
 
+    // --------------------- Enemy Skills ---------------------------------
+    // ===================== Melee Enemy ==================================
+    NormalSlash, // enemy normal attack
+
+    HeavySlam, // higher damage/ with EN reduction
 }

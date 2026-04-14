@@ -6,16 +6,16 @@
 // Weijun
 using UnityEngine; // default 
 
-public class CharacterInfo1 : MonoBehaviour
+public class CharacterInfo1 : UnitCore
 {
     private int maxAP = 2; // action points for player each turn max out at 2 aside from passive skills
     //private int RageMode = 2; // after defeating 2 enemy in a row, enters a special state, player can attack again (extra movement) on top of the AP
 
     [Header("Player Stats")]
-    [SerializeField] private int HP;    //  the player's current
-    [SerializeField] private int MaxHP; // the player's Max HP
-    [SerializeField] private int EN; // the player's current EN (energey for skills)
-    [SerializeField] private int MaxEN; // the player's max EN
+    [SerializeField] private int hp;    //  the player's current
+    [SerializeField] private int maxHP; // the player's Max HP
+    [SerializeField] private int en; // the player's current EN (energey for skills)
+    [SerializeField] private int maxEN; // the player's max EN
     [SerializeField] private int baseMoveRange; // how far player able to move
     [SerializeField] private int baseAttk; // the basic attack of player
     [SerializeField] private int baseAttkRange; // basic attack range of player
@@ -23,29 +23,28 @@ public class CharacterInfo1 : MonoBehaviour
     [SerializeField] private int baseCriticalRate; // the basic critical rate for player
     [SerializeField] private int baseCritDamage; // the basic critical damage for player
     [SerializeField] private int baseEvasion; // evasion rate of the player
-    [SerializeField] private int Level; // what level is the character
+    [SerializeField] private int level; // what level is the character
 
     private OverlayTile1 standingOnTile; // stores the tile
 
     // public accessor for player's info
-    public int CurrentHP => HP; 
-    public int maxHP => MaxHP;
-    public int CurrentEN => EN;
-    public int maxEN => MaxEN;
-    public int BaseAttk => baseAttk;
-    public int BaseRange => baseAttkRange;
-    public int BaseHitRate => baseHitRate;
+    public override int CurrentHP => hp; 
+    public override int MaxHP => maxHP;
+    public int CurrentEN => en;
+    public int MaxEN => maxEN;
+    public override int BaseAttack => baseAttk;
+    public override int AttackRange => baseAttkRange;
+    public override int HitRate => baseHitRate;
     public int BaseCriticalRate => baseCriticalRate;
     public int BaseCritDamage => baseCritDamage;    
-    public int BaseEvasion => baseEvasion;
-    public int CurrentLevel => Level;
+    public override int EvasionRate => baseEvasion;
+    public int CurrentLevel => level;
+    public override OverlayTile1 CurrentTile => standingOnTile;
 
     // check EN
-    public bool HasEN(int costEN) => EN >= costEN; // left EN right cost (>=) a right symbol
+    public bool HasEN(int costEN) => en >= costEN; // left EN right cost (>=) a right symbol
 
     //public int MoveRange => moveRange;
-
-    public OverlayTile1 CurrentTile => standingOnTile;
 
     public static CharacterInfo1 Instance { get; private set; } // access
     public int currentAP {  get; private set; } // access the AP
@@ -61,8 +60,8 @@ public class CharacterInfo1 : MonoBehaviour
     public void LevelUp()
     {
         // check to see if player can be leveled up
-        if (Level < 20)
-            Level++; // player leveled up
+        if (level < 10)
+            level++; // player leveled up
 
         else
         {
@@ -109,16 +108,22 @@ public class CharacterInfo1 : MonoBehaviour
 
     public void PlayerTakeDamage(int dmg)
     {
-        HP -= dmg; // current hp - dmg
+        hp -= dmg; // current hp - dmg
 
-        if (HP <= 0) // check if player have HP left
+        if (hp <= 0) // check if player have HP left
         {
-            HP = 0; // reset it to 0
+            hp = 0; // reset it to 0
 
             Debug.Log($"{name} has died."); // debug
 
             TurnManager.Instance.SetTurnState(TurnState.GameOver); // Game Over!
         }
+    }
+
+    // abstract override 
+    public override void TakeDamage(int dmg)
+    {
+        PlayerTakeDamage(dmg);
     }
 
     public bool PlayerEnCheck(int costEN)
@@ -127,7 +132,7 @@ public class CharacterInfo1 : MonoBehaviour
         //if (costEN <= 0) return true;
 
         // if the player EN is less than EN cost return false
-        if (EN < costEN) return false;
+        if (en < costEN) return false;
 
         return true;
     } 
@@ -137,7 +142,7 @@ public class CharacterInfo1 : MonoBehaviour
         // if the EN cost is negative or greater than total EN get out
         if (costEN < 0 || costEN > CurrentEN || CurrentEN == 0) return;
 
-        EN -= costEN; // EN - costEN
+        en -= costEN; // EN - costEN
     }
 
     public void RestoreEN(int amountEN)
@@ -145,16 +150,16 @@ public class CharacterInfo1 : MonoBehaviour
         // if the amount is negative return
         if (amountEN <= 0) return;
 
-        EN = Mathf.Min(maxEN, EN + amountEN); // compare maxEN and the current EN + restore amount and use the minimum, make sure we don't over cap the EN limit
+        en = Mathf.Min(maxEN, en + amountEN); // compare maxEN and the current EN + restore amount and use the minimum, make sure we don't over cap the EN limit
     }
 
     // ADDED BY WARREN: New method to increase maximum HP (for level up choices)
     // also used to increase max HP for equipped gear - Ellison
     public void IncreaseMaxHP(int amount)
     {
-        MaxHP += amount;
-        HP += amount;
-        Debug.Log($"HP increased to {HP}/{MaxHP}");
+        maxHP += amount;
+        hp += amount;
+        Debug.Log($"HP increased to {hp}/{maxHP}");
         
         UpdateAllUI();
     }
@@ -165,10 +170,10 @@ public class CharacterInfo1 : MonoBehaviour
     // - Ellison
     public void DecreaseMaxHP(int amount)
     {
-        MaxHP -= amount;
+        maxHP -= amount;
         //HP = Mathf.Min(HP, MaxHP); // make sure current HP doesn't exceed new max HP
-        HP -= amount; // decrease current HP by the same amount to reflect the change, if we just set it to the new max it would heal the player if they were below the new max already
-        Debug.Log($"HP decreased to {HP}/{MaxHP}");
+        hp -= amount; // decrease current HP by the same amount to reflect the change, if we just set it to the new max it would heal the player if they were below the new max already
+        Debug.Log($"HP decreased to {hp}/{maxHP}");
         
         UpdateAllUI();
     }
@@ -178,15 +183,15 @@ public class CharacterInfo1 : MonoBehaviour
     public void RestoreHP(int amount)
     {
         if (amount <= 0) return; // if the amount is negative or zero return
-        HP = Mathf.Min(MaxHP, HP + amount); // compare maxHP and the current HP + restore amount and use the minimum, make sure we don't over cap the HP limit
+        hp = Mathf.Min(MaxHP, hp + amount); // compare maxHP and the current HP + restore amount and use the minimum, make sure we don't over cap the HP limit
     }
 
     // New method to increase maximum EN (for level up choices)
     public void IncreaseMaxEN(int amount)
     {
-        MaxEN += amount;
-        EN += amount;
-        Debug.Log($"EN increased to {EN}/{MaxEN}");
+        maxEN += amount;
+        en += amount;
+        Debug.Log($"EN increased to {en}/{maxEN}");
         
         UpdateAllUI();
     }
@@ -230,22 +235,22 @@ public class CharacterInfo1 : MonoBehaviour
     public void LoadFromSaveData(PlayerSaveData data)
     {
         // Stats that saves when player saves while in game
-        HP = data.hp;
-        MaxHP = data.maxHP;
-        EN = data.en;
-        MaxEN = data.maxEN;
+        hp = data.hp;
+        maxHP = data.maxHP;
+        en = data.en;
+        maxEN = data.maxEN;
         baseAttk = data.baseAttk;
         baseAttkRange = data.baseAttkRange;
         baseHitRate = data.baseHitRate;
         baseCriticalRate = data.baseCriticalRate;
         baseCritDamage = data.baseCritDamage;
         baseEvasion = data.baseEvasion;
-        Level = data.level;
+        level = data.level;
 
         // Set position
         transform.position = new Vector3(data.posX, data.posY, data.posZ);
         
-        Debug.Log($"Game loaded! HP: {HP}/{MaxHP}, EN: {EN}/{MaxEN}");
+        Debug.Log($"Game loaded! HP: {hp}/{maxHP}, EN: {en}/{maxEN}");
     }
 
 }

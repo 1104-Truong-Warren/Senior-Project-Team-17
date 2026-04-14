@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: -6424244232038671058}
   - component: {fileID: 1283290579460195088}
   - component: {fileID: 7919476336222347911}
+  - component: {fileID: -3895431657657374414}
+  - component: {fileID: 8541822560335772196}
   m_Layer: 9
   m_Name: EnemyElite
   m_TagString: Untagged
@@ -153,8 +155,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a673fd9e76a9614297535b4c9e90b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  Tile: {fileID: 0}
+  stats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
+  currentHP: 0
+  tile: {fileID: 0}
 --- !u!114 &6399035647557708820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,9 +221,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfba66794135694ba3274bc2a4204bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeDodgeBounus: 10
+  activeDodgeBounus: 15
   counterAttackChance: 0
   allowToCounter: 1
+--- !u!114 &-3895431657657374414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5232868240694350822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3de0d1d4adfbe04fb9b8eef5ddc4307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 8483452363038859107}
+  skillAttachment: {fileID: 8541822560335772196}
+--- !u!114 &8541822560335772196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5232868240694350822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442efa83434da2c45aa35edac04624ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equippedActiveSkills:
+  - {fileID: 11400000, guid: ee4624905aa7a8946975dbbe0b4aaa6b, type: 2}
+  - {fileID: 11400000, guid: b27ca21e6bce81d48aef31ce8d0b3bf4, type: 2}
+  unlockedActiveSkills:
+  - {fileID: 11400000, guid: ee4624905aa7a8946975dbbe0b4aaa6b, type: 2}
+  - {fileID: 11400000, guid: b27ca21e6bce81d48aef31ce8d0b3bf4, type: 2}
+  unlockedPassiveSkills: []
 --- !u!1001 &6827227202612923296
 PrefabInstance:
   m_ObjectHideFlags: 0

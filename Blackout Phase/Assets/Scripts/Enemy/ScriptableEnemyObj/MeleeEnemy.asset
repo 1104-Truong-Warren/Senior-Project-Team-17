@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 15
   attackRange: 1
-  damage: 3
+  baseAttack: 3
   detectionRange: 3
   movementRange: 3
   evasionRate: 10

@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
             tile.HideTile(); // undo hightlight
 
             Debug.Log("Enemy moved visually to: " + tile.gridLocation);
-            Debug.Log("EnemyInfo.currentTile says: " + enemyInfo.currentTile.gridLocation);
+            Debug.Log("EnemyInfo.currentTile says: " + enemyInfo.CurrentTile.gridLocation);
         }
 
         //if (path.Count == 0) 
@@ -78,6 +78,6 @@ public class EnemyMovement : MonoBehaviour
         transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y + 0.01f, // a little y offset
             tile.transform.position.z);
 
-        Debug.Log($"{name} moved to {enemyInfo.currentTile.gridLocation}"); // debug msg
+        Debug.Log($"{name} moved to {enemyInfo.CurrentTile.gridLocation}"); // debug msg
     }
 }

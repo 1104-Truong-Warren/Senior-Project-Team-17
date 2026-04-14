@@ -1,3 +1,6 @@
+//
+// Weijun 
+
 using UnityEngine; // default
 using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 using System.Collections.Generic; // for the List<T> and dictionary <T, T> for pathfinding
@@ -62,7 +65,7 @@ public class EnemyController1 : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("EnemyController start - currentTile = " + enemyInfo.currentTile); // debug
+        Debug.Log("EnemyController start - currentTile = " + enemyInfo.CurrentTile); // debug
 
         enemyState = EnemyState.Patrol; // start off by patrolling
     }
@@ -97,7 +100,9 @@ public class EnemyController1 : MonoBehaviour
         // check if player is in enemy attack range if so, attack
         if (enemyAttk != null && player != null && player.CurrentTile != null)
         {
-            bool canAttack = enemyAttk.CanAttackPlayer(player); // flag to see if enemy can attack player
+            UnitCore target = player; // target is the player
+
+            bool canAttack = enemyAttk.CanAttackTarget(target); // flag to see if enemy can attack player
 
             //var player = GetPlayer(); // set up player
 
@@ -209,8 +214,8 @@ public class EnemyController1 : MonoBehaviour
 
     if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
 
-    int distance = Mathf.Abs(enemyInfo.currentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
-                + Mathf.Abs(enemyInfo.currentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
+    int distance = Mathf.Abs(enemyInfo.CurrentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
+                + Mathf.Abs(enemyInfo.CurrentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
 
     return distance <= enemyInfo.EnemyDetect; // return the detection range
 }
@@ -231,7 +236,7 @@ private IEnumerator MoveTowardPlayer()
         }
 
         // if adjacent tile is equal to the enemy tile
-        if (chaseTargetPlayer == enemyInfo.currentTile)
+        if (chaseTargetPlayer == enemyInfo.CurrentTile)
         {
             Debug.Log($"{name}: Already at the adjacent tile, keep on chasing next turn."); // debug
 
@@ -239,7 +244,7 @@ private IEnumerator MoveTowardPlayer()
             yield break;
         }
 
-        List<OverlayTile1> findPath = pathFinder.FindPath(enemyInfo.currentTile, chaseTargetPlayer); // find the adjacent path bewteen player/enemy
+        List<OverlayTile1> findPath = pathFinder.FindPath(enemyInfo.CurrentTile, chaseTargetPlayer); // find the adjacent path bewteen player/enemy
 
         if (findPath.Count <= 1)  // skip if it's one because player is next to nemey
         {
@@ -259,7 +264,7 @@ private IEnumerator MoveTowardPlayer()
     private IEnumerator PatrolEnemyMovement()
     {
         // if enemy tile is null display a debug
-        if (enemyInfo.currentTile == null)
+        if (enemyInfo.CurrentTile == null)
         {
             Debug.LogError($" {name} has no currentTile, skipping turn.");
             yield break;
@@ -281,7 +286,7 @@ private IEnumerator MoveTowardPlayer()
         OverlayTile1 targetTile = MapManager1.Instance.GetTile(targetGrid); // get the tile from map Manager
 
         // if target tile and enemy current tile both are found and they are equal update the index
-        if (targetTile != null && enemyInfo.currentTile != null && enemyInfo.currentTile.gridLocation == targetTile.gridLocation)
+        if (targetTile != null && enemyInfo.CurrentTile != null && enemyInfo.CurrentTile.gridLocation == targetTile.gridLocation)
         {
             UpdateIndex(); // index update
             yield break;
@@ -293,7 +298,7 @@ private IEnumerator MoveTowardPlayer()
             yield break;
         }
 
-        Debug.Log($"{name} current tile = {enemyInfo.currentTile.gridLocation}"); // debug msg
+        Debug.Log($"{name} current tile = {enemyInfo.CurrentTile.gridLocation}"); // debug msg
         Debug.Log("Calling pathfinder..."); // debug msg
 
         if (targetTile.hasPlayer)
@@ -308,7 +313,7 @@ private IEnumerator MoveTowardPlayer()
             yield break;
         }
 
-        List<OverlayTile1> path = pathFinder.FindPath(enemyInfo.currentTile, targetTile); // current tile to next tile
+        List<OverlayTile1> path = pathFinder.FindPath(enemyInfo.CurrentTile, targetTile); // current tile to next tile
 
         if (path.Count < 2)
         {
@@ -319,7 +324,7 @@ private IEnumerator MoveTowardPlayer()
         // current skip 0 -> start from 1
         yield return movement.MoveAlong(path.Skip(1).ToList()); // if path count > 0 delay return, got through the patrol points, skips whole path
 
-        if (enemyInfo.currentTile.gridLocation == targetTile.gridLocation) // if we reach the tile update it
+        if (enemyInfo.CurrentTile.gridLocation == targetTile.gridLocation) // if we reach the tile update it
             UpdateIndex(); // updates the index
     }
 
@@ -363,7 +368,7 @@ private IEnumerator MoveTowardPlayer()
 
             //return tile; // returns the first valid adjacent tile
 
-            float distance = Vector2.Distance(tile.transform.position, enemyInfo.currentTile.transform.position); // store that variable 
+            float distance = Vector2.Distance(tile.transform.position, enemyInfo.CurrentTile.transform.position); // store that variable 
 
             // if the new distance better than the distance we have replace it
             if (distance < bestDistance)
@@ -386,9 +391,9 @@ private IEnumerator MoveTowardPlayer()
         movingForward = true; // direction of movement
 
         // enemyInfo and enemy current tile exist and patrolPoints is vaild, change the starting tile to the next index
-        if (enemyInfo != null && enemyInfo.currentTile != null && patrolPoints.Count > 0)
+        if (enemyInfo != null && enemyInfo.CurrentTile != null && patrolPoints.Count > 0)
         {
-            Vector2Int currentTile = new Vector2Int(enemyInfo.currentTile.gridLocation.x, enemyInfo.currentTile.gridLocation.y); // set current tile based on enemy current position x,y
+            Vector2Int currentTile = new Vector2Int(enemyInfo.CurrentTile.gridLocation.x, enemyInfo.CurrentTile.gridLocation.y); // set current tile based on enemy current position x,y
 
             // current patrol point is equal to the tile and patrol points are more than one go to next point
             if (patrolPoints[patrolIndex] == currentTile && patrolPoints.Count > 1)
@@ -422,12 +427,25 @@ private IEnumerator MoveTowardPlayer()
     //    return CharacterInfo1.Instance != null ? CharacterInfo1.Instance : GameObject.FindGameObjectWithTag("Player1")?.GetComponent<CharacterInfo1>(); 
     //}
 
-    private void AttackQeue(CharacterInfo1 player)
+    private void AttackQeue(UnitCore player)
     {
         // if player null get out
         if (player == null) return;
 
-        Debug.Log($"[Enemy]:{name} Attack Qeue! player:{player?.name} dmg:{enemyInfo.EnemyDmg}"); // debug msg
+        EnemySkillLogic enemySkillLogic = GetComponent<EnemySkillLogic>(); // setup the enemySkill Logic
+
+        // if the enemeySkillL is found continue
+        if (enemySkillLogic != null)
+        {
+            bool usedSkill = enemySkillLogic.TryQueueBestSkill(player); // try to use the skill on player
+
+            // skill is used display a msg
+            if (usedSkill)
+            {
+                Debug.Log($"[EC] Enemy:{name} Queued skill attack on {player.name}"); // debug msg
+                return;
+            }
+        }
 
         //// states for calculation
         //int enemyHitRate = enemyInfo.EnemyHitRate; // set up the enemy hit rate
@@ -436,9 +454,11 @@ private IEnumerator MoveTowardPlayer()
 
         //int playerEvasion = player.BaseEvasion; // set up the player evasion rate
 
-        int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.EnemyHitRate, 0, player.BaseEvasion);
+        Debug.Log($"[Enemy]:{name} Attack Qeue! player:{player?.name} dmg:{enemyInfo.BaseAttack}"); // debug msg for basic attack/ default
 
-        TurnManager.Instance.StartPlayerReaction(enemyInfo, enemyInfo.EnemyDmg, hitChance); // copies over the enemy/player data
+        int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.HitRate, 0, player.EvasionRate);
+
+        TurnManager.Instance.StartPlayerReaction(enemyInfo, player, enemyInfo.BaseAttack, hitChance); // copies over the enemy/player data
     }
 
     private void OnDestroy()

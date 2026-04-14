@@ -38,15 +38,15 @@ public class PlayerSaveData
     public PlayerSaveData(CharacterInfo1 player)
     {
         hp = player.CurrentHP;
-        maxHP = player.maxHP;
+        maxHP = player.MaxHP;
         en = player.CurrentEN;
-        maxEN = player.maxEN;
-        baseAttk = player.BaseAttk;
-        baseAttkRange = player.BaseRange;
-        baseHitRate = player.BaseHitRate;
+        maxEN = player.MaxEN;
+        baseAttk = player.BaseAttack;
+        baseAttkRange = player.AttackRange;
+        baseHitRate = player.HitRate;
         baseCriticalRate = player.BaseCriticalRate;
         baseCritDamage = player.BaseCritDamage;
-        baseEvasion = player.BaseEvasion;
+        baseEvasion = player.EvasionRate;
         level = player.CurrentLevel;
 
         // Save position

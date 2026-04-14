@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   skillType: 0
-  targetType: 0
-  weaponType: 0
-  classType: 0
-  subClassType: 0
+  targetType: 1
+  weaponType: 1
+  classType: 1
+  subClassType: 1
   skillEffectType: 0
   skillDisplayName: Sword Slash
   skillDescription: Launching forward and Slash Target with Sword swings.
@@ -40,4 +40,4 @@ MonoBehaviour:
   skillCoolDown: 0
   skillDuration: 0
   requiredLevel: 2
-  requirdSkills: 
+  requirdSkills: 00000000

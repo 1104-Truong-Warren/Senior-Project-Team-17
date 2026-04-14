@@ -89,14 +89,14 @@ public class CharacterInfoDisplay : MonoBehaviour
         // Update HP text display
         if (textComponents.Length >= 1)
         {
-            textComponents[0].text = hpPrefix + playerInfo.CurrentHP + "/" + playerInfo.maxHP;
+            textComponents[0].text = hpPrefix + playerInfo.CurrentHP + "/" + playerInfo.MaxHP;
         }
         
         // Update HP bar visual (if hpBar is assigned)
-        if (hpBar != null && playerInfo.maxHP > 0) // Check to avoid division by zero
+        if (hpBar != null && playerInfo.MaxHP > 0) // Check to avoid division by zero
         {
             // Calculate HP percentage (0.0 to 1.0)
-            float hpPercentage = (float)playerInfo.CurrentHP / playerInfo.maxHP;
+            float hpPercentage = (float)playerInfo.CurrentHP / playerInfo.MaxHP;
             
             // Update bar fill amount
             hpBar.fillAmount = hpPercentage;
@@ -118,7 +118,7 @@ public class CharacterInfoDisplay : MonoBehaviour
                 // Debug.Log($"HP {hpPercentage*100}% = RED"); - Commented out because it keeps spamming in the console.
             }
         }
-        else if (hpBar != null && playerInfo.maxHP <= 0)
+        else if (hpBar != null && playerInfo.MaxHP <= 0)
         {
             Debug.LogWarning("CharacterInfoDisplay: Player maxHP is 0 or negative, cannot update HP bar.");
         }
@@ -133,25 +133,25 @@ public class CharacterInfoDisplay : MonoBehaviour
         // Update Attack display
         if (textComponents.Length >= 3)
         {
-            textComponents[2].text = attackPrefix + playerInfo.BaseAttk;
+            textComponents[2].text = attackPrefix + playerInfo.BaseAttack;
         }
         
         // Update EN text display
         if (textComponents.Length >= 4)
         {
-            textComponents[3].text = enPrefix + playerInfo.CurrentEN + "/" + playerInfo.maxEN;
+            textComponents[3].text = enPrefix + playerInfo.CurrentEN + "/" + playerInfo.MaxEN;
         }
         
         // Update EN bar visual
-        if (enBar != null && playerInfo.maxEN > 0)
+        if (enBar != null && playerInfo.MaxEN > 0)
         {
             // Calculate EN percentage (0.0 to 1.0)
-            float enPercentage = (float)playerInfo.CurrentEN / playerInfo.maxEN;
+            float enPercentage = (float)playerInfo.CurrentEN / playerInfo.MaxEN;
             
             // Update bar fill amount
             enBar.fillAmount = enPercentage;
         }
-        else if (enBar != null && playerInfo.maxEN <= 0)
+        else if (enBar != null && playerInfo.MaxEN <= 0)
         {
             Debug.LogWarning("CharacterInfoDisplay: Player maxEN is 0 or negative, cannot update EN bar.");
         }

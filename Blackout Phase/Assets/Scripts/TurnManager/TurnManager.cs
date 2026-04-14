@@ -8,11 +8,13 @@
 // it just keeps on repeating again until the player dies then it goes into game over state
 // Weijun
 
-using UnityEngine; // default
 using System.Collections; // for the array list we have also IEnumerator for delay funciton calls yield returns. loading map first then do something else
 using System.Collections.Generic;  // for the List<T> and dictionary <T, T> for pathfinding
-using Unity.VisualScripting;
+using System.Net.Mail;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine; // default
 
 public enum TurnState
 {
@@ -40,12 +42,17 @@ public class TurnManager : MonoBehaviour
     public static TurnManager Instance { get; private set; }  // accessor for other scripts
     public TurnState State { get; private set; } = TurnState.MapLoading; // state controls the turn using finite state, starts with loading in
 
-    public EnemyInfo inComingAttackEnemy { get; private set; } // let otehr scripts to access it
+    public EnemyInfo inComingAttackEnemy { get; private set; } // let other scripts to access it attacker
+
+    public UnitCore inComingTargetUnit { get; private set; } // let other scripts to access it player target
 
     // player's reaction to enemy attacks
     public int inComingDamage { get; private set; } // let other scripts to access it, the in coming damage 
 
     public int inComingHitChance { get; private set; } // let other scripts to access the in coming Hit Chance
+
+    // enemy skill data
+    public SkillData incomingEnemySkill { get; private set; } // let other script to access the enemy skill
 
     public bool WaitForPlayerReact => State == TurnState.PlayerReaction; // set a flag for other script to access if player is in Reaction state
 
@@ -59,7 +66,9 @@ public class TurnManager : MonoBehaviour
 
     private PlayerHighlighter playerHighlighter; // for displaying the highlights
 
-    private PlayerSkillExecutor playerSkillExecutor; // accessor to the skill effect
+    //private SkillExecutor playerSkillExecutor; // accessor to the skill effect
+
+    //private SkillAttachment skillAttachment; // accessor for the skill cooldown
 
     private void Awake()
     {
@@ -73,10 +82,6 @@ public class TurnManager : MonoBehaviour
         Instance = this; // found set it up
 
         //isInitialized = true; // toggle flag everything is set up
-
-        // if skill accessor not found set up
-        if (playerSkillExecutor == null)
-            playerSkillExecutor = GetComponent<PlayerSkillExecutor>();
 
         DontDestroyOnLoad(gameObject); // keeps the game object
 
@@ -108,6 +113,8 @@ public class TurnManager : MonoBehaviour
         //EnemyController1[] found = FindObjectsByType<EnemyController1>(FindObjectsSortMode.InstanceID); // got through the list and find enemies
 
         //enemies.AddRange(found); // add the nemeies
+
+        //SetupPlayerSkillExecutor(); // set up the playerSkillExecutor
 
         Debug.Log($"TurnManager: Found {enemies.Count} enemies in scene."); // debug
 
@@ -216,10 +223,6 @@ public class TurnManager : MonoBehaviour
 
     private void PlayerTurnStart()
     {
-        // if skill effect accessor set up call it 
-        if (playerSkillExecutor != null)
-            playerSkillExecutor.CountCoolDownAtStart(); // skill coold down goes down
-
         // check if the playerInfo finished loading
         if (!PlayerSetUp())
         {
@@ -228,6 +231,8 @@ public class TurnManager : MonoBehaviour
             StartCoroutine(WaitForPlayerReady()); // calls the delay function
             return;
         }
+
+        SetupSkillAttachmentCDTick(playerInfo); // set up the skillAttachment for the combat unit
 
         //PlayerFuryMode.Instance.ResetCurrentKills(); // reset the kill counter before each turn
 
@@ -260,7 +265,7 @@ public class TurnManager : MonoBehaviour
         // is the enemy null if so get out
         if (inComingAttackEnemy == null) return;
 
-        OverlayTile1 enemyTile = inComingAttackEnemy.currentTile; // save the enemy tile
+        OverlayTile1 enemyTile = inComingAttackEnemy.CurrentTile; // save the enemy tile
 
         // check to see if enemy tile is null
         if (enemyTile == null)
@@ -348,6 +353,7 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator EnemyTurnAction()
     {
+        
         //CurrentPhase = TurnPhase.Enemy; // currently enemy's phase
 
         //Debug.Log("Enemy Phase Start"); // debug
@@ -359,6 +365,13 @@ public class TurnManager : MonoBehaviour
             if (enemy == null) continue; // if enemy is not found skip ingore
 
             //if (!enemies.Contains(enemy)) continue; // skip the enemies we kill this turn
+
+            EnemyInfo enemyInfo = enemy.GetComponent<EnemyInfo>(); // get the info for enemy
+
+            // check to see if enemy exist
+            if (enemyInfo == null || enemyInfo.CurrentHP <= 0) continue;
+
+            SetupSkillAttachmentCDTick(enemyInfo);
             
             Debug.Log($"TurnManager: Enemy taking turn -> {enemy.name}"); // which enemy
 
@@ -436,6 +449,58 @@ public class TurnManager : MonoBehaviour
         return playerInfo != null; // check if playerInfo is still null
     }
 
+    private void SetupSkillAttachmentCDTick(UnitCore combatUnit)
+    {
+        // check to see if the unit is null 
+        if (combatUnit == null) return;
+            //playerInfo = CharacterInfo1.Instance; // set up playerInfo
+            
+        Debug.Log($"[TM] UnitInfo found:{combatUnit != null}"); // debug msg
+
+        SkillAttachment skillAttachment = combatUnit.GetComponent<SkillAttachment>(); // set the skillAttachment to find the unit.attachment 
+        
+        // check if the skill atachment is found
+        if (skillAttachment == null)
+        {
+            Debug.Log($"[TM] SkillAttachment not found:{skillAttachment != null}"); // debug msg
+            return;
+        }
+
+        Debug.Log($"[TM] SkillAttachment found:{skillAttachment != null}"); // debug msg
+
+        skillAttachment.CooldownCountDown(); // start counting the skill.cd
+    }
+
+    // decidee if the incomingAttack is normal/skill
+    private void DecideIncomingAttackType()
+    {
+        // check to see if attacker exist
+        if (inComingAttackEnemy == null) return;
+
+        // check if the target exst
+        if (inComingTargetUnit == null) return;
+
+        EnemyAttackCore enemyAttackCore = inComingAttackEnemy.GetComponent<EnemyAttackCore>(); // setup the attacCore
+
+        // if the attackCore is still null 
+        if (enemyAttackCore == null)
+            enemyAttackCore = inComingAttackEnemy.GetComponentInChildren<EnemyAttackCore>(); // find it in the chidren
+
+        // still null display a message
+        if (enemyAttackCore == null)
+        {
+            Debug.Log("[TM] EnemyAttackCore not found!"); // debug msg
+            return;
+        }
+
+        // if the skill is not null 
+        if (incomingEnemySkill != null)
+            enemyAttackCore.AttackTarget(inComingTargetUnit, incomingEnemySkill); // skill attack
+
+        else
+            enemyAttackCore.AttackTarget(inComingTargetUnit); // normal attack
+    }
+
     private IEnumerator WaitForPlayerReady()
     {
         yield return new WaitUntil(PlayerSetUp); // wait until the Player is set up
@@ -449,7 +514,7 @@ public class TurnManager : MonoBehaviour
     //    TurnManager.Instance.EndPlayerTurn(); // ends player's turn
     //}
 
-    public void StartPlayerReaction(EnemyInfo enemyAttker, int dmg, int hitChance)
+    public void StartPlayerReaction(EnemyInfo enemyAttker, UnitCore target, int dmg, int hitChance, SkillData enemySkill = null)
     {
         // if it's reaction state get out
         if (State == TurnState.PlayerReaction)
@@ -467,7 +532,20 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
+        // check to see if target is null
+        if (target == null)
+        {
+            Debug.Log("Reaction target missing!"); // debug msg
+
+            ResetIncomingPlayerReaction(); // reset everthing
+            return;
+        }
+
         inComingAttackEnemy = enemyAttker; // set up enemy attacker
+
+        inComingTargetUnit = target; // setup the attack target
+
+        incomingEnemySkill = enemySkill; // the enemy skill
 
         inComingDamage = dmg; // how much damage is from enemy
 
@@ -491,7 +569,7 @@ public class TurnManager : MonoBehaviour
 
         int playerDodgeBonus = 10; // extra 10 dodge chance
 
-        int HitChanceAdjustment = Mathf.Clamp(inComingHitChance - playerDodgeBonus, 5, 95); // make sure after the bonus chance it is still within 5 - 95
+        int HitChanceAdjustment = Mathf.Clamp(inComingHitChance - playerDodgeBonus + playerInfo.EvasionRate, 5, 95); // make sure after the bonus chance it is still within 5 - 95
 
         bool enemyHit = HitRollCheck.HitRollPercent(HitChanceAdjustment); // use flag to check the hit chance roll
 
@@ -500,7 +578,11 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Player Failed to Dodge!"); // debug msg
 
-            CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // player take damage
+            //CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // player take damage
+
+            //inComingTargetUnit.TakeDamage(inComingDamage); // take damage
+
+            DecideIncomingAttackType(); // normal/skill attack from enemy
         }
         else
         {
@@ -525,7 +607,11 @@ public class TurnManager : MonoBehaviour
 
         Debug.Log("Player takes Dmg by Enemy"); // debug msg
 
-        CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // take damage
+        //CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // take damage
+
+        //inComingTargetUnit.TakeDamage(inComingDamage); // take damage
+
+        DecideIncomingAttackType(); // normal/skill attack from enemy
 
         //playerReactionSuccessful = true; // set flage to true and player, 
 
@@ -546,7 +632,19 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
-        PlayerCombatCheck.Instance.PlayerCounterAttack(inComingAttackEnemy); // call the counter attack function and pass over the enemy info
+        // if the enemy is found and alive decide which attack to use
+        if (inComingAttackEnemy != null && inComingAttackEnemy.CurrentHP > 0)
+            DecideIncomingAttackType(); // which attack to use normal/skill for enemy
+
+        //// check if the Target is player
+        if (inComingTargetUnit is CharacterInfo1 playerTarget && playerTarget.CurrentHP > 0 && inComingAttackEnemy.CurrentHP > 0)
+        {
+            //playerTarget.PlayerTakeDamage(inComingDamage); // player takes dmg
+
+            PlayerCombatCheck.Instance.PlayerCounterAttack(inComingAttackEnemy, false); // call the counter attack function and pass over the enemy info
+
+            //Debug.Log($"[TM] Counter:{playerTarget.name} took:{inComingDamage}"); // debug msg
+        }
 
         EndPlayerReaction();  // after player react flag toggle
 
@@ -560,6 +658,8 @@ public class TurnManager : MonoBehaviour
         // reset everything
         inComingAttackEnemy = null;
 
+        incomingEnemySkill = null;
+
         inComingDamage = 0;
 
         inComingHitChance = 0;
@@ -569,10 +669,30 @@ public class TurnManager : MonoBehaviour
     {
 
         yield return new WaitUntil(() => playerReactionSuccessful); // wait until player reaction flag is true
-     
+
+        // after playerReacted enemy Skill CD start
+        EnemyInfo enemy = inComingAttackEnemy; // setup the incomingAttack to enemy
+
+        // enemy is found continue
+        if (enemy != null)
+        {
+            SkillAttachment enemySkillAttachment = enemy.GetComponent<SkillAttachment>(); // find the skillAttachment on enemy
+
+            // enemySkillAttachment is found start the set skill cooldown
+            if (enemySkillAttachment != null && incomingEnemySkill != null)
+            {
+                enemySkillAttachment.SetSkillCooldown(incomingEnemySkill);
+
+                Debug.Log($"[TM] Set Enemy skill CD:{incomingEnemySkill.skillCoolDown}"); // debug msg
+            }
+        }
 
         // reset everything
         inComingAttackEnemy = null;
+
+        inComingTargetUnit = null;
+
+        incomingEnemySkill = null;
 
         inComingDamage = 0;
 
@@ -662,6 +782,43 @@ public class TurnManager : MonoBehaviour
     }
 
 }
+
+// old version of playerStart()
+//// if the playerInfo not found set it up
+//if (playerInfo == null)
+//    PlayerSetUp();
+//    //playerInfo = GetComponent<CharacterInfo1>();
+
+//// if the skill attachment is empty set it up
+//if (skillAttachment == null)
+//SetupSkillAttachment(playerInfo); // set up the playerSkillExecutor
+
+//// if skill effect accessor set up call it 
+//if (skillAttachment != null)
+//{
+//    Debug.Log($"[TM] Tracking cooldown"); // debug msg
+
+//    //skillAttachment.CooldownCountDown(); // skill coold down goes down
+//}
+//else
+//    Debug.Log($"[TM] SkillAttachmebt not found!"); // debug msg
+
+//private void SetupPlayerSkillExecutor()
+//{
+//    // check to see if playerInfo is null if so set up
+//    if (playerInfo == null)
+//        playerInfo = CharacterInfo1.Instance; // set up playerInfo 
+
+//    Debug.Log($"[TM] playerInfo found:{playerInfo != null}"); // debug msg
+
+//    // if the playerInfo is found
+//    if (playerInfo != null)
+//    {
+//        playerSkillExecutor = playerInfo.GetComponent<SkillExecutor>(); // set the playerSkillExcutor to the skill executor
+//    }
+
+//    Debug.Log($"[TM] playerSkillExecutor found:{playerSkillExecutor != null}"); // debug msg
+//}
 
 //public void DeleteEnemy(EnemyController1 enemy)
 //{

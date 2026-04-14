@@ -50,84 +50,84 @@ public class MouseController1 : MonoBehaviour
     private void LateUpdate()
     {
         if (TurnManager.Instance.State != TurnState.PlayerAction && TurnManager.Instance.State != TurnState.PlayerSpawn) return; // preventing player moving before other things are setup
-        { 
-        //// mouse test for enemy collider
-        //Vector3 mPosition = Input.mousePosition; // set up the mousse position
-
-        // Debugs for display
-        //mPosition.z = Mathf.Abs(Camera.main.transform.position.z); // make sure z is not affected to get the correct input
-
-        //Vector3 MPWorld = Camera.main.ScreenToWorldPoint(mPosition); // mouse position in the game world
-
-        //Debug.DrawLine(MPWorld + Vector3.left * 0.1f, MPWorld + Vector3.right * 0.1f, Color.green, 0.1f); // debug msg
-
-        //Debug.DrawLine(MPWorld + Vector3.up * 0.1f, MPWorld + Vector3.down * 0.1f, Color.green, 0.1f); // debug msg
-
-        // Ellison - moved everything into a check for movement being enabled AND cursor not being over a UI element
-        if (!IsPointerOverUIObject())
         {
-            //Debug.Log($"Cursor Z: {cursor.transform.position.z}");
+            //// mouse test for enemy collider
+            //Vector3 mPosition = Input.mousePosition; // set up the mousse position
 
-            //Debug.Log($"Camera Z: {Camera.main.transform.position.z}");
+            // Debugs for display
+            //mPosition.z = Mathf.Abs(Camera.main.transform.position.z); // make sure z is not affected to get the correct input
 
-            //RaycastHit2D? hit = GetFocusedOnTile();
+            //Vector3 MPWorld = Camera.main.ScreenToWorldPoint(mPosition); // mouse position in the game world
 
-            var hit = GetFocusedOnTile(); // reference
+            //Debug.DrawLine(MPWorld + Vector3.left * 0.1f, MPWorld + Vector3.right * 0.1f, Color.green, 0.1f); // debug msg
 
-            // found something then save it to a gameobj
-            if (hit.HasValue)
+            //Debug.DrawLine(MPWorld + Vector3.up * 0.1f, MPWorld + Vector3.down * 0.1f, Color.green, 0.1f); // debug msg
+
+            // Ellison - moved everything into a check for movement being enabled AND cursor not being over a UI element
+            if (!IsPointerOverUIObject())
             {
+                //Debug.Log($"Cursor Z: {cursor.transform.position.z}");
 
-                //GameObject overlayTile = hit.Value.collider.gameObject;
+                //Debug.Log($"Camera Z: {Camera.main.transform.position.z}");
 
-                //Debug.Log($"Cursor moving to {overlayTile.transform.position}");
+                //RaycastHit2D? hit = GetFocusedOnTile();
 
-                if (cursor != null)
-                //if (Input.GetMouseButtonDown(0))
+                var hit = GetFocusedOnTile(); // reference
+
+                // found something then save it to a gameobj
+                if (hit.HasValue)
                 {
-                    //Vector3 targetPosition = overlayTile.transform.position;
 
-                    //targetPosition.z -= 0.01f; // tiny offsets to z
+                    //GameObject overlayTile = hit.Value.collider.gameObject;
 
-                    OverlayTile1 tile = hit.Value.collider.gameObject.GetComponent<OverlayTile1>(); // which tile to spawn
+                    //Debug.Log($"Cursor moving to {overlayTile.transform.position}");
 
-                    // get out if tile not found
-                    if (tile == null)
-                        return;
-
-                    cursor.transform.position = tile.transform.position; // set cursor location to the overlay
-
-                    cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
-
-                    // spawn player before Turn starts
-                    if (TurnManager.Instance.State == TurnState.PlayerSpawn && Input.GetMouseButtonDown(0))
+                    if (cursor != null)
+                    //if (Input.GetMouseButtonDown(0))
                     {
-                        // tile not found get out
-                        if (tile == null) return;
+                        //Vector3 targetPosition = overlayTile.transform.position;
 
-                        // if tile is being used get out
-                        if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) return;
+                        //targetPosition.z -= 0.01f; // tiny offsets to z
 
-                        characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+                        OverlayTile1 tile = hit.Value.collider.gameObject.GetComponent<OverlayTile1>(); // which tile to spawn
 
-                        PositionCharacterOnLine(tile); // where to spawn
+                        // get out if tile not found
+                        if (tile == null)
+                            return;
 
-                        characterInfo.PlayerSetTile(tile); // set up the player tile
+                        cursor.transform.position = tile.transform.position; // set cursor location to the overlay
 
-                        TurnManager.Instance.SetTurnState(TurnState.PlayerStart); // after respawn starts turn
+                        cursor.GetComponent<SpriteRenderer>().sortingOrder = 9999;
 
-                        PlayerCombatCheck.Instance?.PlayerSetUp(); // set up player status
-                        return;
-                    }
+                        // spawn player before Turn starts
+                        if (TurnManager.Instance.State == TurnState.PlayerSpawn && Input.GetMouseButtonDown(0))
+                        {
+                            // tile not found get out
+                            if (tile == null) return;
 
-                    // check for attack input if key press is A
-                    if (Input.GetKeyDown(AttackKey))
-                    {
-                        TurnManager.Instance.ClearHighlights(); // clear the highlights before attacking
+                            // if tile is being used get out
+                            if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) return;
 
-                        currentAction = PlayerAction.Attack;
-                        Debug.Log("Attack Mode on!");
-                    }
+                            characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+
+                            PositionCharacterOnLine(tile); // where to spawn
+
+                            characterInfo.PlayerSetTile(tile); // set up the player tile
+
+                            TurnManager.Instance.SetTurnState(TurnState.PlayerStart); // after respawn starts turn
+                            
+                            PlayerCombatCheck.Instance?.PlayerSetUp(); // set up player status
+                            return;
+                        }
+
+                        // check for attack input if key press is A
+                        if (Input.GetKeyDown(AttackKey))
+                        {
+                            TurnManager.Instance.ClearHighlights(); // clear the highlights before attacking
+
+                            currentAction = PlayerAction.Attack;
+                            Debug.Log("Attack Mode on!");
+                        }
 
                         // if the keycode is preview first clear highlights then show the player attack range
                         if (Input.GetKeyDown(previewAttkRange))
@@ -141,12 +141,12 @@ public class MouseController1 : MonoBehaviour
                             SkillData currentSkill = PlayerCombatCheck.Instance != null ? PlayerCombatCheck.Instance.GetCurrentSkill() : null; // find the current skill range if it's not null
 
                             if (characterInfo != null && characterInfo.CurrentTile != null)
-                                highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, characterInfo.BaseRange);
+                                highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, characterInfo.AttackRange);
 
                             // if player and current tile is found, highlight it by passing the current tile and player attack range
                             if (characterInfo != null && characterInfo.CurrentTile != null && currentSkill != null)
                             {
-                                int AttackRangeDisplay = currentSkill != null ? currentSkill.AttackRange : characterInfo.BaseRange; // check to see if currentSkill is null
+                                int AttackRangeDisplay = currentSkill != null ? currentSkill.AttackRange : characterInfo.AttackRange; // check to see if currentSkill is null
 
                                 highlight?.ShowPlayerAttackRangeTiles(characterInfo.CurrentTile, AttackRangeDisplay); // use the none-null attack range, skill null, use base range
                             }

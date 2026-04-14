@@ -4,7 +4,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SkillData", menuName = "PlayerSkills/Skill Data")] // what the file is called and what kind of file it is
+[CreateAssetMenu(fileName = "SkillData", menuName = "Skills/Skill Data")] // what the file is called and what kind of file it is
 public class SkillData : ScriptableObject
 {
     [Header("Skill Name")]
@@ -48,7 +48,7 @@ public class SkillData : ScriptableObject
     public int skillDuration; // how long it lasts
 
     [Header("Unlock requirements")]
-    [Range(0, 20)] public int requiredLevel; // what's the requirement level
+    [Range(0, 10)] public int requiredLevel; // what's the requirement level
     public Skill_ID[] requirdSkills; // how to unlock the skill
 }
 
