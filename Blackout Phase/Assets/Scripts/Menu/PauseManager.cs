@@ -92,6 +92,14 @@ public class PauseManager : MonoBehaviour
     // Function that loads the main menu, when the user press pause and press the quit button, it will load the main menu/title screen.
     public void LoadMainMenu()
     {
+        // Deletes the character game object when the player returns to main menu. Added this to help with save/load problem.
+        GameObject player = GameObject.FindGameObjectWithTag("Player1");
+        if (player != null)
+        {
+            Debug.Log("Destroying player before leaving to main menu");
+            Destroy(player);
+        }
+
         Time.timeScale = 1f;
         SceneManager.LoadScene("TitleScreen");
     }
