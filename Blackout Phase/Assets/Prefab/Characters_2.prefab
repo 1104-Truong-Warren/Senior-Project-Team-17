@@ -201,7 +201,7 @@ MonoBehaviour:
   playerSkillExecutor: {fileID: 5483337668809541789}
   playerSkillIndexSelect: 0
   audioSource: {fileID: -821979088614009695}
-  attackSound: {fileID: 8300000, guid: ccf3d1d1e6af0e44ab84f5585ad0790d, type: 3}
+  swordSlashSound: {fileID: 8300000, guid: ccf3d1d1e6af0e44ab84f5585ad0790d, type: 3}
   missSound: {fileID: 8300000, guid: 9caa8c079b89cc04b8712aa8ff1b9147, type: 3}
 --- !u!114 &5483337668809541789
 MonoBehaviour:

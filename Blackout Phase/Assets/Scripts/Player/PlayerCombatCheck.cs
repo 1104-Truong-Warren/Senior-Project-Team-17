@@ -111,6 +111,9 @@ public class PlayerCombatCheck : MonoBehaviour
 
         Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
 
+        // Added by Warren, plays attack sound.
+        PlaySwordSlashSound();
+
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
 
         // Added by Warren, for player's damage UI on the enemy
@@ -156,6 +159,9 @@ public class PlayerCombatCheck : MonoBehaviour
         if (dmg <= 0) return;
 
         //Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
+
+        // Added by Warren, plays attack sound.
+        PlaySwordSlashSound();
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
 
@@ -292,6 +298,9 @@ public class PlayerCombatCheck : MonoBehaviour
         if (!HitRollCheck.HitRollPercent(hitChance))
         {
             Debug.Log("Attack MISS!"); // debug msg
+
+            // Added by Warren, plays miss sound.
+            PlayMissSound();
 
             // Added by Warren, text that shows on the screen
             if (DamageObserver.Instance != null)
@@ -457,6 +466,30 @@ public class PlayerCombatCheck : MonoBehaviour
     private int Manhattan(Vector3Int a, Vector3Int b)
     {
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // returns the player/enemy distance
+    }
+
+    // Added by Warren, for SFX (hitting and missing)
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip swordSlashSound;
+    [SerializeField] private AudioClip missSound;  
+
+    private void PlaySwordSlashSound()
+    {
+        if (audioSource != null && swordSlashSound != null)
+        {
+            audioSource.PlayOneShot(swordSlashSound);
+            Debug.Log("Sword slash SFX played!");
+        }
+    }
+
+    private void PlayMissSound()
+    {
+        if (audioSource != null && missSound != null)
+        {
+            audioSource.PlayOneShot(missSound);
+            Debug.Log("Miss swish SFX played!");
+        }
     }
 }
 
