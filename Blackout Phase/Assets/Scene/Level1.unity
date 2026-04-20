@@ -2776,10 +2776,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3086,15 +3086,15 @@ RectTransform:
   m_GameObject: {fileID: 980082286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.73, z: 0.60872}
+  m_LocalScale: {x: 0.9, y: 0.77, z: 0.60872}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 949205809}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400.99, y: 319.0481}
+  m_AnchoredPosition: {x: -0.032470703, y: 0}
+  m_SizeDelta: {x: 400.925, y: 319.0481}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &980082288
 MonoBehaviour:
@@ -14599,6 +14599,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 771215969558173515, guid: 9ebfb712c11620e43b8310b31b4ff145, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1310414414429255714, guid: 9ebfb712c11620e43b8310b31b4ff145, type: 3}
       propertyPath: uiAppearDelay
       value: 1.2
