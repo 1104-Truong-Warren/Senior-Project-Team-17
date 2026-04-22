@@ -9,11 +9,15 @@ public class EquipmentMenuSlot : MonoBehaviour
 
     Item item;
 
-    public void EquipItem(Item newItem)
+    public int slotIndex;
+
+    public void EquipItem(Item newItem, int index)
     {
         item = newItem;
         icon.sprite = item.icon;
         icon.enabled = true;
+
+        slotIndex = index;
     }
 
     public void UnequipItem()
@@ -25,9 +29,9 @@ public class EquipmentMenuSlot : MonoBehaviour
 
     public void OnUnequip()
     {
-        if (item != null && item is Equipment equipmentItem)
+        if (item != null)
         {
-            EquipmentManager.instance.Unequip((int)equipmentItem.equipSlot);
+            EquipmentManager.instance.Unequip(slotIndex);
         }
     }
 }
