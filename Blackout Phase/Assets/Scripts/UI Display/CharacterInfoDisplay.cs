@@ -35,7 +35,15 @@ public class CharacterInfoDisplay : MonoBehaviour
     private CharacterInfo1 playerInfo;
     private TextMeshProUGUI[] textComponents;
     private bool playerFound = false;
-    
+
+    // Ellison - added additional references for inventory
+    [Header("Inventory References")]
+    [SerializeField] private Image inventoryHpBar; // UI Image for inventory bar, set to Filled type in Inspector
+    [SerializeField] private Image inventoryEnBar; // UI Image for inventory EN bar, set to Filled type in Inspector
+    [SerializeField] private TextMeshProUGUI inventoryHpText; // Text for inventory HP display
+    [SerializeField] private TextMeshProUGUI inventoryEnText; // Text for inventory EN display
+    [SerializeField] private TextMeshProUGUI inventoryAttackText;
+
     void Start()
     {
         textComponents = GetComponentsInChildren<TextMeshProUGUI>();
@@ -90,31 +98,40 @@ public class CharacterInfoDisplay : MonoBehaviour
         if (textComponents.Length >= 1)
         {
             textComponents[0].text = hpPrefix + playerInfo.CurrentHP + "/" + playerInfo.MaxHP;
+            // Ellison - Update inventory HP text as well
+            if (inventoryHpText != null)
+            {
+                inventoryHpText.text = playerInfo.CurrentHP + "/" + playerInfo.MaxHP;
+            }
         }
-        
+
         // Update HP bar visual (if hpBar is assigned)
-        if (hpBar != null && playerInfo.MaxHP > 0) // Check to avoid division by zero
+        if (hpBar != null && inventoryHpBar != null&& playerInfo.MaxHP > 0) // Check to avoid division by zero
         {
             // Calculate HP percentage (0.0 to 1.0)
             float hpPercentage = (float)playerInfo.CurrentHP / playerInfo.MaxHP;
             
             // Update bar fill amount
             hpBar.fillAmount = hpPercentage;
-            
+            inventoryHpBar.fillAmount = hpPercentage;
+
             // Colors, when the health is greater than 60%, it will stay green
             if (hpPercentage > 0.6f)
             {
                 hpBar.color = Color.green;
+                inventoryHpBar.color = Color.green;
                 // Debug.Log($"HP {hpPercentage*100}% = GREEN"); - Commented out because it keeps spamming in the console.
             }
             else if (hpPercentage > 0.3f) // If health is greater than 30%, it will turn yellow
             {
                 hpBar.color = Color.yellow;
+                inventoryHpBar.color = Color.yellow;
                 // Debug.Log($"HP {hpPercentage*100}% = YELLOW"); - Commented out because it keeps spamming in the console.
             }
             else
             {
                 hpBar.color = Color.red; // If health is less than 30%, it will turn red
+                inventoryHpBar.color = Color.red;
                 // Debug.Log($"HP {hpPercentage*100}% = RED"); - Commented out because it keeps spamming in the console.
             }
         }
@@ -134,22 +151,33 @@ public class CharacterInfoDisplay : MonoBehaviour
         if (textComponents.Length >= 3)
         {
             textComponents[2].text = attackPrefix + playerInfo.BaseAttack;
+            // Ellison - Update inventory attack text as well
+            if (inventoryAttackText != null)
+            {
+                inventoryAttackText.text = playerInfo.BaseAttack.ToString();
+            }
         }
-        
+
         // Update EN text display
         if (textComponents.Length >= 4)
         {
             textComponents[3].text = enPrefix + playerInfo.CurrentEN + "/" + playerInfo.MaxEN;
+            // Ellison - Update inventory EN text as well
+            if (inventoryEnText != null)
+            {
+                inventoryEnText.text = playerInfo.CurrentEN + "/" + playerInfo.MaxEN;
+            }
         }
-        
+
         // Update EN bar visual
-        if (enBar != null && playerInfo.MaxEN > 0)
+        if (enBar != null && inventoryEnBar != null && playerInfo.MaxEN > 0)
         {
             // Calculate EN percentage (0.0 to 1.0)
             float enPercentage = (float)playerInfo.CurrentEN / playerInfo.MaxEN;
             
             // Update bar fill amount
             enBar.fillAmount = enPercentage;
+            inventoryEnBar.fillAmount = enPercentage;
         }
         else if (enBar != null && playerInfo.MaxEN <= 0)
         {

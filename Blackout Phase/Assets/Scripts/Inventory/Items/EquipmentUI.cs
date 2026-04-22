@@ -18,11 +18,12 @@ public class EquipmentUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void UpdateUI(Equipment newItem, Equipment oldItem)
     {
+        /*
         for (int i = 0; i < slots.Length; i++)
         {
             if (newItem != null && (int)newItem.equipSlot == i)
@@ -30,6 +31,20 @@ public class EquipmentUI : MonoBehaviour
                 slots[i].EquipItem(newItem);
             }
             else if (oldItem != null && (int)oldItem.equipSlot == i)
+            {
+                slots[i].UnequipItem();
+            }
+        }*/
+
+        Equipment[] currentEquipment = equipmentManager.currentEquipment;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (i < currentEquipment.Length && currentEquipment[i] != null)
+            {
+                slots[i].EquipItem(currentEquipment[i], i);
+            }
+            else
             {
                 slots[i].UnequipItem();
             }

@@ -9,7 +9,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment")]
 public class Equipment : Item
 {
-    public EquipmentSlot equipSlot;
+    //public EquipmentSlot equipSlot;
 
     public int healthModifier;
     public int attackModifier;
@@ -17,9 +17,17 @@ public class Equipment : Item
     public override void Use()
     {
         base.Use();
-        EquipmentManager.instance.Equip(this);
-        RemoveFromInventory();
+        bool wasEquipped = EquipmentManager.instance.Equip(this);
+
+        if (wasEquipped)
+        {
+            RemoveFromInventory();
+        }
+        else
+        {
+            Debug.Log("Couldn't equip " + itemName);
+        }
     }
 }
 
-public enum EquipmentSlot { Head, Arm1, Arm2, Chest, Legs }
+//public enum EquipmentSlot { Head, Arm1, Arm2, Chest, Legs }

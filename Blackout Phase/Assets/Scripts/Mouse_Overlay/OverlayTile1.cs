@@ -86,7 +86,9 @@ public class OverlayTile1 : MonoBehaviour
     {
         if (hasItem)
         {
-            Inventory.instance.Add(itemOnTile.item); // Add the item to the inventory
+            //Inventory.instance.Add(itemOnTile.item); // Add the item to the inventory
+            // new for auto use
+            itemOnTile.item.Use(); // Automatically use the item after picking it up
             hasItem = false; // Remove the item from the tile
             Destroy(itemOnTile.gameObject); // Destroy the item GameObject in the scene
             itemOnTile = null; // Clear the reference to the item
