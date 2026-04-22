@@ -706,6 +706,13 @@ public class TutorialManager : MonoBehaviour
             if (dialogue.GetCurrentLineIndex() == 1 && !countered)
             {
                 stepCompletePanel.SetActive(false);
+                
+                // Deduct EN for using counter (hardcoded for tutorial)
+                if (mouseController.characterInfo != null)
+                {
+                    mouseController.characterInfo.PlayerSpendEN(5); // Spend 5 EN for counter
+                }
+                
                 AttackEnemy(4, 10);
                 levelsManager.IncreaseXP(25);
                 countered = true;
