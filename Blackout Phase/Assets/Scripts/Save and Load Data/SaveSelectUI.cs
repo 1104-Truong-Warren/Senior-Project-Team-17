@@ -141,10 +141,25 @@ public class SaveSelectUI : MonoBehaviour
     // The purpose of this function is when the save file button is clicked, then it stores the filename and loads the game scane.
     private void LoadSelectedSave(string fileName)
     {
-        // Store the selected filename in PlayerPrefs so SaveManager can access it after the scene loads
-        PlayerPrefs.SetString("LoadFileName", fileName);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Demo_pxiel_2D_Test_Grid");
-        saveSelectPanel.SetActive(false); // Hides save selection panel
+        string fullPath = saveManager.saveFolderPath + fileName;
+        
+        if (System.IO.File.Exists(fullPath))
+        {
+            string json = System.IO.File.ReadAllText(fullPath);
+            PlayerSaveData data = JsonUtility.FromJson<PlayerSaveData>(json);
+            
+            // Store both the filename and the scene name
+            PlayerPrefs.SetString("LoadFileName", fileName);
+            PlayerPrefs.Save();
+            
+            // Load the scene that was saved
+            SceneManager.LoadScene(data.sceneName);
+        }
+        else
+        {
+            Debug.LogError($"Save file not found: {fullPath}");
+        }
+        
+        saveSelectPanel.SetActive(false);
     }
 }

@@ -52,7 +52,7 @@ public class MainMenu : MonoBehaviour
     
     public void PlayGame() // Calls in Unity's built-in SceneMananger function, it will load the scene depending on the name.
     {
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("LevelSelect");
     }
 
     

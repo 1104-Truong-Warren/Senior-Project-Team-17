@@ -327,7 +327,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 946340763}
   m_HandleRect: {fileID: 946340762}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -403,8 +403,10 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 3359f86c4b9684f439862c4ab652856f, type: 2}
   masterVolumeParameter: MasterVolume
   sfxVolumeParameter: SFXVolume
+  musicVolumeParameter: MusicVolume
   masterVolumeSlider: {fileID: 788016380}
   sfxVolumeSlider: {fileID: 431001255}
+  musicVolumeSlider: {fileID: 0}
 --- !u!4 &75281144
 Transform:
   m_ObjectHideFlags: 0
