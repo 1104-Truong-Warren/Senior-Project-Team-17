@@ -16,6 +16,9 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine; // default
 
+// Added by Warren
+using UnityEngine.SceneManagement;
+
 public enum TurnState
 {
     MapLoading, // loads map
@@ -190,6 +193,15 @@ public class TurnManager : MonoBehaviour
 
             case TurnState.GameOver: // if player died/didn't meet requirements 
                 Debug.Log("GAME OVER!");
+
+                // Added by Warren, need it to make Game Over screen function properly when the player restarts the level.
+
+                // Save the current level name before loading Game Over scene
+                PlayerPrefs.SetString("LastLevel", SceneManager.GetActiveScene().name);
+                PlayerPrefs.Save();
+                
+                // Load the Game Over scene
+                SceneManager.LoadScene("GameOver");
                 break;              
         }
 
