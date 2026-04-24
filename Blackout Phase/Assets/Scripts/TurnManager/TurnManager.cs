@@ -86,7 +86,12 @@ public class TurnManager : MonoBehaviour
 
         //isInitialized = true; // toggle flag everything is set up
 
-        DontDestroyOnLoad(gameObject); // keeps the game object
+        // Modified by Warren, needed if scene is not changed to main menu.
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name != "TitleScreen")
+        {
+            DontDestroyOnLoad(gameObject); // keeps the game object
+        }
 
         Debug.Log("TurnManager Awake"); // test
 
@@ -793,6 +798,41 @@ public class TurnManager : MonoBehaviour
         Instance = inst; // set up the same instance for test
     }
 
+    // Added by Warren, cleans everything up when the player wants to return to the main menu.
+    private void OnDestroy()
+    {
+        // Clean up the instance when this object is destroyed
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
+    // Added by Warren: //
+    //=================//
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // If we loaded the title screen, destroy this manager
+        if (scene.name == "TitleScreen")
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
+            Destroy(gameObject);
+        }
+    }
+    // =============== //
 }
 
 // old version of playerStart()
