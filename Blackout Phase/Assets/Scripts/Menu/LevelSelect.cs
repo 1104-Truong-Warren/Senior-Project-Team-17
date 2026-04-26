@@ -11,7 +11,7 @@ public class LevelSelect : MonoBehaviour
     // Load Tutorial Level
     public void LoadTutorial()
     {
-        SceneManager.LoadScene("Tutorial"); // Change to your actual level scene name
+        SceneManager.LoadScene("Tutorial");
     }
     
     // Level 1 Button
@@ -21,10 +21,22 @@ public class LevelSelect : MonoBehaviour
     }
     
     // Level 2 Button
-    // public void LoadLevel2()
-    // {
-    //     SceneManager.LoadScene("Level2"); // Change to your actual level scene name
-    // }
+    public void LoadLevel2()
+    {
+        SceneManager.LoadScene("Level2"); 
+    }
+
+    // Level 3 Button
+    public void LoadLevel3()
+    {
+        SceneManager.LoadScene("Level3"); 
+    }
+
+    // Level 4 Button
+    public void LoadLevel4()
+    {
+        SceneManager.LoadScene("Level4"); 
+    }
     
     // Back to Main Menu
     public void BackToMainMenu()
