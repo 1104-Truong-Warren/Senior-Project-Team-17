@@ -21,11 +21,10 @@ public class VictoryManager : MonoBehaviour
     
     private void Awake()
     {
-        // Singleton setup
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Keep this for now, but we'll clean up properly
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -61,12 +60,47 @@ public class VictoryManager : MonoBehaviour
     
     private void ContinueGame()
     {
-        Debug.Log("Continue clicked - Load next level");
-
+        Debug.Log("Continue clicked, load next level");
+        
+        // Get the current level name
+        string currentLevel = SceneManager.GetActiveScene().name;
+        Debug.Log("Current level: " + currentLevel);
+        
+        string nextLevel = GetNextLevelName(currentLevel);
+        
         // Clean up before leaving
         CleanupAndDestroy();
         
-        SceneManager.LoadScene("TitleScreen"); // Placeholder, will update once Level 2 have been implemented.
+        // Load the next level
+        SceneManager.LoadScene(nextLevel);
+    }
+    
+    // New function, instead of predefining the levels, it will check the "Level" string first, and then automatically read in the number followed by it and load the scene.
+    private string GetNextLevelName(string currentLevel)
+    {
+        // Check if the current level is in the format "LevelX" (Level1, Level2, Level3, Level4)
+        if (currentLevel.StartsWith("Level"))
+        {
+            string numberPart = currentLevel.Substring(5);
+            
+            if (int.TryParse(numberPart, out int levelNumber))
+            {
+                int nextLevelNumber = levelNumber + 1;
+                
+                return "Level" + nextLevelNumber;
+            }
+        }
+        
+        switch (currentLevel)
+        {
+            case "Level1": return "Level2";
+            case "Level2": return "Level3";
+            case "Level3": return "Level4";
+
+            default:
+                Debug.LogWarning("Unknown level format, returning to main menu");
+                return "TitleScreen";
+        }
     }
     
    private void GoToMainMenu()
