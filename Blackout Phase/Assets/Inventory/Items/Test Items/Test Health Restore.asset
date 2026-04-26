@@ -18,4 +18,6 @@ MonoBehaviour:
   description: Restores 5 HP when used
   flavorText: '"A small restorative core"'
   isDefaultItem: 0
+  useSound: {fileID: 8300000, guid: ba1680af05af69a41a749d8d5ca20f67, type: 3}
   healthChangeAmount: 5
+  energyChangeAmount: 0

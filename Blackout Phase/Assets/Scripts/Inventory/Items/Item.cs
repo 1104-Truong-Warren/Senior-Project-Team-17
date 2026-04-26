@@ -13,12 +13,18 @@ public class Item : ScriptableObject
     public string flavorText = "Default Flavor Text";
     public bool isDefaultItem = false;
 
+    public AudioClip useSound;
+
     // virtual function so that derived classes can override it
     public virtual void Use()
     {
         // Use the item
         // Something may happen
         Debug.Log("Using " + itemName);
+        if (useSound != null)
+        {
+            ItemAudioManager.Instance.PlayItemUseSound(useSound);
+        }
     }
 
     public void RemoveFromInventory()
