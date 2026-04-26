@@ -18,6 +18,6 @@ MonoBehaviour:
   description: Increases attack by 15 when equipped.
   flavorText: '"An energy sword modified to maximize its damage potential"'
   isDefaultItem: 0
-  equipSlot: 1
+  useSound: {fileID: 8300000, guid: 983f68866c2cc6c4e81290756209f37b, type: 3}
   healthModifier: 0
   attackModifier: 15

@@ -18,6 +18,6 @@ MonoBehaviour:
   description: Increases ATK by 5
   flavorText: '"A basic gun"'
   isDefaultItem: 0
-  equipSlot: 1
+  useSound: {fileID: 8300000, guid: 2256f3958fa2a894e886b07c540bcaae, type: 3}
   healthModifier: 0
   attackModifier: 5
