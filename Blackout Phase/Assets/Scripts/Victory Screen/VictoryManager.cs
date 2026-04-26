@@ -61,7 +61,13 @@ public class VictoryManager : MonoBehaviour
     private void ContinueGame()
     {
         Debug.Log("Continue clicked, load next level");
-        
+
+        // Hides the victory panel
+        if (victoryPanel != null)
+        {
+            victoryPanel.SetActive(false);
+        }
+            
         // Get the current level name
         string currentLevel = SceneManager.GetActiveScene().name;
         Debug.Log("Current level: " + currentLevel);
@@ -73,6 +79,7 @@ public class VictoryManager : MonoBehaviour
         // When the user is on the final level and completes it, "Continue" will redirect them back to the title screen.
         if (nextLevel == currentLevel || nextLevel == "TitleScreen")
         {
+            StartCoroutine(CleanupAfterLoad());
             SceneManager.LoadScene("TitleScreen");
         }
         else
@@ -80,7 +87,6 @@ public class VictoryManager : MonoBehaviour
             SceneManager.LoadScene(nextLevel);
         }
         
-        StartCoroutine(CleanupAfterLoad());
     }
     
     // Needed so that the next level leads first before cleaning up.
@@ -155,6 +161,11 @@ public class VictoryManager : MonoBehaviour
    private void GoToMainMenu()
     {
         Debug.Log("Main Menu clicked");
+
+        if (victoryPanel != null)
+        {
+            victoryPanel.SetActive(false);
+        }
         
         SceneManager.LoadScene("TitleScreen");
         
@@ -164,14 +175,18 @@ public class VictoryManager : MonoBehaviour
     private void OnDestroy()
     {
         // Clean up button listeners
-        if (continueButton != null)
+         if (Instance == this)
         {
-            continueButton.onClick.RemoveListener(ContinueGame);
-        }
-        
-        if (mainMenuButton != null)
-        {
-            mainMenuButton.onClick.RemoveListener(GoToMainMenu);
+            // Clean up button listeners
+            if (continueButton != null)
+            {
+                continueButton.onClick.RemoveListener(ContinueGame);
+            }
+            
+            if (mainMenuButton != null)
+            {
+                mainMenuButton.onClick.RemoveListener(GoToMainMenu);
+            }
         }
     }
 }
