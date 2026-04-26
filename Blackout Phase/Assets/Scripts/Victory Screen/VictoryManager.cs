@@ -25,7 +25,7 @@ public class VictoryManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // Keep this for now, but we'll clean up properly
         }
         else
         {
@@ -63,10 +63,8 @@ public class VictoryManager : MonoBehaviour
     {
         Debug.Log("Continue clicked - Load next level");
 
-        // Clear instance so new one can be created
-        Instance = null;
-        
-        Destroy(gameObject);
+        // Clean up before leaving
+        CleanupAndDestroy();
         
         SceneManager.LoadScene("TitleScreen"); // Placeholder, will update once Level 2 have been implemented.
     }
@@ -75,12 +73,34 @@ public class VictoryManager : MonoBehaviour
     {
         Debug.Log("Main Menu clicked");
         
+        CleanupAndDestroy();
+        
+        SceneManager.LoadScene("TitleScreen");
+    }
+
+    private void CleanupAndDestroy()
+    {
+        // Reset TurnManager before destroying
+        if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.ForceResetToPlayerTurn();
+        }
+        
+        // Remove button listeners
+        if (continueButton != null)
+        {
+            continueButton.onClick.RemoveListener(ContinueGame);
+        }
+        
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.onClick.RemoveListener(GoToMainMenu);
+        }
+        
+        // Clear the instance
         Instance = null;
         
         Destroy(gameObject);
-        
-        // Load main menu
-        SceneManager.LoadScene("TitleScreen");
     }
 
     private void OnDestroy()

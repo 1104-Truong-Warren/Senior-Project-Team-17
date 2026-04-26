@@ -16,11 +16,18 @@ public class GameOverSceneManager : MonoBehaviour
     [SerializeField] private Button restartButton;
     [SerializeField] private Button mainMenuButton;
     
+    // Stores the name of the level the player was just on
+    private string lastLevelName;
+    
     void Start()
     {
+        // Retrieve the level name that was saved before loading the Game Over scene
+        // If no level was saved, default to "Level1" as a test
+        lastLevelName = PlayerPrefs.GetString("LastLevel", "Level1");
+        
         if (restartButton != null)
         {
-            restartButton.onClick.AddListener(RestartGame); // AddListener is a built-in Unity UI event that allows users to drag mouse cursor on the buttons on the screen and triggers a function.
+            restartButton.onClick.AddListener(RestartGame);
         }
         
         if (mainMenuButton != null)
@@ -28,13 +35,13 @@ public class GameOverSceneManager : MonoBehaviour
             mainMenuButton.onClick.AddListener(GoToMainMenu);
         }
         
-        Debug.Log("Game Over scene loaded");
+        Debug.Log("Game Over scene loaded - Last level was: " + lastLevelName);
     }
     
-    // Reloads and resets the main gameplay scene.
+    // Reloads and resets the current gameplay scene, and it works for any level, instead of one predefined level.
     void RestartGame()
     {
-        Debug.Log("Restarting game...");
+        Debug.Log("Restarting game on level: " + lastLevelName);
         
         // Reset TurnManager state before loading scene
         if (TurnManager.Instance != null)
@@ -42,8 +49,7 @@ public class GameOverSceneManager : MonoBehaviour
             TurnManager.Instance.ForceResetToPlayerTurn();
         }
         
-        // Load the game scene
-        SceneManager.LoadScene("Demo_pxiel_2D_Test_Grid");
+        SceneManager.LoadScene(lastLevelName);
     }
     
     // Loads the Title Screen scene.
@@ -51,7 +57,6 @@ public class GameOverSceneManager : MonoBehaviour
     {
         Debug.Log("Going to main menu");
         
-        // Also reset when going to main menu to prevent issues
         if (TurnManager.Instance != null)
         {
             TurnManager.Instance.ForceResetToPlayerTurn();
@@ -62,7 +67,7 @@ public class GameOverSceneManager : MonoBehaviour
     
     void Update()
     {
-        // Keyboard keys shortcuts, if mouse cursor does not work on the buttons.
+        // Keyboard shortcuts, if mouse cursor does not work on the buttons.
         if (Input.GetKeyDown(KeyCode.R))
         {
             RestartGame();

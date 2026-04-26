@@ -3,6 +3,7 @@
 // The purpose of this script is it defines the data structure for saving and loading the character's information.
 // It stores all of the stats and positioning from CharacterInfo.cs
 // It can be converted to JSON and saved to a txt file.
+// It also loads the scene when where the player saved.
 
 // Source: https://docs.unity3d.com/Manual/JSONSerialization.html - For JsonUtility and serialization
 // Source: https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html - For save file location
@@ -13,6 +14,8 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerSaveData
 {
+    public string sceneName;
+
     // Player stats from CharacterInfo1
     public int hp;
     public int maxHP;
@@ -37,6 +40,8 @@ public class PlayerSaveData
     // Constructor that grabs data from your player
     public PlayerSaveData(CharacterInfo1 player)
     {
+        sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
         hp = player.CurrentHP;
         maxHP = player.MaxHP;
         en = player.CurrentEN;

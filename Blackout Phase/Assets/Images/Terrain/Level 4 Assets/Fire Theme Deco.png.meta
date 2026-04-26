@@ -1,0 +1,871 @@
+fileFormatVersion: 2
+guid: 4329a9d6d08766e4dacee737bf3a08d9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7024357402129369958
+    second: Fire Theme Deco_0
+  - first:
+      213: 763387187669221856
+    second: Fire Theme Deco_1
+  - first:
+      213: 5411137671186531139
+    second: Fire Theme Deco_2
+  - first:
+      213: -3926070555953657493
+    second: Fire Theme Deco_3
+  - first:
+      213: -3319528644334446957
+    second: Fire Theme Deco_4
+  - first:
+      213: -7096596923367282557
+    second: Fire Theme Deco_5
+  - first:
+      213: 5688329138675382912
+    second: Fire Theme Deco_6
+  - first:
+      213: -2279784446692482814
+    second: Fire Theme Deco_7
+  - first:
+      213: 7885369777363512313
+    second: Fire Theme Deco_8
+  - first:
+      213: -2294928006702244306
+    second: Fire Theme Deco_9
+  - first:
+      213: 632309060616182466
+    second: Fire Theme Deco_10
+  - first:
+      213: -918441089961204275
+    second: Fire Theme Deco_11
+  - first:
+      213: -6032440274487149330
+    second: Fire Theme Deco_12
+  - first:
+      213: 3750704535193365303
+    second: Fire Theme Deco_13
+  - first:
+      213: -4067238957635286315
+    second: Fire Theme Deco_14
+  - first:
+      213: 6198696215288183972
+    second: Fire Theme Deco_15
+  - first:
+      213: -5364277600450581382
+    second: Fire Theme Deco_16
+  - first:
+      213: -2075632329512514725
+    second: Fire Theme Deco_17
+  - first:
+      213: -7909411902727408389
+    second: Fire Theme Deco_18
+  - first:
+      213: 3685114309278597867
+    second: Fire Theme Deco_19
+  - first:
+      213: 317098873833129956
+    second: Fire Theme Deco_20
+  - first:
+      213: 1112865124322326454
+    second: Fire Theme Deco_21
+  - first:
+      213: -6083217881042664820
+    second: Fire Theme Deco_22
+  - first:
+      213: -53463397087317844
+    second: Fire Theme Deco_23
+  - first:
+      213: 8032851339027137352
+    second: Fire Theme Deco_24
+  - first:
+      213: 211639298254066886
+    second: Fire Theme Deco_25
+  - first:
+      213: -8763619857037280770
+    second: Fire Theme Deco_26
+  - first:
+      213: 7944312801931288953
+    second: Fire Theme Deco_27
+  - first:
+      213: 7816363088358860031
+    second: Fire Theme Deco_28
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Fire Theme Deco_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 271
+        width: 67
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9471bec828748e90800000000000000
+      internalID: -7024357402129369958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_1
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 285
+        width: 56
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e1cb134a98189a00800000000000000
+      internalID: 763387187669221856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_2
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 297
+        width: 43
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 343cec1ea09381b40800000000000000
+      internalID: 5411137671186531139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_3
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 299
+        width: 59
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b69034d61abc389c0800000000000000
+      internalID: -3926070555953657493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_4
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 297
+        width: 56
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39616bc194aaee1d0800000000000000
+      internalID: -3319528644334446957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_5
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 192
+        width: 53
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 388209492b2d38d90800000000000000
+      internalID: -7096596923367282557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_6
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 217
+        width: 70
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08aff3ca63101fe40800000000000000
+      internalID: 5688329138675382912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_7
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 225
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2012f62ef149c50e0800000000000000
+      internalID: -2279784446692482814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_8
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 221
+        width: 36
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fb6a56b8067e6d60800000000000000
+      internalID: 7885369777363512313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_9
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 226
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2eda6f0327c620e0800000000000000
+      internalID: -2294928006702244306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_10
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 227
+        width: 31
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cad9429db966c800800000000000000
+      internalID: 632309060616182466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_11
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 135
+        width: 53
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc56dbdd1ba0143f0800000000000000
+      internalID: -918441089961204275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_12
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 141
+        width: 62
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eecfe661887784ca0800000000000000
+      internalID: -6032440274487149330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_13
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 152
+        width: 31
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73ba5a517ed2d0430800000000000000
+      internalID: 3750704535193365303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_14
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 148
+        width: 30
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dac48997b34e87c0800000000000000
+      internalID: -4067238957635286315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_15
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 170
+        width: 33
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ac7fce9d51360650800000000000000
+      internalID: 6198696215288183972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_16
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 170
+        width: 31
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7cee8c81f14e85b0800000000000000
+      internalID: -5364277600450581382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_17
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 173
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5b071bb46fd133e0800000000000000
+      internalID: -2075632329512514725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_18
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 75
+        width: 46
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf4bfa3c7cf1c3290800000000000000
+      internalID: -7909411902727408389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_19
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 85
+        width: 49
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be2824190f7242330800000000000000
+      internalID: 3685114309278597867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_20
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 83
+        width: 45
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e70085eebf866400800000000000000
+      internalID: 317098873833129956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_21
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 84
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b737223fe0b17f00800000000000000
+      internalID: 1112865124322326454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_22
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 31
+        width: 34
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c82c5254191149ba0800000000000000
+      internalID: -6083217881042664820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_23
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 31
+        width: 34
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca0ff18d25f024ff0800000000000000
+      internalID: -53463397087317844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_24
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 31
+        width: 35
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 843cb34abbb6a7f60800000000000000
+      internalID: 8032851339027137352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_25
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 26
+        width: 45
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c452f802d4efe200800000000000000
+      internalID: 211639298254066886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_26
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 28
+        width: 54
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef9bbb2fb2e516680800000000000000
+      internalID: -8763619857037280770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_27
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 30
+        width: 26
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 971e3bf076edf3e60800000000000000
+      internalID: 7944312801931288953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire Theme Deco_28
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 29
+        width: 45
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff4ea15e0dc497c60800000000000000
+      internalID: 7816363088358860031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Fire Theme Deco_0: -7024357402129369958
+      Fire Theme Deco_1: 763387187669221856
+      Fire Theme Deco_10: 632309060616182466
+      Fire Theme Deco_11: -918441089961204275
+      Fire Theme Deco_12: -6032440274487149330
+      Fire Theme Deco_13: 3750704535193365303
+      Fire Theme Deco_14: -4067238957635286315
+      Fire Theme Deco_15: 6198696215288183972
+      Fire Theme Deco_16: -5364277600450581382
+      Fire Theme Deco_17: -2075632329512514725
+      Fire Theme Deco_18: -7909411902727408389
+      Fire Theme Deco_19: 3685114309278597867
+      Fire Theme Deco_2: 5411137671186531139
+      Fire Theme Deco_20: 317098873833129956
+      Fire Theme Deco_21: 1112865124322326454
+      Fire Theme Deco_22: -6083217881042664820
+      Fire Theme Deco_23: -53463397087317844
+      Fire Theme Deco_24: 8032851339027137352
+      Fire Theme Deco_25: 211639298254066886
+      Fire Theme Deco_26: -8763619857037280770
+      Fire Theme Deco_27: 7944312801931288953
+      Fire Theme Deco_28: 7816363088358860031
+      Fire Theme Deco_3: -3926070555953657493
+      Fire Theme Deco_4: -3319528644334446957
+      Fire Theme Deco_5: -7096596923367282557
+      Fire Theme Deco_6: 5688329138675382912
+      Fire Theme Deco_7: -2279784446692482814
+      Fire Theme Deco_8: 7885369777363512313
+      Fire Theme Deco_9: -2294928006702244306
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

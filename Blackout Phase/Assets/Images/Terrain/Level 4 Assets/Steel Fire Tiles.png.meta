@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: 99c68f8f4fa19304780c0b4245820a28
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -274195643402381940
+    second: Steel Fire Tiles_0
+  - first:
+      213: 5608355202325817539
+    second: Steel Fire Tiles_1
+  - first:
+      213: -4014094592719360470
+    second: Steel Fire Tiles_2
+  - first:
+      213: -3767951121079398092
+    second: Steel Fire Tiles_3
+  - first:
+      213: 5223208601183034671
+    second: Steel Fire Tiles_4
+  - first:
+      213: -7506150753070038317
+    second: Steel Fire Tiles_5
+  - first:
+      213: 2362051416942201709
+    second: Steel Fire Tiles_6
+  - first:
+      213: 3867141340126796872
+    second: Steel Fire Tiles_7
+  - first:
+      213: 5811129756267793197
+    second: Steel Fire Tiles_8
+  - first:
+      213: -1444456001498137774
+    second: Steel Fire Tiles_9
+  - first:
+      213: -3374340907656297517
+    second: Steel Fire Tiles_10
+  - first:
+      213: 6987034879136124597
+    second: Steel Fire Tiles_11
+  - first:
+      213: 5910823371821279099
+    second: Steel Fire Tiles_12
+  - first:
+      213: 699893839888306709
+    second: Steel Fire Tiles_13
+  - first:
+      213: 4535564544474739139
+    second: Steel Fire Tiles_14
+  - first:
+      213: 7004669200845857167
+    second: Steel Fire Tiles_15
+  - first:
+      213: 5914202237567990399
+    second: Steel Fire Tiles_16
+  - first:
+      213: 3217002252710602748
+    second: Steel Fire Tiles_17
+  - first:
+      213: 8012365297466464402
+    second: Steel Fire Tiles_18
+  - first:
+      213: 5831132402181846069
+    second: Steel Fire Tiles_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Steel Fire Tiles_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 307
+        width: 95
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c859a0cd38cd13cf0800000000000000
+      internalID: -274195643402381940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_1
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 306
+        width: 97
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c828d89751e4dd40800000000000000
+      internalID: 5608355202325817539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_2
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 305
+        width: 99
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2e652a4c321b48c0800000000000000
+      internalID: -4014094592719360470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_3
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 305
+        width: 97
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43117093b6c85bbc0800000000000000
+      internalID: -3767951121079398092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_4
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 304
+        width: 98
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2d974d8c809c7840800000000000000
+      internalID: 5223208601183034671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_5
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 219
+        width: 97
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d2cabcc8abc4d790800000000000000
+      internalID: -7506150753070038317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_6
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 220
+        width: 98
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6b4c00cf31b7c020800000000000000
+      internalID: 2362051416942201709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_7
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 220
+        width: 100
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84c5c725f88daa530800000000000000
+      internalID: 3867141340126796872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_8
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 219
+        width: 98
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2b4b0289b745a050800000000000000
+      internalID: 5811129756267793197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_9
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 219
+        width: 98
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25bb5017be244fbe0800000000000000
+      internalID: -1444456001498137774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_10
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 116
+        width: 96
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3c31092deeb21d0800000000000000
+      internalID: -3374340907656297517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_11
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 115
+        width: 97
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5be4c24243fe6f060800000000000000
+      internalID: 6987034879136124597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_12
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 114
+        width: 99
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b77eb7f2a86770250800000000000000
+      internalID: 5910823371821279099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_13
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 114
+        width: 97
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 512d60b3db586b900800000000000000
+      internalID: 699893839888306709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_14
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 113
+        width: 90
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c1f5493cef81fe30800000000000000
+      internalID: 4535564544474739139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_15
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 12
+        width: 95
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f81698d9685953160800000000000000
+      internalID: 7004669200845857167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_16
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 12
+        width: 93
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7a7f0ca997731250800000000000000
+      internalID: 5914202237567990399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_17
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 12
+        width: 99
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf76272218615ac20800000000000000
+      internalID: 3217002252710602748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_18
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 13
+        width: 95
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 298d72669c3a13f60800000000000000
+      internalID: 8012365297466464402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Steel Fire Tiles_19
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 11
+        width: 97
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 534b15e66085ce050800000000000000
+      internalID: 5831132402181846069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Steel Fire Tiles_0: -274195643402381940
+      Steel Fire Tiles_1: 5608355202325817539
+      Steel Fire Tiles_10: -3374340907656297517
+      Steel Fire Tiles_11: 6987034879136124597
+      Steel Fire Tiles_12: 5910823371821279099
+      Steel Fire Tiles_13: 699893839888306709
+      Steel Fire Tiles_14: 4535564544474739139
+      Steel Fire Tiles_15: 7004669200845857167
+      Steel Fire Tiles_16: 5914202237567990399
+      Steel Fire Tiles_17: 3217002252710602748
+      Steel Fire Tiles_18: 8012365297466464402
+      Steel Fire Tiles_19: 5831132402181846069
+      Steel Fire Tiles_2: -4014094592719360470
+      Steel Fire Tiles_3: -3767951121079398092
+      Steel Fire Tiles_4: 5223208601183034671
+      Steel Fire Tiles_5: -7506150753070038317
+      Steel Fire Tiles_6: 2362051416942201709
+      Steel Fire Tiles_7: 3867141340126796872
+      Steel Fire Tiles_8: 5811129756267793197
+      Steel Fire Tiles_9: -1444456001498137774
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

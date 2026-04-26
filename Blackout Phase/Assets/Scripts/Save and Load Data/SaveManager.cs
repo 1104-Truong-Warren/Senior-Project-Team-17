@@ -15,40 +15,46 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance;
     
-    private string saveFolderPath;
+    public string saveFolderPath;
     public List<SaveFileInfo> availableSaves = new List<SaveFileInfo>(); // List that holds data for all found save files
     
     void Awake()
     {
-        // Checks to see of only one SaveManager exists, should only exist in the title screen
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            saveFolderPath = Application.persistentDataPath + "/Saves/"; // Constructs path to the Saves folder
+            saveFolderPath = Application.persistentDataPath + "/Saves/";
             
-            // If the Saves folder doesn't exist, then it will create one automatically.
             if (!Directory.Exists(saveFolderPath)) 
                 Directory.CreateDirectory(saveFolderPath);
             
             RefreshSaveList();
 
-            // Checks if the file have been loaded, it is stored in PlayerPrefs by SaveSelectUI when the save is chosen.
+            // Check for saved file to load
             if (PlayerPrefs.HasKey("LoadFileName"))
             {
                 string fileName = PlayerPrefs.GetString("LoadFileName");
-                PlayerPrefs.DeleteKey("LoadFileName"); // Clears the file so that it only run once.
+                PlayerPrefs.DeleteKey("LoadFileName");
+                
+                // Also get the scene name if it exists
+                if (PlayerPrefs.HasKey("LoadSceneName"))
+                {
+                    string sceneName = PlayerPrefs.GetString("LoadSceneName");
+                    PlayerPrefs.DeleteKey("LoadSceneName");
+                    // The scene should already be loading from SaveSelectUI, so just load the data
+                }
+                
                 LoadGame(fileName);
             }
         }
         else
         {
-            // If another instance exists, it destroys it.
             Destroy(gameObject);
         }
     }
     
-    // The purpose of this function is it scanes the Saves folder, reads every .txt file, and then creates SaveFileInfo objects for the load option in the menu.
+    // The purpose of this function is it scanes the Saves folder, reads every .json file, and then creates SaveFileInfo objects for the load option in the menu.
     public void RefreshSaveList()
     {
         availableSaves.Clear();
@@ -56,7 +62,7 @@ public class SaveManager : MonoBehaviour
         if (!Directory.Exists(saveFolderPath))
             return;
     
-        string[] files = Directory.GetFiles(saveFolderPath, "*.txt");
+        string[] files = Directory.GetFiles(saveFolderPath, "*.json");
         
         // Processes each file that is found
         foreach (string file in files)
@@ -74,6 +80,7 @@ public class SaveManager : MonoBehaviour
                     saveDate = File.GetLastWriteTime(file),
                     playerHP = data.hp,
                     playerMaxHP = data.maxHP,
+                    sceneName = data.sceneName
                 };
                 
                 availableSaves.Add(info);
@@ -92,7 +99,7 @@ public class SaveManager : MonoBehaviour
         CharacterInfo1 player = CharacterInfo1.Instance;
         if (player == null) return;
         
-        string fileName = "Save_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt"; // Generates filename to by using the current date and time
+        string fileName = "Save_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".json"; // Generates filename to by using the current date and time
         string fullPath = saveFolderPath + fileName;
         
         PlayerSaveData data = new PlayerSaveData(player); // Creates the data object that contins the player's current state.

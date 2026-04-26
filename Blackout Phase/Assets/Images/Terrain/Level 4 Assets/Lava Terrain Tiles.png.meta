@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: e902415ed205a3842b2e7e8cdfca9698
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6983812288686888061
+    second: Lava Terrain Tiles_0
+  - first:
+      213: -2110139608710633913
+    second: Lava Terrain Tiles_1
+  - first:
+      213: 4815127383916167015
+    second: Lava Terrain Tiles_2
+  - first:
+      213: -3279930792123303110
+    second: Lava Terrain Tiles_3
+  - first:
+      213: -2076115752114685996
+    second: Lava Terrain Tiles_4
+  - first:
+      213: -1924565366792823286
+    second: Lava Terrain Tiles_5
+  - first:
+      213: 6674644679461999586
+    second: Lava Terrain Tiles_6
+  - first:
+      213: 6205530011233154064
+    second: Lava Terrain Tiles_7
+  - first:
+      213: -623284727109081851
+    second: Lava Terrain Tiles_8
+  - first:
+      213: -587394257359669937
+    second: Lava Terrain Tiles_9
+  - first:
+      213: 5268213066130885123
+    second: Lava Terrain Tiles_10
+  - first:
+      213: -2526591511302923822
+    second: Lava Terrain Tiles_11
+  - first:
+      213: -7319015377192143527
+    second: Lava Terrain Tiles_12
+  - first:
+      213: 1327511567455432089
+    second: Lava Terrain Tiles_13
+  - first:
+      213: -5149370922981430407
+    second: Lava Terrain Tiles_14
+  - first:
+      213: 4371280959581475021
+    second: Lava Terrain Tiles_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 320
+        width: 103
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38b6fcaa9b3841f90800000000000000
+      internalID: -6983812288686888061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_1
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 320
+        width: 103
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7462254b43747b2e0800000000000000
+      internalID: -2110139608710633913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_2
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 320
+        width: 106
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76f349218d4c2d240800000000000000
+      internalID: 4815127383916167015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_3
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 320
+        width: 106
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3bff9782585b72d0800000000000000
+      internalID: -3279930792123303110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_4
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 227
+        width: 105
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d77c9229b72033e0800000000000000
+      internalID: -2076115752114685996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_5
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 229
+        width: 106
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0e5b45eef19a45e0800000000000000
+      internalID: -1924565366792823286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_6
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 229
+        width: 107
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e39841e8f911ac50800000000000000
+      internalID: 6674644679461999586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_7
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 227
+        width: 107
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 014f39abaa87e1650800000000000000
+      internalID: 6205530011233154064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_8
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 119
+        width: 106
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 505acbec7d5a957f0800000000000000
+      internalID: -623284727109081851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_9
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 119
+        width: 108
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f45f8faf80829d7f0800000000000000
+      internalID: -587394257359669937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_10
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 119
+        width: 106
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a8dc71fd37c1940800000000000000
+      internalID: 5268213066130885123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_11
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 119
+        width: 108
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d9954c286ebfecd0800000000000000
+      internalID: -2526591511302923822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_12
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 17
+        width: 104
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95537d0da42ad6a90800000000000000
+      internalID: -7319015377192143527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_13
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 17
+        width: 106
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99d2765bcb44c6210800000000000000
+      internalID: 1327511567455432089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_14
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 17
+        width: 107
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97b67f69d62c988b0800000000000000
+      internalID: -5149370922981430407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lava Terrain Tiles_15
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 15
+        width: 109
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc058496fd8e9ac30800000000000000
+      internalID: 4371280959581475021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Lava Terrain Tiles_0: -6983812288686888061
+      Lava Terrain Tiles_1: -2110139608710633913
+      Lava Terrain Tiles_10: 5268213066130885123
+      Lava Terrain Tiles_11: -2526591511302923822
+      Lava Terrain Tiles_12: -7319015377192143527
+      Lava Terrain Tiles_13: 1327511567455432089
+      Lava Terrain Tiles_14: -5149370922981430407
+      Lava Terrain Tiles_15: 4371280959581475021
+      Lava Terrain Tiles_2: 4815127383916167015
+      Lava Terrain Tiles_3: -3279930792123303110
+      Lava Terrain Tiles_4: -2076115752114685996
+      Lava Terrain Tiles_5: -1924565366792823286
+      Lava Terrain Tiles_6: 6674644679461999586
+      Lava Terrain Tiles_7: 6205530011233154064
+      Lava Terrain Tiles_8: -623284727109081851
+      Lava Terrain Tiles_9: -587394257359669937
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
