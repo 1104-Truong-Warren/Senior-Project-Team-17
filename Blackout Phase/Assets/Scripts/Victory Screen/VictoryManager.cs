@@ -67,12 +67,38 @@ public class VictoryManager : MonoBehaviour
         Debug.Log("Current level: " + currentLevel);
         
         string nextLevel = GetNextLevelName(currentLevel);
+        Debug.Log("Next level: " + nextLevel);
         
-        // Clean up before leaving
-        CleanupAndDestroy();
+        // Load the next level first
+        // When the user is on the final level and completes it, "Continue" will redirect them back to the title screen.
+        if (nextLevel == currentLevel || nextLevel == "TitleScreen")
+        {
+            SceneManager.LoadScene("TitleScreen");
+        }
+        else
+        {
+            SceneManager.LoadScene(nextLevel);
+        }
         
-        // Load the next level
-        SceneManager.LoadScene(nextLevel);
+        StartCoroutine(CleanupAfterLoad());
+    }
+    
+    // Needed so that the next level leads first before cleaning up.
+    private System.Collections.IEnumerator CleanupAfterLoad()
+    {
+        yield return null;
+        
+        // Reset TurnManager before destroying
+        if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.ForceResetToPlayerTurn();
+        }
+        
+        // Clear the instance
+        Instance = null;
+        
+        // Destroy this GameObject
+        Destroy(gameObject);
     }
     
     // New function, instead of predefining the levels, it will check the "Level" string first, and then automatically read in the number followed by it and load the scene.
@@ -86,8 +112,32 @@ public class VictoryManager : MonoBehaviour
             if (int.TryParse(numberPart, out int levelNumber))
             {
                 int nextLevelNumber = levelNumber + 1;
+                string nextLevel = "Level" + nextLevelNumber;
                 
-                return "Level" + nextLevelNumber;
+                // Check if the next level actually exists in the build settings
+                int sceneCount = SceneManager.sceneCountInBuildSettings;
+                bool levelExists = false;
+                
+                for (int i = 0; i < sceneCount; i++)
+                {
+                    string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+                    string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+                    if (sceneName == nextLevel)
+                    {
+                        levelExists = true;
+                        break;
+                    }
+                }
+                
+                if (levelExists)
+                {
+                    return nextLevel;
+                }
+                else
+                {
+                    Debug.Log("Next level " + nextLevel + " not found, returning to main menu");
+                    return "TitleScreen";
+                }
             }
         }
         
@@ -96,7 +146,6 @@ public class VictoryManager : MonoBehaviour
             case "Level1": return "Level2";
             case "Level2": return "Level3";
             case "Level3": return "Level4";
-
             default:
                 Debug.LogWarning("Unknown level format, returning to main menu");
                 return "TitleScreen";
@@ -107,34 +156,9 @@ public class VictoryManager : MonoBehaviour
     {
         Debug.Log("Main Menu clicked");
         
-        CleanupAndDestroy();
-        
         SceneManager.LoadScene("TitleScreen");
-    }
-
-    private void CleanupAndDestroy()
-    {
-        // Reset TurnManager before destroying
-        if (TurnManager.Instance != null)
-        {
-            TurnManager.Instance.ForceResetToPlayerTurn();
-        }
         
-        // Remove button listeners
-        if (continueButton != null)
-        {
-            continueButton.onClick.RemoveListener(ContinueGame);
-        }
-        
-        if (mainMenuButton != null)
-        {
-            mainMenuButton.onClick.RemoveListener(GoToMainMenu);
-        }
-        
-        // Clear the instance
-        Instance = null;
-        
-        Destroy(gameObject);
+        StartCoroutine(CleanupAfterLoad());
     }
 
     private void OnDestroy()
