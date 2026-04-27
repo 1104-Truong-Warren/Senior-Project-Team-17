@@ -7,6 +7,10 @@ public class InventorySlot : MonoBehaviour
 {
     public Image icon;
     public Button removeButton;
+    public GameObject confirmDeletePanel;
+
+    private Button confirmButton;
+    private Button cancelButton;
 
     Item item;
 
@@ -17,6 +21,21 @@ public class InventorySlot : MonoBehaviour
 
     public bool hasItem = false;
 
+    private void Start()
+    {
+        // Set up the remove button listener
+        if (removeButton != null)
+        {
+            removeButton.onClick.AddListener(OnRemoveButton);
+        }
+    }
+
+    public void SetConfirmationButtons(Button confirm, Button cancel)
+    {
+        confirmButton = confirm;
+        cancelButton = cancel;
+    }
+
     public void AddItem(Item newItem)
     {
         item = newItem;
@@ -24,7 +43,6 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = item.icon;
         icon.enabled = true;
         removeButton.interactable = true;
-
 
         name = item.itemName;
         type = item.type;
@@ -51,8 +69,41 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButton()
     {
+        if (confirmDeletePanel != null)
+        {
+            confirmDeletePanel.SetActive(true);
+            
+            // Clear previous listeners and add current slot's methods
+            if (confirmButton != null)
+            {
+                confirmButton.onClick.RemoveAllListeners();
+                confirmButton.onClick.AddListener(OnConfirmDelete);
+            }
+            
+            if (cancelButton != null)
+            {
+                cancelButton.onClick.RemoveAllListeners();
+                cancelButton.onClick.AddListener(OnCancelDelete);
+            }
+        }
+    }
+
+    public void OnConfirmDelete()
+    {
         Inventory.instance.Remove(item);
         hasItem = false;
+        if (confirmDeletePanel != null)
+        {
+            confirmDeletePanel.SetActive(false);
+        }
+    }
+
+    public void OnCancelDelete()
+    {
+        if (confirmDeletePanel != null)
+        {
+            confirmDeletePanel.SetActive(false);
+        }
     }
 
     public void UseItem()

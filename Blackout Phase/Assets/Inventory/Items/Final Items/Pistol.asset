@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34ad24b98da3ba342be6486e74dc0f22, type: 3}
-  m_Name: Barrier
+  m_Name: Pistol
   m_EditorClassIdentifier: 
-  itemName: Barrier
-  icon: {fileID: 21300000, guid: e2642e91624823b4fb0fdcb1042d0e95, type: 3}
+  itemName: Pistol
+  icon: {fileID: 21300000, guid: 88562ea8f9b0ee749864825512e4e241, type: 3}
   type: Equipment
-  description: Increases Max HP by 10
-  flavorText: '"An improved energy shield."'
+  description: Increases attack by 10 when equipped.
+  flavorText: '"A weak, mech-sized pistol. Not approved for handheld use."'
   isDefaultItem: 0
-  useSound: {fileID: 8300000, guid: 392613fa78cc07246a2b611caef18fcd, type: 3}
-  healthModifier: 10
-  attackModifier: 0
+  useSound: {fileID: 8300000, guid: c695b0eef4c72a7429d24bc8a8b91743, type: 3}
+  healthModifier: 0
+  attackModifier: 10

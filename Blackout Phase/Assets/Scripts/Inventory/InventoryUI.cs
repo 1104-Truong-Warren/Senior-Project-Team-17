@@ -1,10 +1,14 @@
 // From https://youtu.be/YLhj7SfaxSE?si=Wm-SfEMXYx61skpm for Inventory UI
 // Ellison
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     public Transform itemsParent;
+    public Button confirmButton;
+    public Button cancelButton;
+    
     Inventory inventory;
     InventorySlot[] slots;
 
@@ -15,6 +19,12 @@ public class InventoryUI : MonoBehaviour
         inventory.onItemChangedCallback += UpdateUI;
 
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+
+        // Initialize all slots with button references
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].SetConfirmationButtons(confirmButton, cancelButton);
+        }
 
         UpdateUI();
     }
