@@ -47,8 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4957d3f418fce36409b23d50e90e8d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxItems: 6
-  items: []
+  maxItems: 9
+  items:
+  - {fileID: 11400000, guid: 9bf2323d09295744ca7d12ef704e6d6a, type: 2}
+  - {fileID: 11400000, guid: 9f79af065aea1c34cad877a77065eca0, type: 2}
+  - {fileID: 11400000, guid: bc05062863750b94e83d7076457e792a, type: 2}
+  - {fileID: 11400000, guid: 98586b6d9d1d1174e82b75df9bfdc531, type: 2}
+  - {fileID: 11400000, guid: 192fdb34d421c184aba768b4cd9b10f9, type: 2}
+  - {fileID: 11400000, guid: 476b5b96d6a6f35459f80a175cc5fe78, type: 2}
+  - {fileID: 11400000, guid: 2288cbf09556c654da989481acacf47d, type: 2}
 --- !u!114 &6313042267577174056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,10 +81,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1bbb93bea0c15446bcaaae24da9e024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numSlots: 3
   previousTotalHealthModifier: 0
   previousTotalAttackModifier: 0
   currentTotalHealthModifier: 0
   currentTotalAttackModifier: 0
+  currentEquipment: []
 --- !u!114 &7502157784676181602
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: MK1 Sword
   m_EditorClassIdentifier: 
   itemName: Mk. 1 Energy Sword
-  icon: {fileID: -3096384489321853493, guid: 6d4d803019a427543887d2c45fef7c26, type: 3}
+  icon: {fileID: 21300000, guid: c5365f8496d04c84991c78289b702466, type: 3}
   type: Equipment
-  description: Increases attack by 5 when equipped.
-  flavorText: '"A weak, standard-issue energy sword"'
+  description: Increases attack and helth by 5 when equipped.
+  flavorText: '"Standard-issue energy sword. Good for offense and defense."'
   isDefaultItem: 0
   useSound: {fileID: 8300000, guid: 983f68866c2cc6c4e81290756209f37b, type: 3}
-  healthModifier: 0
+  healthModifier: 5
   attackModifier: 5

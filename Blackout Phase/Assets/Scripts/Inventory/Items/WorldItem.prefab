@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4039468998743586474}
   - component: {fileID: 7643649761454904599}
   - component: {fileID: 2171541987101388962}
+  - component: {fileID: -7620301207431529138}
   m_Layer: 2
   m_Name: WorldItem
   m_TagString: Untagged
@@ -139,3 +140,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3970c010f57c7724fb4112b493c83dbf, type: 2}
   Tile: {fileID: 0}
+--- !u!95 &-7620301207431529138
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4771652766161298532}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b7aee8703cbe0094899e081324c106c0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
