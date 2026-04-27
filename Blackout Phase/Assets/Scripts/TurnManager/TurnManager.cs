@@ -63,6 +63,8 @@ public class TurnManager : MonoBehaviour
 
     private bool playerReactionSuccessful = false; // keep track if player's reaction worked
 
+    private bool incomingAttackerResolved = false; // check if the enemy already attacked
+
     private bool isInitialized = false; // check too see if enemies are initialized
 
     private CharacterInfo1 playerInfo; // player's info
@@ -240,6 +242,10 @@ public class TurnManager : MonoBehaviour
 
     private void PlayerTurnStart()
     {
+        // player instance is found starts ticking down the buff timer
+        if (CharacterInfo1.Instance != null)
+            CharacterInfo1.Instance.TickDownBuffEffects(BuffEffectTimer.StartOnUserTurn);
+
         // check if the playerInfo finished loading
         if (!PlayerSetUp())
         {
@@ -311,7 +317,13 @@ public class TurnManager : MonoBehaviour
     {
         if (State != TurnState.PlayerAction) return; // not player's turn get out
 
-        Debug.Log("Player turn Ended -> Enemy Phase Starting");
+        // player instance is found end ticking down the buff timer
+        if (CharacterInfo1.Instance != null)
+            CharacterInfo1.Instance.TickDownBuffEffects(BuffEffectTimer.EndOfUserTurn);
+
+        Debug.Log("[TM] After turn end attack: " + playerInfo.BaseAttack); // debug msg
+
+        Debug.Log("[TM] Player turn Ended -> Enemy Phase Starting");
 
         // before ending player's turn check if it died
         if (playerInfo.CurrentHP <= 0)
@@ -359,6 +371,20 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator EnemyTurnStart()
     {
+        // loop through all the enemy list
+        foreach (EnemyController1 enemy in enemies)
+        {
+            // skip null enemy
+            if (enemy == null) continue;
+
+            EnemyInfo enemyInfo = enemy.GetComponent<EnemyInfo>(); // access the enemy
+
+            // if the enemy is not found or dead skip
+            if (enemyInfo == null || enemyInfo.IsDead()) continue;
+
+            enemyInfo.TickDownBuffEffects(BuffEffectTimer.StartOnUserTurn); // starts the tick 
+        }
+
         //SetTurnState(TurnState.EnemyStart); // state is now enemy start
 
         Debug.Log("Enemy turn Start"); // debug msg
@@ -421,6 +447,21 @@ public class TurnManager : MonoBehaviour
         if (State == TurnState.ClearLevel) yield break; 
 
         SetTurnState(TurnState.EnemyEnd); // enemy turn ended
+
+        // loop through the list of enemies 
+        foreach (EnemyController1 enemy in enemies)
+        {
+            // skip null enemy
+            if (enemy == null) continue;
+
+            EnemyInfo enemyInfo = enemy.GetComponent<EnemyInfo>(); // access the enemy
+
+            // if the enemy is not found or dead skip
+            if (enemyInfo == null || enemyInfo.IsDead()) continue;
+
+            enemyInfo.TickDownBuffEffects(BuffEffectTimer.EndOfUserTurn); // end the tick at the same time
+        }
+
 
         //CurrentPhase = TurnPhase.Player; // back to player's phase after enmey's turn
 
@@ -489,8 +530,13 @@ public class TurnManager : MonoBehaviour
     }
 
     // decidee if the incomingAttack is normal/skill
-    private void DecideIncomingAttackType()
+    private void DecideIncomingAttackType(float damgeMultiplier = 1f)
     {
+        // if the enemy already attack get out
+        if (incomingAttackerResolved) return;
+
+        incomingAttackerResolved = true; // set the flag to true enemy attacked
+
         // check to see if attacker exist
         if (inComingAttackEnemy == null) return;
 
@@ -510,12 +556,18 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
+        int orginalDmg = inComingDamage; // the original value
+
+        inComingDamage = Mathf.RoundToInt(inComingDamage * damgeMultiplier); // recalculate the damage with the multiplier 
+
         // if the skill is not null 
         if (incomingEnemySkill != null)
             enemyAttackCore.AttackTarget(inComingTargetUnit, incomingEnemySkill); // skill attack
 
         else
             enemyAttackCore.AttackTarget(inComingTargetUnit); // normal attack
+
+        inComingDamage = orginalDmg; // set it back to orignal value
     }
 
     private IEnumerator WaitForPlayerReady()
@@ -563,6 +615,8 @@ public class TurnManager : MonoBehaviour
         inComingTargetUnit = target; // setup the attack target
 
         incomingEnemySkill = enemySkill; // the enemy skill
+
+        incomingAttackerResolved = false; // set it to false/ enemy hasn't attacked
 
         inComingDamage = dmg; // how much damage is from enemy
 
@@ -628,7 +682,7 @@ public class TurnManager : MonoBehaviour
 
         //inComingTargetUnit.TakeDamage(inComingDamage); // take damage
 
-        DecideIncomingAttackType(); // normal/skill attack from enemy
+        DecideIncomingAttackType(0.8f); // normal/skill attack from enemy, 20% dmg reduction
 
         //playerReactionSuccessful = true; // set flage to true and player, 
 
@@ -646,6 +700,13 @@ public class TurnManager : MonoBehaviour
             Debug.Log("Enemy is dead or missing!"); // debug msg
 
             EndPlayerReaction();
+
+            LevelCleared(); // check for level clear condition
+
+            // if the state is not clear change it to enemy action
+            if (State != TurnState.ClearLevel)
+                State = TurnState.EnemyAction; 
+
             return;
         }
 
@@ -663,6 +724,17 @@ public class TurnManager : MonoBehaviour
             //Debug.Log($"[TM] Counter:{playerTarget.name} took:{inComingDamage}"); // debug msg
         }
 
+        bool counterCheck = PlayerCombatCheck.Instance.PlayerCounterAttack(inComingAttackEnemy, false); // flag for checking if the player counter is successful
+
+        Debug.Log("[TM] counterCheck: " + counterCheck); // debug msg
+
+        // check if the counter is successful
+        if (!counterCheck)
+        {
+            Debug.Log("{TM] Player Counter failed, reselct skill"); // debug msg
+            return; 
+        }
+
         EndPlayerReaction();  // after player react flag toggle
 
         //playerReactionSuccessful = true; // set player did an reaction
@@ -670,10 +742,12 @@ public class TurnManager : MonoBehaviour
 
     public void ResetIncomingPlayerReaction()
     {
-        playerReactionSuccessful = true; // toggle the raction flag
+        playerReactionSuccessful = false; // toggle the raction flag
 
         // reset everything
         inComingAttackEnemy = null;
+
+        inComingTargetUnit = null;
 
         incomingEnemySkill = null;
 
@@ -691,7 +765,7 @@ public class TurnManager : MonoBehaviour
         EnemyInfo enemy = inComingAttackEnemy; // setup the incomingAttack to enemy
 
         // enemy is found continue
-        if (enemy != null)
+        if (enemy != null && enemy.CurrentHP > 0)
         {
             SkillAttachment enemySkillAttachment = enemy.GetComponent<SkillAttachment>(); // find the skillAttachment on enemy
 
@@ -711,9 +785,20 @@ public class TurnManager : MonoBehaviour
 
         incomingEnemySkill = null;
 
+        incomingAttackerResolved = false; 
+
         inComingDamage = 0;
 
         inComingHitChance = 0;
+
+        LevelCleared(); // check for level condition clear before continue
+
+        // check if the state is cleared
+        if (State == TurnState.ClearLevel)
+        {
+            Debug.Log("[TM] Level cleared on player reaction kill"); // debug msg
+            yield break;
+        }
 
         // check to see if player is in reaction state, change to enemyAction so enemy can attack
         if (State == TurnState.PlayerReaction)
@@ -727,6 +812,8 @@ public class TurnManager : MonoBehaviour
         playerReactionSuccessful = true; // set the flag to true, player reacted
 
         playerHighlighter?.ClearHighlights(); // clear the highlights once finished reatiing
+
+        Debug.Log("[TM] EndPlayerReaction callded!"); // debug msg
     }
 
     // Added by Warren: Needed to add this function because the GAME OVER screen keeps reappearing because the TurnManager game over state keeps looping.
@@ -786,11 +873,37 @@ public class TurnManager : MonoBehaviour
 
     public void DeleteEnmey(EnemyController1 enemy)
     {
-        PlayerFuryMode.Instance.EnemyKilledUpdate(); // add to kills
+        Debug.Log("[TM] Delete enemy being called...."); // debug msg
+
+        // check make sure enemy is found
+        if (enemy == null) return;
+
+        //// make sure enemy is found
+        //if (enemy != null)
+
+        EnemyInfo _enemyInfo = enemy.GetComponentInChildren<EnemyInfo>(); // get the enemy info using enemy, even the children / copies
+
+        // make sure the enemyInfo and score manager is found
+        if (_enemyInfo != null && ScoreManager.Instance != null)
+        {
+            bool inFuryMode = PlayerFuryMode.Instance != null && PlayerFuryMode.Instance.inFuryMode; // if the furymode is found and the player is in fury mode = true
+
+            ScoreManager.Instance.AddEnemyKillScore(_enemyInfo.EnemyRank, inFuryMode); // add score depending on the rank
+        }
+        else
+        {
+            Debug.LogWarning("[TM] Score was not added: enemyInfo/ScoreManager missing!"); // debug msg
+        }
+
+        // make sure it's not empty
+        if (PlayerFuryMode.Instance != null)
+            PlayerFuryMode.Instance.EnemyKilledUpdate(); // add to kills
 
         enemies.Remove(enemy); // removes this enemy
 
         enemies.RemoveAll(e => e == null); // deletes all the null enemies
+
+        LevelCleared(); // check if the level is complelted
     }
 
     public static void SetInstaceForEnemyTest(TurnManager inst)

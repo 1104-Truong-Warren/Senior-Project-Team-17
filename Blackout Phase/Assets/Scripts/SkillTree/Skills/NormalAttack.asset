@@ -16,9 +16,10 @@ MonoBehaviour:
   skillType: 0
   targetType: 1
   weaponType: 0
-  classType: 0
-  subClassType: 0
+  classType: 1
+  subClassType: 1
   skillEffectType: 0
+  skillEffects: []
   skillDisplayName: Normal Attack
   skillDescription: Dashing forward and punches target.
   HitRate: 40
@@ -35,6 +36,7 @@ MonoBehaviour:
   enBouns: 0
   movementBonus: 0
   apBonus: 0
+  passiveModifiers: []
   skillENCost: 5
   skillAPCost: 1
   skillCoolDown: 0

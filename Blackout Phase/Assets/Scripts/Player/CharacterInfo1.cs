@@ -32,12 +32,14 @@ public class CharacterInfo1 : UnitCore
     public override int MaxHP => maxHP;
     public int CurrentEN => en;
     public int MaxEN => maxEN;
-    public override int BaseAttack => baseAttk;
-    public override int AttackRange => baseAttkRange;
-    public override int HitRate => baseHitRate;
+    public override int BaseAttack => GetModifiedStats(StatsType.Attack, baseAttk);
+    public override int AttackRange => GetModifiedStats(StatsType.AttackRange, baseAttkRange);
+    public override int HitRate => GetModifiedStats(StatsType.HitRate, baseHitRate);
+    public override int MoveRange => GetModifiedStats(StatsType.MoveRange, baseMoveRange); 
     public int BaseCriticalRate => baseCriticalRate;
     public int BaseCritDamage => baseCritDamage;    
-    public override int EvasionRate => baseEvasion;
+    public override int EvasionRate => GetModifiedStats(StatsType.Evasion, baseEvasion);
+    public override int CritRate => GetModifiedStats(StatsType.CritRate, baseCriticalRate);
     public int CurrentLevel => level;
     public override OverlayTile1 CurrentTile => standingOnTile;
 

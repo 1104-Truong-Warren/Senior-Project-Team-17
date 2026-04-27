@@ -10,30 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
-  m_Name: SwordSlash(sword)
+  m_Name: NormalCanon
   m_EditorClassIdentifier: 
-  id: 2
+  id: 12
   skillType: 0
-  targetType: 1
-  weaponType: 1
-  classType: 1
-  subClassType: 1
+  targetType: 0
+  weaponType: 0
+  classType: 0
+  subClassType: 0
   skillEffectType: 0
-  skillEffects:
-  - buffEffectName: Attack Down lvl1
-    targetType: 1
-    durationTurnsLeft: 2
-    tickTimer: 0
-    modifiers:
-    - statsType: 0
-      value: -2
-      isPercent: 0
-  skillDisplayName: Sword Slash
-  skillDescription: Launching forward and Slash Target with Sword swings.
-  HitRate: 35
-  CritChance: 10
-  AttackDamage: 10
-  AttackRange: 1
+  skillEffects: []
+  skillDisplayName: Canon
+  skillDescription: Dealing damage to target using canon (damage low)
+  HitRate: 40
+  CritChance: 5
+  AttackDamage: 5
+  AttackRange: 2
   critBonus: 0
   critDmgBonus: 0
   hitRateBonus: 0
@@ -44,9 +36,10 @@ MonoBehaviour:
   enBouns: 0
   movementBonus: 0
   apBonus: 0
-  skillENCost: 10
-  skillAPCost: 1
+  passiveModifiers: []
+  skillENCost: 0
+  skillAPCost: 0
   skillCoolDown: 0
   skillDuration: 0
-  requiredLevel: 2
-  requirdSkills: 00000000
+  requiredLevel: 0
+  requirdSkills: 

@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: -3895431657657374414}
   - component: {fileID: 8541822560335772196}
   m_Layer: 9
-  m_Name: EnemyElite
+  m_Name: MeleeElite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,8 @@ MonoBehaviour:
   unlockedActiveSkills:
   - {fileID: 11400000, guid: ee4624905aa7a8946975dbbe0b4aaa6b, type: 2}
   - {fileID: 11400000, guid: b27ca21e6bce81d48aef31ce8d0b3bf4, type: 2}
-  unlockedPassiveSkills: []
+  unlockedPassiveSkills:
+  - {fileID: 11400000, guid: 1fcb8756ad443e64285f92a44546bc73, type: 2}
 --- !u!1001 &6827227202612923296
 PrefabInstance:
   m_ObjectHideFlags: 0

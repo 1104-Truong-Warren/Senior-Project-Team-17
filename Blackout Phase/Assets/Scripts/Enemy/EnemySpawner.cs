@@ -61,6 +61,10 @@ public class EnemySpwawan : MonoBehaviour
 
         enemyInfo.ResetHPToMAX(); // set enemy HP back to max before spawn
 
+        ScoreManager.Instance.RegisterEnemyScore(enemyInfo.EnemyRank); // setup the enemy rank/score value
+
+        SkillAttachment attachment = enemy.GetComponent<SkillAttachment>(); // accesss the skill attachment
+
         EnemyController1 enemyController = enemy.GetComponent<EnemyController1>(); // controlls enemy
 
         enemyController.SetPatrolPoints(patrolPoints, 0); // set up the patrol points for enemy
@@ -71,6 +75,18 @@ public class EnemySpwawan : MonoBehaviour
             Debug.LogError("Enemy Prefab is missing or Control is missing!"); //debug
             return;
         }
+
+        Debug.Log($"[Enemy without passive boost] {enemy.name} loading passives"); // debug msg
+
+        enemyInfo.DebugStats(); // display the new stats before loading passives
+
+        // check to see of the attachment is empty
+        if (attachment != null)
+            enemyInfo.LoadPassiveModFromSA(attachment); // add the skill attachemtn to load in passives
+
+        Debug.Log($"[Enemy with passive boost] {enemy.name} loading passives"); // debug msg
+
+        enemyInfo.DebugStats(); // display the new stats after loading passives
 
         enemyInfo.EnemySetTile(tile); // set up the tile
 
