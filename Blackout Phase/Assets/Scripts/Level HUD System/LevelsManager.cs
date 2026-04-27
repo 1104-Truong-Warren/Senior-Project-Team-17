@@ -53,6 +53,9 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] private AudioClip levelUpSound;
     [SerializeField] [Range(0f, 1f)] private float levelUpVolume = 0.8f;
 
+    [SerializeField] private AudioClip upgradeSelectSound;
+    [SerializeField] [Range(0f, 1f)] private float upgradeSelectVolume = 0.8f;
+
     // Reference to the attached skills
     // Weijun
     //[Header("Player Attachment")]
@@ -520,6 +523,8 @@ public class LevelsManager : MonoBehaviour
     // Player makes a choice
     private void MakeChoice(int choiceIndex)
     {
+        PlayUpgradeSelectSound();
+        
         if (choiceIndex < 0 || choiceIndex >= 3 || currentChoices[choiceIndex] == null)
         {
             Debug.LogWarning("Invalid choice!");
@@ -813,6 +818,7 @@ public class LevelsManager : MonoBehaviour
         return attachment.HasUnlockedSkillID(skillId);
     }
 
+    // Added by Warren
     private void PlayLevelUpSound()
     {
         if (audioSource != null && levelUpSound != null)
@@ -823,6 +829,20 @@ public class LevelsManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Missing AudioSource or LevelUpSound in LevelsManager!");
+        }
+    }
+
+    // Added by Warren
+    private void PlayUpgradeSelectSound()
+    {
+        if (audioSource != null && upgradeSelectSound != null)
+        {
+            audioSource.PlayOneShot(upgradeSelectSound, upgradeSelectVolume);
+            Debug.Log("Upgrade Select SFX played!");
+        }
+        else
+        {
+            Debug.LogWarning("Missing AudioSource or UpgradeSelectSound in LevelsManager!");
         }
     }
     
