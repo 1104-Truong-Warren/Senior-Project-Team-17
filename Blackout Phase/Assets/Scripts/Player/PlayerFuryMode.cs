@@ -9,7 +9,14 @@ public class PlayerFuryMode : MonoBehaviour
     [SerializeField] private int baseFuryModeActionTurns = 2; // how long the base Fury mode lasts
 
     // Added by Warren
+    //==========================
     private Animator animator;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip furyModeSound;
+    [SerializeField] [Range(0f, 1f)] private float furyModeVolume = 0.7f;
+    //==========================
 
     // Player in game stats
     private int currentKills = 0; // starting with 0 kills
@@ -29,6 +36,12 @@ public class PlayerFuryMode : MonoBehaviour
         inFuryMode = false; // defalut is false; < 0
 
         effect = GetComponent<PlayerFuryVisualEffect>(); // set up the reference
+
+        // Added by Warren
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
     public void EnemyKilledUpdate()
@@ -53,7 +66,24 @@ public class PlayerFuryMode : MonoBehaviour
         Debug.Log("Fury Mode Active!"); // debug msg
 
         // Added by Warren
+        PlayFuryModeSound();
+
+        // Added by Warren
         ShowFuryModePopup();
+    }
+
+    // Added by Warren
+    private void PlayFuryModeSound()
+    {
+        if (audioSource != null && furyModeSound != null)
+        {
+            audioSource.PlayOneShot(furyModeSound, furyModeVolume);
+            Debug.Log("Fury Mode SFX played!");
+        }
+        else
+        {
+            Debug.LogWarning("Missing AudioSource or FuryModeSound in PlayerFuryMode!");
+        }
     }
 
     public bool FuryModeGoingDown()

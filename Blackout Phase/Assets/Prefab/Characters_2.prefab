@@ -134,6 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killsToTrigger: 2
   baseFuryModeActionTurns: 2
+  audioSource: {fileID: -821979088614009695}
+  furyModeSound: {fileID: 8300000, guid: 4a88f313e3376e544a10c31c5301f975, type: 3}
 --- !u!114 &9097942805516662175
 MonoBehaviour:
   m_ObjectHideFlags: 0
