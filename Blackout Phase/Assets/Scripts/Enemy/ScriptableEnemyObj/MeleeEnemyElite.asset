@@ -19,4 +19,6 @@ MonoBehaviour:
   movementRange: 3
   evasionRate: 10
   hitRate: 85
+  critRate: 0
   enemyType: MeleeElite
+  enemyRank: 1
