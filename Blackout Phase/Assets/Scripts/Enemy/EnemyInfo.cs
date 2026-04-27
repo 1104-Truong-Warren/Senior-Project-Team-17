@@ -27,15 +27,19 @@ public class EnemyInfo : UnitCore
     // public accessor
     public override int CurrentHP => currentHP; //{ get; protected set; } // enemy currentHp set up
     public override int MaxHP => stats != null ? stats.maxHP : 0; // for the abstract
-    public int moveRange => stats.movementRange;// set move range
-    public override int AttackRange => stats != null ? stats.attackRange : 0; // attack range
-    public override int BaseAttack => stats.baseAttack; // get the enemy's dmg
+    public override int MoveRange => GetModifiedStats(StatsType.MoveRange, stats.movementRange); //moveRange => stats.movementRange;// set move range
+    public override int AttackRange => GetModifiedStats(StatsType.AttackRange, stats.attackRange);  //stats != null ? stats.attackRange : 0; // attack range
+    public override int BaseAttack => GetModifiedStats(StatsType.Attack, stats.baseAttack);  //stats.baseAttack; // get the enemy's dmg
     public int EnemyDetect => stats.detectionRange; // get the enemy's detection range
 
     // public int health => stats != null ? stats.maxHP; // hit points
-    public override int EvasionRate => stats != null ? stats.evasionRate : 0; // get enemy evasion rate 
-    public override int HitRate => stats != null ? stats.hitRate : 0; // enemy base hit rate   
+    public override int EvasionRate => GetModifiedStats(StatsType.Attack, stats.baseAttack);  //stats != null ? stats.evasionRate : 0; // get enemy evasion rate 
+    public override int HitRate => GetModifiedStats(StatsType.HitRate, stats.hitRate); //stats != null ? stats.hitRate : 0; // enemy base hit rate   
+    public override int CritRate => GetModifiedStats(StatsType.CritRate, stats.critRate); // get enemy critRate
     public override OverlayTile1 CurrentTile => tile; // where the enemy tile is
+    public EnemyRank EnemyRank => stats.enemyRank; // access the scriptatble rank
+
+    private bool IsDead = false; // falg for enemy death check
 
     private void Awake()
     {
@@ -84,7 +88,8 @@ public class EnemyInfo : UnitCore
     {
         currentHP -= dmg; // total heal - dmg
 
-        if (CurrentHP <= 0)
+        // is the enemy hp < 0 and not dead?
+        if (CurrentHP <= 0 && !IsDead)
         {
             currentHP = 0;
 
@@ -93,6 +98,16 @@ public class EnemyInfo : UnitCore
                 tile.hasEnemy = false;
 
             Debug.Log($"{name} has died.");
+
+            IsDead = true; // toggle the dead flag 
+
+            EnemyController1 enemyController = GetComponentInParent<EnemyController1>(); // access from the parent object
+
+            // if the enemy controler and TurnManager is found
+            if (enemyController != null && TurnManager.Instance != null)
+            {
+                TurnManager.Instance.DeleteEnmey(enemyController); // pass the enemy control to delect enemy
+            }
 
             Destroy(this.gameObject);  // destory object enemy
         }

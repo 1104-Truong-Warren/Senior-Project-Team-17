@@ -2,6 +2,7 @@
 // used to see how scriptableObject works URL: https://www.youtube.com/watch?v=cy49zMBZvhg
 // Weijun
 
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SkillData", menuName = "Skills/Skill Data")] // what the file is called and what kind of file it is
@@ -17,6 +18,10 @@ public class SkillData : ScriptableObject
     public ClassType classType; // melee/range
     public SubClassType subClassType; // SwordMaster/Berserker 
     public SkillEffectType skillEffectType; // damage/heal/buff
+    
+
+    [Header("Status Effects")]
+    public List<SkillEffectsData> skillEffects = new List<SkillEffectsData> (); // to control the skillEffect list
 
     [Header("Skill Descriptions/Display")]
     public string skillDisplayName; // ingame name
@@ -39,6 +44,7 @@ public class SkillData : ScriptableObject
     public int enBouns; // extra stats add to base stats
     public int movementBonus; // extra stats add to base stats
     public int apBonus; // extra stats add to base stats
+    public List<StatsModifier> passiveModifiers = new List<StatsModifier> (); // for passive bonus
 
     [Header("Skill Cost/Duration (EN, AP, CD)")]
     // =========== AP/EN cost =====================

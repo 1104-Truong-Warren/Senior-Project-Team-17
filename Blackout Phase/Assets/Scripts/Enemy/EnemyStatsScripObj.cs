@@ -1,3 +1,7 @@
+//
+// Enemy stats for scriptable object
+// Weijun
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyStats", menuName = "Enemies/Enemy Stats")]
@@ -13,7 +17,9 @@ public class EnemyStatsScripObj : ScriptableObject
     [Header("Enemy Combat Settings")]
     public int evasionRate; // dodge rate
     public int hitRate; // base hit chance
+    public int critRate; // base crit rate
 
     [Header("Enemy Type")]
     public string enemyType; // describ what type of nemey it is
+    public EnemyRank enemyRank; // what rank of enemy, mob/elite/boss
 }

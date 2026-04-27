@@ -62,7 +62,7 @@ public class EnemyMeleeBasic : EnemyAttackCore // using the EnemyAttackCore to b
             return;
         }
 
-        int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.HitRate, 0, target.EvasionRate); // get the hit chance on target
+        int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.HitRate, skillHitBonus, target.EvasionRate); // get the hit chance on target
 
         Debug.Log($"[EMB] hitChance:{hitChance}"); // debug msg
 
@@ -99,7 +99,11 @@ public class EnemyMeleeBasic : EnemyAttackCore // using the EnemyAttackCore to b
             return;
         }
 
-        int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.HitRate, skill.hitRateBonus, target.EvasionRate); // get the hit chance on target
+        Debug.Log($"[EMB] Enemy HitRate:{enemyInfo.HitRate}"); // debug msg
+
+        Debug.Log($"[EMB] Enemy Skill HitRate:{skill.HitRate}"); // debug msg
+
+        int hitChance = HitRollCheck.FinalHitChanceCal(enemyInfo.HitRate, skill.HitRate, target.EvasionRate); // get the hit chance on target
 
         Debug.Log($"[EMB] hitChance:{hitChance}"); // debug msg
 

@@ -33,26 +33,44 @@ public class EnemySkillLogic : MonoBehaviour
         int bestScore = int.MinValue; // place hoder for the best score calculation
 
         // loop through the active skills
-        foreach (SkillData skil in skillAttachment.EquippedActiveSkills)
+        foreach (SkillData skill in skillAttachment.EquippedActiveSkills)
         {
             // check for null slots, keep on going
-            if (skil == null) continue;
+            if (skill == null) continue;
 
             // skip skills that are on cooldown
-            if (skillAttachment.IsSkillOnCooldown(skil)) continue;
+            if (skillAttachment.IsSkillOnCooldown(skill)) continue;
 
             // skip if it's not an attack skill
-            if (skil.skillEffectType != SkillEffectType.Damage) continue;
+            if (skill.skillEffectType != SkillEffectType.Damage) continue;
+
+            // skip if the target is not player/both
+            if (skill.targetType != TargetType.Player && skill.targetType != TargetType.both) continue;
 
             int distance = Manhattan(enemy.CurrentTile.gridLocation, target.CurrentTile.gridLocation); // find the distance if attack is in range
 
-            int score = skil.AttackDamage; // set the score to the skill damage
+            int score = skill.AttackDamage; // set the score to the skill damage
+
+            // check to see if skill has effects if so add it
+            foreach (var effect in skill.skillEffects)
+            {
+                // skip empty effect
+                if (effect == null) continue;
+
+                // check if it's a debuff
+                if (effect.targetType == EffectTargetType.Target)
+                    score += 3; // debuff enemy gives more score
+
+                // check if it's a buff
+                else if (effect.targetType == EffectTargetType.Self)
+                    score += 1; // self buff less points
+            }
 
             // if the distance is greater than the skill skip it
-            if (distance > skil.AttackRange) continue;
+            if (distance > skill.AttackRange) continue;
 
             // check the attack damage is greater than target's HP + 100
-            if (skil.AttackDamage >= target.CurrentHP)
+            if (skill.AttackDamage >= target.CurrentHP)
                 score += 100;
 
             // if the score is higher best score save it and use that skill
@@ -60,7 +78,7 @@ public class EnemySkillLogic : MonoBehaviour
             {
                 bestScore = score;
 
-                bestSkillToUse = skil;
+                bestSkillToUse = skill;
             }
         }
 
@@ -78,6 +96,42 @@ public class EnemySkillLogic : MonoBehaviour
         TurnManager.Instance.StartPlayerReaction(enemy, target, bestSkillToUse.AttackDamage, hitChance, bestSkillToUse); // pass it to playerReaction
 
         return true; //skillExecutor.ExecuteSkill(enemy, bestSkillToUse, target); // run the SkilExecutor if true it worked!
+    }
+
+    public SkillData GetBestSkillForAttackRange(UnitCore target)
+    {
+        SkillData bestSkill = null; // access the skill holder
+
+        int bestScore = int.MinValue; // holds the best score
+
+        //
+        foreach(SkillData skill in skillAttachment.EquippedActiveSkills)
+        {
+            // skip empty skills
+            if (skill == null) continue;
+
+            // skill on cd skip
+            if (skillAttachment.IsSkillOnCooldown(skill)) continue;
+
+            // skip if the skill is not a damage skill
+            if (skill.skillEffectType != SkillEffectType.Damage) continue;
+
+            int score = skill.AttackDamage; // base on the highest dmg
+
+            // does it have effects? buff/debuff
+            if (skill.skillEffects != null)
+                score += skill.skillEffects.Count * 2; // each skill count as 2 
+
+            // check if the score higher best 
+            if (score > bestScore)
+            {
+                bestScore = score; // swap them, score if it's higher
+
+                bestSkill = skill; // swap the skill 
+            }
+        }
+
+        return bestSkill; // return the skill for use
     }
 
     private int Manhattan(Vector3Int a, Vector3Int b)

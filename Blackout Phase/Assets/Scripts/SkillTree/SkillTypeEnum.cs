@@ -18,3 +18,6 @@ public enum SubClassType { Any, SwordMaster }
 
 // Skill Effect Type
 public enum SkillEffectType { Damage, buff, Heal, PassiveStatsBoost }
+
+// use for the buff/debuffs
+public enum EffectTargetType { Self, Target, Both}

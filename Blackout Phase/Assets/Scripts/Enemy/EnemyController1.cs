@@ -30,6 +30,7 @@ public class EnemyController1 : MonoBehaviour
     private EnemyPathFinder pathFinder; // finding the enemy path
     private EnemyMovement movement; // how it moves
     private EnemyAttackCore enemyAttk; // access the enemy attk script
+    private EnemySkillLogic enemySkillLogic; // access the enemySkill logic script
     private EnemyState enemyState; // state control for Enemy AI
     //private EnemyTileScanner scanner; // scanns the neighbour tiles for pathfinding
 
@@ -55,6 +56,8 @@ public class EnemyController1 : MonoBehaviour
         pathFinder = new EnemyPathFinder(scanner); // setup scanner
 
         enemyAttk = GetComponentInChildren<EnemyAttackCore>(); // set up enemy attack
+
+        enemySkillLogic = GetComponent<EnemySkillLogic>(); // setup enemy skill logic
 
         // check to see if the set up is working
         if (enemyAttk == null)
@@ -98,23 +101,24 @@ public class EnemyController1 : MonoBehaviour
         Debug.Log($"[Enemy:{name}] TakeTurn start | State:{enemyState}"); // debug msg
 
         // check if player is in enemy attack range if so, attack
-        if (enemyAttk != null && player != null && player.CurrentTile != null)
+        if (enemyAttk != null && player != null && player.CurrentTile != null && enemySkillLogic != null)
         {
             UnitCore target = player; // target is the player
 
-            bool canAttack = enemyAttk.CanAttackTarget(target); // flag to see if enemy can attack player
+            bool canAttack = enemySkillLogic.TryQueueBestSkill(target); //enemyAttk.CanAttackTarget(target); // flag to see if enemy can attack player
 
             //var player = GetPlayer(); // set up player
 
             Debug.Log($"[Enemy:{name}] CanAttackPlayer = {canAttack}"); // debug msg
 
+            // if can use skill
             if (canAttack)
             {
                 Debug.Log($"Player In Range:{name} attck player!"); // debug msg
 
                 //enemyAttk.AttackPlayer(player);
 
-                AttackQeue(player);
+                AttackQeue(player); // skill attack
                 yield break;
             }
             else
@@ -122,6 +126,15 @@ public class EnemyController1 : MonoBehaviour
                 Debug.Log($"[Enemy:{name}] Attack check skipped | enemyAttackerNull? {enemyAttk == null} | PlayerNull? {player == null} " +
                     $"| playerTIleNull? {(player != null ? player.CurrentTile == null : true)}"); // debug msg
             }
+        }
+
+        // fall back basic attack if skill didn't worked
+        if (enemyAttk != null && enemyAttk.CanAttackTarget(player))
+        {
+            Debug.Log($"[EC] {name} basic attack"); // debug msg
+
+            enemyAttk.AttackTarget(player); // basic attack
+            yield break;
         }
 
         // player detected ! change state (detect state)
@@ -209,22 +222,40 @@ public class EnemyController1 : MonoBehaviour
     }
 
     private bool PlayerDetectRange()
-{
-    CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
+    {
+        CharacterInfo1 player = CharacterInfo1.Instance; // setup the prefab character
 
-    if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
+        if (player == null || player.CurrentTile == null) return false; // if player or the tile is not found return false
 
-    int distance = Mathf.Abs(enemyInfo.CurrentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
-                + Mathf.Abs(enemyInfo.CurrentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
+        int distance = Mathf.Abs(enemyInfo.CurrentTile.gridLocation.x - player.CurrentTile.gridLocation.x) // mahattant math to see how close is the player 
+                    + Mathf.Abs(enemyInfo.CurrentTile.gridLocation.y - player.CurrentTile.gridLocation.y);
 
-    return distance <= enemyInfo.EnemyDetect; // return the detection range
-}
+        return distance <= enemyInfo.EnemyDetect; // return the detection range
+    }
 
-private IEnumerator MoveTowardPlayer()
+    private IEnumerator MoveTowardPlayer()
     {
         //OverlayTile playerTile = CharacterInfo.Instance.CurrentTile; // get the player tile info
 
-        OverlayTile1 chaseTargetPlayer = GetClosestAdjacentTileToPlayer(); // find the closest adjacent tile but not player's tile
+        int bestAttackRange = enemyInfo.AttackRange; // holder for attck range
+
+        //EnemySkillLogic skillLogic = GetComponent<EnemySkillLogic>(); // setup the logic access
+
+        // check if the skill logic is found
+        if (enemySkillLogic != null)
+        {
+            SkillData bestSkillRange = enemySkillLogic.GetBestSkillForAttackRange(player); // find the best attack range skill
+
+            // check to see if the skill is found
+            if (bestSkillRange != null)
+            {
+                bestAttackRange = bestSkillRange.AttackRange; // use it for the best attk range holder
+
+                Debug.Log($"[EC] {name} moving based on skill range: {bestSkillRange.skillDisplayName} | attack range:{bestAttackRange}"); // debug msg
+            }
+        }
+
+        OverlayTile1 chaseTargetPlayer = GetBestTileAttackRangeOfPlayer(bestAttackRange); // using the helper and send the attk range over, find the best tile
 
         // no adjacent tile found
         if (chaseTargetPlayer == null)
@@ -254,9 +285,18 @@ private IEnumerator MoveTowardPlayer()
             yield break;
         }
 
-        List<OverlayTile1> moveSteps = findPath.Skip(1).Take(enemyInfo.moveRange).ToList(); // if it matches current tile, go to next tile
+        List<OverlayTile1> moveSteps = findPath.Skip(1).Take(enemyInfo.MoveRange).ToList(); // if it matches current tile, go to next tile
 
         yield return movement.MoveAlong(moveSteps); // move correct steps to moveAlong and distance
+
+        // check to see if player/player tile and enemy attack are found, then attck the player
+        if (enemyAttk != null && player != null && player.CurrentTile != null)
+        {
+            Debug.Log($"[EC] {name} moved in attack range, attacking...."); // debug msg
+
+            AttackQeue(player);
+            yield break;
+        }
 
         enemyState = EnemyState.Alter; // still in alter mode after move
     }
@@ -328,58 +368,50 @@ private IEnumerator MoveTowardPlayer()
             UpdateIndex(); // updates the index
     }
 
-    private OverlayTile1 GetClosestAdjacentTileToPlayer()
+    private OverlayTile1 GetBestTileAttackRangeOfPlayer(int skillAttackRange)
     {
-        CharacterInfo1 player = CharacterInfo1.Instance; // get player info
+        // making sure player/enemy tile is found
+        if (player == null || player.CurrentTile == null || enemyInfo.CurrentTile == null) return null;
 
-        // if player || the player tile not found retuns null
-        if (player == null || player.CurrentTile == null)
-            return null;
+        List<OverlayTile1> pathToPlayer = pathFinder.FindPath(enemyInfo.CurrentTile, player.CurrentTile); // use path finder to find player
 
-        Vector2Int playerPositions = new Vector2Int(player.CurrentTile.gridLocation.x, // only use vectect2Int not Vector3Int convert to x,y
-            player.CurrentTile.gridLocation.y);
+        // making sure the path is not empty
+        if (pathToPlayer == null || pathToPlayer.Count == 0) return null;
 
-        Vector2Int[] adjacentOffsets = new Vector2Int[] // the four adjacent directions
+        OverlayTile1 bestTile = null; // holds the best tile
+
+        int bestPathLenghth = int.MaxValue; // stores the best path
+
+        // loop through the tile in the map keys
+        foreach(OverlayTile1 tile in MapManager1.Instance.map.Values)
         {
-            new Vector2Int(1, 0), // x
-            new Vector2Int(-1, 0),
-            new Vector2Int(0, 1), // y
-            new Vector2Int(0, -1),
-        };
+            // skip empty tiles
+            if (tile == null) continue;
 
-        OverlayTile1 bestTile = null; // to store the best tile to stand
+            // skip the tiles that are being block or used by enemy/player
+            if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) continue;
 
-        float bestDistance = float.MaxValue; // no limits for now 
+            int distanceToPlayer = Manhattan(tile.gridLocation, player.CurrentTile.gridLocation); // find the best pathway
 
-        // use loop to run through the offsets to find the best one
-        foreach (var offsets in adjacentOffsets)
-        {
-            Vector2Int gridPosition = playerPositions + offsets; // add the offset to the player position
+            // skill the ones that are far than skill attack range
+            if (distanceToPlayer > skillAttackRange) continue;
 
-            OverlayTile1 tile = MapManager1.Instance.GetTile(gridPosition); // access the tile from map
+            List<OverlayTile1> path = pathFinder.FindPath(enemyInfo.CurrentTile, tile); //find the best path from current tile
 
-            if (tile == null) continue; // keeps going even if the tile not found skip
+            // see if the path is vaild
+            if (path == null || path.Count < 2) continue;
 
-            else if (tile.isBlocked) continue; // keeps going if the tile isBlocked (has enemy/player) skip
-
-            else if (tile.hasEnemy) continue; // keeps going if enemy is using the tile skip
-
-            else if (tile.hasPlayer) continue; // keeps going if player using the tile skip
-
-            //return tile; // returns the first valid adjacent tile
-
-            float distance = Vector2.Distance(tile.transform.position, enemyInfo.CurrentTile.transform.position); // store that variable 
-
-            // if the new distance better than the distance we have replace it
-            if (distance < bestDistance)
+            // check of the path is better than current path
+            if (path.Count < bestPathLenghth)
             {
-                bestDistance = distance; // replace the position
+                bestPathLenghth = path.Count; // replace best path to current path
 
-                bestTile = tile; // store that tile's position
+                bestTile = tile; // replace the best tile too
             }
         }
 
-        return bestTile; // returns the closest adjacent tile  
+        return bestTile; // return the tile
+
     }
 
     public void SetPatrolPoints(List<Vector2Int> pPoints, int startIndex = 0)
@@ -460,18 +492,77 @@ private IEnumerator MoveTowardPlayer()
 
         TurnManager.Instance.StartPlayerReaction(enemyInfo, player, enemyInfo.BaseAttack, hitChance); // copies over the enemy/player data
     }
+    private int Manhattan(Vector3Int a, Vector3Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // returns the player/enemy distance
+    }
 
     private void OnDestroy()
     {
-        // deltes the destoryed enemy
-        if (TurnManager.Instance != null)
-            TurnManager.Instance.DeleteEnmey(this);
+        //// deltes the destoryed enemy
+        //if (TurnManager.Instance != null)
+        //    TurnManager.Instance.DeleteEnmey(this);
 
         // Added by Warren, stops all running coroutines when enemies are destroyed, bug should be fixed.
         StopAllCoroutines();
     }
     
 }
+
+// replaced by skill range
+//private OverlayTile1 GetClosestAdjacentTileToPlayer()
+//{
+//    CharacterInfo1 player = CharacterInfo1.Instance; // get player info
+
+//    // if player || the player tile not found retuns null
+//    if (player == null || player.CurrentTile == null)
+//        return null;
+
+//    Vector2Int playerPositions = new Vector2Int(player.CurrentTile.gridLocation.x, // only use vectect2Int not Vector3Int convert to x,y
+//        player.CurrentTile.gridLocation.y);
+
+//    Vector2Int[] adjacentOffsets = new Vector2Int[] // the four adjacent directions
+//    {
+//            new Vector2Int(1, 0), // x
+//            new Vector2Int(-1, 0),
+//            new Vector2Int(0, 1), // y
+//            new Vector2Int(0, -1),
+//    };
+
+//    OverlayTile1 bestTile = null; // to store the best tile to stand
+
+//    float bestDistance = float.MaxValue; // no limits for now 
+
+//    // use loop to run through the offsets to find the best one
+//    foreach (var offsets in adjacentOffsets)
+//    {
+//        Vector2Int gridPosition = playerPositions + offsets; // add the offset to the player position
+
+//        OverlayTile1 tile = MapManager1.Instance.GetTile(gridPosition); // access the tile from map
+
+//        if (tile == null) continue; // keeps going even if the tile not found skip
+
+//        else if (tile.isBlocked) continue; // keeps going if the tile isBlocked (has enemy/player) skip
+
+//        else if (tile.hasEnemy) continue; // keeps going if enemy is using the tile skip
+
+//        else if (tile.hasPlayer) continue; // keeps going if player using the tile skip
+
+//        //return tile; // returns the first valid adjacent tile
+
+//        float distance = Vector2.Distance(tile.transform.position, enemyInfo.CurrentTile.transform.position); // store that variable 
+
+//        // if the new distance better than the distance we have replace it
+//        if (distance < bestDistance)
+//        {
+//            bestDistance = distance; // replace the position
+
+//            bestTile = tile; // store that tile's position
+//        }
+//    }
+
+//    return bestTile; // returns the closest adjacent tile  
+//}
 
 // not in use anymore 
 //public void AttackPlayer()

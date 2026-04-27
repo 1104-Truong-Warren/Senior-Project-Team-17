@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class SkillExecutor : MonoBehaviour
 {
@@ -121,6 +122,196 @@ public class SkillExecutor : MonoBehaviour
         return true; // skill used
     }
 
+    public void ApplySkillEffects(SkillData skill, UnitCore attacker, UnitCore target)
+    {
+        // check if skill and skill effect exist
+        if (skill == null || skill.skillEffects == null) return;
+
+        // go through the skill effect list
+        foreach (var skillEffectData in skill.skillEffects)
+        {
+            // skip the empty data
+            if (skillEffectData == null) continue;
+
+            UnitCore effectTarget = null; // setup a target 
+
+            // use a switch statement for the different buff type
+            switch (skillEffectData.targetType)
+            {
+                // for self type
+                case EffectTargetType.Self:
+                    effectTarget = attacker;
+                    break;
+
+                // for target
+                case EffectTargetType.Target:
+                    effectTarget = target; 
+                    break;
+
+                // for both
+                case EffectTargetType.Both:
+                    ApplyEffect(attacker, skillEffectData);
+                    ApplyEffect(target, skillEffectData);
+                    break;
+
+                default:
+                    break;
+            }
+
+            //// check if the target type is self/target buff/debuff
+            //if (skillEffectData.targetType == EffectTargetType.Self)
+            //    effectTarget = attacker; // target self
+
+            //// else if the type is target give them the debuff/debuff
+            //else if (skillEffectData.targetType == EffectTargetType.Target)
+            //    effectTarget = target; // effect is on the target
+
+            // skill the empty targets
+            if (effectTarget == null) continue;
+
+            // define the statues effects
+            StatusEffectBuff newBuffEffect = new StatusEffectBuff
+            {
+                buffEffectName = skillEffectData.buffEffectName, // name
+
+                remainingBuffTurns = skillEffectData.durationTurnsLeft, // buff duration
+
+                tickTimer = skillEffectData.tickTimer, // tick down timer
+
+                modifiers = new List<StatsModifier>() // list of the stats to modify
+            };
+
+            // loop through each modifier in skillEffectData list
+            foreach (var mod in skillEffectData.modifiers)
+            {
+                // add it as
+                newBuffEffect.modifiers.Add(new StatsModifier
+                {
+                    statsType = mod.statsType, // type
+
+                    value = mod.value, // how many
+
+                    isPercent = mod.isPercent, // is percent?
+                });
+            }
+
+            effectTarget.AddBuffEffect(newBuffEffect); // add the buff to the unit's list
+
+            Debug.Log($"[SE] Applied buffs {newBuffEffect.buffEffectName} to {effectTarget.name}"); // debug msg
+        }
+    }
+
+    public void ApplyEffect(UnitCore effectTarget, SkillEffectsData skillEffectsData)
+    {
+        // make sure both target and skill data are defined
+        if (effectTarget == null || skillEffectsData == null) return;
+
+
+        // define the statues effects
+        StatusEffectBuff newBuffEffect = new StatusEffectBuff
+        {
+            buffEffectName = skillEffectsData.buffEffectName, // name
+
+            remainingBuffTurns = skillEffectsData.durationTurnsLeft, // buff duration
+
+            tickTimer = skillEffectsData.tickTimer, // tick down timer
+
+            modifiers = new List<StatsModifier>() // list of the stats to modify
+        };
+
+        // loop through each modifier in skillEffectData list
+        foreach (var mod in skillEffectsData.modifiers)
+        {
+            // add it as
+            newBuffEffect.modifiers.Add(new StatsModifier
+            {
+                statsType = mod.statsType, // type
+
+                value = mod.value, // how many
+
+                isPercent = mod.isPercent, // is percent?
+            });
+        }
+
+        effectTarget.AddBuffEffect(newBuffEffect);
+    }
+
+    public void ApplyAttackBuff(UnitCore target)
+    {
+        Debug.Log("[SE] ApplyAttackBuff being called..."); // debug msg
+
+        // check to see if unity is found
+        if (target == null)
+        {
+            Debug.Log("[SE] ApplyAttackBuff | target is null!"); // debug msg
+            return;
+        }
+
+        // redefine the script for testing
+        StatusEffectBuff buff = new StatusEffectBuff
+        {
+            buffEffectName = "Attack Up",
+
+            remainingBuffTurns = 3,
+
+            tickTimer = BuffEffectTimer.EndOfUserTurn,
+
+            modifiers = new List<StatsModifier>
+            {
+                new StatsModifier
+                {
+                    statsType = StatsType.Attack,
+
+                    value = 2,
+
+                    isPercent = false
+                }
+            }
+        };
+
+        target.AddBuffEffect(buff); // add the buff
+
+        Debug.Log("[SE] Player BaseAttack after buffed: " + player.BaseAttack); // debug msg
+    }
+
+    public void ApplyMovementDebuff(UnitCore target)
+    {
+        Debug.Log("[SE] ApplyMovementDebuff being called..."); // debug msg
+
+        // check to see if unity is found
+        if (target == null)
+        {
+            Debug.Log("[SE] ApplyMovementDebuff  | target is null!"); // debug msg
+            return;
+        }
+
+        // redefine the script for testing
+        StatusEffectBuff debuff = new StatusEffectBuff
+        {
+            buffEffectName = "Movement Down",
+
+            remainingBuffTurns = 1,
+
+            tickTimer = BuffEffectTimer.EndOfUserTurn,
+
+            modifiers = new List<StatsModifier>
+            {
+                new StatsModifier
+                {
+                    statsType = StatsType.MoveRange,
+
+                    value = -1,
+
+                    isPercent = false
+                }
+            }
+        };
+
+        target.AddBuffEffect(debuff); // add the debuff
+
+        //Debug.Log("[SE] Target moveRange after buffed: " + player.GetMoveRange); // debug msg
+    }
+
     // for player
     public bool UseSkill(SkillData skill, EnemyInfo enemy = null)
     {
@@ -150,6 +341,13 @@ public class SkillExecutor : MonoBehaviour
                     return false;
                 }
 
+                // check if the skill can be used
+                if (!CanUseSkillOnTarget(skill, player, enemy))
+                {
+                    Debug.Log("[SE] Skill is invalid for this Target!"); // debug msg
+                    return false;
+                }
+
                 skillUsed = UseDamageSkill(skill, enemy); // else damge the enemy
                 break;
 
@@ -157,6 +355,13 @@ public class SkillExecutor : MonoBehaviour
                 Debug.Log($"[SkillExecutor] Heal case reached."); // debug msg
                 skillUsed = UseRecoverySkill(skill);
                 break;
+
+            case SkillEffectType.buff:
+                Debug.Log($"[SkillExecutor] Buff case reached."); // debug msg
+                ApplySkillEffects(skill, player, enemy); // applay the skill
+                skillUsed = true;
+                break;
+
 
             default:
                 Debug.Log($"[SE] Skilltype doesn't exist:{skill.skillEffectType}"); // debug msg
@@ -192,7 +397,7 @@ public class SkillExecutor : MonoBehaviour
             Debug.Log($"[SE] Set Skill cooldown for {skill.skillDisplayName} to {skill.skillCoolDown}"); // debug msg
         }
 
-        Debug.Log($"[SE] SKill uused:{skill.skillDisplayName}"); // debug msg
+        Debug.Log($"[SE] SKill used:{skill.skillDisplayName}"); // debug msg
         return true; // skill used
     }
 
@@ -307,6 +512,31 @@ public class SkillExecutor : MonoBehaviour
 
         Debug.Log($"[SkillExecutor] SKill can be used"); // debug msg
         return true; // if passed all the test true
+    }
+
+    public bool CanUseSkillOnTarget(SkillData skill, UnitCore caster, UnitCore target)
+    {
+        // check if skill/user is found
+        if (skill == null || caster == null) return false;
+
+        // check if the skill type is not damage type
+        if (skill.skillEffectType != SkillEffectType.Damage) return false;
+
+        // check to see if target/target tile is found
+        if (target == null || target.CurrentTile == null || caster.CurrentTile == null) return false;
+
+        // make sure the skill type is targeting enemy/both
+        if (skill.targetType != TargetType.Enemy && skill.targetType != TargetType.both) return false;
+
+        int distance = Manhattan(caster.CurrentTile.gridLocation, target.CurrentTile.gridLocation); // find the correct distance
+
+        return distance <= skill.AttackRange; // return when the skill matches the distance
+    }
+
+    // distance helper
+    private int Manhattan(Vector3Int a, Vector3Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // returns the player/enemy distance
     }
 }
 

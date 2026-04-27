@@ -628,8 +628,13 @@ public class LevelsManager : MonoBehaviour
 
                         Debug.Log($"[LM] Unlocked Active skill:{skill.skillDisplayName}"); // debug msg
                     }
-                    else
+
+                    else if (skill.skillType == SkillType.Passive)
                     {
+                        CharacterInfo1 player = CharacterInfo1.Instance; // copies over the player info
+
+                        player.LoadPassiveModFromSA(attachment); // load in the skills 
+
                         Debug.Log($"[LM] Unlocked Passive skill:{skill.skillDisplayName}"); // debug msg
                     }
                 }

@@ -104,14 +104,28 @@ public class PlayerCombatCheck : MonoBehaviour
         //    return false;
         //}
 
-        int dmg = CalculatePlayerSkillDmg(skill, playerInfo, enemy); // for the final attack crit hit
+        //playerSkillExecutor.ApplyAttackBuff(playerInfo); // test
 
+        Debug.Log("Before buff attack: " + playerInfo.BaseAttack); // debug msg
+
+        Debug.Log("Before debuff enemy: " + enemy.BaseAttack); // debug msg
+
+        playerSkillExecutor.ApplySkillEffects(skill, playerInfo, enemy); // what kind of skill effects after doing damage
+
+        Debug.Log("After buff attack: " + playerInfo.BaseAttack); // debug msg
+
+        Debug.Log("After debuff enemy: " + enemy.BaseAttack); // debug msg
+
+        int dmg = CalculatePlayerSkillDmg(skill, playerInfo, enemy); // for the final attack crit hit
+        
         // making sure the dmg is vaild
         if (dmg <= 0) return false;
 
         Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+
+        Debug.Log("[PCC] playerSkillExecutor: " + playerSkillExecutor); // debug msg
 
         // Added by Warren, for player's damage UI on the enemy
         if (DamageObserver.Instance != null)
@@ -124,14 +138,28 @@ public class PlayerCombatCheck : MonoBehaviour
         return true; // attack hit
     }
 
-    public void PlayerCounterAttack(EnemyInfo enemy, bool allowEnemyReaction = true) // added bool flag to make sure enemy can only counter once
+    public bool PlayerCounterAttack(EnemyInfo enemy, bool allowEnemyReaction = true) // added bool flag to make sure enemy can only counter once
     {
+        // if the enemy is not found or dead return true, so the player can continue
+        if (enemy == null || enemy.CurrentHP <= 0) return true;
+
         SkillData currentSkill = playerSkillattach.GetActiveSkill(playerSkillIndexSelect); // setup the currentSkill
 
         //var player = CharacterInfo1.Instance; // make a copy of characterInfo as reference
 
+        // check to see if the skill is vaild can be use/ range check
+        if (!playerSkillExecutor.CanUseSkillOnTarget(currentSkill, playerInfo, enemy))
+        {
+            Debug.Log("[PCC] Invalid counter skill: Wrong type/target/ out of reach"); // debug msg
+            return false;
+        }
+
         // check if the player is able to use the skill 
-        if (!CanPlayerUseSkill(currentSkill, playerInfo, enemy)) return;
+        if (!CanPlayerUseSkill(currentSkill, playerInfo, enemy))
+        {
+            Debug.Log("[PCC] Counter failed | skillUsed: false"); // debug msg
+            return false;
+        }
 
         playerInfo.PlayerSpendEN(currentSkill.skillENCost); // EN goes down before attack lands
 
@@ -145,25 +173,43 @@ public class PlayerCombatCheck : MonoBehaviour
         //}
 
         // if player attack missed return
-        if (!PlayerAttackHits(currentSkill, playerInfo, enemy)) return;
+        if (!PlayerAttackHits(currentSkill, playerInfo, enemy))
+        {
+            Debug.Log("[PCC] Counter failed | Attack Missed!"); // debug msg
+            return false;
+        }
 
         // if the enemy react to player dodged get out
         //if (EnemyReactToAttack(currentSkill, playerInfo, enemy)) return;
 
+        Debug.Log("Before buff attack: " + playerInfo.BaseAttack); // debug msg
+
+        Debug.Log("Before debuff enemy: " + enemy.BaseAttack); // debug msg
+
+        playerSkillExecutor.ApplySkillEffects(currentSkill, playerInfo, enemy); // what kind of skill effects after doing damage
+
+        Debug.Log("After buff attack: " + playerInfo.BaseAttack); // debug msg
+
+        Debug.Log("After debuff enemy: " + enemy.BaseAttack); // debug msg
+
         int dmg = CalculatePlayerSkillDmg(currentSkill, playerInfo, enemy); // for the final attack crit hit
 
         // making sure the dmg is vaild
-        if (dmg <= 0) return;
+        if (dmg <= 0) return false;
 
-        //Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
+        Debug.Log($"Enemy taking:{dmg} dmg"); // debug msg
 
         enemy.EnemyTakeDamage(dmg); // calls the dmamge founction pass the amount
+
+        
 
         // Added by Warren, for player's damage UI on the enemy
         if (DamageObserver.Instance != null)
         {
             DamageObserver.Instance.ShowPlayerDamage(dmg, enemy.transform.position);
         }
+
+        return true; // passed
 
         //EnemyReactToAttack(currentSkill, playerInfo, enemy); // enemy reaction to player's attack
     }

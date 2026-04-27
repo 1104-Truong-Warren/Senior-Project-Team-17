@@ -161,8 +161,6 @@ public class PlayerTargetSelect : MonoBehaviour
         SetEnemyTarget(enemyCandidates[targetIndex]); // call function set enmey target
     }
 
-
-
     private void LockOnTarget()
     {
         RefershEnemyCandidates(); // function to check which enemies 
@@ -333,7 +331,7 @@ public class PlayerTargetSelect : MonoBehaviour
         if (currentSkill == null) return false;
 
         // if skill type matches and target is player
-        if (currentSkill.skillEffectType == SkillEffectType.Heal && currentSkill.targetType == TargetType.Player)
+        if ((currentSkill.skillEffectType == SkillEffectType.Heal || currentSkill.skillEffectType == SkillEffectType.buff) && (currentSkill.targetType == TargetType.Player || currentSkill.targetType == TargetType.both))
         {
             Debug.Log($"Using Self-Target skill:{currentSkill.skillDisplayName}"); // debug msg
 

@@ -19,6 +19,15 @@ MonoBehaviour:
   classType: 1
   subClassType: 1
   skillEffectType: 0
+  skillEffects:
+  - buffEffectName: Attack UP lvl1
+    targetType: 0
+    durationTurnsLeft: 1
+    tickTimer: 1
+    modifiers:
+    - statsType: 0
+      value: 2
+      isPercent: 0
   skillDisplayName: Sword Toss
   skillDescription: Throw extra swords to target.
   HitRate: 20
@@ -38,6 +47,6 @@ MonoBehaviour:
   skillENCost: 10
   skillAPCost: 1
   skillCoolDown: 0
-  skillDuration: 0
+  skillDuration: 1
   requiredLevel: 3
   requirdSkills: 02000000

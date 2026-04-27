@@ -19,6 +19,7 @@ MonoBehaviour:
   classType: 0
   subClassType: 0
   skillEffectType: 2
+  skillEffects: []
   skillDisplayName: Mecha Scan
   skillDescription: Fixing the Mecha restore HP/EN.
   HitRate: 0
@@ -35,6 +36,7 @@ MonoBehaviour:
   enBouns: 0
   movementBonus: 0
   apBonus: 0
+  passiveModifiers: []
   skillENCost: 0
   skillAPCost: 2
   skillCoolDown: 3

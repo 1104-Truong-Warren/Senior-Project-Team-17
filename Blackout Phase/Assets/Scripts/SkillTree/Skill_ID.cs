@@ -18,6 +18,8 @@ public enum Skill_ID
 
     SwordToss, // throws the swords to target
 
+    UltimateBladeWorks, // secret sword move that deals tons of damge and gain attack buff/movement buff
+
     // ======================= Buff Skills ================================
     // Buff Skills, temperature stats up
     // ====================================================================
@@ -29,6 +31,8 @@ public enum Skill_ID
     // ====================== SM Sub Class passive ===============================
     Swordsman, // passive for SM sub class gain extera hp/en
 
+    MindsEyes, // passive for SM sub class gain crit buff/evasion/attack up lvl3
+
     RageGoAgain, // when you slay enemies depending on level how many times you can attack before next turn (alway crits attive after 3 enemy kills)
 
     ExtraAP, // by unlocking the passive get more AP points per turn
@@ -39,5 +43,10 @@ public enum Skill_ID
     // ===================== Melee Enemy ==================================
     NormalSlash, // enemy normal attack
 
+    NormalCanon, // range normal attack
+
     HeavySlam, // higher damage/ with EN reduction
+
+    // ==================== passive skils =================================
+    AttackUpSmall // lvl 1 attack up
 }

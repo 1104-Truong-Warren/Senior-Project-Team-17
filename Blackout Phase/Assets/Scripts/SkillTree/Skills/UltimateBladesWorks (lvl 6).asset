@@ -10,68 +10,59 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
-  m_Name: SwordStand(Lvl4)
+  m_Name: UltimateBladesWorks (lvl 6)
   m_EditorClassIdentifier: 
-  id: 5
+  id: 4
   skillType: 0
-  targetType: 0
+  targetType: 1
   weaponType: 1
   classType: 1
   subClassType: 1
-  skillEffectType: 1
+  skillEffectType: 0
   skillEffects:
-  - buffEffectName: Attack up lvl2
+  - buffEffectName: Attack up lvl3
     targetType: 0
     durationTurnsLeft: 3
     tickTimer: 1
     modifiers:
     - statsType: 0
-      value: 4
+      value: 5
       isPercent: 0
-  - buffEffectName: CritRate up lvl1
+  - buffEffectName: Movement up lvl3
+    targetType: 0
+    durationTurnsLeft: 3
+    tickTimer: 1
+    modifiers:
+    - statsType: 2
+      value: 2
+      isPercent: 0
+  - buffEffectName: Critical up lvl3
     targetType: 0
     durationTurnsLeft: 3
     tickTimer: 1
     modifiers:
     - statsType: 4
-      value: 5
+      value: 20
       isPercent: 0
-  - buffEffectName: HitRate up lvl1
-    targetType: 0
-    durationTurnsLeft: 3
-    tickTimer: 1
-    modifiers:
-    - statsType: 1
-      value: 10
-      isPercent: 0
-  - buffEffectName: Evasion up lvl1
-    targetType: 0
-    durationTurnsLeft: 3
-    tickTimer: 1
-    modifiers:
-    - statsType: 5
-      value: 10
-      isPercent: 0
-  skillDisplayName: Sword Stand
-  skillDescription: Entering attack sword stand (temporary boost stats)
-  HitRate: 0
-  CritChance: 0
-  AttackDamage: 0
-  AttackRange: 0
-  critBonus: 10
-  critDmgBonus: 10
-  hitRateBonus: 5
+  skillDisplayName: UltimateBladesWords
+  skillDescription: Unlock the ultimate skill using the art of sword
+  HitRate: 50
+  CritChance: 20
+  AttackDamage: 25
+  AttackRange: 2
+  critBonus: 0
+  critDmgBonus: 0
+  hitRateBonus: 0
   hpRecoverP: 0
   enRecoverP: 0
-  attackBonus: 10
-  hpBonus: 20
+  attackBonus: 0
+  hpBonus: 0
   enBouns: 0
   movementBonus: 0
   apBonus: 0
-  passiveModifiers: []
-  skillENCost: 20
-  skillAPCost: 1
+  skillENCost: 30
+  skillAPCost: 2
   skillCoolDown: 3
   skillDuration: 3
-  requiredLevel: 4
-  requirdSkills: 03000000
+  requiredLevel: 6
+  requirdSkills: 06000000
