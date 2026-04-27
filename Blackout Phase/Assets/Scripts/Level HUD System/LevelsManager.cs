@@ -48,6 +48,11 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] int targetXPIncrease = 50;
     [SerializeField] int xpPerEnemy = 25;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip levelUpSound;
+    [SerializeField] [Range(0f, 1f)] private float levelUpVolume = 0.8f;
+
     // Reference to the attached skills
     // Weijun
     //[Header("Player Attachment")]
@@ -109,6 +114,11 @@ public class LevelsManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
         }
 
         currentLevel = 1;
@@ -279,10 +289,10 @@ public class LevelsManager : MonoBehaviour
             if (player != null)
                 player.LevelUp();
 
-            // Show level up celebration first
             ShowLevelUpEffect();
+
+            PlayLevelUpSound();
             
-            // Then show the choice panel after celebration
             StartCoroutine(ShowLevelUpChoiceAfterDelay());
             
             Debug.Log($"Level Up! Now level {currentLevel}");
@@ -801,6 +811,19 @@ public class LevelsManager : MonoBehaviour
     public bool IsSkillUnlocked(Skill_ID skillId)
     {
         return attachment.HasUnlockedSkillID(skillId);
+    }
+
+    private void PlayLevelUpSound()
+    {
+        if (audioSource != null && levelUpSound != null)
+        {
+            audioSource.PlayOneShot(levelUpSound, levelUpVolume);
+            Debug.Log("Level Up SFX played!");
+        }
+        else
+        {
+            Debug.LogWarning("Missing AudioSource or LevelUpSound in LevelsManager!");
+        }
     }
     
     //// This method gets all unlocked skills
