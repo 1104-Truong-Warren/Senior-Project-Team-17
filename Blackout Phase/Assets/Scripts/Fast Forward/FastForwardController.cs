@@ -16,6 +16,27 @@ public class FastForwardToggle : MonoBehaviour
     
     public TextMeshProUGUI buttonText;
     
+    void Start()
+    {
+        Time.timeScale = 1f;
+    }
+    
+    // Updated it to where the speed keeps on going, despite the player reaction UI resetting time scale back to 1. 
+    void Update()
+    {
+        // Continuously check if time scale changed and reapply if needed
+        if (isFastForwarding && Time.timeScale != 2f)
+        {
+            Time.timeScale = 2f;
+            buttonText.text = "Stop Fast Forward";
+        }
+        else if (!isFastForwarding && Time.timeScale != 1f)
+        {
+            Time.timeScale = 1f;
+            buttonText.text = "Fast Forward";
+        }
+    }
+    
     public void ToggleFastForward()
     {
         isFastForwarding = !isFastForwarding;
