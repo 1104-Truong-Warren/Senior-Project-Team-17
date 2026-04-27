@@ -230,13 +230,9 @@ MonoBehaviour:
   equippedActiveSkills:
   - {fileID: 11400000, guid: 3b316f204c24d984abf1ebf53db74c82, type: 2}
   - {fileID: 11400000, guid: 045e9b27712b07e46993cdbdddee5f4a, type: 2}
-  - {fileID: 11400000, guid: 88e4d18799d25c7439680d695127345b, type: 2}
-  - {fileID: 11400000, guid: 43c3af2e72b17b342abe217ba11b3d01, type: 2}
   unlockedActiveSkills:
   - {fileID: 11400000, guid: 3b316f204c24d984abf1ebf53db74c82, type: 2}
   - {fileID: 11400000, guid: 045e9b27712b07e46993cdbdddee5f4a, type: 2}
-  - {fileID: 11400000, guid: 88e4d18799d25c7439680d695127345b, type: 2}
-  - {fileID: 11400000, guid: 43c3af2e72b17b342abe217ba11b3d01, type: 2}
   unlockedPassiveSkills: []
 --- !u!82 &-821979088614009695
 AudioSource:
