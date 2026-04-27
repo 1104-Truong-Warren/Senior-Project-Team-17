@@ -94,7 +94,7 @@ MonoBehaviour:
   levelUpSound: {fileID: 8300000, guid: 90299d1b9ddbf70438c5660dd698289d, type: 3}
   levelUpVolume: 0.8
   upgradeSelectSound: {fileID: 8300000, guid: bcc79bcee3d3c4046a47066811095611, type: 3}
-  upgradeSelectVolume: 0.8
+  upgradeSelectVolume: 1
   attachment: {fileID: 0}
   newUnlockedActiveSkills: []
 --- !u!82 &7252388891936527068
