@@ -217,7 +217,7 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No AudioSource found on tutorialMovementPanel");
+            Debug.LogWarning("No AudioSource found on cameraMovementPanel");
         }
 
         AudioSource playerMovementAudio = playerMovementPanel.GetComponent<AudioSource>();
@@ -253,7 +253,7 @@ public class TutorialManager : MonoBehaviour
         AudioSource combat2Audio = combat2Panel.GetComponent<AudioSource>();
         if (combat2Audio != null)
         {
-            stepAudioSources[TutorialStep.MoveToNext] = combat2Audio;
+            stepAudioSources[TutorialStep.Combat2] = combat2Audio;
         }
         else
         {
@@ -391,8 +391,8 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator RunBlackscreenStep(Dialogue dialogue)
     {
-        dialogue.Reinitialize(blackscreenDialogue); // set the dialogue asset for the blackscreen dialogue
         dialogue.gameObject.SetActive(true);
+        dialogue.Reinitialize(blackscreenDialogue); // set the dialogue asset for the blackscreen dialogue
         // Wait until dialogue is done (check the dialogueDone flag)
         yield return new WaitUntil(() => dialogue.dialogueDone);
         currentStepComplete = true;
@@ -405,8 +405,8 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator RunDialogueMovementIntroStep(Dialogue dialogue)
     {
-        dialogue.Reinitialize(cameraMovementIntroDialogue); // set the dialogue asset for the movement intro dialogue
         dialogue.gameObject.SetActive(true);
+        dialogue.Reinitialize(cameraMovementIntroDialogue); // set the dialogue asset for the movement intro dialogue
 
         // Wait until dialogue is done (also check for certain index to show mission panel)
         while (!dialogue.dialogueDone)
@@ -538,27 +538,36 @@ public class TutorialManager : MonoBehaviour
     {
         // wait until level up hud appears
         yield return new WaitUntil(() => levelUpHud.activeInHierarchy);
-        blocker.SetActive(true);
         hudShown = true;
 
-        dialogue.Reinitialize(levelUpDialogue); // set the dialogue asset for the level up midpoint dialogue
         dialogue.gameObject.SetActive(true);
-        // Wait until dialogue is done
-        while (!dialogue.dialogueDone)
-        {
-            yield return null;
-        }
+        dialogue.Reinitialize(levelUpDialogue); // set the dialogue asset for the level up midpoint dialogue
+        blocker.SetActive(true);
+
+        // unpause time temporarily
+        Time.timeScale = 1f;
+
+        // Wait until dialogue is done before pausing time
+        yield return new WaitUntil(() => dialogue.dialogueDone);
+        
+        // pause time after dialogue completes
+        Time.timeScale = 0f;
         blocker.SetActive(false);
+
         stepCompletePanel.SetActive(false);
         levelUpPanel.SetActive(true);
 
         yield return new WaitUntil(() => currentStepComplete);
+        
+        // Resume time when step is complete
+        Time.timeScale = 1f;
+
     }
 
     private IEnumerator RunMoveToNextIntroStep(Dialogue dialogue)
     {
-        dialogue.Reinitialize(moveToNextIntroDialogue);
         dialogue.gameObject.SetActive(true);
+        dialogue.Reinitialize(moveToNextIntroDialogue);
 
         while (!dialogue.dialogueDone)
         {
@@ -679,8 +688,8 @@ public class TutorialManager : MonoBehaviour
         reactionShown = true;
         stepCompletePanel.SetActive(false);
 
-        dialogue.Reinitialize(reactionDialogue); // set the dialogue asset for the level up midpoint dialogue
         dialogue.gameObject.SetActive(true);
+        dialogue.Reinitialize(reactionDialogue); // set the dialogue asset for the level up midpoint dialogue
         // Wait until dialogue is done
         while (!dialogue.dialogueDone)
         {
@@ -698,8 +707,8 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator RunReactionCleanupStep(Dialogue dialogue)
     {
-        dialogue.Reinitialize(reactionCleanupDialogue); // set the dialogue asset for the combat intro dialogue
         dialogue.gameObject.SetActive(true);
+        dialogue.Reinitialize(reactionCleanupDialogue); // set the dialogue asset for the combat intro dialogue
         bool countered = false;
         while (!dialogue.dialogueDone)
         {
@@ -723,8 +732,8 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator RunInventoryIntroStep(Dialogue dialogue)
     {
-        dialogue.Reinitialize(inventoryIntroDialogue); // set the dialogue asset for the combat intro dialogue
         dialogue.gameObject.SetActive(true);
+        dialogue.Reinitialize(inventoryIntroDialogue); // set the dialogue asset for the combat intro dialogue
         while (!dialogue.dialogueDone)
         {
             if (dialogue.GetCurrentLineIndex() == 1)
@@ -754,8 +763,8 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator RunUseItemIntroStep(Dialogue dialogue)
     {
-        dialogue.Reinitialize(useItemIntroDialogue); // set the dialogue asset for the combat intro dialogue
         dialogue.gameObject.SetActive(true);
+        dialogue.Reinitialize(useItemIntroDialogue); // set the dialogue asset for the combat intro dialogue
         while (!dialogue.dialogueDone)
         {
             if (dialogue.GetCurrentLineIndex() == 1)
@@ -1121,7 +1130,7 @@ public class TutorialManager : MonoBehaviour
     {
         Debug.Log("Tutorial Complete!");
         StartCoroutine(Delay(2f));
-        SceneManager.LoadScene("Demo_pxiel_2D_Test_Grid");
+        SceneManager.LoadScene("LevelSelect");
     }
 
     private void markTaskComplete(GameObject statusImage)
