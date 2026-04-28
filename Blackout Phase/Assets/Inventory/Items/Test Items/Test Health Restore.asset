@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4a6e2b172b94d4db444c07fa047732, type: 3}
   m_Name: Test Health Restore
   m_EditorClassIdentifier: 
-  itemName: Test Health Restore
+  itemName: Health Restore
   icon: {fileID: 21300000, guid: 6e7f6fecd617d02468c0c4e450581ddd, type: 3}
   type: Consumable
   description: Restores 5 HP when used

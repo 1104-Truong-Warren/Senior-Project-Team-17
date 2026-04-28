@@ -28,7 +28,13 @@ public class TutorialActionMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (!inventoryOpen)
+            {
+                ToggleMovementFromKey();
+            }
+        }
     }
 
     public void ToggleMenu()
@@ -123,5 +129,17 @@ public class TutorialActionMenu : MonoBehaviour
         collapseButton.interactable = true;
         movementEnabled = false;
         menuAnimator.SetBool("isCollapsed", false);
+    }
+
+    public void ToggleMovementFromKey()
+    {
+        if (!movementEnabled)
+        {
+            EnableMovementFull();
+        }
+        else
+        {
+            DisableMovementFull();
+        }
     }
 }

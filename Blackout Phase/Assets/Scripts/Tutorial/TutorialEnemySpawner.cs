@@ -14,6 +14,7 @@ public class TutorialEnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab; // enemy prefab
     [SerializeField] private EnemyStatsScripObj enemyStats; // enemy stats
     [SerializeField] private Vector2Int spawnGridPosition;// where it starts
+    [SerializeField] private float yPositionOffset = -0.01f; // Y offset for sprite positioning
 
     public EnemyInfo enemyInfo; // set up accessor
 
@@ -90,7 +91,7 @@ public class TutorialEnemySpawner : MonoBehaviour
         tile.hasEnemy = true; // triggers the nemey flag
 
         enemy.transform.position = new Vector3(tile.transform.position.x,
-            tile.transform.position.y + 0.01f, // y is offset by a little
+            tile.transform.position.y + yPositionOffset, // y offset (adjustable in inspector)
             tile.transform.position.z);
 
         //enemyController.SetInitialized(); // flag set to true

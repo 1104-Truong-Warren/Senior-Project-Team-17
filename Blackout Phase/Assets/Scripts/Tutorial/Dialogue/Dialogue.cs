@@ -46,8 +46,11 @@ public class Dialogue : MonoBehaviour
         textComponent.text = string.Empty; // clear the text
         dialogueDone = false; // reset the dialogue done flag
 
-        // Start dialogue again
-        StartDialogue();
+        // Only start dialogue if the GameObject is active
+        if (gameObject.activeInHierarchy)
+        {
+            StartDialogue();
+        }
     }
 
     // Update is called once per frame
