@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
   m_Name: NormalSlash
   m_EditorClassIdentifier: 
-  id: 9
+  id: 11
   skillType: 0
   targetType: 0
   weaponType: 0
   classType: 0
   subClassType: 0
   skillEffectType: 0
+  skillEffects: []
   skillDisplayName: Normal Slash
   skillDescription: 'Slashing the target '
   HitRate: 35
@@ -35,6 +36,7 @@ MonoBehaviour:
   enBouns: 0
   movementBonus: 0
   apBonus: 0
+  passiveModifiers: []
   skillENCost: 0
   skillAPCost: 0
   skillCoolDown: 0

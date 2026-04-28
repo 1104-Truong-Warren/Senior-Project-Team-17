@@ -576,7 +576,7 @@ MonoBehaviour:
     m_Bits: 0
   currentAction: 0
   cursor: {fileID: 225022930}
-  characterPrefab: {fileID: 5142501310898631158, guid: e551b6a8dc33ec745919d1ebf9efcf62, type: 3}
+  characterPrefab: {fileID: 308588799570629389, guid: eb5f0a69ecbfa5c4a8f30684113cb99f, type: 3}
   characterInfo: {fileID: 0}
   speed: 3
   previewAttkRange: 119
@@ -784,7 +784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &338418346
 Transform:
   m_ObjectHideFlags: 0
@@ -1608,7 +1608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
+  enemyPrefab: {fileID: 7142512310913549335, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
   enemyStats: {fileID: 11400000, guid: 9e924b25fa321604b820860981ca41dc, type: 2}
   spawnGridPosition: {x: -2, y: -5}
   patrolPoints:
@@ -3409,7 +3409,7 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1842748745
+  m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}

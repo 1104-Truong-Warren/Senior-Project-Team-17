@@ -105,20 +105,20 @@ public class EnemyController1 : MonoBehaviour
         {
             UnitCore target = player; // target is the player
 
-            bool canAttack = enemySkillLogic.TryQueueBestSkill(target); //enemyAttk.CanAttackTarget(target); // flag to see if enemy can attack player
+            bool usedSKill = enemySkillLogic.TryQueueBestSkill(target); //enemyAttk.CanAttackTarget(target); // flag to see if enemy can attack player
 
             //var player = GetPlayer(); // set up player
 
-            Debug.Log($"[Enemy:{name}] CanAttackPlayer = {canAttack}"); // debug msg
+            Debug.Log($"[Enemy:{name}] CanAttackPlayer = {usedSKill}"); // debug msg
 
             // if can use skill
-            if (canAttack)
+            if (usedSKill)
             {
                 Debug.Log($"Player In Range:{name} attck player!"); // debug msg
 
                 //enemyAttk.AttackPlayer(player);
 
-                AttackQeue(player); // skill attack
+                //AttackQeue(player); // skill attack
                 yield break;
             }
             else

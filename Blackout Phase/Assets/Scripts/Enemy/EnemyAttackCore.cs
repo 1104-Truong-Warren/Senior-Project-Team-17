@@ -18,9 +18,15 @@ public abstract class EnemyAttackCore : MonoBehaviour
 
     public abstract bool CanAttackTarget(UnitCore target); // just a inheritance, for distance check
 
+    public abstract bool CanAttackTarget(UnitCore target, int attackRange); // just a inheritance, for skill distance check
+
     public abstract void AttackTarget(UnitCore target); // the actual attk function check, Normal Attack
 
     public abstract void AttackTarget(UnitCore target, SkillData skill); // the skill versioin
+
+    public abstract void AttackTarget(UnitCore target, int finalDamage); // for modified dmg for tank damage
+
+    public abstract void AttackTarget(UnitCore target, int finalDamage, SkillData skill); // for modified dmg for tank damage
 
     protected int Manhattan(Vector3Int a, Vector3Int b) // returns the correct distance bewteen player/enemy
     {
