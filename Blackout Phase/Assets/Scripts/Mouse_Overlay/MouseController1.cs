@@ -44,6 +44,8 @@ public class MouseController1 : MonoBehaviour
         pathFinder = new PathFinder1(); // create it
 
         path = new List<OverlayTile1>(); // set up the List for tiles
+
+        Debug.Log($"[MC] MouseController active on: {name}"); // debug msg
     }
 
     // Update is called once per frame
@@ -290,14 +292,16 @@ public class MouseController1 : MonoBehaviour
 
         float zIndex = path[0].transform.position.z + 0.01f; // z position
 
-        characterInfo.transform.position = Vector2.MoveTowards(characterInfo.transform.position, // move to
-            path[0].transform.position, step);
+        //characterInfo.transform.position = Vector2.MoveTowards(characterInfo.transform.position, // move to
+        //    path[0].transform.position, step);
 
-        characterInfo.transform.position = new Vector3(characterInfo.transform.position.x, // from
-            characterInfo.transform.position.y, zIndex);
+        Vector3 targetPosition = GetUnitPositionOnTile(path[0]); // recentering it
+
+        characterInfo.transform.position = Vector3.MoveTowards(characterInfo.transform.position, targetPosition, step);  // new Vector3(characterInfo.transform.position.x, // from
+            //characterInfo.transform.position.y, zIndex);
 
         // movement finished
-        if (Vector2.Distance(characterInfo.transform.position, path[0].transform.position) < 0.00001f)
+        if (Vector2.Distance(characterInfo.transform.position, targetPosition) < 0.01f) // path[0].transform.position
         {
             PositionCharacterOnLine(path[0]); // calculate postition on line
 
@@ -328,6 +332,8 @@ public class MouseController1 : MonoBehaviour
 
     private void PositionCharacterOnLine(OverlayTile1 tile)
     {
+        Debug.Log($"[MC] PositionCharacterOnline called, tile: {tile.gridLocation}"); // debug msg
+
         if (characterInfo == null) // characterInfo not found go through the characterPrefab and use that info
         {
             characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>();
@@ -347,12 +353,31 @@ public class MouseController1 : MonoBehaviour
         characterInfo.PlayerSetTile(tile); // update player's tile info
 
         // offset the y-axis a little bit
-        characterInfo.transform.position = new Vector3(tile.transform.position.x,
-            tile.transform.position.y + 0.0001f,
-            tile.transform.position.z
-        );  // store the postion
+        characterInfo.transform.position = GetUnitPositionOnTile(tile); // use the helper // new Vector3(tile.transform.position.x, 
+        //    tile.transform.position.y + 0.0001f,
+        //    tile.transform.position.z
+        //);  // store the postion
 
-        characterInfo.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+        Debug.Log($"[MC] Player Root Position: {characterInfo.transform.position}"); // debug msg
+
+        Debug.Log($"[MC] Tile Position: {tile.transform.position}"); // debug msg
+
+        Debug.Log($"[MC] Player CurrentTile: {characterInfo.CurrentTile.gridLocation}"); // debug msg
+
+        //Debug.Log($"[MC] Root Position: {characterInfo.transform.position}"); // debug msg
+
+        SpriteRenderer sr = characterInfo.GetComponentInChildren<SpriteRenderer>(); // find the sprite renderer of the player 
+
+        //characterInfo.GetComponentInChildren<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder; // get it from the children 
+
+        // spreite is found get the sorting order from tile
+        if (sr != null)
+        {
+            //Debug.Log($"[MC] Sprite Local position: {sr.transform.localPosition}"); // debug msg
+
+            sr.sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+        }
+            
     }
 
     public RaycastHit2D? GetFocusedOnTile()
@@ -419,6 +444,12 @@ public class MouseController1 : MonoBehaviour
         }
 
         return null; // elsee return null
+    }
+
+    // helper for the position 
+    private Vector3 GetUnitPositionOnTile(OverlayTile1 tile)
+    {
+        return tile.transform.position; // without visual changes//new Vector3(tile.transform.position.x, tile.transform.position.y + 0.01f, tile.transform.position.z); // use this for both player and enemy position to keep them the same
     }
 
 

@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
   m_Name: HeavySlam
   m_EditorClassIdentifier: 
-  id: 0
+  id: 13
   skillType: 0
   targetType: 0
   weaponType: 0
   classType: 0
   subClassType: 0
   skillEffectType: 0
+  skillEffects: []
   skillDisplayName: Heavy Slam
   skillDescription: Dash forward and slam on target
   HitRate: 30
@@ -35,9 +36,10 @@ MonoBehaviour:
   enBouns: 0
   movementBonus: 0
   apBonus: 0
+  passiveModifiers: []
   skillENCost: 0
   skillAPCost: 0
   skillCoolDown: 0
-  skillDuration: 2
+  skillDuration: 0
   requiredLevel: 0
   requirdSkills: 

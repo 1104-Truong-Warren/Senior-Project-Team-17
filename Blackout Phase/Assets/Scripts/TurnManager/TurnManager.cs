@@ -558,14 +558,16 @@ public class TurnManager : MonoBehaviour
 
         int orginalDmg = inComingDamage; // the original value
 
-        inComingDamage = Mathf.RoundToInt(inComingDamage * damgeMultiplier); // recalculate the damage with the multiplier 
+        int finalDamage = Mathf.RoundToInt(inComingDamage * damgeMultiplier); // recalculate the damage with the multiplier 
+
+        Debug.Log($"[TM] Player takes Dmg:{finalDamage} by Enemy"); // debug msg
 
         // if the skill is not null 
         if (incomingEnemySkill != null)
-            enemyAttackCore.AttackTarget(inComingTargetUnit, incomingEnemySkill); // skill attack
+            enemyAttackCore.AttackTarget(inComingTargetUnit, finalDamage, incomingEnemySkill); // skill attack
 
         else
-            enemyAttackCore.AttackTarget(inComingTargetUnit); // normal attack
+            enemyAttackCore.AttackTarget(inComingTargetUnit, finalDamage); // normal attack
 
         inComingDamage = orginalDmg; // set it back to orignal value
     }
@@ -676,7 +678,16 @@ public class TurnManager : MonoBehaviour
         // if current state is not player Reaction get out
         if (State != TurnState.PlayerReaction) return;
 
-        Debug.Log("Player takes Dmg by Enemy"); // debug msg
+        // check to see if the damage is vaild
+        if (inComingDamage <= 0)
+        {
+            Debug.LogWarning("[TM] No vaild incoming damage from enemy, skipping Tank damage"); // debug msg
+
+            EndPlayerReaction(); // force to end reaction
+            return;
+        }
+
+        //Debug.Log($"[TM] Player takes Dmg by Enemy"); // debug msg
 
         //CharacterInfo1.Instance.PlayerTakeDamage(inComingDamage); // take damage
 
@@ -751,6 +762,8 @@ public class TurnManager : MonoBehaviour
 
         incomingEnemySkill = null;
 
+        incomingAttackerResolved = false;
+
         inComingDamage = 0;
 
         inComingHitChance = 0;
@@ -809,6 +822,9 @@ public class TurnManager : MonoBehaviour
 
     public void EndPlayerReaction()
     {
+        // if player reacted returns
+        if (playerReactionSuccessful) return;
+
         playerReactionSuccessful = true; // set the flag to true, player reacted
 
         playerHighlighter?.ClearHighlights(); // clear the highlights once finished reatiing
