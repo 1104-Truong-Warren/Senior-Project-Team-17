@@ -39,7 +39,7 @@ public class EnemyInfo : UnitCore
     public override OverlayTile1 CurrentTile => tile; // where the enemy tile is
     public EnemyRank EnemyRank => stats.enemyRank; // access the scriptatble rank
 
-    private bool IsDead = false; // falg for enemy death check
+    //private bool IsDead = false; // falg for enemy death check
 
     private void Awake()
     {
@@ -89,7 +89,7 @@ public class EnemyInfo : UnitCore
         currentHP -= dmg; // total heal - dmg
 
         // is the enemy hp < 0 and not dead?
-        if (CurrentHP <= 0 && !IsDead)
+        if (CurrentHP <= 0)//!IsDead)
         {
             currentHP = 0;
 
@@ -99,7 +99,7 @@ public class EnemyInfo : UnitCore
 
             Debug.Log($"{name} has died.");
 
-            IsDead = true; // toggle the dead flag 
+            //IsDead = true; // toggle the dead flag 
 
             EnemyController1 enemyController = GetComponentInParent<EnemyController1>(); // access from the parent object
 

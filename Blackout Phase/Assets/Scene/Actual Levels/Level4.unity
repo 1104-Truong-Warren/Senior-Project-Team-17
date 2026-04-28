@@ -652,7 +652,7 @@ MonoBehaviour:
     m_Bits: 0
   currentAction: 0
   cursor: {fileID: 225022930}
-  characterPrefab: {fileID: 5142501310898631158, guid: e551b6a8dc33ec745919d1ebf9efcf62, type: 3}
+  characterPrefab: {fileID: 308588799570629389, guid: eb5f0a69ecbfa5c4a8f30684113cb99f, type: 3}
   characterInfo: {fileID: 0}
   speed: 3
   previewAttkRange: 119
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
+  enemyPrefab: {fileID: 7142512310913549335, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
   enemyStats: {fileID: 11400000, guid: 9e924b25fa321604b820860981ca41dc, type: 2}
   spawnGridPosition: {x: -13, y: -15}
   patrolPoints:
@@ -7181,7 +7181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
+  enemyPrefab: {fileID: 4681400459612642235, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
   enemyStats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
   spawnGridPosition: {x: 7, y: -11}
   patrolPoints:
@@ -7303,8 +7303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
-  enemyStats: {fileID: 11400000, guid: 9e924b25fa321604b820860981ca41dc, type: 2}
+  enemyPrefab: {fileID: 6294096057763871038, guid: de1031b35bda46945b7f41a919d81407, type: 3}
+  enemyStats: {fileID: 11400000, guid: 853593a251b58e64d9a5dd377bb42d6f, type: 2}
   spawnGridPosition: {x: -11, y: -11}
   patrolPoints:
   - {x: -8, y: -8}
@@ -7548,7 +7548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
+  enemyPrefab: {fileID: 7142512310913549335, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
   enemyStats: {fileID: 11400000, guid: 9e924b25fa321604b820860981ca41dc, type: 2}
   spawnGridPosition: {x: 11, y: -12}
   patrolPoints:
@@ -7583,7 +7583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
+  enemyPrefab: {fileID: 4681400459612642235, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
   enemyStats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
   spawnGridPosition: {x: -11, y: 7}
   patrolPoints:
@@ -16559,7 +16559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
+  enemyPrefab: {fileID: 4681400459612642235, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
   enemyStats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
   spawnGridPosition: {x: -16, y: 11}
   patrolPoints:
@@ -17079,7 +17079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
+  enemyPrefab: {fileID: 4681400459612642235, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
   enemyStats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
   spawnGridPosition: {x: 10, y: 12}
   patrolPoints:
@@ -22953,7 +22953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27385a27792d818429795cfb1c131b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5232868240694350822, guid: 6db050ca83cc04149b935444b7209c89, type: 3}
+  enemyPrefab: {fileID: 4681400459612642235, guid: 5affc72d39da5854ea28628ae3bf8c19, type: 3}
   enemyStats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
   spawnGridPosition: {x: 7, y: 7}
   patrolPoints:

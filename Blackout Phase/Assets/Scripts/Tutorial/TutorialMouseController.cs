@@ -454,7 +454,7 @@ public class TutorialMouseController : MonoBehaviour
             tile.transform.position.z
         );  // store the postion
 
-        characterInfo.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+        characterInfo.GetComponentInChildren<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
     }
 
     public RaycastHit2D? GetFocusedOnTile()
