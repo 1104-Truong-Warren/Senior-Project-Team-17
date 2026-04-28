@@ -21605,7 +21605,7 @@ MonoBehaviour:
     m_Bits: 0
   currentAction: 0
   cursor: {fileID: 1842108569}
-  characterPrefab: {fileID: 5142501310898631158, guid: e551b6a8dc33ec745919d1ebf9efcf62, type: 3}
+  characterPrefab: {fileID: 308588799570629389, guid: eb5f0a69ecbfa5c4a8f30684113cb99f, type: 3}
   characterInfo: {fileID: 0}
   speed: 3
   previewAttkRange: 0
@@ -21701,7 +21701,7 @@ MonoBehaviour:
     m_Bits: 0
   currentAction: 0
   cursor: {fileID: 1842108569}
-  characterPrefab: {fileID: 5142501310898631158, guid: e551b6a8dc33ec745919d1ebf9efcf62, type: 3}
+  characterPrefab: {fileID: 308588799570629389, guid: eb5f0a69ecbfa5c4a8f30684113cb99f, type: 3}
   characterInfo: {fileID: 0}
   speed: 3
   spawnGridPosition: {x: -2, y: -2}
@@ -24083,6 +24083,11 @@ MonoBehaviour:
   targetXP: 100
   targetXPIncrease: 50
   xpPerEnemy: 100
+  audioSource: {fileID: 0}
+  levelUpSound: {fileID: 0}
+  levelUpVolume: 0.8
+  upgradeSelectSound: {fileID: 0}
+  upgradeSelectVolume: 0.8
   attachment: {fileID: 0}
   newUnlockedActiveSkills: []
 --- !u!4 &2123584617
