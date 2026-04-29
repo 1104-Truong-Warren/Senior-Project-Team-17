@@ -1,0 +1,988 @@
+fileFormatVersion: 2
+guid: 7d7fcdf19b7f99e42885df935f38f390
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7265161168392540972
+    second: Green_Enemies_0
+  - first:
+      213: 103391556938354779
+    second: Green_Enemies_1
+  - first:
+      213: 6834984777139699620
+    second: Green_Enemies_2
+  - first:
+      213: -5957526278074295926
+    second: Green_Enemies_3
+  - first:
+      213: -3976674874204182736
+    second: Green_Enemies_4
+  - first:
+      213: -1993304716338110557
+    second: Green_Enemies_5
+  - first:
+      213: -7951925943511358789
+    second: Green_Enemies_6
+  - first:
+      213: -3771632518161185880
+    second: Green_Enemies_7
+  - first:
+      213: 4979376708172476069
+    second: Green_Enemies_8
+  - first:
+      213: 725522059094097121
+    second: Green_Enemies_9
+  - first:
+      213: -9189144023070501753
+    second: Green_Enemies_10
+  - first:
+      213: -2497117401859645434
+    second: Green_Enemies_11
+  - first:
+      213: -1608411918433444307
+    second: Green_Enemies_12
+  - first:
+      213: -8630439507106314764
+    second: Green_Enemies_13
+  - first:
+      213: -2058739054072451842
+    second: Green_Enemies_14
+  - first:
+      213: 6322423842506457406
+    second: Green_Enemies_15
+  - first:
+      213: -4777441558983979176
+    second: Green_Enemies_16
+  - first:
+      213: -8375109743713875949
+    second: Green_Enemies_17
+  - first:
+      213: -78482443230580252
+    second: Green_Enemies_18
+  - first:
+      213: -2814421344646204551
+    second: Green_Enemies_19
+  - first:
+      213: -3334892058017811160
+    second: Green_Enemies_20
+  - first:
+      213: 5772630890866880812
+    second: Green_Enemies_21
+  - first:
+      213: 9121409063247707806
+    second: Green_Enemies_22
+  - first:
+      213: 6568025968436976437
+    second: Green_Enemies_23
+  - first:
+      213: -511187938803064086
+    second: Green_Enemies_24
+  - first:
+      213: 2851893552085188775
+    second: Green_Enemies_25
+  - first:
+      213: -5022877299351071854
+    second: Green_Enemies_26
+  - first:
+      213: 1278006058579534077
+    second: Green_Enemies_27
+  - first:
+      213: 5797540406757249292
+    second: Green_Enemies_28
+  - first:
+      213: 205233541048359768
+    second: Green_Enemies_29
+  - first:
+      213: -6074960415179666151
+    second: Green_Enemies_30
+  - first:
+      213: -4569201699285605115
+    second: Green_Enemies_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Green_Enemies_0
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 720
+        width: 225
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c23dff5179903d460800000000000000
+      internalID: 7265161168392540972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_1
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 722
+        width: 222
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b50d510c2125f6100800000000000000
+      internalID: 103391556938354779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_2
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 721
+        width: 235
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4af3d96017ebade50800000000000000
+      internalID: 6834984777139699620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_3
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 721
+        width: 471
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8993571a6d925da0800000000000000
+      internalID: -5957526278074295926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_4
+      rect:
+        serializedVersion: 2
+        x: 1397
+        y: 846
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 037a6df654300d8c0800000000000000
+      internalID: -3976674874204182736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_5
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 504
+        width: 167
+        height: 173
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3af5e85ebeb5654e0800000000000000
+      internalID: -1993304716338110557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_6
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 504
+        width: 166
+        height: 173
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb2eac84c7515a190800000000000000
+      internalID: -7951925943511358789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_7
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 671
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a3c0bb253878abc0800000000000000
+      internalID: -3771632518161185880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_8
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 503
+        width: 167
+        height: 173
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ae6975fbbc4a1540800000000000000
+      internalID: 4979376708172476069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_9
+      rect:
+        serializedVersion: 2
+        x: 615
+        y: 672
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ec73010872911a00800000000000000
+      internalID: 725522059094097121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_10
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 501
+        width: 196
+        height: 183
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7849afa723a997080800000000000000
+      internalID: -9189144023070501753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_11
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 499
+        width: 451
+        height: 179
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 600a5bb04f4785dd0800000000000000
+      internalID: -2497117401859645434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_12
+      rect:
+        serializedVersion: 2
+        x: 1082
+        y: 257
+        width: 319
+        height: 215
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2e1545c1e5cda9e0800000000000000
+      internalID: -1608411918433444307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_13
+      rect:
+        serializedVersion: 2
+        x: 1179
+        y: 460
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f54e6b8ef48a3880800000000000000
+      internalID: -8630439507106314764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_14
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 458
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efca9ccecb3ed63e0800000000000000
+      internalID: -2058739054072451842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_15
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 272
+        width: 241
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e31ce04bcf2cdb750800000000000000
+      internalID: 6322423842506457406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_16
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 271
+        width: 194
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85f429dc63e13bdb0800000000000000
+      internalID: -4777441558983979176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_17
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 410
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3188503bf02a5cb80800000000000000
+      internalID: -8375109743713875949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_18
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 271
+        width: 203
+        height: 183
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e1f22a32ac29eef0800000000000000
+      internalID: -78482443230580252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_19
+      rect:
+        serializedVersion: 2
+        x: 897
+        y: 272
+        width: 193
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 973f510d2ba21f8d0800000000000000
+      internalID: -2814421344646204551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_20
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 394
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 825b39d975518b1d0800000000000000
+      internalID: -3334892058017811160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_21
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 379
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c213195e5318c1050800000000000000
+      internalID: 5772630890866880812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_22
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 353
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9e78e93731c59e70800000000000000
+      internalID: 9121409063247707806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_23
+      rect:
+        serializedVersion: 2
+        x: 1399
+        y: 344
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b1a34c1d0562b50800000000000000
+      internalID: 6568025968436976437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_24
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 326
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae2ed2e2745e7e8f0800000000000000
+      internalID: -511187938803064086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_25
+      rect:
+        serializedVersion: 2
+        x: 1382
+        y: 299
+        width: 22
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a0c34d5316f39720800000000000000
+      internalID: 2851893552085188775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_26
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 53
+        width: 298
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2935ec565b72b4ab0800000000000000
+      internalID: -5022877299351071854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_27
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 251
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df02e663db36cb110800000000000000
+      internalID: 1278006058579534077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_28
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 45
+        width: 243
+        height: 189
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c015db38840057050800000000000000
+      internalID: 5797540406757249292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_29
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 220
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85bde2671d229d200800000000000000
+      internalID: 205233541048359768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_30
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 52
+        width: 228
+        height: 188
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91d08ac50b761bba0800000000000000
+      internalID: -6074960415179666151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green_Enemies_31
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 0
+        width: 511
+        height: 233
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50568fe534fe690c0800000000000000
+      internalID: -4569201699285605115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2e57dac03e03e224dbb016bbd1cf2680
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Green_Enemies_0: 7265161168392540972
+      Green_Enemies_1: 103391556938354779
+      Green_Enemies_10: -9189144023070501753
+      Green_Enemies_11: -2497117401859645434
+      Green_Enemies_12: -1608411918433444307
+      Green_Enemies_13: -8630439507106314764
+      Green_Enemies_14: -2058739054072451842
+      Green_Enemies_15: 6322423842506457406
+      Green_Enemies_16: -4777441558983979176
+      Green_Enemies_17: -8375109743713875949
+      Green_Enemies_18: -78482443230580252
+      Green_Enemies_19: -2814421344646204551
+      Green_Enemies_2: 6834984777139699620
+      Green_Enemies_20: -3334892058017811160
+      Green_Enemies_21: 5772630890866880812
+      Green_Enemies_22: 9121409063247707806
+      Green_Enemies_23: 6568025968436976437
+      Green_Enemies_24: -511187938803064086
+      Green_Enemies_25: 2851893552085188775
+      Green_Enemies_26: -5022877299351071854
+      Green_Enemies_27: 1278006058579534077
+      Green_Enemies_28: 5797540406757249292
+      Green_Enemies_29: 205233541048359768
+      Green_Enemies_3: -5957526278074295926
+      Green_Enemies_30: -6074960415179666151
+      Green_Enemies_31: -4569201699285605115
+      Green_Enemies_4: -3976674874204182736
+      Green_Enemies_5: -1993304716338110557
+      Green_Enemies_6: -7951925943511358789
+      Green_Enemies_7: -3771632518161185880
+      Green_Enemies_8: 4979376708172476069
+      Green_Enemies_9: 725522059094097121
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

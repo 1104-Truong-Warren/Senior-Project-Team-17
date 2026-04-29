@@ -93,7 +93,7 @@ public class EnemySkillLogic : MonoBehaviour
 
         Debug.Log($"[ESL] {enemy.name} used {bestSkillToUse.skillDisplayName}"); // debug msg
 
-        TurnManager.Instance.StartPlayerReaction(enemy, target, bestSkillToUse.AttackDamage, hitChance, bestSkillToUse); // pass it to playerReaction
+        TurnManager.Instance.StartPlayerReaction(enemy, target, bestSkillToUse.AttackDamage + enemy.BaseAttack, hitChance, bestSkillToUse); // pass it to playerReaction
 
         return true; //skillExecutor.ExecuteSkill(enemy, bestSkillToUse, target); // run the SkilExecutor if true it worked!
     }

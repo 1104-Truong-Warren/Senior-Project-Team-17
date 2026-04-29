@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9178e53d98f6f3c4f832d9310163cb1d, type: 3}
-  m_Name: MeleeEnemy
+  m_Name: LockOn
   m_EditorClassIdentifier: 
-  maxHP: 15
-  attackRange: 1
-  baseAttack: 3
-  detectionRange: 3
-  movementRange: 3
-  evasionRate: 10
-  hitRate: 30
-  critRate: 0
-  enemyType: Melee
-  enemyRank: 0
+  maxHP: 35
+  attackRange: 2
+  baseAttack: 9
+  detectionRange: 8
+  movementRange: 8
+  evasionRate: 40
+  hitRate: 65
+  critRate: 40
+  enemyType: BOSS
+  enemyRank: 2

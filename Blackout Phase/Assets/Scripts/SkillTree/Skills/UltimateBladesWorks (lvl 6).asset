@@ -60,9 +60,10 @@ MonoBehaviour:
   enBouns: 0
   movementBonus: 0
   apBonus: 0
+  passiveModifiers: []
   skillENCost: 30
   skillAPCost: 2
   skillCoolDown: 3
   skillDuration: 3
   requiredLevel: 6
-  requirdSkills: 06000000
+  requirdSkills: 

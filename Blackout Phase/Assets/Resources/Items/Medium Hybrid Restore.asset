@@ -15,9 +15,9 @@ MonoBehaviour:
   itemName: Hybrid Restore
   icon: {fileID: 21300000, guid: e8a3c9d724699d94290fe619fbedea3f, type: 3}
   type: Consumable
-  description: Restores 10 HP and 20 EN when used
+  description: Restores 40 HP and 40 EN when used
   flavorText: '"A medium-sized hybrid restorative core."'
   isDefaultItem: 0
   useSound: {fileID: 8300000, guid: ba1680af05af69a41a749d8d5ca20f67, type: 3}
-  healthChangeAmount: 10
-  energyChangeAmount: 20
+  healthChangeAmount: 40
+  energyChangeAmount: 40
