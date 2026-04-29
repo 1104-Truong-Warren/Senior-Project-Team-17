@@ -1,9 +1,7 @@
 // used this video to see how other people make skills URL: https://www.youtube.com/watch?v=V4WrS-Wt2xU
 // Weijun
 
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
 
 public class PlayerCombatCheck : MonoBehaviour
 {

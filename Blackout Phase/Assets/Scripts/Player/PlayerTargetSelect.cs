@@ -6,7 +6,6 @@ using System.Collections.Generic;
 //using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
 using static UnityEngine.GraphicsBuffer;
 
 public class PlayerTargetSelect : MonoBehaviour
