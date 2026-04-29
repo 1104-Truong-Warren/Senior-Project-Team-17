@@ -12,11 +12,12 @@ public class InventoryUI : MonoBehaviour
     Inventory inventory;
     InventorySlot[] slots;
 
+    public InventoryData data;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        inventory = Inventory.instance;
-        inventory.onItemChangedCallback += UpdateUI;
+        data.onItemChanged += UpdateUI;
 
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 
@@ -39,14 +40,22 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i < inventory.items.Count)
+            if (i < data.items.Count)
             {
-                slots[i].AddItem(inventory.items[i]);
+                slots[i].AddItem(data.items[i]);
             }
             else
             {
                 slots[i].ClearSlot();
             }
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (data != null)
+        {
+            data.onItemChanged -= UpdateUI;
         }
     }
 }
