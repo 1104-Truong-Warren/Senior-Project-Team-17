@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
-  m_Name: HeavySlam
+  m_Name: DestroyerMode
   m_EditorClassIdentifier: 
-  id: 13
+  id: 15
   skillType: 0
   targetType: 0
   weaponType: 0
@@ -20,7 +20,15 @@ MonoBehaviour:
   subClassType: 0
   skillEffectType: 0
   skillEffects:
-  - buffEffectName: Attack Down(lvl1)
+  - buffEffectName: Attack Up (lvl2)
+    targetType: 0
+    durationTurnsLeft: 2
+    tickTimer: 0
+    modifiers:
+    - statsType: 0
+      value: 4
+      isPercent: 0
+  - buffEffectName: Attack Down (lvl1)
     targetType: 1
     durationTurnsLeft: 2
     tickTimer: 0
@@ -28,11 +36,12 @@ MonoBehaviour:
     - statsType: 0
       value: -2
       isPercent: 0
-  skillDisplayName: Heavy Slam
-  skillDescription: Dash forward and slam on target
-  HitRate: 30
+  skillDisplayName: Destroyer Mode
+  skillDescription: Charging to the target and shift to destroyer state boost self
+    attack, lower target's attack
+  HitRate: 40
   CritChance: 10
-  AttackDamage: 10
+  AttackDamage: 15
   AttackRange: 2
   critBonus: 0
   critDmgBonus: 0
@@ -47,7 +56,7 @@ MonoBehaviour:
   passiveModifiers: []
   skillENCost: 0
   skillAPCost: 0
-  skillCoolDown: 0
+  skillCoolDown: 5
   skillDuration: 0
   requiredLevel: 0
   requirdSkills: 

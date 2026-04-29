@@ -45,8 +45,16 @@ public enum Skill_ID
 
     NormalCanon, // range normal attack
 
-    HeavySlam, // higher damage/ with EN reduction
+    HeavySlam, // higher damage/ with Attack reduction
+
+    SuperSnip, // higher damage/ with higher range/ higher crit chance
+
+    DestoryerMode, // high damage/ with attack down debuff/ Attack up Medium
+
+    LockOn, // high range damage/ with movement debuff
 
     // ==================== passive skils =================================
-    AttackUpSmall // lvl 1 attack up
+    AttackUpSmall, // lvl 1 attack up
+
+    CriticalUpSmall // lvl 1 critical up 
 }

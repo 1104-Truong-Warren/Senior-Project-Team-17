@@ -10,30 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
-  m_Name: HeavySlam
+  m_Name: ExtraMovement
   m_EditorClassIdentifier: 
-  id: 13
-  skillType: 0
+  id: 10
+  skillType: 1
   targetType: 0
   weaponType: 0
   classType: 0
   subClassType: 0
-  skillEffectType: 0
-  skillEffects:
-  - buffEffectName: Attack Down(lvl1)
-    targetType: 1
-    durationTurnsLeft: 2
-    tickTimer: 0
-    modifiers:
-    - statsType: 0
-      value: -2
-      isPercent: 0
-  skillDisplayName: Heavy Slam
-  skillDescription: Dash forward and slam on target
-  HitRate: 30
-  CritChance: 10
-  AttackDamage: 10
-  AttackRange: 2
+  skillEffectType: 3
+  skillEffects: []
+  skillDisplayName: Extra Movement
+  skillDescription: extend the movement range by 2
+  HitRate: 0
+  CritChance: 0
+  AttackDamage: 0
+  AttackRange: 0
   critBonus: 0
   critDmgBonus: 0
   hitRateBonus: 0
@@ -44,10 +36,13 @@ MonoBehaviour:
   enBouns: 0
   movementBonus: 0
   apBonus: 0
-  passiveModifiers: []
+  passiveModifiers:
+  - statsType: 2
+    value: 2
+    isPercent: 0
   skillENCost: 0
   skillAPCost: 0
   skillCoolDown: 0
   skillDuration: 0
-  requiredLevel: 0
+  requiredLevel: 5
   requirdSkills: 

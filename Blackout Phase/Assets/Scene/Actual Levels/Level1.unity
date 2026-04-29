@@ -1179,9 +1179,8 @@ MonoBehaviour:
   enemyStats: {fileID: 11400000, guid: 9e924b25fa321604b820860981ca41dc, type: 2}
   spawnGridPosition: {x: -5, y: 2}
   patrolPoints:
-  - {x: -3, y: -5}
-  - {x: -3, y: -1}
-  - {x: -3, y: 2}
+  - {x: -5, y: 2}
+  - {x: -5, y: 5}
 --- !u!4 &783708996
 Transform:
   m_ObjectHideFlags: 0
@@ -1285,9 +1284,8 @@ MonoBehaviour:
   enemyStats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
   spawnGridPosition: {x: 1, y: 2}
   patrolPoints:
-  - {x: 1, y: -3}
-  - {x: 1, y: 0}
-  - {x: 3, y: -5}
+  - {x: 1, y: 2}
+  - {x: 1, y: -2}
 --- !u!4 &820111674
 Transform:
   m_ObjectHideFlags: 0
@@ -1609,9 +1607,8 @@ MonoBehaviour:
   enemyStats: {fileID: 11400000, guid: 9e924b25fa321604b820860981ca41dc, type: 2}
   spawnGridPosition: {x: 1, y: -4}
   patrolPoints:
-  - {x: -6, y: 0}
-  - {x: 6, y: -3}
-  - {x: -7, y: -5}
+  - {x: 1, y: -4}
+  - {x: 1, y: 0}
 --- !u!4 &1098947168
 Transform:
   m_ObjectHideFlags: 0
@@ -10235,11 +10232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3139807911280166267, guid: 365ef874169b7c949a15b0ce7e85ca4c, type: 3}
       propertyPath: spawnGridPosition.x
-      value: 6
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 3139807911280166267, guid: 365ef874169b7c949a15b0ce7e85ca4c, type: 3}
       propertyPath: spawnGridPosition.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4341928498832212384, guid: 365ef874169b7c949a15b0ce7e85ca4c, type: 3}
       propertyPath: m_Name
@@ -10598,6 +10595,10 @@ PrefabInstance:
     - target: {fileID: 2766455460889554845, guid: 8f575d2c6ab1de64695f7614412e8f45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4405223979556932747, guid: 8f575d2c6ab1de64695f7614412e8f45, type: 3}
+      propertyPath: spawnGridPosition.y
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 5619690982223404165, guid: 8f575d2c6ab1de64695f7614412e8f45, type: 3}
       propertyPath: m_Name
@@ -11378,7 +11379,7 @@ PrefabInstance:
       objectReference: {fileID: 1705977524}
     - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
       propertyPath: allSkills.Array.size
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
       propertyPath: playerSkillAttachment
@@ -11400,6 +11401,26 @@ PrefabInstance:
       propertyPath: 'allSkills.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 43c3af2e72b17b342abe217ba11b3d01, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 789e1a8c7eb7f7942a94c097dddf8780, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 736c7fa65d4e8f043bbe72a43612185f, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c8ddc48f716ee7c408453e13dc91d73f, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[7]'
+      value: 
+      objectReference: {fileID: 11400000, guid: acf60160181060e4a9c40f437a059ccb, type: 2}
+    - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
+      propertyPath: 'allSkills.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8fdc64fd28d35b847911295cf2165b88, type: 2}
     - target: {fileID: 5655816596305276016, guid: d66a44b9834912d4eb2041562297b93a, type: 3}
       propertyPath: 'choiceTexts.Array.data[0]'
       value: 

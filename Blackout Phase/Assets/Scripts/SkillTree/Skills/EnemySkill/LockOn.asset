@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
-  m_Name: HeavySlam
+  m_Name: LockOn
   m_EditorClassIdentifier: 
-  id: 13
+  id: 16
   skillType: 0
   targetType: 0
   weaponType: 0
@@ -20,20 +20,21 @@ MonoBehaviour:
   subClassType: 0
   skillEffectType: 0
   skillEffects:
-  - buffEffectName: Attack Down(lvl1)
+  - buffEffectName: Movement Down(lvl1)
     targetType: 1
     durationTurnsLeft: 2
     tickTimer: 0
     modifiers:
-    - statsType: 0
-      value: -2
+    - statsType: 2
+      value: -1
       isPercent: 0
-  skillDisplayName: Heavy Slam
-  skillDescription: Dash forward and slam on target
-  HitRate: 30
-  CritChance: 10
+  skillDisplayName: Lock On
+  skillDescription: Lock on to the target dealing high damage and  cripples the target's
+    movement range
+  HitRate: 45
+  CritChance: 5
   AttackDamage: 10
-  AttackRange: 2
+  AttackRange: 4
   critBonus: 0
   critDmgBonus: 0
   hitRateBonus: 0
@@ -47,7 +48,7 @@ MonoBehaviour:
   passiveModifiers: []
   skillENCost: 0
   skillAPCost: 0
-  skillCoolDown: 0
+  skillCoolDown: 3
   skillDuration: 0
   requiredLevel: 0
   requirdSkills: 
