@@ -1139,7 +1139,7 @@ public class TutorialManager : MonoBehaviour
         Debug.Log("Tutorial Complete!");
 
         StartCoroutine(Delay(2f));
-        SceneManager.LoadScene("LevelSelect");
+        SceneManager.LoadScene("TitleScreen");
     }
 
     private void markTaskComplete(GameObject statusImage)
