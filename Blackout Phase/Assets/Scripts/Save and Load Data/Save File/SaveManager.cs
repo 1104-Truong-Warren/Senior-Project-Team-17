@@ -14,7 +14,10 @@ using System.Collections;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance;
-    
+
+    // Ellison - inventory data
+    public InventoryData inventoryData;
+
     public string saveFolderPath;
     public List<SaveFileInfo> availableSaves = new List<SaveFileInfo>(); // List that holds data for all found save files
     
@@ -101,8 +104,9 @@ public class SaveManager : MonoBehaviour
         
         string fileName = "Save_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".json"; // Generates filename to by using the current date and time
         string fullPath = saveFolderPath + fileName;
-        
-        PlayerSaveData data = new PlayerSaveData(player); // Creates the data object that contins the player's current state.
+
+        // Ellison - changed this next line to add inventory data
+        PlayerSaveData data = new PlayerSaveData(player, inventoryData); // Creates the data object that contins the player's current state.
         string json = JsonUtility.ToJson(data, true); // Converts the data object to a JSON string
         
         File.WriteAllText(fullPath, json); // Writes the JSON string to the new file
@@ -161,6 +165,8 @@ public class SaveManager : MonoBehaviour
         if (player != null)
         {
             player.LoadFromSaveData(data);
+            // Ellison - load inventory and equipment
+            LoadInventoryAndEquipment(data);
             Debug.Log($"Game loaded! HP: {data.hp}");
             
             // Updates positioning
@@ -194,5 +200,38 @@ public class SaveManager : MonoBehaviour
         {
             Debug.LogError($"Failed to delete save file: {e.Message}");
         }
+    }
+
+
+    // Ellison - added function to restore inventory
+    void LoadInventoryAndEquipment(PlayerSaveData data)
+    {
+        // clear current data if any
+        inventoryData.items.Clear();
+        for (int i = 0; i < inventoryData.currentEquipment.Length; i++)
+        {
+            inventoryData.currentEquipment[i] = null;
+        }
+
+        // load from path in resources folder into inventory
+        foreach (string itemName in data.inventoryItemNames)
+        {
+            Item item = Resources.Load<Item>("Items/" + itemName);
+            if (item != null) inventoryData.items.Add(item);
+        }
+
+        // load into equipment
+        for (int i = 0; i < data.equippedItemNames.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(data.equippedItemNames[i]))
+            {
+                Equipment eq = Resources.Load<Equipment>("Items/" + data.equippedItemNames[i]);
+                inventoryData.currentEquipment[i] = eq;
+            }
+        }
+
+        // force UI refresh
+        inventoryData.onItemChanged?.Invoke();
+        inventoryData.onEquipmentChanged?.Invoke(null, null);
     }
 }

@@ -9,7 +9,9 @@
 // Source: https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html - For save file location
 // Source: https://learn.microsoft.com/en-us/dot/standard/serialization/system-text-json/overview - For JSON data structure
 
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Analytics.IAnalytic;
 
 [System.Serializable]
 public class PlayerSaveData
@@ -33,12 +35,16 @@ public class PlayerSaveData
     public float posX;
     public float posY;
     public float posZ;
-    
+
+    // Ellison - added to also load inventory
+    public List<string> inventoryItemNames = new List<string>();
+    public string[] equippedItemNames = new string[3];
+
     // Empty constructor needed for loading
     public PlayerSaveData() { }
     
     // Constructor that grabs data from your player
-    public PlayerSaveData(CharacterInfo1 player)
+    public PlayerSaveData(CharacterInfo1 player, InventoryData invData)
     {
         sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
@@ -58,5 +64,17 @@ public class PlayerSaveData
         posX = player.transform.position.x;
         posY = player.transform.position.y;
         posZ = player.transform.position.z;
+
+
+        // Ellison - inventory
+        foreach (Item item in invData.items)
+        {
+            if (item != null) inventoryItemNames.Add(item.name);
+        }
+        for (int i = 0; i < invData.currentEquipment.Length; i++)
+        {
+            if (invData.currentEquipment[i] != null)
+                equippedItemNames[i] = invData.currentEquipment[i].name;
+        }
     }
 }
