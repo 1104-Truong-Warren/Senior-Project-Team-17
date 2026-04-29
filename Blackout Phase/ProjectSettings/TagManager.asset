@@ -9,6 +9,7 @@ TagManager:
   - Player1
   - Music Volume slider
   - SFX Volume slider
+  - Tutorial Character
   layers:
   - Default
   - TransparentFX
