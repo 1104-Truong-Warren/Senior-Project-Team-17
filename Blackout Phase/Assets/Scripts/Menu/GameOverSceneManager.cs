@@ -43,6 +43,13 @@ public class GameOverSceneManager : MonoBehaviour
     {
         Debug.Log("Restarting game on level: " + lastLevelName);
         
+        // Resets player stats before restarting.
+        if (CharacterInfo1.Instance != null)
+        {
+            CharacterInfo1.Instance.ResetForLevelRestart();
+            Debug.Log("Reset player stats for restart");
+        }
+
         // Reset TurnManager state before loading scene
         if (TurnManager.Instance != null)
         {

@@ -67,6 +67,16 @@ public class VictoryManager : MonoBehaviour
         {
             victoryPanel.SetActive(false);
         }
+
+        if (CharacterInfo1.Instance != null)
+        {
+            CharacterInfo1.Instance.SaveForNextLevel();
+        }
+
+         if (LevelsManager.Instance != null)
+        {
+            LevelsManager.Instance.SaveLevelData();
+        }
             
         // Get the current level name
         string currentLevel = SceneManager.GetActiveScene().name;

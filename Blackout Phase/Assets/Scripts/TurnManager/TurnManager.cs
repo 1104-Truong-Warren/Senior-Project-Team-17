@@ -937,7 +937,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    // Added by Warren: //
+    // Added by Warren, properly loads the scene when the player completed the level and switches back to their turn on the next level: //
     //=================//
     private void OnEnable()
     {

@@ -25,6 +25,23 @@ public class CharacterInfo1 : UnitCore
     [SerializeField] private int baseEvasion; // evasion rate of the player
     [SerializeField] private int level; // what level is the character
 
+    // Added by Warren
+    // ================
+    private static int savedHP;
+    private static int savedMaxHP;
+    private static int savedEN;
+    private static int savedMaxEN;
+    private static int savedBaseAttk;
+    private static int savedBaseAttkRange;
+    private static int savedBaseHitRate;
+    private static int savedBaseCriticalRate;
+    private static int savedBaseCritDamage;
+    private static int savedBaseEvasion;
+    private static int savedLevel;
+    private static bool hasSavedData = false;
+    private static bool isTutorialLevel = false;
+    // ==================
+
     private OverlayTile1 standingOnTile; // stores the tile
 
     // public accessor for player's info
@@ -58,7 +75,17 @@ public class CharacterInfo1 : UnitCore
         Instance = this; // set up the player accessor
 
         currentAP = maxAP; // Start with 2AP
+
+        
     }
+
+    // Added by Warren
+    private void Start()
+    {
+        // Load stats from previous level if they exist
+        LoadFromPreviousLevel();
+    }
+
     public void LevelUp()
     {
         // check to see if player can be leveled up
@@ -255,4 +282,109 @@ public class CharacterInfo1 : UnitCore
         Debug.Log($"Game loaded! HP: {hp}/{maxHP}, EN: {en}/{maxEN}");
     }
 
+    // Added by Warren, needed for data persistence, saves all of the data of the current scene and then transfers them to the next level.
+    // ===============
+    public void SaveForNextLevel()
+    {
+
+        if (isTutorialLevel)
+        {
+            Debug.Log("Tutorial level - NOT saving stats");
+            return;
+        }
+
+        savedHP = hp;
+        savedMaxHP = maxHP;
+        savedEN = en;
+        savedMaxEN = maxEN;
+        savedBaseAttk = baseAttk;
+        savedBaseAttkRange = baseAttkRange;
+        savedBaseHitRate = baseHitRate;
+        savedBaseCriticalRate = baseCriticalRate;
+        savedBaseCritDamage = baseCritDamage;
+        savedBaseEvasion = baseEvasion;
+        savedLevel = level;
+        hasSavedData = true;
+        
+        Debug.Log($"Saved stats for next level - HP: {hp}/{maxHP}, EN: {en}/{maxEN}, Attack: {baseAttk}, Level: {level}");
+    }
+
+    // Call this when the new level starts
+    public void LoadFromPreviousLevel()
+    {
+        if (hasSavedData)
+        {
+            hp = savedHP;
+            maxHP = savedMaxHP;
+            en = savedEN;
+            maxEN = savedMaxEN;
+            baseAttk = savedBaseAttk;
+            baseAttkRange = savedBaseAttkRange;
+            baseHitRate = savedBaseHitRate;
+            baseCriticalRate = savedBaseCriticalRate;
+            baseCritDamage = savedBaseCritDamage;
+            baseEvasion = savedBaseEvasion;
+            level = savedLevel;
+            
+            Debug.Log($"Loaded stats from previous level - HP: {hp}/{maxHP}, EN: {en}/{maxEN}, Attack: {baseAttk}, Level: {level}");
+            UpdateAllUI();
+        }
+        else
+        {
+            Debug.Log("No saved data found, using default stats");//
+            if (hasSavedData && savedHP <= 0)
+            {
+                Debug.Log("Saved HP was 0 (player died), using default stats instead");
+            }
+            else
+            {
+                Debug.Log("No saved data found, using default stats");
+            }
+            
+            // Reset to default values
+            hp = maxHP;
+            en = maxEN;
+            hasSavedData = false;
+            }
+    }
+
+    public void ResetForLevelRestart()
+    {
+        // Reset to default starting values
+        hp = maxHP;  // Full HP
+        en = maxEN;  // Full EN
+        currentAP = maxAP;  // Reset AP
+        
+        // Clear saved data so we don't load the dead state
+        hasSavedData = false;
+        
+        Debug.Log($"Player reset for level restart - HP: {hp}/{maxHP}, EN: {en}/{maxEN}");
+        UpdateAllUI();
+    }
+
+    // Function used to ensure that tutorial stats data does not transfer to the actual levels
+    public static void SetTutorialMode(bool isTutorial)
+    {
+        isTutorialLevel = isTutorial;
+        Debug.Log($"Tutorial mode set to: {isTutorial}");
+    }
+
+    public static void ClearSavedData()
+    {
+        savedHP = 0;
+        savedMaxHP = 0;
+        savedEN = 0;
+        savedMaxEN = 0;
+        savedBaseAttk = 0;
+        savedBaseAttkRange = 0;
+        savedBaseHitRate = 0;
+        savedBaseCriticalRate = 0;
+        savedBaseCritDamage = 0;
+        savedBaseEvasion = 0;
+        savedLevel = 0;
+        hasSavedData = false;
+        
+        Debug.Log("Cleared all saved player data");
+    }
+    // ===============
 }

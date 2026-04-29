@@ -46,6 +46,8 @@ public class MouseController1 : MonoBehaviour
         path = new List<OverlayTile1>(); // set up the List for tiles
 
         Debug.Log($"[MC] MouseController active on: {name}"); // debug msg
+
+        movementEnabled = true; // Added by Warren
     }
 
     // Update is called once per frame
@@ -110,7 +112,16 @@ public class MouseController1 : MonoBehaviour
                             // if tile is being used get out
                             if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) return;
 
-                            characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+                            //characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
+
+                            // Added by Warren, needed this for data persistence, previously, it wont let me place down the character.
+                            // ================
+                            if (characterInfo == null && CharacterInfo1.Instance != null)
+                            {
+                                characterInfo = CharacterInfo1.Instance;
+                                Debug.Log("Found existing player from CharacterInfo1.Instance");
+                            }
+                            // ================
 
                             PositionCharacterOnLine(tile); // where to spawn
 

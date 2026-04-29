@@ -90,6 +90,14 @@ public class LevelsManager : MonoBehaviour
     // Singleton pattern implementation, so that any script can give XP without complication (if needed).
     public static LevelsManager Instance { get; private set; }
 
+    // For save data persistence
+    private static int savedCurrentLevel;
+    private static int savedCurrentXP;
+    private static int savedTargetXP;
+    private static bool hasSavedLevelData = false;
+    private static bool isTutorialLevel = false;
+
+
     // Enum for types of level up choices
     private enum ChoiceType
     {
@@ -149,6 +157,8 @@ public class LevelsManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("LevelManager Start!"); // debug msg
+
+        LoadLevelData();
 
         SkillAttachment attachment = GetPlayerSkillAttachment(); // accessor to player attachment
 
@@ -833,6 +843,7 @@ public class LevelsManager : MonoBehaviour
     }
 
     // Added by Warren
+    // ==============
     private void PlayUpgradeSelectSound()
     {
         if (audioSource != null && upgradeSelectSound != null)
@@ -845,7 +856,43 @@ public class LevelsManager : MonoBehaviour
             Debug.LogWarning("Missing AudioSource or UpgradeSelectSound in LevelsManager!");
         }
     }
+
+    public void SaveLevelData()
+    {
+        if (isTutorialLevel)
+        {
+            Debug.Log("Tutorial level - NOT saving level data");
+            return;
+        }
+
+        savedCurrentLevel = currentLevel;
+        savedCurrentXP = currentXP;
+        savedTargetXP = targetXP;
+        hasSavedLevelData = true;
+        
+        Debug.Log($"Saved level data - Level: {currentLevel}, XP: {currentXP}/{targetXP}");
+    }
+
+    public void LoadLevelData()
+    {
+        if (hasSavedLevelData)
+        {
+            currentLevel = savedCurrentLevel;
+            currentXP = savedCurrentXP;
+            targetXP = savedTargetXP;
+            
+            UpdateHUD();
+            Debug.Log($"Loaded level data - Level: {currentLevel}, XP: {currentXP}/{targetXP}");
+        }
+    }
+
+    public static void SetTutorialMode(bool isTutorial)
+    {
+        isTutorialLevel = isTutorial;
+    }
     
+    // ==============
+
     //// This method gets all unlocked skills
     //public SkillData[] GetUnlockedSkills()
     //{

@@ -1129,6 +1129,7 @@ public class TutorialManager : MonoBehaviour
     private void OnTutorialComplete()
     {
         Debug.Log("Tutorial Complete!");
+
         StartCoroutine(Delay(2f));
         SceneManager.LoadScene("LevelSelect");
     }
