@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
   m_Name: AttackUp(lvl1)
   m_EditorClassIdentifier: 
-  id: 14
+  id: 17
   skillType: 1
   targetType: 1
   weaponType: 0

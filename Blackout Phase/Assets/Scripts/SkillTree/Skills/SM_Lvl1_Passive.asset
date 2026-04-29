@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4d7098a02a5804981a5fd644695c87, type: 3}
   m_Name: SM_Lvl1_Passive
   m_EditorClassIdentifier: 
-  id: 5
+  id: 6
   skillType: 1
   targetType: 0
   weaponType: 1
   classType: 1
   subClassType: 1
   skillEffectType: 3
+  skillEffects: []
   skillDisplayName: Swordsman
   skillDescription: Gaining the advance knowledge of sword usage.
   HitRate: 0
@@ -35,9 +36,22 @@ MonoBehaviour:
   enBouns: 50
   movementBonus: 0
   apBonus: 0
+  passiveModifiers:
+  - statsType: 3
+    value: 1
+    isPercent: 0
+  - statsType: 4
+    value: 10
+    isPercent: 0
+  - statsType: 5
+    value: 10
+    isPercent: 0
+  - statsType: 1
+    value: 10
+    isPercent: 0
   skillENCost: 0
   skillAPCost: 0
   skillCoolDown: 0
   skillDuration: 0
   requiredLevel: 5
-  requirdSkills: 04000000
+  requirdSkills: 03000000

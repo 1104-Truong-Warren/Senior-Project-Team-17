@@ -34,7 +34,7 @@ MonoBehaviour:
     tickTimer: 1
     modifiers:
     - statsType: 4
-      value: 5
+      value: 10
       isPercent: 0
   - buffEffectName: HitRate up lvl1
     targetType: 0

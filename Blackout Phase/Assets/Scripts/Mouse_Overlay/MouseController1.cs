@@ -384,7 +384,7 @@ public class MouseController1 : MonoBehaviour
         // spreite is found get the sorting order from tile
         if (sr != null)
         {
-            //Debug.Log($"[MC] Sprite Local position: {sr.transform.localPosition}"); // debug msg
+            //Debug.Log($"[MC] Sprite Local position: {sr.transform.localPosition}"); // debug msg1
 
             sr.sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
         }
