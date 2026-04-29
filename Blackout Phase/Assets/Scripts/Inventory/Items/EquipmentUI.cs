@@ -6,23 +6,13 @@ public class EquipmentUI : MonoBehaviour
     EquipmentManager equipmentManager;
     EquipmentMenuSlot[] slots;
 
-    public InventoryData data;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // link to instance
         equipmentManager = EquipmentManager.instance;
+        equipmentManager.onEquipmentChanged += UpdateUI;
 
-        // subscribe to event and changes
-        data = equipmentManager.data;
-        data.onEquipmentChanged += UpdateUI;
-
-        // find slots
         slots = equipmentParent.GetComponentsInChildren<EquipmentMenuSlot>();
-
-        // force UI refresh
-        UpdateUI(null, null);
     }
 
     // Update is called once per frame
@@ -46,7 +36,7 @@ public class EquipmentUI : MonoBehaviour
             }
         }*/
 
-        Equipment[] currentEquipment = data.currentEquipment;
+        Equipment[] currentEquipment = equipmentManager.currentEquipment;
 
         for (int i = 0; i < slots.Length; i++)
         {
@@ -58,14 +48,6 @@ public class EquipmentUI : MonoBehaviour
             {
                 slots[i].UnequipItem();
             }
-        }
-    }
-
-    void OnDestroy()
-    {
-        if (data != null)
-        {
-            data.onEquipmentChanged -= UpdateUI;
         }
     }
 }

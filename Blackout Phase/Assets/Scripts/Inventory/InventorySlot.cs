@@ -111,7 +111,6 @@ public class InventorySlot : MonoBehaviour
         if (item != null)
         {
             item.Use();
-            Debug.Log("Used item: " + item.itemName);
         }
     }
 }
