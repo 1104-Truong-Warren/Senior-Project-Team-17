@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 1899093662906685131}
   - component: {fileID: 4997809053125324266}
   m_Layer: 9
-  m_Name: MeleeElite
+  m_Name: Destroyer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a673fd9e76a9614297535b4c9e90b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: b41fdffdb14b4134b8c8d3397191ffa1, type: 2}
+  stats: {fileID: 11400000, guid: 181b393c9502b994d97e6a1bbef8ba62, type: 2}
   currentHP: 0
   tile: {fileID: 0}
 --- !u!114 &4216074020380213063
@@ -200,11 +200,14 @@ MonoBehaviour:
   equippedActiveSkills:
   - {fileID: 11400000, guid: ee4624905aa7a8946975dbbe0b4aaa6b, type: 2}
   - {fileID: 11400000, guid: b27ca21e6bce81d48aef31ce8d0b3bf4, type: 2}
+  - {fileID: 11400000, guid: 37ee254395477c84db0e6a1a60af2cdc, type: 2}
   unlockedActiveSkills:
   - {fileID: 11400000, guid: ee4624905aa7a8946975dbbe0b4aaa6b, type: 2}
   - {fileID: 11400000, guid: b27ca21e6bce81d48aef31ce8d0b3bf4, type: 2}
+  - {fileID: 11400000, guid: 37ee254395477c84db0e6a1a60af2cdc, type: 2}
   unlockedPassiveSkills:
   - {fileID: 11400000, guid: 1fcb8756ad443e64285f92a44546bc73, type: 2}
+  - {fileID: 11400000, guid: a232e7d5fda26f34d867cfc257a9c2b5, type: 2}
 --- !u!114 &4997809053125324266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +298,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 69
-  m_Sprite: {fileID: -1726562176117357665, guid: 69f289da294905b4b9cb82e844aaecac, type: 3}
+  m_Sprite: {fileID: -4883992831217675976, guid: dc5cf19a6f2cdb342bcd18de017100e7, type: 3}
   m_Color: {r: 0.9529412, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

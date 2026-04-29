@@ -112,16 +112,16 @@ public class MouseController1 : MonoBehaviour
                             // if tile is being used get out
                             if (tile.isBlocked || tile.hasEnemy || tile.hasPlayer) return;
 
-                            //characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
-
                             // Added by Warren, needed this for data persistence, previously, it wont let me place down the character.
                             // ================
                             if (characterInfo == null && CharacterInfo1.Instance != null)
                             {
-                                characterInfo = CharacterInfo1.Instance;
+                                characterInfo = CharacterInfo1.Instance.GetComponent<CharacterInfo1>();
                                 Debug.Log("Found existing player from CharacterInfo1.Instance");
                             }
                             // ================
+
+                            //characterInfo = Instantiate(characterPrefab).GetComponent<CharacterInfo1>(); // copy character info from character1
 
                             PositionCharacterOnLine(tile); // where to spawn
 

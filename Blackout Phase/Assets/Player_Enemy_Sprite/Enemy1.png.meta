@@ -118,7 +118,7 @@ TextureImporter:
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 47
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -226,12 +226,12 @@ TextureImporter:
       name: Enemy1_3
       rect:
         serializedVersion: 2
-        x: 720
-        y: 1296
+        x: 759
+        y: 1286
         width: 240
         height: 240
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.76250005, y: 0.45000002}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -254,7 +254,7 @@ TextureImporter:
         height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 20, y: 0, z: 0, w: 24}
       customData: 
       outline: []
       physicsShape: []
@@ -276,7 +276,7 @@ TextureImporter:
         height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 22}
       customData: 
       outline: []
       physicsShape: []
@@ -298,7 +298,7 @@ TextureImporter:
         height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 44, w: 16}
       customData: 
       outline: []
       physicsShape: []
@@ -314,13 +314,13 @@ TextureImporter:
       name: Enemy1_7
       rect:
         serializedVersion: 2
-        x: 720
+        x: 683
         y: 1056
-        width: 240
+        width: 311
         height: 240
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 18}
       customData: 
       outline: []
       physicsShape: []
