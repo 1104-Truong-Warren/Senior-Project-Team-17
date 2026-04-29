@@ -26175,11 +26175,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: bc05062863750b94e83d7076457e792a, type: 2}
     - target: {fileID: 5693209751788393390, guid: 3c0d0f18b2cd9dd418ebe50729a2cdb4, type: 3}
       propertyPath: spawnGridPosition.x
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5693209751788393390, guid: 3c0d0f18b2cd9dd418ebe50729a2cdb4, type: 3}
       propertyPath: spawnGridPosition.y
-      value: -8
+      value: -13
       objectReference: {fileID: 0}
     - target: {fileID: 5778785597523079967, guid: 3c0d0f18b2cd9dd418ebe50729a2cdb4, type: 3}
       propertyPath: m_Name
@@ -26281,6 +26281,18 @@ PrefabInstance:
     - target: {fileID: 4242220591750874799, guid: 8d3cd793483409c479fe2196fac048ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6455273555896194427, guid: 8d3cd793483409c479fe2196fac048ff, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6455273555896194427, guid: 8d3cd793483409c479fe2196fac048ff, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 6455273555896194427, guid: 8d3cd793483409c479fe2196fac048ff, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 8646824318224616967, guid: 8d3cd793483409c479fe2196fac048ff, type: 3}
       propertyPath: m_Name

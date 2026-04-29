@@ -18646,7 +18646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5693209751788393390, guid: 3c0d0f18b2cd9dd418ebe50729a2cdb4, type: 3}
       propertyPath: spawnGridPosition.y
-      value: 16
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5778785597523079967, guid: 3c0d0f18b2cd9dd418ebe50729a2cdb4, type: 3}
       propertyPath: m_Name
