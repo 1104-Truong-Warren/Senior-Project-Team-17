@@ -17,15 +17,26 @@ public class Equipment : Item
     public override void Use()
     {
         base.Use();
-        bool wasEquipped = EquipmentManager.instance.Equip(this);
 
-        if (wasEquipped)
+        int index = EquipmentManager.instance.data.items.IndexOf(this);
+
+        if (index != -1)
         {
-            RemoveFromInventory();
+            bool wasEquipped = EquipmentManager.instance.Equip(index);
+            Debug.Log("Attempting to equip " + itemName + " at index " + index);
+
+            if (wasEquipped)
+            {
+                Debug.Log("Equipped " + itemName);
+            }
+            else if (!wasEquipped)
+            {
+                Debug.Log("Couldn't equip " + itemName + ". Slots might be full.");
+            }
         }
         else
         {
-            Debug.Log("Couldn't equip " + itemName);
+            Debug.Log("Invalid index of " + index);
         }
     }
 }

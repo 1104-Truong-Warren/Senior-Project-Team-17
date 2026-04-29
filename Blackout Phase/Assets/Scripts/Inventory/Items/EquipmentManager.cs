@@ -1,6 +1,7 @@
 // From https://youtu.be/d9oLS5hy0zU?si=aRchPZDA7vTQ6ELb for Equipment Manager
 // Ellison
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,127 +17,40 @@ public class EquipmentManager : MonoBehaviour
     public int currentTotalHealthModifier = 0;
     public int currentTotalAttackModifier = 0;
 
+    public InventoryData data;
+
     void Awake()
     {
-        if (instance != null)
-        {
-            Debug.LogWarning("More than one instance of EquipmentManager found!");
-            return;
-        }
         instance = this;
     }
 
-
-
-    public Equipment[] currentEquipment;
-
-    public delegate void OnEquipmentChanged(Equipment newItem, Equipment oldItem);
-    public OnEquipmentChanged onEquipmentChanged;
-
-    Inventory inventory;
-
     void Start()
     {
-        inventory = Inventory.instance;
-
-        //int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
-        currentEquipment = new Equipment[numSlots];
+        data.onEquipmentChanged += OnEquipmentChanged;
     }
 
-    public bool Equip(Equipment newItem)
+    public bool Equip(int inventoryIndex)
     {
-        //int slotIndex = (int)newItem.equipSlot;
-
-        // find leftmost empty slot
-        int slotIndex = -1;
-        for (int i = 0; i < numSlots; i++)
-        {
-            if (currentEquipment[i] == null)
-            {
-                slotIndex = i;
-                break;
-            }
-        }
-
-        Equipment oldItem = null;
-
-        // return early if full
-        if (slotIndex == -1)
-        {
-            Debug.LogWarning("No more equipment slots available!");
-            return false;
-        }
-
-
-        /*if (currentEquipment[slotIndex] != null)
-        {
-            oldItem = currentEquipment[slotIndex];
-            Unequip(slotIndex);
-            inventory.Add(oldItem);
-        }*/
-
-        // equip new item
-        currentEquipment[slotIndex] = newItem;
-
-        if (onEquipmentChanged != null)
-        {
-            onEquipmentChanged.Invoke(newItem, oldItem);
-        }
-
-        RecalculateTotalModifiers();
-        ApplyModifiersToPlayer();
-        Debug.Log("Equipped " + newItem.name + " in slot " + slotIndex);
-        return true;
+        return data.Equip(inventoryIndex);
     }
 
     public void Unequip(int slotIndex)
     {
-        /*
-        if (currentEquipment[slotIndex] != null)
-        {
-            Equipment oldItem = currentEquipment[slotIndex];
-            inventory.Add(oldItem);
-            currentEquipment[slotIndex] = null;
-
-            if (onEquipmentChanged != null)
-            {
-                onEquipmentChanged.Invoke(null, oldItem);
-            }
-
-            RecalculateTotalModifiers();
-            ApplyModifiersToPlayer();
-            Debug.Log("Unequipped " + oldItem.name + " from slot " + oldItem.equipSlot);
-        }*/
-
-        // sliding unequip
-        if (slotIndex >= 0 && slotIndex < currentEquipment.Length && currentEquipment[slotIndex] != null)
-        {
-            Equipment oldItem = currentEquipment[slotIndex];
-            inventory.Add(oldItem);
-
-            // shift items to the left
-            for (int i = slotIndex; i < currentEquipment.Length - 1; i++)
-            {
-                currentEquipment[i] = currentEquipment[i + 1];
-            }
-            currentEquipment[currentEquipment.Length - 1] = null;
-
-            if (onEquipmentChanged != null)
-            {
-                onEquipmentChanged.Invoke(null, oldItem);
-            }
-            RecalculateTotalModifiers();
-            ApplyModifiersToPlayer();
-            Debug.Log("Unequipped " + oldItem.name + " from slot " + slotIndex);
-        }
+        data.Unequip(slotIndex);
     }
 
     public void UnequipAll()
     {
-        for (int i = currentEquipment.Length - 1; i >= 0; i--)
+        for (int i = data.currentEquipment.Length - 1; i >= 0; i--)
         {
             Unequip(i);
         }
+    }
+
+    void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
+    {
+        RecalculateTotalModifiers();
+        ApplyModifiersToPlayer();
     }
 
     // function to recalculate total modifiers based on currently equipped items, called after equipping or unequipping
@@ -148,7 +62,7 @@ public class EquipmentManager : MonoBehaviour
         currentTotalHealthModifier = 0;
         currentTotalAttackModifier = 0;
 
-        foreach (Equipment equipment in currentEquipment)
+        foreach (Equipment equipment in data.currentEquipment)
         {
             if (equipment != null)
             {
