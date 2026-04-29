@@ -9,6 +9,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class VictoryManager : MonoBehaviour
 {
@@ -16,7 +17,10 @@ public class VictoryManager : MonoBehaviour
     [SerializeField] private GameObject victoryPanel;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button mainMenuButton;
-    
+    [SerializeField] private float fadeDuration = 1f; // For fading length (in seconds)
+
+    private CanvasGroup victoryCanvasGroup;  // ADD THIS LINE
+
     public static VictoryManager Instance { get; private set; }
     
     private void Awake()
@@ -47,15 +51,42 @@ public class VictoryManager : MonoBehaviour
         {
             mainMenuButton.onClick.AddListener(GoToMainMenu);
         }
+
+        if (victoryPanel != null)
+        {
+            victoryPanel.SetActive(false);
+            victoryCanvasGroup = victoryPanel.GetComponent<CanvasGroup>();
+            if (victoryCanvasGroup == null)
+                victoryCanvasGroup = victoryPanel.AddComponent<CanvasGroup>();
+            victoryCanvasGroup.alpha = 0f;
+        }
     }
     
     // Activates the victory panel GameObject, called from TurnManager.LevelCleared() when all enemies are defeated.
     public void ShowVictory()
     {
-        if (victoryPanel != null)
+        // if (victoryPanel != null)
+        // {
+        //     victoryPanel.SetActive(true);
+        // }
+
+        StartCoroutine(FadeInVictory());
+    }
+
+    private IEnumerator FadeInVictory()
+    {
+        victoryPanel.SetActive(true);
+        victoryCanvasGroup.alpha = 0f;
+        
+        float timer = 0f;
+        while (timer < fadeDuration)
         {
-            victoryPanel.SetActive(true);
+            timer += Time.deltaTime;
+            victoryCanvasGroup.alpha = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+            yield return null;
         }
+        
+        victoryCanvasGroup.alpha = 1f;
     }
     
     private void ContinueGame()
