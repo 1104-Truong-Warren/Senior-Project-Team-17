@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G)) //Old version: if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.G))
         {
             GetGodModeItems();
         }
