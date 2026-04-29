@@ -519,7 +519,7 @@ MonoBehaviour:
     m_Bits: 0
   currentAction: 0
   cursor: {fileID: 225022930}
-  characterPrefab: {fileID: 308588799570629389, guid: bdaeac13040fbb74f866293c94cb1c0a, type: 3}
+  characterPrefab: {fileID: 308588799570629389, guid: eb5f0a69ecbfa5c4a8f30684113cb99f, type: 3}
   characterInfo: {fileID: 0}
   speed: 3
   previewAttkRange: 119
