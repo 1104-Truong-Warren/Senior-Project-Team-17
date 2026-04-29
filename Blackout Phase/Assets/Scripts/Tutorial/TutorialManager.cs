@@ -142,6 +142,9 @@ public class TutorialManager : MonoBehaviour
 
     [Header("InventoryIntro Step")]
     public DialogueAsset inventoryIntroDialogue;
+    public InventoryData inventoryData;
+    public Item tutorialItem1;
+    public Item tutorialItem2;
 
     [Header("Inventory Step")]
     public GameObject inventoryButton;
@@ -743,6 +746,11 @@ public class TutorialManager : MonoBehaviour
             }
             yield return null;
         }
+
+        // add items right before needed
+        // new inventory system
+        inventoryData.Add(tutorialItem1);
+        inventoryData.Add(tutorialItem2);
     }
 
     private IEnumerator RunInventoryStep()
@@ -757,7 +765,7 @@ public class TutorialManager : MonoBehaviour
 
         yield return new WaitUntil(() => currentStepComplete);
         // prompt UI refresh to get the pre added items to appear
-        inventory.onItemChangedCallback.Invoke();
+        // inventory.onItemChangedCallback.Invoke();
 
     }
 
@@ -1021,7 +1029,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case TutorialStep.UseItem:
-                if (inventory.items.Count == 0 && !stepMarkedComplete)
+                if (inventoryData.items.Count == 0 && !stepMarkedComplete)
                 {
                     markTaskComplete(useBothStatusImage);
                     StartCoroutine(CompleteStepWithDelay(currentStep, 1f));
