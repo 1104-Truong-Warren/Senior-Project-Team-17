@@ -26620,6 +26620,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1030330615281354507, guid: 9ebfb712c11620e43b8310b31b4ff145, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1310414414429255714, guid: 9ebfb712c11620e43b8310b31b4ff145, type: 3}
       propertyPath: uiAppearDelay
       value: 1.2

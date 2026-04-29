@@ -157,7 +157,7 @@ public class ReactionUI : MonoBehaviour
             // Dodge success = 100 - enemy hit chance (if enemy misses, you dodge)
             int dodgeSuccessRate = 100 - enemyHitChance;
             // Counter success = half of dodge rate (counter is harder to pull off)
-            int counterSuccessRate = 100; //(100 - enemyHitChance) / 2;
+            int counterSuccessRate = (100 - enemyHitChance) / 2; //(100 - enemyHitChance) / 2;
             
             // Update info text with damage and enemy hit chance
             if (infoText != null)
@@ -166,6 +166,8 @@ public class ReactionUI : MonoBehaviour
             // Update success rate text with calculated percentages
             if (successRateText != null)
                 successRateText.text = $"Dodge: {dodgeSuccessRate}% | Counter: {counterSuccessRate}%";
+
+            UpdateButtonStates();
         }
         
         // Show the panel
@@ -222,17 +224,12 @@ public class ReactionUI : MonoBehaviour
         }
         
         // Update Counter button 
-        if (counterButton != null)
+        if (counterButtonText != null)
         {
-            // Check if player has enough EN using HasEN method
             bool canCounter = playerInfo.HasEN(counterENCost);
             counterButton.interactable = canCounter;
-            
-            if (counterButtonText != null)
-            {
-                counterButtonText.text = $"COUNTER (F) ({counterENCost} EN)\n{counterSuccessRate}%";
-                counterButtonText.color = canCounter ? Color.white : Color.gray;
-            }
+            counterButtonText.text = $"COUNTER (F) ({counterENCost} EN)\n{counterSuccessRate}%";
+            counterButtonText.color = canCounter ? Color.white : Color.gray;
         }
     }
     
