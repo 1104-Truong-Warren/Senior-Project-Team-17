@@ -148,9 +148,12 @@ public class TutorialManager : MonoBehaviour
     public GameObject openInventoryPanel;
     public GameObject openInventoryStatusImage;
     public Inventory inventory;
+    public InventoryData inventoryData;
 
     [Header("UseItemIntro Step")]
     public DialogueAsset useItemIntroDialogue;
+    public Item hpItem;
+    public Item enItem;
 
     [Header("UseItem Step")]
     public GameObject useItemPanel;
@@ -743,6 +746,11 @@ public class TutorialManager : MonoBehaviour
             }
             yield return null;
         }
+
+        // just add the 2 items right before they're needed
+        // reworking inventory messed this up so this is simple fix
+        inventoryData.Add(hpItem);
+        inventoryData.Add(enItem);
     }
 
     private IEnumerator RunInventoryStep()
@@ -756,8 +764,6 @@ public class TutorialManager : MonoBehaviour
         openInventoryPanel.SetActive(true);
 
         yield return new WaitUntil(() => currentStepComplete);
-        // prompt UI refresh to get the pre added items to appear
-        inventory.onItemChangedCallback.Invoke();
 
     }
 
@@ -774,6 +780,8 @@ public class TutorialManager : MonoBehaviour
             }
             yield return null;
         }
+        
+        
     }
 
     private IEnumerator RunUseItemStep()
@@ -1021,7 +1029,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case TutorialStep.UseItem:
-                if (inventory.items.Count == 0 && !stepMarkedComplete)
+                if (inventoryData.items.Count == 0 && !stepMarkedComplete)
                 {
                     markTaskComplete(useBothStatusImage);
                     StartCoroutine(CompleteStepWithDelay(currentStep, 1f));

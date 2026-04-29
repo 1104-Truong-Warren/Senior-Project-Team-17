@@ -4168,7 +4168,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Task 1: Press the inventory button to open the inventory.'
+  m_text: 'Task 1: Use both restorative consumables.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7383,6 +7383,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130370347741350367, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2464696289674152772, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7753471313651590717, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
@@ -18380,8 +18384,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.7078857, y: 5.303894}
-  m_SizeDelta: {x: -545.3805, y: -331.5642}
+  m_AnchoredPosition: {x: -1.7078857, y: 0.54299927}
+  m_SizeDelta: {x: -545.3805, y: -341.086}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515623839
 MonoBehaviour:
@@ -18998,6 +19002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipmentParent: {fileID: 1716088443}
+  data: {fileID: 11400000, guid: 655ac9b4bbf277148968cb0bb6593f93, type: 2}
 --- !u!114 &1581257523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19015,7 +19020,7 @@ MonoBehaviour:
   previousTotalAttackModifier: 0
   currentTotalHealthModifier: 0
   currentTotalAttackModifier: 0
-  currentEquipment: []
+  data: {fileID: 11400000, guid: 655ac9b4bbf277148968cb0bb6593f93, type: 2}
 --- !u!114 &1581257524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19031,6 +19036,7 @@ MonoBehaviour:
   itemsParent: {fileID: 1650213632}
   confirmButton: {fileID: 0}
   cancelButton: {fileID: 0}
+  data: {fileID: 11400000, guid: 655ac9b4bbf277148968cb0bb6593f93, type: 2}
 --- !u!114 &1581257525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19043,10 +19049,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4957d3f418fce36409b23d50e90e8d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 655ac9b4bbf277148968cb0bb6593f93, type: 2}
   maxItems: 6
   items:
   - {fileID: 11400000, guid: 9ecc06350d1bfa14e915353b054857e5, type: 2}
   - {fileID: 11400000, guid: 3970c010f57c7724fb4112b493c83dbf, type: 2}
+  godModeItem1: {fileID: 0}
+  godModeItem2: {fileID: 0}
+  godModeItem3: {fileID: 0}
 --- !u!4 &1581257526
 Transform:
   m_ObjectHideFlags: 0
@@ -22284,6 +22294,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2464696289674152772, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7753471313651590717, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
       propertyPath: m_Name
       value: InventorySlot (1)
@@ -22591,6 +22605,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2464696289674152772, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7753471313651590717, guid: a91c7ff6f0f3b5848bef6b64fdeb2b40, type: 3}
       propertyPath: m_Name
       value: InventorySlot
@@ -22845,7 +22863,10 @@ MonoBehaviour:
   openInventoryPanel: {fileID: 1243697258}
   openInventoryStatusImage: {fileID: 476276990}
   inventory: {fileID: 1581257525}
+  inventoryData: {fileID: 11400000, guid: 655ac9b4bbf277148968cb0bb6593f93, type: 2}
   useItemIntroDialogue: {fileID: 11400000, guid: 25d1b10eb237da54e9265d50c6231354, type: 2}
+  hpItem: {fileID: 11400000, guid: 9ecc06350d1bfa14e915353b054857e5, type: 2}
+  enItem: {fileID: 11400000, guid: 3970c010f57c7724fb4112b493c83dbf, type: 2}
   useItemPanel: {fileID: 1095188401}
   useBothStatusImage: {fileID: 1625855647}
   conclusionDialogue: {fileID: 11400000, guid: 5f470cb35cb14134aa2e16be8dff2174, type: 2}

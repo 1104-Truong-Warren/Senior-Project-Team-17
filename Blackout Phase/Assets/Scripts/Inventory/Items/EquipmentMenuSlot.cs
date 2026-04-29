@@ -11,6 +11,13 @@ public class EquipmentMenuSlot : MonoBehaviour
 
     public int slotIndex;
 
+    new public string name;
+    public string type;
+    public string description;
+    public string flavorText;
+
+    public bool hasItem = false;
+
     public void EquipItem(Item newItem, int index)
     {
         item = newItem;
@@ -18,6 +25,13 @@ public class EquipmentMenuSlot : MonoBehaviour
         icon.enabled = true;
 
         slotIndex = index;
+
+        name = item.itemName;
+        type = item.type;
+        description = item.description;
+        flavorText = item.flavorText;
+
+        hasItem = true;
     }
 
     public void UnequipItem()
@@ -25,6 +39,13 @@ public class EquipmentMenuSlot : MonoBehaviour
         item = null;
         icon.sprite = null;
         icon.enabled = false;
+
+        name = "";
+        type = "";
+        description = "";
+        flavorText = "";
+
+        hasItem = false;
     }
 
     public void OnUnequip()

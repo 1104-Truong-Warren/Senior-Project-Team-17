@@ -33,8 +33,12 @@ public class ItemInfoPopup : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         mouseOnCount = mouseOnCount + 1;
 
-        if (inventorySlot.GetComponent<InventorySlot>().hasItem)
+        InventorySlot invSlot = inventorySlot.GetComponent<InventorySlot>();
+        EquipmentMenuSlot equipSlot = inventorySlot.GetComponent<EquipmentMenuSlot>();
+
+        if (invSlot != null && invSlot.hasItem)
         {
+            Debug.Log("Fetching inventory info...");
             UIObject.SetActive(true);
 
             currentSlotSprite = inventorySlot.GetComponent<InventorySlot>().icon.sprite;
@@ -46,8 +50,19 @@ public class ItemInfoPopup : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             //onMouseEnterCallback.Invoke(currentSlotImage, currentSlotType, currentSlotDescription, currentSlotFlavorText);
             itemInfoUI.UpdateUI(currentSlotSprite, currentSlotName, currentSlotType, currentSlotDescription, currentSlotFlavorText);
         }
-        
-        Debug.Log(mouseOnCount);
+        else if (equipSlot != null && equipSlot.hasItem)
+        {
+            Debug.Log("Fetching equipment info...");
+            UIObject.SetActive(true);
+            currentSlotSprite = equipSlot.icon.sprite;
+            currentSlotName = equipSlot.name;
+            currentSlotType = equipSlot.type;
+            currentSlotDescription = equipSlot.description;
+            currentSlotFlavorText = equipSlot.flavorText;
+            itemInfoUI.UpdateUI(currentSlotSprite, currentSlotName, currentSlotType, currentSlotDescription, currentSlotFlavorText);
+        }
+
+            Debug.Log(mouseOnCount);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
