@@ -19,7 +19,7 @@ public class VictoryManager : MonoBehaviour
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private float fadeDuration = 1f; // For fading length (in seconds)
 
-    private CanvasGroup victoryCanvasGroup;  // ADD THIS LINE
+    private CanvasGroup victoryCanvasGroup;
 
     public static VictoryManager Instance { get; private set; }
     
