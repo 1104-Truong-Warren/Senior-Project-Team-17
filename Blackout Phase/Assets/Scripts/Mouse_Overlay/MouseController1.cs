@@ -39,6 +39,8 @@ public class MouseController1 : MonoBehaviour
     // Ellison - Reference to collapse button to disable it when movement is enabled
     public Button collapseButton;
 
+    public ActionMenuManager actionMenuManager;
+
     private void Start()
     {
         pathFinder = new PathFinder1(); // create it
@@ -224,7 +226,7 @@ public class MouseController1 : MonoBehaviour
                             }
 
                             // if the character movement is enabled
-                            if (movementEnabled)
+                            if (actionMenuManager.movementEnabled)
                             {
                                 if (characterInfo == null)
                                 {
@@ -296,6 +298,8 @@ public class MouseController1 : MonoBehaviour
 
     private void MoveAlongPath()
     {
+        actionMenuManager.BeginMovementProcess();
+
         // Ellison - added to disable collapse button while moving
         collapseButton.interactable = false;
 
@@ -337,6 +341,8 @@ public class MouseController1 : MonoBehaviour
                 DisableMovement();
                 menuAnimator.SetBool("isCollapsed", false);
                 collapseButton.interactable = true;
+
+                actionMenuManager.EndMovementProcess(); // end the movement process in the action menu
             }
         }
     }

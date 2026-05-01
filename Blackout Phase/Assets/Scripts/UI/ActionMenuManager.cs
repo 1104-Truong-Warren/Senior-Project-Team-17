@@ -9,6 +9,13 @@ public class ActionMenuManager : MonoBehaviour
     public Button inventoryButton;
     public GameObject inventoryScreen;
 
+    public bool actionMenuOpen = true;
+    public bool movementEnabled = false;
+
+    public GameObject moveMessagePanel;
+
+    public bool inventoryOpen = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,7 +41,18 @@ public class ActionMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (!inventoryOpen)
+            {
+                ToggleMovementFromKey();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventoryScreen();
+        }
+
     }
 
 
@@ -53,6 +71,14 @@ public class ActionMenuManager : MonoBehaviour
         }
     }
 
+    public void CloseMenu()
+    {
+        if (menuAnimator != null)
+        {
+            menuAnimator.SetBool("isCollapsed", true);
+        }
+    }
+
 
     public void OpenInventoryScreen()
     {
@@ -64,7 +90,7 @@ public class ActionMenuManager : MonoBehaviour
             menuAnimator.SetBool("isCollapsed", true);
         }
 
-        
+        inventoryOpen = true;
     }
 
     public void CloseInventoryScreen()
@@ -76,6 +102,8 @@ public class ActionMenuManager : MonoBehaviour
         {
             menuAnimator.SetBool("isCollapsed", false);
         }
+
+        inventoryOpen = false;
     }
 
     public void ToggleInventoryScreen()
@@ -87,6 +115,51 @@ public class ActionMenuManager : MonoBehaviour
         else
         {
             OpenInventoryScreen();
+        }
+    }
+
+    public void EnableMovementFull()
+    {
+        movementEnabled = true;
+        moveMessagePanel.SetActive(true);
+        menuAnimator.SetBool("isCollapsed", true);
+    }
+
+    public void DisableMovementFull()
+    {
+        movementEnabled = false;
+        moveMessagePanel.SetActive(false);
+        menuAnimator.SetBool("isCollapsed", false);
+    }
+
+    public void DisableMovementPartial()
+    {
+        movementEnabled = false;
+        moveMessagePanel.SetActive(false);
+    }
+
+    public void BeginMovementProcess()
+    {
+        moveMessagePanel.SetActive(false);
+        collapseButton.interactable = false;
+    }
+
+    public void EndMovementProcess()
+    {
+        collapseButton.interactable = true;
+        movementEnabled = false;
+        menuAnimator.SetBool("isCollapsed", false);
+    }
+
+    public void ToggleMovementFromKey()
+    {
+        if (!movementEnabled)
+        {
+            EnableMovementFull();
+        }
+        else
+        {
+            DisableMovementFull();
         }
     }
 }

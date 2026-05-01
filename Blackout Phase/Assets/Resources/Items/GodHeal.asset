@@ -19,5 +19,5 @@ MonoBehaviour:
   flavorText: '"TESTING ONLY"'
   isDefaultItem: 0
   useSound: {fileID: 8300000, guid: ba1680af05af69a41a749d8d5ca20f67, type: 3}
-  healthChangeAmount: 999999999
-  energyChangeAmount: 999999999
+  healthChangeAmount: 1000
+  energyChangeAmount: 1000

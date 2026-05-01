@@ -834,6 +834,7 @@ MonoBehaviour:
   movementEnabled: 0
   menuAnimator: {fileID: 304094275}
   collapseButton: {fileID: 633539109}
+  actionMenuManager: {fileID: 304094274}
 --- !u!1 &243103997
 GameObject:
   m_ObjectHideFlags: 0
@@ -18070,7 +18071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6123082533995659375, guid: 63b8505443e6a6c42afac6945f6dee53, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

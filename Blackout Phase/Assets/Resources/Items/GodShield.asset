@@ -19,5 +19,5 @@ MonoBehaviour:
   flavorText: '"TESTING ONLY"'
   isDefaultItem: 0
   useSound: {fileID: 8300000, guid: 392613fa78cc07246a2b611caef18fcd, type: 3}
-  healthModifier: 999999999
+  healthModifier: 1000
   attackModifier: 0

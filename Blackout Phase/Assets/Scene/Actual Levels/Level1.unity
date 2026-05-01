@@ -532,6 +532,8 @@ MonoBehaviour:
   movementEnabled: 0
   menuAnimator: {fileID: 304094275}
   collapseButton: {fileID: 633539109}
+  actionMenuManager: {fileID: 304094274}
+  attackMessagePanel: {fileID: 874209681}
 --- !u!1 &260175844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,6 +1460,11 @@ MonoBehaviour:
 Animation:
   m_CorrespondingSourceObject: {fileID: 5443738660914691957, guid: 8b1a5b85d7a7da646b825a525370cd54, type: 3}
   m_PrefabInstance: {fileID: 3640206611665096347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &874209681 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3357067756547555081, guid: 81f1b7b4d4341f042a813fb05004b2e8, type: 3}
+  m_PrefabInstance: {fileID: 1128792570167359635}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &927851675 stripped
 RectTransform:
@@ -10569,7 +10576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6123082533995659375, guid: 63b8505443e6a6c42afac6945f6dee53, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
