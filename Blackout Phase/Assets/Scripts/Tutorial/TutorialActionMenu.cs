@@ -35,6 +35,10 @@ public class TutorialActionMenu : MonoBehaviour
                 ToggleMovementFromKey();
             }
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventoryScreen();
+        }
     }
 
     public void ToggleMenu()
