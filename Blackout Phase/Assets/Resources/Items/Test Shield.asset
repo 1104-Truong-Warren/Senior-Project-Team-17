@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ad24b98da3ba342be6486e74dc0f22, type: 3}
   m_Name: Test Shield
   m_EditorClassIdentifier: 
-  itemName: Test Shield
+  itemName: Shield
   icon: {fileID: 21300000, guid: f6fe994edcbf07748a7d73ee710dab32, type: 3}
   type: Equipment
-  description: Increases max HP by 5
+  description: Increases max HP by 10
   flavorText: '"A basic shield"'
   isDefaultItem: 0
-  useSound: {fileID: 8300000, guid: 983f68866c2cc6c4e81290756209f37b, type: 3}
-  healthModifier: 5
+  useSound: {fileID: 8300000, guid: 392613fa78cc07246a2b611caef18fcd, type: 3}
+  healthModifier: 10
   attackModifier: 0

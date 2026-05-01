@@ -19,5 +19,5 @@ MonoBehaviour:
   flavorText: '"A medium-sized hybrid restorative core."'
   isDefaultItem: 0
   useSound: {fileID: 8300000, guid: ba1680af05af69a41a749d8d5ca20f67, type: 3}
-  healthChangeAmount: 40
-  energyChangeAmount: 40
+  healthChangeAmount: 200
+  energyChangeAmount: 200
