@@ -247,10 +247,12 @@ public class TutorialMouseController : MonoBehaviour
                     if (highlightingEnemy2Only)
                     {
                         tutorialManager.AttackEnemy(2, 5);
+                        attackCombat2Prepare = false; // end prepare state to go to start of next cycle
                     }
                     else if (!highlightingEnemy2Only)
                     {
                         tutorialManager.AttackEnemy(3, 5);
+                        attackCombat2Prepare = false; // end prepare state to go to start of next cycle
                     }
 
                     // all alive enemies immediately attack
