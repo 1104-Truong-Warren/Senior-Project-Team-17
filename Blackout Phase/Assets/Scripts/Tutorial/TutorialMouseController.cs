@@ -652,7 +652,8 @@ public class TutorialMouseController : MonoBehaviour
         else if (!movedTransition3b)
             return transition3bTilePosition;
 
-            // all milestones reached, no valid target
+        // all milestones reached, no valid target
+        movementEnabled = false; // no more free movement after all milestones reached
             return Vector2Int.zero;
     }
 
