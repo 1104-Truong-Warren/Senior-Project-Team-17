@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 8622276156501720422}
   - component: {fileID: 5156006507616767485}
   m_Layer: 0
-  m_Name: Characters_1
+  m_Name: TutorialChar2
   m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1865852207455192414}
   - component: {fileID: 4071412976454816366}
+  - component: {fileID: 4364183435482150600}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -395,6 +396,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4364183435482150600
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5973098741497805531}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3c6ac8969bc465f438e2c1cddb16ea4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &9097942805516662175
 MonoBehaviour:
   m_ObjectHideFlags: 0

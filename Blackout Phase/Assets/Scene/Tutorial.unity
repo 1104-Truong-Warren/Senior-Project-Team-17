@@ -4983,6 +4983,10 @@ MonoBehaviour:
   collapseButton: {fileID: 541880991}
   inventoryButton: {fileID: 1356142652}
   inventoryScreen: {fileID: 1088290133}
+  actionMenuOpen: 1
+  movementEnabled: 0
+  moveMessagePanel: {fileID: 0}
+  inventoryOpen: 0
 --- !u!95 &710237909
 Animator:
   serializedVersion: 7
@@ -21627,7 +21631,7 @@ MonoBehaviour:
     m_Bits: 0
   currentAction: 0
   cursor: {fileID: 1842108569}
-  characterPrefab: {fileID: 308588799570629389, guid: eb5f0a69ecbfa5c4a8f30684113cb99f, type: 3}
+  characterPrefab: {fileID: 308588799570629389, guid: 9d2c748ab4afb7c40be1944d16ac3669, type: 3}
   characterInfo: {fileID: 0}
   speed: 3
   previewAttkRange: 0
@@ -21636,6 +21640,7 @@ MonoBehaviour:
   movementEnabled: 0
   menuAnimator: {fileID: 710237909}
   collapseButton: {fileID: 541880991}
+  actionMenuManager: {fileID: 0}
 --- !u!212 &1842108571
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21723,7 +21728,7 @@ MonoBehaviour:
     m_Bits: 0
   currentAction: 0
   cursor: {fileID: 1842108569}
-  characterPrefab: {fileID: 308588799570629389, guid: eb5f0a69ecbfa5c4a8f30684113cb99f, type: 3}
+  characterPrefab: {fileID: 308588799570629389, guid: 9d2c748ab4afb7c40be1944d16ac3669, type: 3}
   characterInfo: {fileID: 0}
   speed: 3
   spawnGridPosition: {x: -2, y: -2}

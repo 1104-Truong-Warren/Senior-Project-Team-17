@@ -26,6 +26,9 @@ public class PlayerCombatCheck : MonoBehaviour
 
     public int playerSkillIndexCheck => playerSkillIndexSelect; // accessor for other scripts
 
+    // Added by Warren
+    private Animator animator;
+
     //// ================== SkillData Settings ===========================
     //[SerializeField] private SkillData SDbasicAttkSkill; // for access the skill data's data
 
@@ -45,6 +48,8 @@ public class PlayerCombatCheck : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        animator = GetComponentInChildren<Animator>(); // Added by Warren
 
         Instance = this; // setup the this pointer
 
@@ -92,6 +97,13 @@ public class PlayerCombatCheck : MonoBehaviour
 
         // if player attack missed return
         if (!PlayerAttackHits(skill, playerInfo, enemy)) return false;
+
+        // Added by Warren
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+            Debug.Log("Attack animation triggered!"); // debug msg
+        }
 
         //bool enemyDodge = EnemyReactToAttack(skill, playerInfo, enemy); // did the attack hit?
 
@@ -160,6 +172,13 @@ public class PlayerCombatCheck : MonoBehaviour
         {
             Debug.Log("[PCC] Counter failed | skillUsed: false"); // debug msg
             return false;
+        }
+
+        // Added by Warren
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack"); 
+            Debug.Log("Counterattack animation triggered!"); // debug msg
         }
 
         playerInfo.PlayerSpendEN(currentSkill.skillENCost); // EN goes down before attack lands
@@ -342,6 +361,13 @@ public class PlayerCombatCheck : MonoBehaviour
         if (!HitRollCheck.HitRollPercent(hitChance))
         {
             Debug.Log("Attack MISS!"); // debug msg
+
+            // Added by Warren
+            if (animator != null)
+            {
+                animator.SetTrigger("Miss");
+                Debug.Log("Miss animation triggered!");
+            }
 
             // Added by Warren, plays miss sound.
             PlayMissSound();

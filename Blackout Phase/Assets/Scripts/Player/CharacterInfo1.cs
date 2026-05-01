@@ -70,13 +70,15 @@ public class CharacterInfo1 : UnitCore
 
     //public OverlayTile PlayerSetTile() => CurrentTile;// helper
 
+    private Animator playerAnimator; // Added by Warren
+
     private void Awake()
     {
         Instance = this; // set up the player accessor
 
         currentAP = maxAP; // Start with 2AP
 
-        
+        playerAnimator = GetComponentInChildren<Animator>(); // Added by Warren
     }
 
     // Added by Warren
@@ -137,6 +139,12 @@ public class CharacterInfo1 : UnitCore
 
     public void PlayerTakeDamage(int dmg)
     {
+        // Added by Warren
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetTrigger("TakeDamage");
+        }
+
         hp -= dmg; // current hp - dmg
 
         if (hp <= 0) // check if player have HP left

@@ -561,6 +561,13 @@ public class TurnManager : MonoBehaviour
 
         Debug.Log($"[TM] Player takes Dmg:{finalDamage} by Enemy"); // debug msg
 
+        // Added by Warren
+        Animator playerAnimator = playerInfo.GetComponentInChildren<Animator>();
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetTrigger("TakeDamage");
+        }
+        
         // if the skill is not null 
         if (incomingEnemySkill != null)
             enemyAttackCore.AttackTarget(inComingTargetUnit, finalDamage, incomingEnemySkill); // skill attack
@@ -659,6 +666,13 @@ public class TurnManager : MonoBehaviour
         else
         {
             Debug.Log("Player Dodged the Attack!"); // debug msg
+
+            // Added by Warren, plays the dodge animation
+            Animator playerAnimator = CharacterInfo1.Instance.GetComponentInChildren<Animator>();
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetTrigger("Dodge");
+            }
 
             // Added by Warren, displays on the screen that the player dodged the attack
             if (DamageObserver.Instance != null)
