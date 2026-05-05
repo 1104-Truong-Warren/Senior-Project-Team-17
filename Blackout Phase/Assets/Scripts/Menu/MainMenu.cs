@@ -1,5 +1,5 @@
 // Warren
-// The purpose of this script is to add and control the main menu functionality, including starting the game by loading the main gameplay scene and existing the application when the user selects the quit button.
+// The purpose of this script is to add and control the main menu functionality, including starting the game by loading the main gameplay scene and exiting the application when the user selects the quit button.
 // The user also have the option to load their save files and adjust sound volume.
 
 // Resource: https://www.youtube.com/watch?v=-GWjA6dixV4 - For setting up main menu and the implementation of start game button and quitting to desktop

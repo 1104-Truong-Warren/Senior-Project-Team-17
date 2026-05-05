@@ -1,6 +1,6 @@
 // Warren
 // The purpose of this script is to manage the save files that appears when the player presses "LOAD GAME" in the main menu.
-// It displays all of the available save fiels as clickable buttons, and it allows the player to choose which save file to load.
+// It displays all of the available save files as clickable buttons, and it allows the player to choose which save file to load.
 // When a save is selected, it stores the filename and then loads the game scene will all updated stats from the player that were previously saved.
 
 // Source: https://www.youtube.com/watch?v=7R3OL8C0SFc - For setting up the display of loaded files in the menu

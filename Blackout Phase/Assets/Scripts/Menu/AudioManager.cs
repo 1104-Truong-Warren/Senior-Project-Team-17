@@ -1,6 +1,6 @@
 // Warren
 
-// The purpose of this script is that it manages all of the audio-related functionality in the game, which includes
+// The purpose of this script is that it manages all of the audio-related functionality in the main menu, which includes
 // adjusting volume through AudioMixer, having a volume slider, and to make sure that it can be accessed anytime through pausing.
 
 // Resource: https://www.youtube.com/watch?v=Y4bHjOiJBd4 - For adding background music for the title screen.
