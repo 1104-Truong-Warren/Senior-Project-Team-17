@@ -1,3 +1,7 @@
+// These are based on this channel on YouTube: https://www.youtube.com/@lawlessgames3844
+// highlighting the movement, attack range, and clears the tiles
+// Weijun
+
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using System.Collections.Generic;

@@ -1,4 +1,7 @@
-//
+// Used this scriptitable enemy as reference URL: https://www.youtube.com/watch?v=PoglGJoDcZg
+// Used this for Inheritance reference URL: https://www.youtube.com/watch?v=F7Wu6_uzD1I
+// Used this for enemy attack behavior reference URL: https://www.youtube.com/watch?v=aA2CSfCBf7w, URL: https://www.youtube.com/watch?v=iOYo7flBUW4
+// EnemyMeleeBasic inherit on the EnemyAttackCore script, by overloading the attack skill functions
 // Weijun
 
 using UnityEngine;

@@ -1,4 +1,6 @@
-//
+// Used this scriptitable enemy as reference URL: https://www.youtube.com/watch?v=PoglGJoDcZg
+// Used this for Inheritance reference URL: https://www.youtube.com/watch?v=F7Wu6_uzD1I
+// Base class for enemy attack Core, later can be used by other scripts as a paraent 
 // Weijun
 
 using UnityEngine;

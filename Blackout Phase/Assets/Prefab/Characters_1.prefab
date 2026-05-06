@@ -150,6 +150,7 @@ MonoBehaviour:
   playerSkillattach: {fileID: 4870886714437327700}
   playerSkillExecutor: {fileID: 4804885689815161879}
   playerSkillIndexSelect: 0
+  skillUI: {fileID: 0}
   audioSource: {fileID: 5961503509837010815}
   swordSlashSound: {fileID: 8300000, guid: ccf3d1d1e6af0e44ab84f5585ad0790d, type: 3}
   missSound: {fileID: 8300000, guid: 9caa8c079b89cc04b8712aa8ff1b9147, type: 3}
@@ -294,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteVisual: {fileID: 1865852207455192414}
-  spriteOffset: {x: 0, y: 0.25}
+  spriteOffset: {x: 0.1, y: 0.25}
 --- !u!114 &5156006507616767485
 MonoBehaviour:
   m_ObjectHideFlags: 0

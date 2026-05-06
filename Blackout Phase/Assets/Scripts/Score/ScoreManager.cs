@@ -1,5 +1,5 @@
-//
-//
+// Used this video as a reference URL: https://www.youtube.com/watch?v=TAGZxRMloyU
+// Added it rank to enemy so they can access scriptible object, once each enemy rank is define, when defeated it will score points according to the Score Manager
 // Weijun
 
 using UnityEngine;

@@ -1,4 +1,4 @@
-// used this video to see how other people make skills URL: https://www.youtube.com/watch?v=V4WrS-Wt2xU
+// used this video to see how other people make skills URL: https://www.youtube.com/watch?v=V4WrS-Wt2xU URL: https://www.youtube.com/watch?v=_OQTTKkwZQY
 // Weijun
 
 using UnityEngine;
@@ -24,6 +24,9 @@ public class PlayerCombatCheck : MonoBehaviour
     [SerializeField] private SkillExecutor playerSkillExecutor; // accessor to the skill executor
     [SerializeField] private int playerSkillIndexSelect; // index for player skill
 
+    [Header("Skill UI accessor")]
+    [SerializeField] private SkillEquipmentUI skillUI; // accessor for the UI
+
     public int playerSkillIndexCheck => playerSkillIndexSelect; // accessor for other scripts
 
     // Added by Warren
@@ -33,6 +36,8 @@ public class PlayerCombatCheck : MonoBehaviour
     //[SerializeField] private SkillData SDbasicAttkSkill; // for access the skill data's data
 
     private CharacterInfo1 playerInfo; // to access playerInfo
+
+
 
     private void Awake()
     {
@@ -60,6 +65,10 @@ public class PlayerCombatCheck : MonoBehaviour
         // skill executor null set up
         if (playerSkillExecutor == null)
             playerSkillExecutor = GetComponent<SkillExecutor>();
+
+        // find the skill ui if it's null
+        if (skillUI == null)
+            skillUI = FindObjectOfType<SkillEquipmentUI>(true);
 
         PlayerSetUp(); // void function to set up the player status
 
@@ -507,6 +516,14 @@ public class PlayerCombatCheck : MonoBehaviour
         }
 
         playerSkillIndexSelect = index; // setup the player skill index
+
+        // if the skill UI is found display it for 1 second
+        if (skillUI != null)
+        {
+            skillUI.HilightSelectedSkillSlot(index); // calls the highlight passing the index
+
+            skillUI.ShowPanelTemporary(1f); // shows the skill panel for 1 second
+        }
 
         Debug.Log($"Skill slot:{index + 1} : {selectedSkill.skillDisplayName}"); // debug msg
 

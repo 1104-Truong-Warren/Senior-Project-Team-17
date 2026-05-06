@@ -1,3 +1,5 @@
+// used this videos as reference: https://www.youtube.com/watch?v=rq6yGh-piIU
+// Added flashing sprite when player enters fury mode
 // Weijun
 
 using System.Collections;

@@ -4,6 +4,7 @@
 // The character info stats is made by me, I added stats for the character hp, movementRange
 // functionalities, AP, and how it works 
 // Weijun
+
 using UnityEngine; // default 
 
 public class CharacterInfo1 : UnitCore
@@ -115,12 +116,37 @@ public class CharacterInfo1 : UnitCore
 
     public int GetMoveRange()
     {
+        int moveRange = baseMoveRange; // holds the base movement range
+
+        SkillAttachment skillAttachment = GetComponent<SkillAttachment>(); // get the skill attachment access
+        
+        // if the player skill attachment is found 
+        if (skillAttachment != null)
+        {
+            // loop through the passive skills in skill attachment, (unlocked passive skills)
+            foreach (SkillData passive in skillAttachment.UnlockedPassiveSkills)
+            {
+                // skip empty skills
+                if (passive == null) continue;
+
+                // loop through the modifier for the passive skill
+                foreach (var modifier in passive.passiveModifiers)
+                {
+                    // the modifier type is movement 
+                    if (modifier.statsType == StatsType.MoveRange)
+                    {
+                        moveRange += modifier.value; // add the base range and the modified value together
+                    }
+                }
+            }
+        }
+
         // AP is at 2 use the base movement range
         if (currentAP == 2 || PlayerFuryMode.Instance.inFuryMode)
-            return baseMoveRange;
+            return moveRange;
 
         else if (currentAP == 1)
-            return Mathf.FloorToInt(baseMoveRange * 0.5f); // reduced to 50% of the base movement range for the second AP point
+            return Mathf.FloorToInt(moveRange * 0.5f); // reduced to 50% of the base movement range for the second AP point
 
         else
             return 0; // nonthing match 

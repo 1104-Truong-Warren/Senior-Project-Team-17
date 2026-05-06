@@ -1,4 +1,6 @@
-//
+// used this video to see how other people make skills URL: https://www.youtube.com/watch?v=V4WrS-Wt2xU
+// used this as a reference to skill making URL: https://www.youtube.com/watch?v=_OQTTKkwZQY
+// used to see how scriptableObject works URL: https://www.youtube.com/watch?v=cy49zMBZvhg
 // Weijun
 
 using NUnit.Framework;

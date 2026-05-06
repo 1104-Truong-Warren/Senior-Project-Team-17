@@ -1,3 +1,8 @@
+// Used these for enemy attack behavior reference URL: https://www.youtube.com/watch?v=aA2CSfCBf7w, URL: https://www.youtube.com/watch?v=iOYo7flBUW4 URL: https://www.youtube.com/watch?v=ls5zeiDCfvI 
+// https://www.youtube.com/watch?v=M7qxcCyZlJ4
+// Decide on which skill is the best by filtering it using score, if the skill has buff/debuff, high dmg bonus points
+// Weijun
+
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 

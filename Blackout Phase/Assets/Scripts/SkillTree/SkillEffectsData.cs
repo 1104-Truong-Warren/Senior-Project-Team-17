@@ -1,4 +1,5 @@
-//
+// used this video to see how other people make skills URL: https://www.youtube.com/watch?v=V4WrS-Wt2xU
+// used to see how scriptableObject works URL: https://www.youtube.com/watch?v=cy49zMBZvhg
 // data for hold ing skill effects
 // Weijun
 

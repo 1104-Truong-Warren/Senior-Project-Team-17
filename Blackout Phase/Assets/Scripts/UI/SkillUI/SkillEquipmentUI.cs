@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro; // for TMP text
 using UnityEngine.UI;
 using UnityEditor;
+using System.Collections;
 
 public class SkillEquipmentUI : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class SkillEquipmentUI : MonoBehaviour
     [SerializeField] private KeyCode doneKey; // for confrim skill setup function
 
     private SkillData skill; // accessor to the skill data
+
+    private Coroutine displaySkillCoroutine; // for displaying the skill
 
     private void Start()
     {
@@ -201,6 +204,22 @@ public class SkillEquipmentUI : MonoBehaviour
 
     }
 
+    public void HilightSelectedSkillSlot(int selectedIndex)
+    {
+        // go through all the skill buttons
+        for (int i = 0; i < skillSlotButtons.Length; i++)
+        {
+            // skill slot is null skip
+            if (skillSlotButtons[i] == null) continue;
+
+            Image img = skillSlotButtons[i].GetComponent<Image>(); // get the image of the sprite
+
+            // change the images color if found
+            if (img != null) 
+                img.color = (i == selectedIndex) ? Color.red : Color.white;
+        }
+    }
+
     public void ConfrimSkillSetup()
     {
         Debug.Log("[SEUI] Skill setup completed!"); // debug msg
@@ -208,6 +227,26 @@ public class SkillEquipmentUI : MonoBehaviour
         HidePanel(); // finished set up hide the panel
     }
 
+    public void ShowPanelTemporary(float duration)
+    {
+        // check to make sure panle is found
+        if (skillPanel == null) return;
+
+        // if the display is found stop it
+        if (displaySkillCoroutine != null)
+            StopCoroutine(displaySkillCoroutine);
+
+        displaySkillCoroutine = StartCoroutine(ShowAndHide(duration)); // start the duration
+    }
+
+    private IEnumerator ShowAndHide(float duration)
+    {
+        skillPanel.SetActive(true); // display the skill UI panel
+
+        yield return new WaitForSeconds(duration); // wait for 1.5 seconds
+
+        skillPanel.SetActive(false); // disable the skill UI panel
+    }
     public void ShowPanel()
     {
         // if the skill panel is found turn on for now

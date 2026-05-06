@@ -6,7 +6,7 @@
 // the moveRange is used for chasing range so it doesn't follow the player forever
 // Weijun
 
-using Unity.VisualScripting;
+using Unity.VisualScripting; // scriptibale object
 using UnityEngine; // default
 
 public class EnemyInfo : UnitCore

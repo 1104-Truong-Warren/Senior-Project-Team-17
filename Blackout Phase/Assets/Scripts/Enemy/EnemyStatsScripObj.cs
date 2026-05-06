@@ -1,5 +1,6 @@
-//
-// Enemy stats for scriptable object
+// Used this scriptitable enemy as reference URL: https://www.youtube.com/watch?v=PoglGJoDcZg
+// Used this for Inheritance reference URL: https://www.youtube.com/watch?v=F7Wu6_uzD1I
+// Enemy stats for scriptable object, the EnemyInfo script has data for these variables
 // Weijun
 
 using UnityEngine;

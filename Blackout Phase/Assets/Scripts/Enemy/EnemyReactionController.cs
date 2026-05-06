@@ -1,4 +1,5 @@
-//
+// Used these for enemy attack behavior reference URL: https://www.youtube.com/watch?v=aA2CSfCBf7w, URL: https://www.youtube.com/watch?v=iOYo7flBUW4 URL: https://www.youtube.com/watch?v=ls5zeiDCfvI 
+// Reaction to player's attack, by passing over the player and skill, decided if enemy can counterattack 
 // Weijun
 
 using UnityEngine;

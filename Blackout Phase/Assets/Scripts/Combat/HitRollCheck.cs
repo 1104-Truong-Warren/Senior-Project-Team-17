@@ -1,5 +1,7 @@
-//
+// Used google to learn the basic Unity math.f and what they do URL: https://www.google.com/
+// Rolling check based on the skill system, reads in skill hit rate, crit rate, evasion, and crit dmg calculation
 // Weijun
+
 
 using UnityEngine;
 

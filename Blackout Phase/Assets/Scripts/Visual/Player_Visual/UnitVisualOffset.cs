@@ -1,4 +1,4 @@
-//
+// used this video as reference: https://www.youtube.com/watch?v=vkgwjRO5QL0
 // add visual offset to the sprite renderers 
 // Weijun
 
