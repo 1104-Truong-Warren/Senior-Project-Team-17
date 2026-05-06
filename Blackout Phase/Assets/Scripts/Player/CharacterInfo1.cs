@@ -190,7 +190,7 @@ public class CharacterInfo1 : UnitCore
         en = Mathf.Min(maxEN, en + amountEN); // compare maxEN and the current EN + restore amount and use the minimum, make sure we don't over cap the EN limit
     }
 
-    // ADDED BY WARREN: New method to increase maximum HP (for level up choices)
+    // Added by Warren - New method to increase maximum HP (for level up choices)
     // also used to increase max HP for equipped gear - Ellison
     public void IncreaseMaxHP(int amount)
     {
@@ -317,7 +317,7 @@ public class CharacterInfo1 : UnitCore
         Debug.Log($"Saved stats for next level - HP: {hp}/{maxHP}, EN: {en}/{maxEN}, Attack: {baseAttk}, Level: {level}");
     }
 
-    // Call this when the new level starts
+    // Calls this when the new level starts
     public void LoadFromPreviousLevel()
     {
         if (hasSavedData)
@@ -339,7 +339,7 @@ public class CharacterInfo1 : UnitCore
         }
         else
         {
-            Debug.Log("No saved data found, using default stats");//
+            Debug.Log("No saved data found, using default stats");
             if (hasSavedData && savedHP <= 0)
             {
                 Debug.Log("Saved HP was 0 (player died), using default stats instead");
@@ -359,9 +359,9 @@ public class CharacterInfo1 : UnitCore
     public void ResetForLevelRestart()
     {
         // Reset to default starting values
-        hp = maxHP;  // Full HP
-        en = maxEN;  // Full EN
-        currentAP = maxAP;  // Reset AP
+        hp = maxHP; // Full HP
+        en = maxEN; // Full EN
+        currentAP = maxAP; // Reset AP
         
         // Clear saved data so we don't load the dead state
         hasSavedData = false;

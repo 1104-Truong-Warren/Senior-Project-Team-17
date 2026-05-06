@@ -88,7 +88,7 @@ public class ReactionUI : MonoBehaviour
             bool shouldShow = TurnManager.Instance.WaitForPlayerReact && TurnManager.Instance.inComingAttackEnemy != null &&
                 TurnManager.Instance.inComingAttackEnemy.CurrentHP > 0;
 
-            // CHANGED: Use coroutine for delayed show, but immediate hide
+            // Use coroutine for delayed show, but immediate hide
             if (shouldShow && !reactionPanel.activeSelf && !isWaitingToShow)
             {
                 // Start coroutine to show UI after delay

@@ -105,7 +105,7 @@ public class DamageObserver : MonoBehaviour
         if (currentHP < lastPlayerHP)
         {
             int damage = lastPlayerHP - currentHP; // Calculate damage amount
-            StartCoroutine(ShowDamageWithDelay(damage)); // CHANGED: Use coroutine with delay
+            StartCoroutine(ShowDamageWithDelay(damage)); 
             lastPlayerHP = currentHP; // Update stored HP
 
             Debug.Log($"DamageObserver: Player took {damage} damage. HP now {currentHP}");
